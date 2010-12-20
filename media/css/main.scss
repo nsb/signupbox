@@ -2,6 +2,13 @@
 
   .headline {
      line-height: 80px;
+     overflow: hidden;
+
+    h2, div {
+      float: left;
+      margin-right: 30px;
+    }
+
    }
 
   .indent {

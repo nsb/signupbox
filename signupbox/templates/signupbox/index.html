@@ -1,0 +1,10 @@
+{% extends "signupbox/appbase.html" %}
+{% load i18n %}
+
+{% block main %}
+<div class="headline indent">
+  <h2>{% blocktrans with account.name as account_name %}{{ account_name }}'s events{% endblocktrans %}</h2>
+  <div><a href="{% url event_create %}">{% trans "Add event" %}</a></div>
+</div>
+
+{% endblock main %}

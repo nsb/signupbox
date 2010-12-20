@@ -4,8 +4,8 @@ from django.contrib.auth import authenticate, login
 from django.shortcuts import render_to_response, redirect
 from django.template import RequestContext
 
-from forms import RegistrationForm
-from models import Account
+from ..forms import RegistrationForm
+from ..models import Account
 
 @login_required
 def index(request):
