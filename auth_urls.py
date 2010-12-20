@@ -4,7 +4,7 @@ from django.conf.urls.defaults import *
 from django.contrib.auth import views as auth_views
 
 urlpatterns = patterns('',
-    url(r'^login/$', auth_views.login, name='auth_login'),
+    url(r'^login/$', auth_views.login, {'template_name':'signupbox/login.html'}, name='auth_login',),
     url(r'^logout/$', auth_views.logout, name='auth_logout'),
     url(r'^password/change/$', auth_views.password_change, name='auth_password_change'),
     url(r'^password/change/done/$', auth_views.password_change_done, name='auth_password_change_done'),

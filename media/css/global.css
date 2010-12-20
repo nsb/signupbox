@@ -32,6 +32,13 @@ strong {
 .extra-quiet {
   color: #d5e1dd; }
 
+a {
+  text-decoration: none;
+  color: #747e80; }
+  a:hover {
+    color: #2b3e42;
+    text-decoration: underline; }
+
 .box .caret {
   border-style: solid;
   margin-left: 40px;

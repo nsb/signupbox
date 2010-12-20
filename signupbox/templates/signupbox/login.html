@@ -1,0 +1,25 @@
+{% extends "signupbox/appbase.html" %}
+{% load i18n %}
+
+{% block main %}
+
+<div class="headline indent">
+  <h2>{% trans "Login" %}</h2>
+</div>
+
+<div class="indent">
+  <form method="POST" action="{% url auth_login %}">
+    {% csrf_token %}
+    <table>
+    {{ form }}
+    </table>
+    <div>
+      <input type="submit" value="{% trans "Login" %}"></input>
+    </div>
+  </form>
+
+  <div>
+    <a href="{% url auth_password_reset %}">Forgot password?</a>
+  </div>
+</div>
+{% endblock main %}
