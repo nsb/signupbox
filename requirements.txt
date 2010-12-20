@@ -1,0 +1,6 @@
+ipython
+psycopg2
+django == 1.2
+BeautifulSoup
+-e git://github.com/dziegler/django-css.git#egg=DjangoCSS
+-e svn+http://google-visualization-python.googlecode.com/svn/trunk/#egg=gviz
