@@ -7,8 +7,11 @@ from django.template import RequestContext
 from forms import RegistrationForm
 from models import Account
 
+@login_required
 def index(request):
-    pass
+    return render_to_response(
+        'signupbox/index.html', RequestContext(request),
+    )
 
 def signup(request):
     if request.method == 'POST':
