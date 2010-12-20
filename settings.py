@@ -101,15 +101,15 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.admin',
-    #'compressor',
+    'compressor',
     'signupbox',
 )
 
-## django-css
-#CACHE_BACKEND = 'dummy://'
-#COMPILER_FORMATS = {
-   #'.scss': {
-        #'binary_path':'sass',
-        #'arguments': '*.scss *.css'
-    #},  
-#}
+# django-css
+CACHE_BACKEND = 'dummy://'
+COMPILER_FORMATS = {
+   '.scss': {
+        'binary_path':'sass',
+        'arguments': '*.scss *.css'
+    },  
+}

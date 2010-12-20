@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load compress %}
+{% block css %}
+  <link href='http://fonts.googleapis.com/css?family=Molengo' rel='stylesheet' type='text/css'>
+  {% compress css %}
+  {{ block.super }}
+  <link rel="stylesheet" href="{{ MEDIA_URL }}css/global.scss" type="text/css">
+  <link rel="stylesheet" href="{{ MEDIA_URL }}css/forms.scss" type="text/css">
+  <link rel="stylesheet" href="{{ MEDIA_URL }}css/page.scss" type="text/css">
+  <link rel="stylesheet" href="{{ MEDIA_URL }}css/header.scss" type="text/css">
+  <link rel="stylesheet" href="{{ MEDIA_URL }}css/main.scss" type="text/css">
+  {% endcompress %}
+{% endblock css %}
+
+{% block page %}
+  <div id="wide-header"></div>
+  <div id="page">
+    <div id="header">
+      {% block header %}
+        {% include "signupbox/header.html" %}
+      {% endblock header %}
+    </div>
+    <div id="main">
+      {% block main %}{% endblock main %}
+    </div>
+  </div>
+  {% block templates %}{% endblock templates %}
+  <div id="modal"></div>
+{% endblock page %}
+
+{% block javascript %}
+  {{ block.super }}
+{% endblock javascript %}

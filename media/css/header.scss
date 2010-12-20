@@ -1,0 +1,138 @@
+@import "mixins";
+@import "colors";
+@import "sizes";
+
+#wide-header {
+  background-color: $color1;
+  position: fixed;
+  height: $header-height;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: -1;
+}
+#header {
+  background-color: transparent;
+  margin: 0 30px;
+
+  color: $color2;
+  overflow: hidden;
+  height: $header-height;
+
+  a {
+    text-decoration: none;
+    color: $color2;
+  }
+
+  .logo {
+    float: left;
+    font-family: 'Molengo', arial, serif;
+    font-size: 275%;
+    width: $content-left;
+    line-height: 56px;
+
+    a {
+      span {
+        /* color: $color5; */
+      }
+    }
+  }
+
+  .section-switch {
+    overflow: hidden;
+    float: left;
+    margin-left: 60px;
+
+    li {
+      float: left;
+      margin: 10px 5px 10px 0;
+      height: $header-height - 20;
+
+      @include round;
+
+      &:hover {
+        background-color: $color1 + $light;
+
+        @include gradient($color1 + $light);
+
+        a {
+          color: $color0;
+        }
+      }
+
+      a {
+        padding: 0 10px;
+        display: block;
+        font-size: 116%;
+      }
+
+      .icon {
+        height: 16px;
+        width: 16px;
+        margin: 6px auto 3px auto;
+      }
+    }
+
+    li.selected {
+
+      background-color: #37414A - #181212;
+
+      @include gradient($color1 - $dark);
+      @include shadow;
+
+      a {
+              cursor: default;
+          color: $color0;   
+          }
+        }
+
+    li.activities .icon {
+        background: url(/static/img/icons/handy-color2/16x16/comment_bubble.png) no-repeat;
+    }
+    li.activities:hover .icon, li.activities.selected .icon {
+        background: url(/static/img/icons/handy-light/16x16/comment_bubble.png) no-repeat;
+    }
+    li.events .icon {
+        background: url(/static/img/icons/handy-color2/16x16/calendar.png) no-repeat;
+    }
+    li.events:hover .icon, li.events.selected .icon {
+        background: url(/static/img/icons/handy-light/16x16/calendar.png) no-repeat;
+    }
+    li.people .icon {
+        background: url(/static/img/icons/handy-color2/16x16/user.png) no-repeat;
+    }
+    li.people:hover .icon, li.people.selected .icon {
+        background: url(/static/img/icons/handy-light/16x16/user.png) no-repeat;
+    }
+    li.statistics .icon {
+        background: url(/static/img/icons/handy-color2/16x16/bar_chart.png) no-repeat;
+    }
+    li.statistics:hover .icon, li.activities.selected .icon {
+        background: url(/static/img/icons/handy-light/16x16/bar_chart.png) no-repeat;
+    }
+  }
+
+  .userbox {
+    float: right;
+    overflow: hidden;
+
+    li {
+      margin: $header-height / 4 + 5 0;
+      float: left;
+      padding: 0 10px;
+      border-left: 1px solid $color2;
+      line-height: $header-height / 2 - 10;
+
+      &:first-child {
+        border-left: none;
+        padding-left: 0;
+      }
+
+      a:hover {
+        color: $color0;
+        text-decoration: underline;
+      }
+    }
+  }
+
+}

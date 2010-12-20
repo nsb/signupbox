@@ -1,0 +1,9 @@
+@import "sizes";
+
+#page {
+  height: 100%;
+  max-width: $max-width;
+  min-width: $min-width;
+  margin: 0 auto;
+  position: relative;
+}

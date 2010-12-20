@@ -39,4 +39,4 @@ def signup(request):
     else:
         form = RegistrationForm()
 
-    return render_to_response('registration/signup.html', { 'form': form }, RequestContext(request))
+    return render_to_response('signupbox/signup.html', { 'form': form }, RequestContext(request))

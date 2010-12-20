@@ -1,0 +1,41 @@
+@mixin overlay {
+  background-color: #000;
+  opacity: .1;
+  -moz-opacity: .10;
+  -ms-filter: ”alpha(opacity=10)”;
+  filter: alpha(opacity=10);
+  position: absolute;
+  width: 100%;
+}
+@mixin round {
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+}
+@mixin round-top {
+  -webkit-border-top-left-radius: 5px;
+  -webkit-border-top-right-radius: 5px;
+  -moz-border-radius-topleft: 5px;
+  -moz-border-radius-topright: 5px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+@mixin round-bottom {
+  -webkit-border-bottom-right-radius: 5px;
+  -webkit-border-bottom-left-radius: 5px;
+  -moz-border-radius-bottomright: 5px;
+  -moz-border-radius-bottomleft: 5px;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+@mixin shadow {
+  -moz-box-shadow: 2px 2px 2px #37414A - #181212;
+  -webkit-box-shadow: 2px 2px 3px #37414A - #181212;
+  box-shadow: 2px 2px 2px #37414A - #181212;
+}
+
+@mixin gradient($color) {
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0.0, $color + #181212 + #181212),
+                color-stop(0.5, $color + #181212), color-stop(1.0, $color));
+  background: -moz-linear-gradient(top, $color + #181212 + #181212, $color + #181212, $color 80%);
+}

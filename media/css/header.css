@@ -1,0 +1,93 @@
+/* http://www.colorcombos.com/color-scheme-275.html */
+#wide-header {
+  background-color: #2b3e42;
+  position: fixed;
+  height: 68px;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: -1; }
+
+#header {
+  background-color: transparent;
+  margin: 0 30px;
+  color: #747e80;
+  overflow: hidden;
+  height: 68px; }
+  #header a {
+    text-decoration: none;
+    color: #747e80; }
+  #header .logo {
+    float: left;
+    font-family: 'Molengo', arial, serif;
+    font-size: 275%;
+    width: 220px;
+    line-height: 56px; }
+    #header .logo a span {
+      /* color: $color5; */ }
+  #header .section-switch {
+    overflow: hidden;
+    float: left;
+    margin-left: 60px; }
+    #header .section-switch li {
+      float: left;
+      margin: 10px 5px 10px 0;
+      height: 48px;
+      -webkit-border-radius: 5px;
+      -moz-border-radius: 5px;
+      border-radius: 5px; }
+      #header .section-switch li:hover {
+        background-color: #435054;
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #737478), color-stop(0.5, #5b6266), color-stop(1, #435054));
+        background: -moz-linear-gradient(top, #737478, #5b6266, #435054 80%); }
+        #header .section-switch li:hover a {
+          color: white; }
+      #header .section-switch li a {
+        padding: 0 10px;
+        display: block;
+        font-size: 116%; }
+      #header .section-switch li .icon {
+        height: 16px;
+        width: 16px;
+        margin: 6px auto 3px auto; }
+    #header .section-switch li.selected {
+      background-color: #1f2f38;
+      background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #435054), color-stop(0.5, #2b3e42), color-stop(1, #132c30));
+      background: -moz-linear-gradient(top, #435054, #2b3e42, #132c30 80%);
+      -moz-box-shadow: 2px 2px 2px #1f2f38;
+      -webkit-box-shadow: 2px 2px 3px #1f2f38;
+      box-shadow: 2px 2px 2px #1f2f38; }
+      #header .section-switch li.selected a {
+        cursor: default;
+        color: white; }
+    #header .section-switch li.activities .icon {
+      background: url(/static/img/icons/handy-color2/16x16/comment_bubble.png) no-repeat; }
+    #header .section-switch li.activities:hover .icon, #header .section-switch li.activities.selected .icon {
+      background: url(/static/img/icons/handy-light/16x16/comment_bubble.png) no-repeat; }
+    #header .section-switch li.events .icon {
+      background: url(/static/img/icons/handy-color2/16x16/calendar.png) no-repeat; }
+    #header .section-switch li.events:hover .icon, #header .section-switch li.events.selected .icon {
+      background: url(/static/img/icons/handy-light/16x16/calendar.png) no-repeat; }
+    #header .section-switch li.people .icon {
+      background: url(/static/img/icons/handy-color2/16x16/user.png) no-repeat; }
+    #header .section-switch li.people:hover .icon, #header .section-switch li.people.selected .icon {
+      background: url(/static/img/icons/handy-light/16x16/user.png) no-repeat; }
+    #header .section-switch li.statistics .icon {
+      background: url(/static/img/icons/handy-color2/16x16/bar_chart.png) no-repeat; }
+    #header .section-switch li.statistics:hover .icon, #header .section-switch li.activities.selected .icon {
+      background: url(/static/img/icons/handy-light/16x16/bar_chart.png) no-repeat; }
+  #header .userbox {
+    float: right;
+    overflow: hidden; }
+    #header .userbox li {
+      margin: 22px 0;
+      float: left;
+      padding: 0 10px;
+      border-left: 1px solid #747e80;
+      line-height: 24px; }
+      #header .userbox li:first-child {
+        border-left: none;
+        padding-left: 0; }
+      #header .userbox li a:hover {
+        color: white;
+        text-decoration: underline; }

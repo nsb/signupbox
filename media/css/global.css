@@ -1,0 +1,51 @@
+/* http://www.colorcombos.com/color-scheme-275.html */
+html {
+  height: 100%; }
+
+body {
+  background-color: white;
+  color: #2b3e42;
+  height: 100%;
+  font: 13px/1.231 helvetica,arial,clean,sans-serif; }
+
+h1 {
+  font-size: 189%; }
+
+h2 {
+  font-size: 174%;
+  font-weight: bold; }
+
+h3 {
+  font-size: 146.5%;
+  font-weight: bold; }
+
+h4 {
+  font-size: 116%;
+  font-weight: bold; }
+
+strong {
+  font-weight: bold; }
+
+.quiet {
+  color: #747e80; }
+
+.extra-quiet {
+  color: #d5e1dd; }
+
+.box .caret {
+  border-style: solid;
+  margin-left: 40px;
+  border-color: white white #d5e1dd #d5e1dd;
+  border-width: 7px 10px;
+  height: 0;
+  width: 0;
+  line-height: 0; }
+.box .box-content {
+  min-width: 300px;
+  font-size: 116%;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  padding: 20px;
+  display: inline-block;
+  background-color: #d5e1dd; }
