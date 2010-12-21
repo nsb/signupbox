@@ -5,7 +5,7 @@ from django import test
 from django.test.client import Client
 from django.core.urlresolvers import reverse
 
-from forms import RegistrationForm
+from ..models import Event
 
 class IntegrationTestCase(test.TestCase):
     def setUp(self):
@@ -42,3 +42,22 @@ class IntegrationTestCase(test.TestCase):
             },
         )
         self.failUnlessEqual(response.status_code, 302)
+        self.assertTrue(Event.objects.filter(title='mytitle').exists())
+
+        #Edit the event
+        response = self.client.post(
+            reverse('event_edit', kwargs={'slug':'mytitle'},), 
+            {
+                'title':'mynewtitle',
+                'begins_0':date.today() + timedelta(days=7),
+                'begins_1_0':'9',
+                'begins_1_1':'00',
+                'ends_0': date.today() + timedelta(days=7),
+                'ends_1_0':'16',
+                'ends_1_1':'00',
+            },
+        )
+        self.failUnlessEqual(response.status_code, 302)
+        self.assertFalse(Event.objects.filter(title='mytitle').exists())
+        self.assertTrue(Event.objects.filter(title='mynewtitle').exists())
+
