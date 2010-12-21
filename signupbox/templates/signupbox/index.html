@@ -7,8 +7,8 @@
   <div><a href="{% url event_create %}">{% trans "Add event" %}</a></div>
 </div>
 
+  <h3 class="indent">{% trans "Upcoming events" %}</h3>
   <div class="event block upcoming">
-    <h3 class="indent">{% trans "Upcoming events" %}</h3>
     {% for event in events.upcoming %}
       <div class="event row {% cycle 'even' 'odd' %}">
         <div class="column"><h4><a href="{% url event_detail event.slug %}">{{ event.title }}</a></h4></div>
@@ -21,14 +21,12 @@
         <div class="column last">{{ event.get_status_display }}</div>
       </div>
     {% empty %}
-      <div class="row">
-        <div class="column">{% trans "No upcoming events" %}</div>
-      </div>
+      <div class="empty">{% trans "No upcoming events" %}</div>
     {% endfor %}
   </div>
 
+  <h3 class="indent">{% trans "Previous events" %}</h3>
   <div class="event block previous">
-    <h3 class="indent">{% trans "Previous events" %}</h3>
     {% for event in events.previous %}
       <div class="event row {% cycle 'even' 'odd' %}">
         <div class="column"><h4><a href="{% url event_detail event.slug %}">{{ event.title }}</a></h4></div>
@@ -38,9 +36,7 @@
         </div>
       </div>
     {% empty %}
-      <div class="row">
-        <div class="column">{% trans "No previous events" %}</div>
-      </div>
+      <div class="empty">{% trans "No previous events" %}</div>
     {% endfor %}
   </div>
 

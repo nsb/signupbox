@@ -22,14 +22,19 @@
       width: 16.6%; }
     #main .block.previous .column {
       width: 33.3%; }
-  #main .row {
+  #main .row, #main .empty {
     line-height: 40px;
-    overflow: hidden;
     padding: 0 40px; }
+  #main .row {
+    overflow: hidden; }
     #main .row.odd {
       background-color: #f7f3e8; }
     #main .row:hover a {
       color: #2b3e42; }
+    #main .row:first-child {
+      border-top: solid 1px #d5e1dd; }
+    #main .row:last-child {
+      border-bottom: solid 1px #d5e1dd; }
     #main .row .column {
       float: left;
       text-overflow: ellipsis;

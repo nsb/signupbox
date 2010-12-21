@@ -41,10 +41,13 @@
 
    }
 
-  .row {
+  .row, .empty {
      line-height: 40px;
-     overflow: hidden;
      padding: 0 40px;
+  }
+
+  .row {
+     overflow: hidden;
 
     &.odd {
       background-color: $color4;
@@ -56,6 +59,14 @@
         color: $color1;
       }
 
+    }
+
+    &:first-child {
+      border-top: solid 1px $color3;
+    }
+
+    &:last-child {
+      border-bottom: solid 1px $color3;
     }
 
     .column {
@@ -86,5 +97,4 @@
     }
 
   }
-
 }
