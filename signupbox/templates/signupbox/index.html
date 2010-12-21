@@ -7,13 +7,18 @@
   <div><a href="{% url event_create %}">{% trans "Add event" %}</a></div>
 </div>
 
-  <div class="event block">
+  <div class="event block upcoming">
     <h3 class="indent">{% trans "Upcoming events" %}</h3>
     {% for event in events.upcoming %}
       <div class="event row {% cycle 'even' 'odd' %}">
         <div class="indent">
           <div class="column"><h4><a href="{% url event_detail event.slug %}">{{ event.title }}</a></h4></div>
-          <div class="column"><a href="{% url event_detail event.slug %}">{{ event.date_formatted }}</a></div>
+          <div class="column">{{ event.date_formatted }}</div>
+          <div class="column">{% trans "in" %} {{ event.begins|timeuntil }}</div>
+          <div class="column">{{ event.venue }}</div>
+          <div class="column">
+            {% blocktrans with event.attendee_count as attendee_count %}{{ attendee_count }} attendees{% endblocktrans %}
+          </div>
         </div>
       </div>
     {% empty %}
@@ -23,13 +28,16 @@
     {% endfor %}
   </div>
 
-  <div class="event block">
+  <div class="event block previous">
     <h3 class="indent">{% trans "Previous events" %}</h3>
     {% for event in events.previous %}
       <div class="event row {% cycle 'even' 'odd' %}">
         <div class="indent">
           <div class="column"><h4><a href="{% url event_detail event.slug %}">{{ event.title }}</a></h4></div>
           <div class="column"><a href="{% url event_detail event.slug %}">{{ event.date_formatted }}</a></div>
+          <div class="column">
+            {% blocktrans with event.attendee_count as attendee_count %}{{ attendee_count }} attendees{% endblocktrans %}
+          </div>
         </div>
       </div>
     {% empty %}

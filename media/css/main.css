@@ -18,6 +18,10 @@
     margin-right: 20px; }
   #main .block {
     margin-bottom: 40px; }
+    #main .block.upcoming .column {
+      width: 20%; }
+    #main .block.previous .column {
+      width: 33.3%; }
   #main .row {
     line-height: 40px;
     overflow: hidden; }
@@ -26,5 +30,4 @@
     #main .row:hover a {
       color: #2b3e42; }
     #main .row .column {
-      float: left;
-      width: 50%; }
+      float: left; }

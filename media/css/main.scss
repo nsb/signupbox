@@ -30,6 +30,15 @@
 
   .block {
      margin-bottom: 40px;
+
+    &.upcoming .column {
+      width: 20%;
+    }
+
+    &.previous .column {
+      width: 33.3%;
+    }
+
    }
 
   .row {
@@ -50,7 +59,6 @@
 
     .column {
       float: left;
-      width: 50%;
     }
 
   }

@@ -181,6 +181,10 @@ class Event(models.Model):
             )
         )
 
+    @property
+    def attendee_count(self):
+        return Attendee.objects.confirmed(event=self).count()
+
     def save(self, *args, **kwargs):
 
         # auto create slug
