@@ -24,5 +24,5 @@
       background-color: #f7f3e8; }
     #main .row:hover a {
       color: #2b3e42; }
-    #main .row div:first-child {
-      margin-left: 40px; }
+    #main .row .column {
+      padding: 0 20px; }
