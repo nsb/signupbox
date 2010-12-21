@@ -2,6 +2,9 @@ from datetime import datetime, timedelta, date, time
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render_to_response, redirect
 from django.template import RequestContext
+from django.core.urlresolvers import reverse
+from django.contrib import messages
+from django.utils.translation import ugettext, ugettext_lazy as _
 
 from ..models import Event
 from ..forms import EventForm
@@ -15,6 +18,7 @@ def create(request):
         form = EventForm(request.POST, instance=event)
         if form.is_valid():
             form.save()
+            messages.success(request, _('Event added.'))
             return redirect(reverse('index'))
     else:
         form = EventForm(
@@ -27,4 +31,5 @@ def create(request):
 
     return render_to_response(
         'signupbox/event_create.html',
-        RequestContext(request, {'form':form}))
+        RequestContext(request, {'form':form})
+    )

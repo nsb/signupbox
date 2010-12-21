@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from datetime import datetime, date, time, timedelta
+from datetime import date, timedelta
 
 from django import test
 
