@@ -16,5 +16,5 @@ class EventForm(forms.ModelForm):
 
     def clean(self):
         if self.cleaned_data['begins'] > self.cleaned_data['ends']:
-            raise forms.ValidationError('Begin date must be before end date')
+            raise forms.ValidationError(_('Begin date must be before end date'))
         return self.cleaned_data
