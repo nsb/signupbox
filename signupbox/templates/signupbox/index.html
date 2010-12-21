@@ -7,11 +7,19 @@
   <div><a href="{% url event_create %}">{% trans "Add event" %}</a></div>
 </div>
 
-<div class="indent">
-  {% for event in events.upcoming.all %}
+  <h3 class="indent">{% trans "Upcoming events" %}</h3>
+  {% for event in events.upcoming %}
     <div>{{ event.title }}</div>
+  {% empty %}
+    <div class="indent">{% trans "No upcoming events" %}</div>
   {% endfor %}
-</div>
 
+
+  <h3 class="indent">{% trans "Previous events" %}</h3>
+  {% for event in events.previous %}
+    <div>{{ event.title }}</div>
+  {% empty %}
+    <div class="indent">{% trans "No previous events" %}</div>
+  {% endfor %}
 
 {% endblock main %}
