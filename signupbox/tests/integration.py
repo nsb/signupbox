@@ -18,6 +18,7 @@ class IntegrationTestCase(test.TestCase):
 
         #Integration tests
 
+        #Signup
         response = self.client.post(
             reverse('signup',),
             {'accountname':'myaccount', 'email':'myemail@example.com', 'password':'mypassword', 'password2':'mypassword',}
@@ -27,6 +28,7 @@ class IntegrationTestCase(test.TestCase):
         response = self.client.get(reverse('index'))
         self.failUnlessEqual(response.status_code, 200)
 
+        #Create an event
         response = self.client.post(
             reverse('event_create'), 
             {
