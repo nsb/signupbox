@@ -22,3 +22,6 @@ class IntegrationTestCase(test.TestCase):
             {'accountname':'myaccount', 'email':'myemail@example.com', 'password':'mypassword', 'password2':'mypassword',}
         )
         self.failUnlessEqual(response.status_code, 302)
+
+        response = self.client.get(reverse('index'))
+        self.failUnlessEqual(response.status_code, 200)
