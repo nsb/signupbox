@@ -34,7 +34,8 @@
     right: 45%; }
     #header .navigation ul {
       position: absolute;
-      bottom: 0; }
+      bottom: 0;
+      margin-left: 20px; }
       #header .navigation ul li {
         position: relative;
         float: left;
