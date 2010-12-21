@@ -1,6 +1,6 @@
 from datetime import datetime, timedelta, date, time
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render_to_response, redirect
+from django.shortcuts import render_to_response, redirect, get_object_or_404
 from django.template import RequestContext
 from django.core.urlresolvers import reverse
 from django.contrib import messages
@@ -46,4 +46,24 @@ def read(request, slug):
         slug=slug,
         template_object_name='event',
         template_name='signupbox/event_detail.html',
+    )
+
+@login_required
+def edit(request, slug):
+
+    account=request.user.accounts.get()
+    event = get_object_or_404(Event, account=account, slug=slug)
+
+    if request.method == 'POST':
+        form = EventForm(request.POST, instance=event)
+        if form.is_valid():
+            form.save()
+            messages.success(request, _('Event updated.'))
+            return redirect(reverse('event_detail', kwargs={'slug':slug}))
+    else:
+        form = EventForm(instance=event,)
+
+    return render_to_response(
+        'signupbox/event_edit.html',
+        RequestContext(request, {'form':form, 'event':event,})
     )

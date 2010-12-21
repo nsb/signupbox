@@ -4,5 +4,6 @@
 {% block main %}
 <div class="headline indent">
   <h2>{{ event.title }}</h2>
+  <div><a href="{% url event_edit event.slug %}">{% trans "Edit event" %}</a></div>
 </div>
 {% endblock main %}

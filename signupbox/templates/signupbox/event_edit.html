@@ -3,17 +3,17 @@
 
 {% block main %}
 <div class="headline indent">
-  <h2>{% trans "Add event" %}</h2>
+  <h2>{% trans "Edit event" %}</h2>
 </div>
 
 <div class="indent">
-  <form action="{% url event_create %}" method="POST">
+  <form action="{% url event_edit event.slug %}" method="POST">
     {% csrf_token %}
     <table>
       {{ form }}
     </table>
     <div>
-      <input type="submit" value="{% trans "Add" %}" />
+      <input type="submit" value="{% trans "Update" %}" />
     </div>
   </form>
 
