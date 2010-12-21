@@ -112,33 +112,6 @@ CURRENCY_CHOICES = (
     (CURRENCY_EUR, _('euros')),
 )
 
-RECURRING_CHOICES = (
-    (RECURRING_NEVER, _('Not repeated')),
-    (RECURRING_DAILY, _('Daily')),
-    (RECURRING_WEEKDAYS, _('Weekly on weekdays')),
-    (RECURRING_WEEKLY, _('Weekly')),
-    (RECURRING_MONTHLY, _('Monthly')),
-    (RECURRING_YEARLY, _('Yearly')),
-)
-
-RECURRING_INTERVAL_CHOICES = [(num, num) for num in range(1,31)]
-
-RECURRING_BY_DATE = 0
-RECURRING_BY_WEEKDAY = 1
-
-RECURRING_MONTHLY_CHOICES = (
-    (RECURRING_BY_DATE, _('day in month')),
-    (RECURRING_BY_WEEKDAY, _('day in week')),
-)
-
-class RecurringWeeklyDay(models.Model):
-    site = models.ForeignKey(Site)
-    name = models.CharField(max_length=255)
-    short_name = models.CharField(max_length=1)
-
-    def __unicode__(self):
-        return self.short_name
-
 class Event(models.Model):
     """
     Event
@@ -146,8 +119,8 @@ class Event(models.Model):
     >>> account = Account.objects.create(name="myaccount")
 
     # Create events
-    >>> event = Event.objects.create(account=account, title='my event', begin_date='2050-01-01', end_date='2050-01-01')
-    >>> event2 = Event.objects.create(account=account, title='my event', begin_date='2050-01-01', end_date='2050-01-01')
+    >>> event = Event.objects.create(account=account, title='my event', begins='2050-01-01', ends='2050-01-01')
+    >>> event2 = Event.objects.create(account=account, title='my event', begins='2050-01-01', ends='2050-01-01')
 
     # make sure slug is unique
     >>> event.slug != event2.slug
@@ -164,32 +137,14 @@ class Event(models.Model):
     venue = models.CharField(max_length=1024, verbose_name=_('Where'), blank=True, help_text=_('The event venue'),)
 
     # date and time fields
-    begin_date = models.DateField()
-    end_date = models.DateField()
-    begin_time = models.TimeField(blank=True, null=True)
-    end_time = models.TimeField(blank=True, null=True)
-
-    # recurring fields
-    recurring = models.IntegerField(
-        blank=True, choices=RECURRING_CHOICES, default=RECURRING_NEVER, verbose_name=_('repeated')
-    )
-    recurring_end_date = models.DateField(blank=True, null=True, verbose_name=_('ends'))
-
-    # repeat only every interval. every three days or every fifth week...
-    recurring_interval = models.IntegerField(
-        choices=RECURRING_INTERVAL_CHOICES, blank=True, default=1, verbose_name=_('repeat every')
-    )
-
-    # only used for recurring weekly
-    recurring_weekly_days = models.ManyToManyField(RecurringWeeklyDay, blank=True, null=True)
-
-    # only used for recurring monthly
-    recurring_monthly=models.IntegerField(blank=True, choices=RECURRING_MONTHLY_CHOICES, default=RECURRING_BY_DATE)
+    begins = models.DateTimeField()
+    ends = models.DateTimeField()
 
     capacity = models.IntegerField(
-        default=0,
+        blank=True,
+        null=True,
         verbose_name=_('Capacity'),
-        help_text=_('0 for unlimited.')
+        help_text=_('Leave blank for unlimited.')
     )
     status = models.CharField(
         max_length=32,
@@ -224,15 +179,15 @@ class Event(models.Model):
         return self.title
 
     class Meta:
-        ordering = ['begin_date', 'begin_time', 'title', 'slug']
+        ordering = ['begins', 'title', 'slug']
         unique_together = (('account', 'slug'),)
 
 class Ticket(models.Model):
     event = models.ForeignKey(Event, related_name='tickets')
     name = models.CharField(max_length=1024)
     description = models.CharField(max_length=1024, blank=True)
-    begin_date = models.DateField(blank=True, null=True)
-    end_date = models.DateField(blank=True, null=True)
+    offered_from = models.DateField(blank=True, null=True)
+    offered_to = models.DateField(blank=True, null=True)
     price = models.DecimalField(max_digits=7, decimal_places=2, default=0)
     currency = models.CharField(max_length=3, blank=True, default='DKK')
 
