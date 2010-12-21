@@ -31,7 +31,15 @@
     #main .row:hover a {
       color: #2b3e42; }
     #main .row .column {
-      float: left; }
+      float: left;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap; }
+      #main .row .column h4 {
+        padding-right: 10px;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap; }
       #main .row .column.last {
         text-align: right; }
       #main .row .column .dashed {

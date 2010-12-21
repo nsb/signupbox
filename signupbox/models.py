@@ -185,6 +185,10 @@ class Event(models.Model):
     def attendee_count(self):
         return Attendee.objects.confirmed(event=self).count()
 
+    @property
+    def website(self):
+        return ''.join(('http://', self.account.domain_for_account(), '/', self.slug))
+
     def save(self, *args, **kwargs):
 
         # auto create slug

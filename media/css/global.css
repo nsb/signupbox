@@ -54,4 +54,7 @@ a {
   border-radius: 5px;
   padding: 20px;
   display: inline-block;
-  background-color: #d5e1dd; }
+  background-color: #d5e1dd;
+  line-height: 2em; }
+  .box .box-content li {
+    list-style: square inside; }

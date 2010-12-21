@@ -4,6 +4,25 @@
 {% block main %}
 <div class="headline indent">
   <h2>{{ event.title }}</h2>
-  <div><a href="{% url event_edit event.slug %}">{% trans "Edit event" %}</a></div>
+</div>
+
+<div class="indent">
+
+  <div class="box">
+    <div class="caret"></div>
+    <div class="box-content">
+      <ul>
+        <li><strong>{% trans "Date" %}:</strong> {{ event.date_formatted }}</li>
+        <li><strong>{% trans "Venue" %}:</strong> {{ event.venue }}</li>
+        <li>
+          <strong>{% trans "Capacity" %}:</strong>
+          {% if event.capacity %}{{ event.capacity }}{% else %}{% trans "Unlimited" %}{% endif %}
+        </li>
+        <li><strong>{% trans "Website" %}:</strong> <a href="{{ event.website }}">{{ event.website }}</a></li>
+      </ul>
+      <div><a href="{% url event_edit event.slug %}">{% trans "Edit event" %}</a></div>
+    </div>
+  </div>
+
 </div>
 {% endblock main %}
