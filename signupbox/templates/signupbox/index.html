@@ -15,10 +15,11 @@
           <div class="column"><h4><a href="{% url event_detail event.slug %}">{{ event.title }}</a></h4></div>
           <div class="column">{{ event.date_formatted }}</div>
           <div class="column">{% trans "in" %} {{ event.begins|timeuntil }}</div>
-          <div class="column">{{ event.venue }}</div>
+          <div class="column">{% if event.venue %}{{ event.venue }}{% else %}<div class="dashed"></div>{% endif %}</div>
           <div class="column">
             {% blocktrans with event.attendee_count as attendee_count %}{{ attendee_count }} attendees{% endblocktrans %}
           </div>
+          <div class="column last">{{ event.get_status_display }}</div>
         </div>
       </div>
     {% empty %}

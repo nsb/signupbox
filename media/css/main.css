@@ -19,7 +19,7 @@
   #main .block {
     margin-bottom: 40px; }
     #main .block.upcoming .column {
-      width: 20%; }
+      width: 16.6%; }
     #main .block.previous .column {
       width: 33.3%; }
   #main .row {
@@ -31,3 +31,11 @@
       color: #2b3e42; }
     #main .row .column {
       float: left; }
+      #main .row .column.last {
+        text-align: right; }
+      #main .row .column .dashed {
+        margin-top: 20px;
+        border-top: dashed;
+        border-width: 1px;
+        border-color: #d5e1dd;
+        width: 90%; }

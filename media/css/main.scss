@@ -32,7 +32,7 @@
      margin-bottom: 40px;
 
     &.upcoming .column {
-      width: 20%;
+      width: 16.6%;
     }
 
     &.previous .column {
@@ -59,6 +59,18 @@
 
     .column {
       float: left;
+
+      &.last {
+        text-align: right;
+      }
+
+      .dashed {
+        margin-top: 20px;
+        border-top: dashed;
+        border-width: 1px;
+        border-color: $color3;
+        width: 90%;
+      }
     }
 
   }
