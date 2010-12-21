@@ -9,17 +9,21 @@
 
   <h3 class="indent">{% trans "Upcoming events" %}</h3>
   {% for event in events.upcoming %}
-    <div>{{ event.title }}</div>
+    <div class="event row {% cycle 'even' 'odd' %}">
+      <div><h4><a href="{% url event_detail event.slug %}">{{ event.title }}</a></h4></div>
+    </div>
   {% empty %}
-    <div class="indent">{% trans "No upcoming events" %}</div>
+    <div class="indent row">{% trans "No upcoming events" %}</div>
   {% endfor %}
 
 
   <h3 class="indent">{% trans "Previous events" %}</h3>
   {% for event in events.previous %}
-    <div>{{ event.title }}</div>
+    <div class="event row {% cycle 'even' 'odd' %}">
+      <div><h4><a href="{% url event_detail event.slug %}">{{ event.title }}</a></h4></div>
+    </div>
   {% empty %}
-    <div class="indent">{% trans "No previous events" %}</div>
+    <div class="indent row">{% trans "No previous events" %}</div>
   {% endfor %}
 
 {% endblock main %}

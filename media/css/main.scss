@@ -13,7 +13,8 @@
   border-right: 1px solid $color3 - $dark;
 
   .headline {
-     line-height: 80px;
+     margin: 20px 0 0 0;
+     line-height: 40px;
      overflow: hidden;
 
     h2, div {
@@ -23,9 +24,34 @@
 
    }
 
+  h3 {
+  }
+
   .indent {
-    margin-left: 30px;
-    margin-right: 30px;
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+
+  .row {
+     line-height: 60px;
+
+    &.odd {
+    }
+
+    &:hover {
+      background-color: $color4;
+
+      a {
+        color: $color1;
+        text-decoration: underline;
+      }
+
+    }
+
+    div:first-child {
+      margin-left: 20px;
+    }
+
   }
 
 }

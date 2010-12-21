@@ -10,7 +10,7 @@
 
 #header {
   background-color: transparent;
-  margin: 0 30px;
+  margin: 0 20px;
   color: #747e80;
   overflow: hidden;
   height: 68px; }
@@ -21,7 +21,6 @@
     float: left;
     font-family: 'Molengo', arial, serif;
     font-size: 275%;
-    width: 220px;
     line-height: 56px; }
     #header .logo a span {
       /* color: $color5; */ }

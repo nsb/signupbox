@@ -5,6 +5,7 @@ from django.template import RequestContext
 from django.core.urlresolvers import reverse
 from django.contrib import messages
 from django.utils.translation import ugettext, ugettext_lazy as _
+from django.views.generic.list_detail import object_detail
 
 from ..models import Event
 from ..forms import EventForm
@@ -32,4 +33,17 @@ def create(request):
     return render_to_response(
         'signupbox/event_create.html',
         RequestContext(request, {'form':form})
+    )
+
+@login_required
+def read(request, slug):
+
+    account = request.user.accounts.get()
+
+    return object_detail(
+        request,
+        queryset=account.events,
+        slug=slug,
+        template_object_name='event',
+        template_name='signupbox/event_detail.html',
     )

@@ -8,11 +8,21 @@
   left: 0;
   border-right: 1px solid #bdcfcb; }
   #main .headline {
-    line-height: 80px;
+    margin: 20px 0 0 0;
+    line-height: 40px;
     overflow: hidden; }
     #main .headline h2, #main .headline div {
       float: left;
       margin-right: 30px; }
   #main .indent {
-    margin-left: 30px;
-    margin-right: 30px; }
+    margin-left: 20px;
+    margin-right: 20px; }
+  #main .row {
+    line-height: 60px; }
+    #main .row:hover {
+      background-color: #f7f3e8; }
+      #main .row:hover a {
+        color: #2b3e42;
+        text-decoration: underline; }
+    #main .row div:first-child {
+      margin-left: 20px; }
