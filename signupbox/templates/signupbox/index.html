@@ -7,4 +7,11 @@
   <div><a href="{% url event_create %}">{% trans "Add event" %}</a></div>
 </div>
 
+<div class="indent">
+  {% for event in events.upcoming.all %}
+    <div>{{ event.title }}</div>
+  {% endfor %}
+</div>
+
+
 {% endblock main %}

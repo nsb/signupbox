@@ -9,8 +9,12 @@ from ..models import Account
 
 @login_required
 def index(request):
+
+    account = request.user.accounts.get()
+
     return render_to_response(
-        'signupbox/index.html', RequestContext(request),
+        'signupbox/index.html',
+        RequestContext(request, {'events':account.events}),
     )
 
 def signup(request):

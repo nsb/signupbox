@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from datetime import datetime
 import uuid
 from urlparse import urlparse
 
@@ -112,6 +113,13 @@ CURRENCY_CHOICES = (
     (CURRENCY_EUR, _('euros')),
 )
 
+class EventManager(models.Manager):
+    def upcoming(self):
+        return self.filter(begins__gt=datetime.now())
+
+    def previous(self):
+        return self.filter(begins__lt=datetime.now())
+
 class Event(models.Model):
     """
     Event
@@ -131,7 +139,7 @@ class Event(models.Model):
     )
     slug = models.SlugField(max_length=255)
 
-    account = models.ForeignKey(Account)
+    account = models.ForeignKey(Account, related_name='events')
 
     description = models.TextField(blank=True, verbose_name=_('Description'))
     venue = models.CharField(max_length=1024, verbose_name=_('Where'), blank=True, help_text=_('The event venue'),)
@@ -153,6 +161,8 @@ class Event(models.Model):
         default='open',
         db_index=True
     )
+
+    objects = EventManager()
 
     def save(self, *args, **kwargs):
 
