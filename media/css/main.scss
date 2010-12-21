@@ -44,6 +44,7 @@
   .row {
      line-height: 40px;
      overflow: hidden;
+     padding: 0 40px;
 
     &.odd {
       background-color: $color4;

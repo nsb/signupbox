@@ -24,7 +24,8 @@
       width: 33.3%; }
   #main .row {
     line-height: 40px;
-    overflow: hidden; }
+    overflow: hidden;
+    padding: 0 40px; }
     #main .row.odd {
       background-color: #f7f3e8; }
     #main .row:hover a {
