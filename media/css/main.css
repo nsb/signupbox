@@ -1,9 +1,18 @@
-#main .headline {
-  line-height: 80px;
-  overflow: hidden; }
-  #main .headline h2, #main .headline div {
-    float: left;
+/* http://www.colorcombos.com/color-scheme-275.html */
+#main {
+  overflow: auto;
+  position: absolute;
+  top: 68px;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  border-right: 1px solid #bdcfcb; }
+  #main .headline {
+    line-height: 80px;
+    overflow: hidden; }
+    #main .headline h2, #main .headline div {
+      float: left;
+      margin-right: 30px; }
+  #main .indent {
+    margin-left: 30px;
     margin-right: 30px; }
-#main .indent {
-  margin-left: 30px;
-  margin-right: 30px; }

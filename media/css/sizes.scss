@@ -4,10 +4,4 @@ $min-width: 800px;
 
 $header-height: 68px;
 
-$sectionbar-height: 40px;
-
-$sidebar-top: $header-height + $sectionbar-height;
-$sidebar-width: 218px;
-
-$content-top: $sidebar-top;
-$content-left: $sidebar-width + 2;
+$content-top: $header-height;

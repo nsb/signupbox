@@ -1,4 +1,16 @@
+@import "mixins";
+@import "colors";
+@import "sizes";
+
 #main {
+
+  overflow: auto;
+  position: absolute;
+  top: $content-top;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  border-right: 1px solid $color3 - $dark;
 
   .headline {
      line-height: 80px;
