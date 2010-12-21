@@ -2,6 +2,7 @@ from django import forms
 
 from ..models import Event
 from widgets import DateTimeField, DateTimeWidget
+from django.utils.translation import ugettext, ugettext_lazy as _
 
 class EventForm(forms.ModelForm):
     begins = DateTimeField(widget=DateTimeWidget)
@@ -12,3 +13,8 @@ class EventForm(forms.ModelForm):
         fields = (
             'title', 'description', 'venue', 'begins', 'ends', 'capacity',
         )
+
+    def clean(self):
+        if self.cleaned_data['begins'] > self.cleaned_data['ends']:
+            raise forms.ValidationError('Begin date must be before end date')
+        return self.cleaned_data

@@ -44,3 +44,16 @@ class EventFormTestCase(test.TestCase):
         )
         self.assertTrue(f.is_valid())
 
+        #End date before begin date should fail
+        f = EventForm({
+              'title':'mytitle',
+              'begins_0':date.today() + timedelta(days=7),
+              'begins_1_0':'9',
+              'begins_1_1':'00',
+              'ends_0': date.today() + timedelta(days=5),
+              'ends_1_0':'16',
+              'ends_1_1':'00',
+            },
+            instance=Event(account=self.account),
+        )
+        self.assertFalse(f.is_valid())
