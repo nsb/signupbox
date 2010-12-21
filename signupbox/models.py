@@ -11,6 +11,7 @@ from django.template import defaultfilters
 from django.contrib.auth.models import User, Group, Permission
 from django.contrib.contenttypes import generic
 from django.contrib.sites.models import Site
+from django.template import defaultfilters
 
 from constants import *
 
@@ -163,6 +164,22 @@ class Event(models.Model):
     )
 
     objects = EventManager()
+
+    @property
+    def date_formatted(self):
+        """
+        format begin and end date
+        """
+        default = "j. F, Y"
+        same_day = self.begins.day == self.ends.day
+        same_year = self.begins.year == self.ends.year
+        same_month = self.begins.month == self.ends.month
+        fmt = "j." if same_month else "j. F" if same_year else default
+        return ' - '.join(
+            (defaultfilters.date(self.begins, default),) if same_day else (
+                defaultfilters.date(self.begins, fmt), defaultfilters.date(self.ends, default)
+            )
+        )
 
     def save(self, *args, **kwargs):
 

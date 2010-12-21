@@ -13,6 +13,7 @@
       <div class="event row {% cycle 'even' 'odd' %}">
         <div class="indent">
           <div class="column"><h4><a href="{% url event_detail event.slug %}">{{ event.title }}</a></h4></div>
+          <div class="column"><a href="{% url event_detail event.slug %}">{{ event.date_formatted }}</a></div>
         </div>
       </div>
     {% empty %}
@@ -22,13 +23,13 @@
     {% endfor %}
   </div>
 
-
   <div class="event block">
     <h3 class="indent">{% trans "Previous events" %}</h3>
     {% for event in events.previous %}
       <div class="event row {% cycle 'even' 'odd' %}">
         <div class="indent">
           <div class="column"><h4><a href="{% url event_detail event.slug %}">{{ event.title }}</a></h4></div>
+          <div class="column"><a href="{% url event_detail event.slug %}">{{ event.date_formatted }}</a></div>
         </div>
       </div>
     {% empty %}

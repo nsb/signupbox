@@ -19,10 +19,12 @@
   #main .block {
     margin-bottom: 40px; }
   #main .row {
-    line-height: 40px; }
+    line-height: 40px;
+    overflow: hidden; }
     #main .row.odd {
       background-color: #f7f3e8; }
     #main .row:hover a {
       color: #2b3e42; }
     #main .row .column {
-      padding: 0 20px; }
+      float: left;
+      width: 50%; }
