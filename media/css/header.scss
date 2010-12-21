@@ -14,6 +14,7 @@
 #header {
   background-color: transparent;
   margin: 0 20px;
+  position: relative;
 
   color: $color2;
   overflow: hidden;
@@ -25,7 +26,8 @@
   }
 
   .logo {
-    float: left;
+    position: absolute;
+    left: 0;
     font-family: 'Molengo', arial, serif;
     font-size: 275%;
     line-height: 56px;
@@ -37,82 +39,58 @@
     }
   }
 
-  .section-switch {
-    overflow: hidden;
-    float: left;
-    margin-left: 60px;
+  .navigation {
+    position: absolute;
+    left: 27%;
+    top: 10px;
+    bottom: 0px;
+    right: 45%;
 
-    li {
-      float: left;
-      margin: 10px 5px 10px 0;
-      height: $header-height - 20;
+    ul {
+      position: absolute;
+      bottom: 0;
 
-      @include round;
+      li {
+        position: relative;
+        float: left;
+        margin: 0 -.2em;
+        z-index: 1;
 
-      &:hover {
-        background-color: $color1 + $light;
-
-        @include gradient($color1 + $light);
-
-        a {
-          color: $color0;
-        }
-      }
-
-      a {
-        padding: 0 10px;
-        display: block;
-        font-size: 116%;
-      }
-
-      .icon {
-        height: 16px;
-        width: 16px;
-        margin: 6px auto 3px auto;
-      }
-    }
-
-    li.selected {
-
-      background-color: #37414A - #181212;
-
-      @include gradient($color1 - $dark);
-      @include shadow;
-
-      a {
-              cursor: default;
-          color: $color0;   
+        > div {
+          padding: 10px;
+          background: $color2;
+          -webkit-border-top-left-radius: 15px;
+          -webkit-border-top-right-radius: 15px;
+          -moz-border-radius-topleft: 15px;
+          -moz-border-radius-topright: 15px;
+          border-top-left-radius: 15px;
+          border-top-right-radius: 15px;
+          a {
+            color: $color0;
           }
         }
 
-    li.activities .icon {
-        background: url(/static/img/icons/handy-color2/16x16/comment_bubble.png) no-repeat;
+        &.active {
+          z-index: 2;
+
+          > div {
+          background-color: $color0;
+
+            a {
+              color: $color1;
+            }
+          }
+        }
+
+      }
     }
-    li.activities:hover .icon, li.activities.selected .icon {
-        background: url(/static/img/icons/handy-light/16x16/comment_bubble.png) no-repeat;
-    }
-    li.events .icon {
-        background: url(/static/img/icons/handy-color2/16x16/calendar.png) no-repeat;
-    }
-    li.events:hover .icon, li.events.selected .icon {
-        background: url(/static/img/icons/handy-light/16x16/calendar.png) no-repeat;
-    }
-    li.people .icon {
-        background: url(/static/img/icons/handy-color2/16x16/user.png) no-repeat;
-    }
-    li.people:hover .icon, li.people.selected .icon {
-        background: url(/static/img/icons/handy-light/16x16/user.png) no-repeat;
-    }
-    li.statistics .icon {
-        background: url(/static/img/icons/handy-color2/16x16/bar_chart.png) no-repeat;
-    }
-    li.statistics:hover .icon, li.activities.selected .icon {
-        background: url(/static/img/icons/handy-light/16x16/bar_chart.png) no-repeat;
-    }
+
   }
 
   .userbox {
-    float: right;
+    position: absolute;
+    right: 0;
+    top: 0;
     overflow: hidden;
 
     li {

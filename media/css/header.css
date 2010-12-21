@@ -11,6 +11,7 @@
 #header {
   background-color: transparent;
   margin: 0 20px;
+  position: relative;
   color: #747e80;
   overflow: hidden;
   height: 68px; }
@@ -18,65 +19,48 @@
     text-decoration: none;
     color: #747e80; }
   #header .logo {
-    float: left;
+    position: absolute;
+    left: 0;
     font-family: 'Molengo', arial, serif;
     font-size: 275%;
     line-height: 56px; }
     #header .logo a span {
       /* color: $color5; */ }
-  #header .section-switch {
-    overflow: hidden;
-    float: left;
-    margin-left: 60px; }
-    #header .section-switch li {
-      float: left;
-      margin: 10px 5px 10px 0;
-      height: 48px;
-      -webkit-border-radius: 5px;
-      -moz-border-radius: 5px;
-      border-radius: 5px; }
-      #header .section-switch li:hover {
-        background-color: #435054;
-        background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #737478), color-stop(0.5, #5b6266), color-stop(1, #435054));
-        background: -moz-linear-gradient(top, #737478, #5b6266, #435054 80%); }
-        #header .section-switch li:hover a {
-          color: white; }
-      #header .section-switch li a {
-        padding: 0 10px;
-        display: block;
-        font-size: 116%; }
-      #header .section-switch li .icon {
-        height: 16px;
-        width: 16px;
-        margin: 6px auto 3px auto; }
-    #header .section-switch li.selected {
-      background-color: #1f2f38;
-      background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #435054), color-stop(0.5, #2b3e42), color-stop(1, #132c30));
-      background: -moz-linear-gradient(top, #435054, #2b3e42, #132c30 80%);
-      -moz-box-shadow: 2px 2px 2px #1f2f38;
-      -webkit-box-shadow: 2px 2px 3px #1f2f38;
-      box-shadow: 2px 2px 2px #1f2f38; }
-      #header .section-switch li.selected a {
-        cursor: default;
-        color: white; }
-    #header .section-switch li.activities .icon {
-      background: url(/static/img/icons/handy-color2/16x16/comment_bubble.png) no-repeat; }
-    #header .section-switch li.activities:hover .icon, #header .section-switch li.activities.selected .icon {
-      background: url(/static/img/icons/handy-light/16x16/comment_bubble.png) no-repeat; }
-    #header .section-switch li.events .icon {
-      background: url(/static/img/icons/handy-color2/16x16/calendar.png) no-repeat; }
-    #header .section-switch li.events:hover .icon, #header .section-switch li.events.selected .icon {
-      background: url(/static/img/icons/handy-light/16x16/calendar.png) no-repeat; }
-    #header .section-switch li.people .icon {
-      background: url(/static/img/icons/handy-color2/16x16/user.png) no-repeat; }
-    #header .section-switch li.people:hover .icon, #header .section-switch li.people.selected .icon {
-      background: url(/static/img/icons/handy-light/16x16/user.png) no-repeat; }
-    #header .section-switch li.statistics .icon {
-      background: url(/static/img/icons/handy-color2/16x16/bar_chart.png) no-repeat; }
-    #header .section-switch li.statistics:hover .icon, #header .section-switch li.activities.selected .icon {
-      background: url(/static/img/icons/handy-light/16x16/bar_chart.png) no-repeat; }
+  #header .navigation {
+    position: absolute;
+    left: 27%;
+    top: 10px;
+    bottom: 0px;
+    right: 45%; }
+    #header .navigation ul {
+      position: absolute;
+      bottom: 0; }
+      #header .navigation ul li {
+        position: relative;
+        float: left;
+        margin: 0 -0.2em;
+        z-index: 1; }
+        #header .navigation ul li > div {
+          padding: 10px;
+          background: #747e80;
+          -webkit-border-top-left-radius: 15px;
+          -webkit-border-top-right-radius: 15px;
+          -moz-border-radius-topleft: 15px;
+          -moz-border-radius-topright: 15px;
+          border-top-left-radius: 15px;
+          border-top-right-radius: 15px; }
+          #header .navigation ul li > div a {
+            color: white; }
+        #header .navigation ul li.active {
+          z-index: 2; }
+          #header .navigation ul li.active > div {
+            background-color: white; }
+            #header .navigation ul li.active > div a {
+              color: #2b3e42; }
   #header .userbox {
-    float: right;
+    position: absolute;
+    right: 0;
+    top: 0;
     overflow: hidden; }
     #header .userbox li {
       margin: 22px 0;

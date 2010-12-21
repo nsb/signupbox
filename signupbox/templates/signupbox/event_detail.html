@@ -1,6 +1,17 @@
 {% extends "signupbox/appbase.html" %}
 {% load i18n %}
 
+{% block navigation %}
+  <a href="">{% trans "My events" %}</a> &rsaquo;
+  <a href="">{{ event.title }}</a> &rsaquo;
+  <ul>
+    <li><div><a href="">{% trans "Attendees" %}</a></div></li>
+    <li class="active"><div><a href="">{% trans "Tickets" %}</a></div></li>
+    <li><div><a href="">{% trans "Website" %}</a></div></li>
+  </ul>
+
+{% endblock navigation %}
+
 {% block main %}
 <div class="headline indent">
   <h2>{{ event.title }}</h2>

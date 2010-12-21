@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load i18n %}
 {% load compress %}
 {% block css %}
   <link href='http://fonts.googleapis.com/css?family=Molengo' rel='stylesheet' type='text/css'>
@@ -17,7 +18,21 @@
   <div id="page">
     <div id="header">
       {% block header %}
-        {% include "signupbox/header.html" %}
+        <div class="logo"><a href="{% url index %}">signup<span>box</span></a></div>
+
+        <div class="navigation">
+          {% block navigation %}{% endblock navigation %}
+        </div>
+
+        <ul class="userbox">
+          {% if user.is_authenticated %}
+            <li>{% trans "logged in as" %} [<a href="">{{ user.username }}</a>]</li>
+            <li><a href="">{% trans "settings" %}</a></li>
+            <li><a href="{% url auth_logout %}">{% trans "logout" %}</a></li>
+          {% else %}
+            <li><a href="{% url auth_login %}">{% trans "login" %}</a></li>
+          {% endif %}
+        </ul>
       {% endblock header %}
     </div>
     <div id="main">
