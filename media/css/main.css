@@ -13,11 +13,13 @@
     #main .headline h2, #main .headline div {
       float: left;
       margin-right: 30px; }
+  #main h3 {
+    line-height: 40px; }
   #main .indent {
     margin-left: 20px;
     margin-right: 20px; }
   #main .block {
-    margin-bottom: 40px; }
+    margin-bottom: 20px; }
     #main .block.upcoming .column {
       width: 16.6%; }
     #main .block.previous .column {

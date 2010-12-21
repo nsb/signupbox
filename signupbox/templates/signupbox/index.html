@@ -25,6 +25,11 @@
     {% endfor %}
   </div>
 
+  <h3 class="indent">{% trans "Recent activities" %}</h3>
+  <div class="activities block">
+    <div class="empty">{% trans "No recent activites" %}</div>
+  </div>
+
   <h3 class="indent">{% trans "Previous events" %}</h3>
   <div class="event block previous">
     {% for event in events.previous %}
