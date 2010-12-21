@@ -7,23 +7,31 @@
   <div><a href="{% url event_create %}">{% trans "Add event" %}</a></div>
 </div>
 
-  <h3 class="indent">{% trans "Upcoming events" %}</h3>
-  {% for event in events.upcoming %}
-    <div class="event row {% cycle 'even' 'odd' %}">
-      <div><h4><a href="{% url event_detail event.slug %}">{{ event.title }}</a></h4></div>
-    </div>
-  {% empty %}
-    <div class="indent row">{% trans "No upcoming events" %}</div>
-  {% endfor %}
+  <div class="event block">
+    <h3 class="indent">{% trans "Upcoming events" %}</h3>
+    {% for event in events.upcoming %}
+      <div class="event row {% cycle 'even' 'odd' %}">
+        <div><h4><a href="{% url event_detail event.slug %}">{{ event.title }}</a></h4></div>
+      </div>
+    {% empty %}
+      <div class="row">
+        <div class="indent">{% trans "No upcoming events" %}</div>
+      </div>
+    {% endfor %}
+  </div>
 
 
-  <h3 class="indent">{% trans "Previous events" %}</h3>
-  {% for event in events.previous %}
-    <div class="event row {% cycle 'even' 'odd' %}">
-      <div><h4><a href="{% url event_detail event.slug %}">{{ event.title }}</a></h4></div>
-    </div>
-  {% empty %}
-    <div class="indent row">{% trans "No previous events" %}</div>
-  {% endfor %}
+  <div class="event block">
+    <h3 class="indent">{% trans "Previous events" %}</h3>
+    {% for event in events.previous %}
+      <div class="event row {% cycle 'even' 'odd' %}">
+        <div><h4><a href="{% url event_detail event.slug %}">{{ event.title }}</a></h4></div>
+      </div>
+    {% empty %}
+      <div class="row">
+        <div class="indent">{% trans "No previous events" %}</div>
+      </div>
+    {% endfor %}
+  </div>
 
 {% endblock main %}

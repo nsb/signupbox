@@ -8,8 +8,7 @@
   left: 0;
   border-right: 1px solid #bdcfcb; }
   #main .headline {
-    margin: 20px 0 0 0;
-    line-height: 40px;
+    line-height: 80px;
     overflow: hidden; }
     #main .headline h2, #main .headline div {
       float: left;
@@ -17,12 +16,13 @@
   #main .indent {
     margin-left: 20px;
     margin-right: 20px; }
+  #main .block {
+    margin-bottom: 40px; }
   #main .row {
-    line-height: 60px; }
-    #main .row:hover {
+    line-height: 40px; }
+    #main .row.odd {
       background-color: #f7f3e8; }
-      #main .row:hover a {
-        color: #2b3e42;
-        text-decoration: underline; }
+    #main .row:hover a {
+      color: #2b3e42; }
     #main .row div:first-child {
-      margin-left: 20px; }
+      margin-left: 40px; }
