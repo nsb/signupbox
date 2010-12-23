@@ -2,8 +2,8 @@
 {% load i18n %}
 
 {% block navigation %}
-  <a href="">{% trans "My events" %}</a> &rsaquo;
-  <a href="">{{ event.title }}</a> &rsaquo;
+  <a href="{% url index %}">{% trans "My events" %}</a> &rsaquo;
+  {% block nav1 %}<a href="{% url event_detail event.slug %}">{{ event.title }}</a>{% endblock nav1 %} &rsaquo;
   <ul>
     <li><div><a href="{% url event_attendees event.slug %}">{% trans "Attendees" %}</a></div></li>
     <li class="active"><div><a href="">{% trans "Tickets" %}</a></div></li>

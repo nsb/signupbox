@@ -74,7 +74,10 @@
 
           &:hover {
             background: $color1 + $light + $light;
-            cursor: pointer;
+
+            a {
+              cursor: pointer;
+            }
           }
         }
 
@@ -86,7 +89,12 @@
 
             a {
               color: $color1;
+
+              &:hover {
+                cursor: auto;
+              }
             }
+
           }
         }
 
