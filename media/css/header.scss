@@ -54,11 +54,10 @@
       li {
         position: relative;
         float: left;
-        margin: 0 -.2em;
+        margin: 0 -.4em;
         z-index: 1;
 
         > div {
-          padding: 10px;
           background: $color1 + $light;
           -webkit-border-top-left-radius: 15px;
           -webkit-border-top-right-radius: 15px;
@@ -66,8 +65,16 @@
           -moz-border-radius-topright: 15px;
           border-top-left-radius: 15px;
           border-top-right-radius: 15px;
+
           a {
+            display: block;
+            padding: 10px 20px;
             color: $color0;
+          }
+
+          &:hover {
+            background: $color1 + $light + $light;
+            cursor: pointer;
           }
         }
 
