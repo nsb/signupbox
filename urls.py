@@ -6,7 +6,7 @@ from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = patterns('',
-    (r'^admin/', include(admin.site.urls)),
+    (r'^myadmin/', include(admin.site.urls)),
     (r'^accounts/', include('auth_urls')),
     (r'^', include('signupbox.urls')),
 )

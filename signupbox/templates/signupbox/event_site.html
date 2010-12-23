@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block page %}
+
+  <h1>{{ event.title }}</h1>
+
+  <p>{{ event.description }}</p>
+
+  <h3>{% trans "Time and date" %}</h3>
+  <p>{{ event.date_formatted }}</p>
+
+  <h3>{% trans "Where" %}</h3>
+  <p>{{ event.venue }}</p>
+
+  <h2><a href="">{% trans "Register" %}</a></h2>
+
+{% endblock page %}
