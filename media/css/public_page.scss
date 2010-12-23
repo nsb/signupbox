@@ -1,0 +1,13 @@
+@import "sizes";
+@import "colors";
+
+body {
+  background-color: $color4;
+}
+
+#page {
+  margin: 0 auto;
+  width: 760px;
+  background-color: $color0;
+  border: solid 2px $color3;
+}

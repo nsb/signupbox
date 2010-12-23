@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load compress %}
+{% block css %}
+  <link href='http://fonts.googleapis.com/css?family=Molengo' rel='stylesheet' type='text/css'>
+  {% compress css %}
+  {{ block.super }}
+  <link rel="stylesheet" href="{{ MEDIA_URL }}css/global.scss" type="text/css">
+  <link rel="stylesheet" href="{{ MEDIA_URL }}css/public_page.scss" type="text/css">
+  {% endcompress %}
+{% endblock css %}
+
+{% block page %}
+  <div id="page">
+    <div id="header">
+      {% block header %}
+      {% endblock header %}
+    </div>
+    <div id="main">
+      {% if messages %}
+      <ul class="messages">
+          {% for message in messages %}
+          <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+          {% endfor %}
+      </ul>
+      {% endif %}
+      {% block main %}{% endblock main %}
+    </div>
+  </div>
+  <div id="modal"></div>
+{% endblock page %}
+
+{% block javascript %}
+  {{ block.super }}
+{% endblock javascript %}
