@@ -1,0 +1,4 @@
+{% extends "signupbox/event_detail_base.html" %}
+{% load i18n %}
+
+{% block nav1 %}<a href="{% url event_detail event.slug %}">{{ event.title }}</a>{% endblock nav1 %}

@@ -1,0 +1,14 @@
+{% extends "signupbox/appbase.html" %}
+{% load i18n %}
+
+{% block navigation %}
+<div class="{% block navclass %}{% endblock navclass %}">
+  <a href="{% url index %}">{% trans "My events" %}</a> &rsaquo;
+  {% block nav1 %}<span>{{ event.title }}</span>{% endblock nav1 %} &rsaquo;
+  <ul>
+    <li class="attendees"><div><a href="{% url event_attendees event.slug %}">{% trans "Attendees" %}</a></div></li>
+    <li class="tickets"><div><a href="">{% trans "Tickets" %}</a></div></li>
+    <li class="website"><div><a href="">{% trans "Website" %}</a></div></li>
+  </ul>
+</div>
+{% endblock navigation %}
