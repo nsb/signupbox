@@ -55,7 +55,10 @@
         position: relative;
         float: left;
         margin: 0 -.4em;
-        z-index: 1;
+
+        &:hover {
+          z-index: 2;
+        }
 
         > div {
           background: $color1 + $light;
@@ -80,27 +83,27 @@
             }
           }
         }
-
-        &.active {
-          z-index: 2;
-
-          > div {
-          background-color: $color0;
-
-            a {
-              color: $color1;
-
-              &:hover {
-                cursor: auto;
-              }
-            }
-
-          }
-        }
-
       }
-    }
 
+    }
+  }
+
+  .attendees .attendees {
+    z-index: 3;
+
+    > div {
+    background-color: $color0;
+
+      a {
+        color: $color1;
+      }
+
+      &:hover {
+        cursor: auto;
+        background-color: $color0;
+      }
+
+    }
   }
 
   .userbox {

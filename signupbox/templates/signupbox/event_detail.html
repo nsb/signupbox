@@ -1,16 +1,5 @@
-{% extends "signupbox/appbase.html" %}
+{% extends "signupbox/event_detail_base.html" %}
 {% load i18n %}
-
-{% block navigation %}
-  <a href="{% url index %}">{% trans "My events" %}</a> &rsaquo;
-  {% block nav1 %}<a href="{% url event_detail event.slug %}">{{ event.title }}</a>{% endblock nav1 %} &rsaquo;
-  <ul>
-    <li><div><a href="{% url event_attendees event.slug %}">{% trans "Attendees" %}</a></div></li>
-    <li class="active"><div><a href="">{% trans "Tickets" %}</a></div></li>
-    <li><div><a href="">{% trans "Website" %}</a></div></li>
-  </ul>
-
-{% endblock navigation %}
 
 {% block main %}
 <div class="headline indent">
