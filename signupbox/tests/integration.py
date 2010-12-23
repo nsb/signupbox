@@ -74,6 +74,7 @@ class IntegrationTestCase(test.TestCase):
         )
         self.failUnlessEqual(response.status_code, 200)
 
+        #Register for event
         fields = list(Event.objects.get(slug='mytitle').fields.all())
 
         data = {
