@@ -1,0 +1,13 @@
+{% extends "signupbox/public_base.html" %}
+{% load i18n %}
+
+{% block main %}
+
+<form action="{% url event_confirm event.slug booking.id %}" method="post">
+{% csrf_token %}
+  <div>
+    <input type="submit" value="{% trans "Confirm" %}" />
+  </div>
+</form>
+
+{% endblock main %}
