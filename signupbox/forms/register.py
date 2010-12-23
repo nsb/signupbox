@@ -3,7 +3,7 @@ from django.utils.functional import curry
 from django.forms.formsets import BaseFormSet, formset_factory
 
 from ..constants import *
-from ..models import Field, Ticket
+from ..models import Field, FieldValue, Ticket, Booking, Attendee
 
 FIELD_TYPES = {
     TEXT_FIELD: forms.CharField,

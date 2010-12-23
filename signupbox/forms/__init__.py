@@ -2,4 +2,4 @@
 from registration import RegistrationForm
 from event import EventForm
 from register import bookingform_factory
-__all__ = ["RegistrationForm", "EventForm",]
+__all__ = ["RegistrationForm", "EventForm", "bookingform_factory",]
