@@ -3,6 +3,20 @@
 
 {% block main %}
 
- Register
+<form action="{% url event_register event.slug %}" method="post">
+{% csrf_token %}
+{{ formset.management_form }}
+
+{% for form in formset.forms %}
+
+  <table>
+  {{ form }}
+  </table>
+
+{% endfor %}
+<div>
+  <input type="submit" value="{% trans "Continue" %}" />
+</div>
+</form>
 
 {% endblock main %}
