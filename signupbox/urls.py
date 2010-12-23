@@ -7,4 +7,5 @@ urlpatterns = patterns('signupbox.views',
     (r'^admin/(?P<slug>[-\w]+)/edit/$', 'event_edit', {}, 'event_edit',),
     (r'^admin/$', 'index', {}, 'index',),
     (r'^(?P<slug>[-\w]+)/$', 'event_site', {}, 'event_site',),
+    (r'^(?P<slug>[-\w]+)/register/$', 'event_register', {}, 'event_register',),
 )

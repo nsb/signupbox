@@ -61,3 +61,15 @@ class IntegrationTestCase(test.TestCase):
         self.assertFalse(Event.objects.filter(title='mytitle').exists())
         self.assertTrue(Event.objects.filter(title='mynewtitle').exists())
 
+        #Get the event site
+        response = self.client.get(
+            reverse('event_site', kwargs={'slug':'mytitle',}),
+            HTTP_HOST='myaccount.example.com'
+        )
+        self.failUnlessEqual(response.status_code, 200)
+
+        response = self.client.get(
+            reverse('event_register', kwargs={'slug':'mytitle',}),
+            HTTP_HOST='myaccount.example.com'
+        )
+        self.failUnlessEqual(response.status_code, 200)

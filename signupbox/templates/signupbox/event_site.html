@@ -13,6 +13,6 @@
   <h3>{% trans "Where" %}</h3>
   <p>{{ event.venue }}</p>
 
-  <h2><a href="">{% trans "Register" %}</a></h2>
+  <h2><a href="{% url event_register event.slug %}">{% trans "Register" %}</a></h2>
 
 {% endblock main %}

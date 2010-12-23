@@ -14,3 +14,13 @@ def event_site(request, slug, account):
         'signupbox/event_site.html',
         RequestContext(request, {'event':event}),
     )
+
+@with_account
+def event_register(request, slug, account):
+
+    event = get_object_or_404(Event, account=account, slug=slug)
+
+    return render_to_response(
+        'signupbox/event_register.html',
+        RequestContext(request, {'event':event}),
+    )
