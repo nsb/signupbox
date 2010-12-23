@@ -5,7 +5,7 @@
   <a href="">{% trans "My events" %}</a> &rsaquo;
   <a href="">{{ event.title }}</a> &rsaquo;
   <ul>
-    <li><div><a href="">{% trans "Attendees" %}</a></div></li>
+    <li><div><a href="{% url event_attendees event.slug %}">{% trans "Attendees" %}</a></div></li>
     <li class="active"><div><a href="">{% trans "Tickets" %}</a></div></li>
     <li><div><a href="">{% trans "Website" %}</a></div></li>
   </ul>
