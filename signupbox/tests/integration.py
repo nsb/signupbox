@@ -73,3 +73,33 @@ class IntegrationTestCase(test.TestCase):
             HTTP_HOST='myaccount.example.com'
         )
         self.failUnlessEqual(response.status_code, 200)
+
+        fields = list(Event.objects.get(slug='mytitle').fields.all())
+
+        data = {
+            # form management data
+            'form-INITIAL_FORMS': 0,
+            'form-TOTAL_FORMS': 3,
+            'form-MAX_NUM_FORMS': u'',
+            # first attendee
+            'form-0-' + fields[0].name: 'Niels Sandholt Busch',
+            'form-0-' + fields[2].name: 'niels@example.com',
+            #'form-0-ticket': tickets[0]['id'],
+            # empty form that should be ignored
+            'form-1-' + fields[0].name: '',
+            'form-1-' + fields[2].name: '',
+            #'form-1-ticket': '',
+            # second attendee
+            'form-2-' + fields[0].name: 'Ebbe Iversen',
+            'form-2-' + fields[2].name: 'ebbe@example.com',
+            #'form-2-ticket': tickets[0]['id'],
+        }
+
+        response = self.client.post(
+            reverse('event_register', kwargs={'slug':'mytitle',}),
+            data,
+            HTTP_HOST='myaccount.example.com'
+        )
+        self.failUnlessEqual(response.status_code, 302)
+        self.assertEquals(Event.objects.get(slug='mytitle').bookings.count(), 1) 
+        self.assertEquals(Event.objects.get(slug='mytitle').bookings.get().attendees.count(), 2)
