@@ -8,6 +8,7 @@
 </div>
 
   <h3 class="indent">{% trans "Upcoming events" %}</h3>
+  {% if events.upcoming %}
   <div class="event block upcoming">
     {% for event in events.upcoming %}
       <div class="event row {% cycle 'even' 'odd' %}">
@@ -20,17 +21,22 @@
         </div>
         <div class="column last">{{ event.get_status_display }}</div>
       </div>
-    {% empty %}
-      <div class="empty">{% trans "No upcoming events" %}</div>
     {% endfor %}
   </div>
+  {% else %}
+    <div class="empty">{% trans "No upcoming events" %}</div>
+  {% endif %}
 
   <h3 class="indent">{% trans "Recent activities" %}</h3>
+  {% if 0 %}
   <div class="activities block">
-    <div class="empty">{% trans "No recent activites" %}</div>
   </div>
+  {% else %}
+    <div class="empty">{% trans "No recent activites" %}</div>
+  {% endif %}
 
   <h3 class="indent">{% trans "Previous events" %}</h3>
+  {% if events.prvevious %}
   <div class="event block previous">
     {% for event in events.previous %}
       <div class="event row {% cycle 'even' 'odd' %}">
@@ -40,9 +46,10 @@
           {% blocktrans with event.attendee_count as attendee_count %}{{ attendee_count }} attendees{% endblocktrans %}
         </div>
       </div>
-    {% empty %}
-      <div class="empty">{% trans "No previous events" %}</div>
     {% endfor %}
   </div>
+  {% else %}
+    <div class="empty">{% trans "No previous events" %}</div>
+  {% endif %}
 
 {% endblock main %}
