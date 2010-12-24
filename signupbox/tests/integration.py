@@ -5,7 +5,7 @@ from django import test
 from django.test.client import Client
 from django.core.urlresolvers import reverse
 
-from ..models import Event
+from ..models import Event, Booking
 
 class IntegrationTestCase(test.TestCase):
     def setUp(self):
@@ -104,3 +104,15 @@ class IntegrationTestCase(test.TestCase):
         self.failUnlessEqual(response.status_code, 302)
         self.assertEquals(Event.objects.get(slug='mytitle').bookings.count(), 1) 
         self.assertEquals(Event.objects.get(slug='mytitle').bookings.get().attendees.count(), 2)
+
+        response = self.client.post(
+            reverse('event_confirm', kwargs={'slug':'mytitle', 'booking_id':Booking.objects.get().pk}),
+            {},
+            HTTP_HOST='myaccount.example.com'
+        )
+
+        response = self.client.get(
+            reverse('event_complete', kwargs={'slug':'mytitle',}),
+            HTTP_HOST='myaccount.example.com'
+        )
+        self.failUnlessEqual(response.status_code, 200)

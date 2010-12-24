@@ -54,5 +54,5 @@ def event_confirm(request, slug, booking_id, account,):
         )
 
 @with_account
-def event_complete(request, slug, booking_id, account,):
-    pass
+def event_complete(request, slug, account,):
+    return HttpResponse('hejsa')
