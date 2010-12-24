@@ -14,3 +14,7 @@ def event_attendees(request, slug):
         'signupbox/attendees.html',
         RequestContext(request, {'event':event,}),
     )
+
+@login_required
+def event_attendees_edit(request, slug, attendee_id):
+    pass

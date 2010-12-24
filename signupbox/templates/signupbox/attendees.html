@@ -9,11 +9,15 @@
   <h2>{% trans "Attendees" %}</h2>
 </div>
 
-<div class="indent">
-
-{% for attendee in event.confirmed_attendees %}
-  {{ attendee }}
-{% endfor %}
-
+<div class="attendee block">
+  {% for attendee in event.confirmed_attendees %}
+  <div class="row {% cycle 'even' 'odd' %}">
+    <div class="column checkbox"><input type="checkbox" /></div>
+    <div class="column"><a href="{% url event_attendees_edit event.slug attendee.id %}">{{ attendee }}</a></div>
+    <div class="column"><a href="">#{{ attendee.booking.id }}</a></div>
+    <div class="column last">{{ attendee.booking.timestamp|date }}</div>
+  </div>
+  {% endfor %}
 </div>
+
 {% endblock main %}
