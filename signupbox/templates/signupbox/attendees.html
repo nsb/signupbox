@@ -10,5 +10,10 @@
 </div>
 
 <div class="indent">
+
+{% for attendee in event.confirmed_attendees %}
+  {{ attendee }}
+{% endfor %}
+
 </div>
 {% endblock main %}

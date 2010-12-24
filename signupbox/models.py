@@ -182,8 +182,8 @@ class Event(models.Model):
         )
 
     @property
-    def attendee_count(self):
-        return Attendee.objects.confirmed(event=self).count()
+    def confirmed_attendees(self):
+        return Attendee.objects.confirmed(event=self)
 
     @property
     def website(self):
@@ -318,7 +318,7 @@ class Attendee(models.Model):
     objects = AttendeeManager()
 
     def __unicode__(self):
-        return self.display_value
+        return self.values.all()[0].value
 
 class FieldValue(models.Model):
     """
