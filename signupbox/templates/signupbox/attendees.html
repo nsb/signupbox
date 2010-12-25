@@ -9,19 +9,24 @@
   <h2>{% trans "Attendees" %}</h2>
 </div>
 
+<form action="{% url event_attendees event.slug %}" method="POST">
+{% csrf_token %}
+{{ form.action }}
 <div class="row">
+  <div class="column checkbox"><input type="checkbox" /></div>
   <span class="indent"><a href="">{% trans "export" %}</a></span>
   <span><a href="">{% trans "mail" %}</a></span>
 </div>
 <div class="attendee block">
   {% for attendee in event.confirmed_attendees %}
   <div class="row {% cycle 'even' 'odd' %}">
-    <div class="column checkbox"><input type="checkbox" /></div>
+    <div class="column checkbox"><input type="checkbox" name="attendees" /></div>
     <div class="column"><a href="{% url event_attendees_edit event.slug attendee.id %}">{{ attendee }}</a></div>
     <div class="column"><a href="">#{{ attendee.booking.id }}</a></div>
     <div class="column last">{{ attendee.booking.timestamp|date }}</div>
   </div>
   {% endfor %}
+</div>
 </div>
 
 {% endblock main %}
