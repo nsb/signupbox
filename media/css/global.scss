@@ -43,6 +43,21 @@ a {
     text-decoration: underline;
   }
 }
+.messages {
+
+  li {
+    line-height: 40px;
+    text-align: center;
+    color: $color2;
+
+    &.success {
+      background-color: $color4;
+      border-top: 1px solid $color3;
+      border-bottom: 1px solid $color3;
+    }
+  }
+
+}
 .box {
 
   .caret {
