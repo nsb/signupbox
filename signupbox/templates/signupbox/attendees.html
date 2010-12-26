@@ -13,7 +13,7 @@
 {% csrf_token %}
 {{ form.action }}
 <div class="row">
-  <div class="column checkbox"><input type="checkbox" /></div>
+  <div class="column checkbox"><input id="check-all" type="checkbox" /></div>
   <span class="indent"><a href="">{% trans "export" %}</a></span>
   <span><a href="">{% trans "mail" %}</a></span>
 </div>
