@@ -14,18 +14,25 @@
 }
 #attached-modal-container {
   position: absolute;
-  left: 0;
-  border: 1px solid $color3;
-  @include round;
-  @include shadow-light;
-  background-color: $color0;
-  padding: 30px 10px 0;
+  left: -21px;
   z-index: 200;
-  color: $color2;
 
-  .close.button {
-    position: absolute;
-    top: 0;
-    right: 10px;
+  .carat {
+    position: relative;
+    left: 30px;
+    width: 0;
+    height: 0;
+    border-width: 7px 9px;
+    border-color: transparent transparent $color0;
+    border-style: solid;
+    z-index: 201;
+  }
+
+  .content {
+    @include round;
+    @include shadow-light;
+    background-color: $color0;
+    padding: 10px 20px;
+    color: $color2;
   }
 }

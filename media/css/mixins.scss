@@ -29,15 +29,15 @@
   border-bottom-left-radius: 5px;
 }
 @mixin shadow-dark {
-  -moz-box-shadow: 2px 2px 2px #37414A - #181212;
-  -webkit-box-shadow: 2px 2px 3px #37414A - #181212;
-  box-shadow: 2px 2px 2px #37414A - #181212;
+  -moz-box-shadow: 2px 2px 10px #37414A - #181212;
+  -webkit-box-shadow: 2px 2px 10px #37414A - #181212;
+  box-shadow: 2px 2px 10px #37414A - #181212;
 }
 
 @mixin shadow-light {
-  -moz-box-shadow: 2px 2px 2px #D5E1DD - #181212;
-  -webkit-box-shadow: 2px 2px 3px #D5E1DD - #181212;
-  box-shadow: 2px 2px 2px #D5E1DD - #181212;
+  -moz-box-shadow: 2px 2px 10px #D5E1DD - #181212;
+  -webkit-box-shadow: 2px 2px 10px #D5E1DD - #181212;
+  box-shadow: 2px 2px 10px #D5E1DD - #181212;
 }
 
 @mixin gradient($color) {
