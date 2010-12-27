@@ -7,19 +7,17 @@
   }
 
   li {
+    position: relative;
     float: left;
   }
 
 }
 
-#attendees-export {
-  position: relative;
+#attendee-export-options {
+  min-width: 200px;
+  line-height: 40px;
 
-  .options {
-    min-width: 200px;
-
-    .submit {
-      border-top: 1px solid $color3;
-    }
+  .submit {
+    border-top: 1px solid $color3;
   }
 }

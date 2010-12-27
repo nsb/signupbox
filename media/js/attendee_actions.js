@@ -5,9 +5,8 @@
   }
 
   function onExportClicked(e) {
-    $S.Modal.showAttachedModal(e.target, $('#TemplateAttendeesExport').tmpl())
-    if ($(e.target).is('a'))
-      e.preventDefault();
+    $S.Modal.showAttachedModal($(e.target).parents('li'), $('#TemplateAttendeesExport').tmpl())
+    e.preventDefault();
   }
 
   $(function() {

@@ -12,10 +12,9 @@ Signupbox = {};
     var container = $('<div id="attached-modal-container"></div>').hide().
       append('<div class="carat"></div><div class="content"></div>').
           css("top", $(target).outerHeight() - 5).
-            click(function(e) { e.stopPropagation(); }).
-              find('.content').append(content).end().
-                find('.close').click(onCloseClicked).end().
-                  appendTo(target);
+            find('.content').append(content).end().
+              find('.close').click(onCloseClicked).end().
+                appendTo(target);
     overlay.add(container).fadeIn("fast");
   }
 
