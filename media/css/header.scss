@@ -69,7 +69,7 @@
           border-top-left-radius: 15px;
           border-top-right-radius: 15px;
 
-          @include shadow;
+          @include shadow-dark;
 
           a {
             display: block;

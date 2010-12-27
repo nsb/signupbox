@@ -17,6 +17,7 @@
   left: 0;
   border: 1px solid $color3;
   @include round;
+  @include shadow-light;
   background-color: $color0;
   padding: 10px;
   z-index: 200;

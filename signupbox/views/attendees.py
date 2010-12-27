@@ -3,7 +3,7 @@ from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
 
 from ..models import Event
-from ..forms import attendeeactionsform_factory
+from ..forms import attendeeactionsform_factory, AttendeesExportForm
 
 class AttendeeActions(object):
     def dispatch(self, request, attendees, action, event, **kwargs):
@@ -50,10 +50,11 @@ def event_attendees(request, slug):
             )
     else:
         form = form_class()
+        export_form = AttendeesExportForm()
 
     return render_to_response(
         'signupbox/attendees.html',
-        RequestContext(request, {'event':event, 'form':form,}),
+        RequestContext(request, {'event':event, 'form':form, 'export_form':export_form}),
     )
 
 @login_required

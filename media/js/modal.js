@@ -10,10 +10,12 @@ Signupbox = {};
   function showAttachedModal(target, content) {
     var overlay = $('<div id="attached-modal-overlay"></div>').hide().appendTo(target);
     var container = $('<div id="attached-modal-container"></div>').hide().
-        append(content).
+      append('<a class="close" href="#">close</a><div class="content"></div>').
           css("top", $(target).outerHeight()).
-            find('.close').click(onCloseClicked).end().
-              appendTo(target);
+            click(function() { return false; }). // prevent click event from bubbling up
+              find('.content').append(content).end().
+                find('.close').click(onCloseClicked).end().
+                  appendTo(target);
     overlay.add(container).fadeIn("fast");
   }
 

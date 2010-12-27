@@ -33,6 +33,11 @@
 
 {% block templates %}
 <script type="text/html" id="TemplateAttendeesExport">
-<div class="dropdown">hejsa<a class="close" href="#">close</a></div>
+  <div class="options">
+    <table>
+      {{ export_form }}
+    </table>
+    <div><input type="submit" value="{% trans "Export" %}" /> <a class="close" href="#">{% trans "Cancel" %}</a></div>
+  </div>
 </script>
 {% endblock templates %}
