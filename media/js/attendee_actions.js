@@ -6,7 +6,8 @@
 
   function onExportClicked(e) {
     $S.Modal.showAttachedModal(e.target, $('#TemplateAttendeesExport').tmpl())
-    e.preventDefault();
+    if ($(e.target).is('a'))
+      e.preventDefault();
   }
 
   $(function() {

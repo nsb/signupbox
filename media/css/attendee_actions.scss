@@ -1,7 +1,13 @@
+@import "colors";
+
 #attendees-export {
   position: relative;
 
   .options {
     min-width: 200px;
+
+    .submit {
+      border-top: 1px solid $color3;
+    }
   }
 }
