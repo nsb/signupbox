@@ -1,0 +1,25 @@
+@import "mixins";
+@import "colors";
+@import "sizes";
+
+#attached-modal-overlay {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  background-color: $color4;
+  opacity: 0.7;
+  z-index: 100;
+}
+#attached-modal-container {
+  position: absolute;
+  top: 20px;
+  left: 0;
+  border: 1px solid $color3;
+  @include round;
+  background-color: $color0;
+  padding: 10px;
+  z-index: 200;
+  color: $color2;
+}

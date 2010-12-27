@@ -6,10 +6,12 @@
   {% compress css %}
   {{ block.super }}
   <link rel="stylesheet" href="{{ MEDIA_URL }}css/global.scss" type="text/css">
+  <link rel="stylesheet" href="{{ MEDIA_URL }}css/modal.scss" type="text/css">
   <link rel="stylesheet" href="{{ MEDIA_URL }}css/forms.scss" type="text/css">
   <link rel="stylesheet" href="{{ MEDIA_URL }}css/page.scss" type="text/css">
   <link rel="stylesheet" href="{{ MEDIA_URL }}css/header.scss" type="text/css">
   <link rel="stylesheet" href="{{ MEDIA_URL }}css/main.scss" type="text/css">
+  <link rel="stylesheet" href="{{ MEDIA_URL }}css/attendee_actions.scss" type="text/css">
   {% endcompress %}
 {% endblock css %}
 
@@ -46,9 +48,14 @@
       {% block main %}{% endblock main %}
     </div>
   </div>
+  {% block templates %}{% endblock templates %}
 {% endblock page %}
 
 {% block javascript %}
   {{ block.super }}
-  <script type="text/javascript" src="{{ MEDIA_URL }}js/attendee_actions.js" ></script>
+  <script type="text/javascript" src="http://ajax.microsoft.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js" ></script>
+  {% compress js %}
+    <script type="text/javascript" src="{{ MEDIA_URL }}js/modal.js" ></script>
+    <script type="text/javascript" src="{{ MEDIA_URL }}js/attendee_actions.js" ></script>
+  {% endcompress %}
 {% endblock javascript %}

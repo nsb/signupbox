@@ -13,9 +13,9 @@
 {% csrf_token %}
 {{ form.action }}
 <div class="row">
-  <div class="column checkbox"><input id="check-all" type="checkbox" /></div>
-  <span class="indent"><a href="">{% trans "export" %}</a></span>
-  <span><a href="">{% trans "mail" %}</a></span>
+  <div class="column checkbox"><input id="attendees-check-all" type="checkbox" /></div>
+  <span id="attendees-export" class="indent"><a href="#">{% trans "export" %}</a></span>
+  <span><a href="#">{% trans "mail" %}</a></span>
 </div>
 <div class="attendee block">
   {% for attendee in event.confirmed_attendees %}
@@ -30,3 +30,9 @@
 </div>
 
 {% endblock main %}
+
+{% block templates %}
+<script type="text/html" id="TemplateAttendeesExport">
+<div class="dropdown">hejsa</div>
+</script>
+{% endblock templates %}
