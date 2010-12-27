@@ -1,5 +1,17 @@
 @import "colors";
 
+#attendee-actions {
+
+  > div, ul {
+    display: inline-block;
+  }
+
+  li {
+    float: left;
+  }
+
+}
+
 #attendees-export {
   position: relative;
 

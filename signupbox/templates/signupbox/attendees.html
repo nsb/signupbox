@@ -12,10 +12,12 @@
 <form action="{% url event_attendees event.slug %}" method="POST">
 {% csrf_token %}
 {{ form.action }}
-<div class="row">
-  <div class="column checkbox"><input id="attendees-check-all" type="checkbox" /></div>
-  <span id="attendees-export" class="indent"><a href="#">{% trans "export" %}</a></span>
-  <span><a href="#">{% trans "mail" %}</a></span>
+<div id="attendee-actions" class="indent">
+  <div class="indent checkbox"><input id="attendees-check-all" type="checkbox" /></div>
+  <ul class="indent">
+    <li id="attendees-export"><a href="#">{% trans "export" %}</a></li>
+    <li><a href="#">{% trans "mail" %}</a></li>
+  </ul>
 </div>
 <div class="attendee block">
   {% for attendee in event.confirmed_attendees %}
