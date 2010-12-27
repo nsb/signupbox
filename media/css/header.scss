@@ -10,12 +10,12 @@
   left: 0;
   right: 0;
   z-index: -1;
+  @include gradient($color1 - $dark);
 }
 #header {
   background-color: transparent;
   margin: 0 20px;
   position: relative;
-
   color: $color2;
   overflow: hidden;
   height: $header-height;
@@ -68,6 +68,8 @@
           -moz-border-radius-topright: 15px;
           border-top-left-radius: 15px;
           border-top-right-radius: 15px;
+
+          @include shadow;
 
           a {
             display: block;
