@@ -4,10 +4,11 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
 from django.http import HttpResponse
-from django.template.defaultfilters import capfirst
+from django.template.defaultfilters import date, floatformat, capfirst
+from django.utils.translation import ugettext, ugettext_lazy as _
 
 from ..constants import *
-from ..models import Event
+from ..models import Event, Booking
 from ..forms import attendeeactionsform_factory, AttendeesExportForm
 
 class AttendeeActions(object):
@@ -67,7 +68,7 @@ class AttendeeActions(object):
 
             writer.writerow(
                 [ugettext('Booking').encode('utf8'),
-                 event.display_label.encode('utf8'),
+                 event.fields.all()[0].label.encode('utf8'),
                  ugettext('Date and time').encode('utf8'),
                  ugettext('Ordernumber').encode('utf8'),
                  ugettext('Transaction').encode('utf8'),
@@ -81,7 +82,7 @@ class AttendeeActions(object):
             for b in bookings:
                 writer.writerow(
                     ['#%d' % b.id,
-                     b.registrations.order_by('id')[0].display_value.encode('utf8') if b.registrations.order_by('id')[0].display_value else None,
+                     str(b.attendees.order_by('id')[0]).encode('utf8') if b.attendees.order_by('id')[0] else None,
                      date(b.timestamp, "d/m/Y H:i"),
                      b.ordernum,
                      b.transaction,
