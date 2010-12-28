@@ -38,7 +38,7 @@ class AttendeesExportForm(forms.Form):
 
 def attendeeactionsform_factory(attendee_qs):
     class AttendeeActionsForm(forms.Form):
-        action = forms.CharField(widget=forms.HiddenInput)
+        action = forms.ChoiceField(choices=ACTION_CHOICES, widget=forms.Select(attrs={'disabled':'disabled'}))
         attendees = forms.ModelMultipleChoiceField(
             queryset=attendee_qs,
         )

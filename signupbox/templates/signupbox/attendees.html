@@ -10,39 +10,25 @@
 </div>
 
 <form action="{% url event_attendees event.slug %}" method="POST">
-{% csrf_token %}
-<div id="attendee-actions" class="indent">
-  <div class="indent checkbox"><input id="attendees-check-all" type="checkbox" /></div>
-  <ul class="indent">
-    <li><div id="attendees-export"><a href="#">{% trans "Export" %}</a></div></li>
-    <li><a href="#">{% trans "Mail" %}</a></li>
-    <li><a href="#">{% trans "Status" %}</a></li>
-  </ul>
-</div>
-<div class="attendee block">
-  {% for attendee in event.confirmed_attendees %}
-  <div class="row {% cycle 'even' 'odd' %}">
-    <div class="column checkbox"><input type="checkbox" name="attendees" value="{{ attendee.id }}" /></div>
-    <div class="column"><a href="{% url event_attendees_edit event.slug attendee.id %}">{{ attendee }}</a></div>
-    <div class="column"><a href="">#{{ attendee.booking.id }}</a></div>
-    <div class="column last">{{ attendee.booking.timestamp|date }}</div>
+  {% csrf_token %}
+  <input type="hidden" name="{{ step_field }}" value="{{ step0 }}" />
+  {{ previous_fields|safe }}
+
+  <div id="attendee-actions" class="indent">
+    <div class="indent checkbox"><input id="attendees-check-all" type="checkbox" /></div>
+    {{ form.action }}
+    <input type="submit" disabled="disabled" value="{% trans "Go" %}" />
   </div>
-  {% endfor %}
-</div>
-</div>
+  <div class="attendee block">
+    {% for attendee in event.confirmed_attendees %}
+    <div class="row {% cycle 'even' 'odd' %}">
+      <div class="column checkbox"><input type="checkbox" name="attendees" value="{{ attendee.id }}" /></div>
+      <div class="column"><a href="{% url event_attendees_edit event.slug attendee.id %}">{{ attendee }}</a></div>
+      <div class="column"><a href="">#{{ attendee.booking.id }}</a></div>
+      <div class="column last">{{ attendee.booking.timestamp|date }}</div>
+    </div>
+    {% endfor %}
+  </div>
+</form>
 
 {% endblock main %}
-
-{% block templates %}
-<script type="text/html" id="TemplateAttendeesExport">
-  <div id="attendee-export-options">
-    <table>
-      {{ export_form }}
-    </table>
-    <input type="hidden" name="action" value="export" />
-    <div class="submit">
-      <input type="submit" value="{% trans "Export" %}" /> {% trans "or" %} <a class="close" href="#">{% trans "cancel" %}</a>
-    </div>
-  </div>
-</script>
-{% endblock templates %}
