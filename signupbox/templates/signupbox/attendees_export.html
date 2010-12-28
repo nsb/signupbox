@@ -1,0 +1,25 @@
+{% extends "signupbox/event_sub_detail_base.html" %}
+{% load i18n %}
+
+{% block navclass %}attendees{% endblock navclass %}
+
+{% block main %}
+<div class="headline indent">
+  <h2>{% trans "Export attendee data" %}</h2>
+</div>
+
+<div class="indent">
+<form action="{% url event_attendees event.slug %}" method="POST">
+  {% csrf_token %}
+  <input type="hidden" name="{{ step_field }}" value="{{ step0 }}" />
+  {{ previous_fields|safe }}
+
+  <table>
+  {{ form }}
+  </table>
+  <input type="submit" value="{% trans "Export" %}">
+
+</form>
+</div>
+
+{% endblock main %}
