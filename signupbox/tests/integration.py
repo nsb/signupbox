@@ -149,6 +149,7 @@ class IntegrationTestCase(test.TestCase):
             HTTP_HOST=self.http_host,
         )
 
+    def testComplete(self):
         response = self.client.get(
             reverse('event_complete', kwargs={'slug':self.event.slug,}),
             HTTP_HOST=self.http_host,
