@@ -1,52 +1,57 @@
 # -*- coding: utf-8 -*-
-from datetime import date, timedelta
+from datetime import datetime, date, timedelta
 
 from django import test
 from django.test.client import Client
 from django.core.urlresolvers import reverse
+from django.contrib.auth.models import User
+from django.contrib.sites.models import Site
 
-from ..models import Event, Booking
+from ..models import Account, Event, Booking
 
 class IntegrationTestCase(test.TestCase):
     def setUp(self):
-        pass
+        self.username, self.email, self.password = 'myusername', 'myemail@example.com', 'mypassword'
+        self.account = Account.objects.create(name='myaccount')
+        self.user = User.objects.create_user(self.username, self.email, self.password,)
+        self.account.users.add(self.user)
+
+        self.event = Event.objects.create(
+            account=self.account,
+            title='mytitle',
+            begins=datetime.today() + timedelta(days=7),
+            ends=datetime.today() + timedelta(days=8),
+        )
+
+        self.http_host = '.'.join((self.account.name, Site.objects.get_current().domain))
 
     def tearDown(self):
-        pass
+        self.user.delete()
+        self.account.delete()
 
-    def testSignupbox(self):
+    def testSignup(self):
 
         #Integration tests
 
         #Signup
         response = self.client.post(
             reverse('signup',),
-            {'accountname':'myaccount', 'email':'myemail@example.com', 'password':'mypassword', 'password2':'mypassword',}
+            {'accountname':'myotheraccount', 'email':'myotheremail@example.com', 'password':'mypassword', 'password2':'mypassword',}
         )
         self.failUnlessEqual(response.status_code, 302)
 
+    def testDashboard(self):
+        logged_in = self.client.login(username=self.username, password=self.password)
         response = self.client.get(reverse('index'))
         self.failUnlessEqual(response.status_code, 200)
+
+    def testCreateEvent(self):
+
+        self.client.login(username=self.username, password=self.password)
 
         #Create an event
         response = self.client.post(
             reverse('event_create'), 
-            {
-                'title':'mytitle',
-                'begins_0':date.today() + timedelta(days=7),
-                'begins_1_0':'9',
-                'begins_1_1':'00',
-                'ends_0': date.today() + timedelta(days=7),
-                'ends_1_0':'16',
-                'ends_1_1':'00',
-            },
-        )
-        self.failUnlessEqual(response.status_code, 302)
-        self.assertTrue(Event.objects.filter(title='mytitle').exists())
-
-        #Edit the event
-        response = self.client.post(
-            reverse('event_edit', kwargs={'slug':'mytitle'},), 
             {
                 'title':'mynewtitle',
                 'begins_0':date.today() + timedelta(days=7),
@@ -58,24 +63,57 @@ class IntegrationTestCase(test.TestCase):
             },
         )
         self.failUnlessEqual(response.status_code, 302)
-        self.assertFalse(Event.objects.filter(title='mytitle').exists())
         self.assertTrue(Event.objects.filter(title='mynewtitle').exists())
 
-        #Get the event site
+    def testEditEvent(self):
+
+        self.client.login(username=self.username, password=self.password)
+
+        #Edit the event
+        response = self.client.post(
+            reverse('event_edit', kwargs={'slug':self.event.slug},), 
+            {
+                'title':'mynewtitle',
+                'begins_0':date.today() + timedelta(days=7),
+                'begins_1_0':'9',
+                'begins_1_1':'00',
+                'ends_0': date.today() + timedelta(days=7),
+                'ends_1_0':'16',
+                'ends_1_1':'00',
+            },
+        )
+        self.failUnlessEqual(response.status_code, 302)
+        self.assertFalse(Event.objects.filter(title=self.event.title).exists())
+        self.assertTrue(Event.objects.filter(title='mynewtitle').exists())
+
+    def testAttendees(self):
+        self.client.login(username=self.username, password=self.password)
+
         response = self.client.get(
-            reverse('event_site', kwargs={'slug':'mytitle',}),
-            HTTP_HOST='myaccount.example.com'
+            reverse('event_attendees', kwargs={'slug':self.event.slug,}),
         )
         self.failUnlessEqual(response.status_code, 200)
 
+
+    def testEventSite(self):
+
+        #Get the event site
         response = self.client.get(
-            reverse('event_register', kwargs={'slug':'mytitle',}),
-            HTTP_HOST='myaccount.example.com'
+            reverse('event_site', kwargs={'slug':self.event.slug,}),
+            HTTP_HOST=self.http_host
+        )
+        self.failUnlessEqual(response.status_code, 200)
+
+    def testEventRegister(self):
+
+        response = self.client.get(
+            reverse('event_register', kwargs={'slug':self.event.slug,}),
+            HTTP_HOST=self.http_host,
         )
         self.failUnlessEqual(response.status_code, 200)
 
         #Register for event
-        fields = list(Event.objects.get(slug='mytitle').fields.all())
+        fields = list(Event.objects.get(slug=self.event.slug).fields.all())
 
         data = {
             # form management data
@@ -97,22 +135,22 @@ class IntegrationTestCase(test.TestCase):
         }
 
         response = self.client.post(
-            reverse('event_register', kwargs={'slug':'mytitle',}),
+            reverse('event_register', kwargs={'slug':self.event.slug,}),
             data,
-            HTTP_HOST='myaccount.example.com'
+            HTTP_HOST=self.http_host,
         )
         self.failUnlessEqual(response.status_code, 302)
-        self.assertEquals(Event.objects.get(slug='mytitle').bookings.count(), 1) 
-        self.assertEquals(Event.objects.get(slug='mytitle').bookings.get().attendees.count(), 2)
+        self.assertEquals(Event.objects.get(slug=self.event.slug).bookings.count(), 1) 
+        self.assertEquals(Event.objects.get(slug=self.event.slug).bookings.get().attendees.count(), 2)
 
         response = self.client.post(
-            reverse('event_confirm', kwargs={'slug':'mytitle', 'booking_id':Booking.objects.get().pk}),
+            reverse('event_confirm', kwargs={'slug':self.event.slug, 'booking_id':Booking.objects.get().pk}),
             {},
-            HTTP_HOST='myaccount.example.com'
+            HTTP_HOST=self.http_host,
         )
 
         response = self.client.get(
-            reverse('event_complete', kwargs={'slug':'mytitle',}),
-            HTTP_HOST='myaccount.example.com'
+            reverse('event_complete', kwargs={'slug':self.event.slug,}),
+            HTTP_HOST=self.http_host,
         )
         self.failUnlessEqual(response.status_code, 200)
