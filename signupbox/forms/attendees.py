@@ -36,6 +36,11 @@ class AttendeesExportForm(forms.Form):
         coerce=lambda x: int(x),
     )
 
+class AttendeesEmailForm(forms.Form):
+    subject = forms.CharField(label=_('Subject'))
+    message = forms.CharField(label=_('Message'), widget=forms.Textarea)
+    receive_copy = forms.BooleanField(label=_('Send copy to self?'), initial=False, required=False)
+
 def attendeeactionsform_factory(attendee_qs):
     class AttendeeActionsForm(forms.Form):
         action = forms.ChoiceField(choices=ACTION_CHOICES, widget=forms.Select(attrs={'disabled':'disabled'}))

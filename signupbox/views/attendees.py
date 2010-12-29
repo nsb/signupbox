@@ -6,11 +6,11 @@ from django.template import RequestContext
 from django.http import HttpResponse
 from django.template.defaultfilters import date, floatformat, capfirst
 from django.utils.translation import ugettext, ugettext_lazy as _
-from django.contrib.formtools.wizard import FormWizard
 
+from ..wizard import FormWizard
 from ..constants import *
 from ..models import Event, Booking
-from ..forms import attendeeactionsform_factory, AttendeesExportForm
+from ..forms import attendeeactionsform_factory, AttendeesExportForm, AttendeesEmailForm
 
 class AttendeeActions(object):
     def dispatch(self, request, attendees, action, event, **kwargs):
@@ -100,33 +100,15 @@ class AttendeesActionWizard(FormWizard):
 
     def parse_params(self, request, *args, **kwargs):
 
-        account=request.user.accounts.get()
+        account = request.user.accounts.get()
         self.event = get_object_or_404(Event, account=account, slug=kwargs['slug'])
-
-        #query = request.GET.copy()
-        #if not 'show' in query:
-            #query['show'] = 'confirmed'
-
-        #self.filter_form = RegistrationListFilterForm(query)
-        #if self.filter_form.is_valid():
-            #show = self.filter_form.cleaned_data['show']
-            #find = self.filter_form.cleaned_data['find']
-
-            #if show:
-                #qs = qs.filter(status=show)
-            #if find:
-                #qs = qs.filter(registrationdata__value__icontains=find).distinct()
-
-        attendees = self.event.confirmed_attendees.all()
-
-        self.form_list = [attendeeactionsform_factory(attendees), AttendeesExportForm]
 
     def get_template(self, step):
         if step == 0:
             return 'signupbox/attendees.html'
         else:
             if self.action == 'email':
-                return 'event/registration_email.html'
+                return 'signupbox/attendees_email.html'
             elif self.action == 'export':
                 return 'signupbox/attendees_export.html'
 
@@ -145,7 +127,7 @@ class AttendeesActionWizard(FormWizard):
             self.attendees = form.cleaned_data['attendees']
 
             if self.action == 'email':
-                self.form_list = [self.form_list[0], RegistrationEmailForm]
+                self.form_list = [self.form_list[0], AttendeesEmailForm]
             elif self.action == 'export':
                 self.form_list = [self.form_list[0], AttendeesExportForm]
             else:
@@ -157,6 +139,30 @@ class AttendeesActionWizard(FormWizard):
             extra_args.update(form_list[1].cleaned_data)
 
         return AttendeeActions().dispatch(request, self.attendees, self.action, self.event, **extra_args)
+
+@login_required
+def event_attendees(request, slug,):
+
+        account=request.user.accounts.get()
+        event = get_object_or_404(Event, account=account, slug=slug)
+
+        #query = request.GET.copy()
+        #if not 'show' in query:
+            #query['show'] = 'confirmed'
+
+        #self.filter_form = RegistrationListFilterForm(query)
+        #if self.filter_form.is_valid():
+            #show = self.filter_form.cleaned_data['show']
+            #find = self.filter_form.cleaned_data['find']
+
+            #if show:
+                #qs = qs.filter(status=show)
+            #if find:
+                #qs = qs.filter(registrationdata__value__icontains=find).distinct()
+
+        attendees = event.confirmed_attendees.all()
+
+        return AttendeesActionWizard([attendeeactionsform_factory(attendees), None])(request, slug=slug)
 
 @login_required
 def event_attendees_edit(request, slug, attendee_id):
