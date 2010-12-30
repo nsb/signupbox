@@ -9,30 +9,27 @@
 <div class="indent">
 
   <div class="box">
-    <div class="caret"></div>
-    <div class="box-content">
-      <ul>
-        <li><strong>{% trans "Date" %}:</strong> {{ event.date_formatted }}</li>
-        <li><strong>{% trans "Venue" %}:</strong> {{ event.venue }}</li>
-        <li>
-          <strong>{% trans "Capacity" %}:</strong>
-          {% if event.capacity %}
-            {{ event.capacity }}
-          {% else %}
-            {% trans "Unlimited" %}
-          {% endif %}
-          {% if event.confirmed_attendees.count %}
-            ({% blocktrans count attendee_count=event.confirmed_attendees.count %}
-              <strong>{{ attendee_count }}</strong> attendee
-              {% plural %}
-              <strong>{{ attendee_count }}</strong> attendees
-            {% endblocktrans %})
-          {% endif %}
-        </li>
-        <li><strong>{% trans "Website" %}:</strong> <a href="{{ event.website }}">{{ event.website }}</a></li>
-      </ul>
-      <div><a href="{% url event_edit event.slug %}">{% trans "Edit event" %}</a></div>
-    </div>
+    <ul>
+      <li><strong>{% trans "Date" %}:</strong> {{ event.date_formatted }}</li>
+      <li><strong>{% trans "Venue" %}:</strong> {{ event.venue }}</li>
+      <li>
+        <strong>{% trans "Capacity" %}:</strong>
+        {% if event.capacity %}
+          {{ event.capacity }}
+        {% else %}
+          {% trans "Unlimited" %}
+        {% endif %}
+        {% if event.confirmed_attendees.count %}
+          ({% blocktrans count attendee_count=event.confirmed_attendees.count %}
+            <strong>{{ attendee_count }}</strong> attendee
+            {% plural %}
+            <strong>{{ attendee_count }}</strong> attendees
+          {% endblocktrans %})
+        {% endif %}
+      </li>
+      <li><strong>{% trans "Website" %}:</strong> <a href="{{ event.website }}">{{ event.website }}</a></li>
+    </ul>
+    <div><a href="{% url event_edit event.slug %}">{% trans "Edit event" %}</a></div>
   </div>
 
 </div>

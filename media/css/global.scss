@@ -58,31 +58,3 @@ a {
   }
 
 }
-.box {
-
-  .caret {
-    border-style: solid;
-    margin-left: 40px;
-    border-color: #FFF #FFF $color3 $color3;
-    border-width: 7px 10px;
-    height: 0;
-    width: 0;
-    line-height: 0;
-  }
-
-  .box-content {
-    min-width: 300px;
-    font-size: 116%;
-    @include round;
-    padding: 20px;
-    display: inline-block;
-    background-color: $color3;
-    line-height: 2em;
-
-    li {
-      list-style: square inside;
-    }
-
-  }
-
-}

@@ -103,4 +103,19 @@
     }
 
   }
+
+  .box {
+    min-width: 300px;
+    font-size: 116%;
+    @include round;
+    padding: 20px;
+    display: inline-block;
+    background-color: $color3;
+    line-height: 2em;
+
+    li {
+      list-style: square inside;
+    }
+  }
+
 }
