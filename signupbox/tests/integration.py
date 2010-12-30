@@ -113,6 +113,25 @@ class AdminTestCase(BaseTestCase):
         )
         self.failUnlessEqual(response.status_code, 200)
 
+    def testAttendeeEdit(self):
+        self.client.login(username=self.username, password=self.password)
+
+        response = self.client.get(
+            reverse('event_attendees_edit', kwargs={'slug':self.event.slug, 'attendee_id':self.attendee.pk,}),
+        )
+        self.failUnlessEqual(response.status_code, 200)
+
+        fields = list(self.event.fields.all())
+
+        response = self.client.post(
+            reverse('event_attendees_edit', kwargs={'slug':self.event.slug, 'attendee_id':self.attendee.pk,},), 
+            {
+                fields[0].name: 'Niels Sandholt Busch',
+                fields[2].name: 'niels@example.com',
+            },
+        )
+        self.failUnlessEqual(response.status_code, 302)
+        self.assertTrue(self.attendee.values.filter(value='Niels Sandholt Busch').exists())
 
     def testAttendeesExport(self):
         self.client.login(username=self.username, password=self.password)
