@@ -9,9 +9,9 @@
 
 {% for form in formset.forms %}
 
-  <table>
-  {{ form }}
-  </table>
+  {% for field in form %}
+    {% include "signupbox/includes/field.html" %}
+  {% endfor %}
 
 {% endfor %}
 <div>
