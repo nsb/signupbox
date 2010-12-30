@@ -17,7 +17,10 @@ def event_fields(request, slug):
     if request.method == 'POST':
         formset = FieldFormset(request.POST, queryset=event.fields.all())
         if formset.is_valid():
-            fields = formset.save()
+            fields = formset.save(commit=False)
+            for field in fields:
+                field.event = event
+                field.save()
             messages.success(request, _('Form fields updated.'))
             return redirect(reverse('event_detail', kwargs={'slug':slug}))
     else:
@@ -25,5 +28,5 @@ def event_fields(request, slug):
 
     return render_to_response(
         'signupbox/event_fields.html',
-        RequestContext(request, {'event':event, 'formset':formset, 'empty_form':formset.empty_form}),
+        RequestContext(request, {'event':event, 'formset':formset,}),
     )

@@ -12,26 +12,14 @@
   <form action="{% url event_fields event.slug %}" method="POST">
     {% csrf_token %}
     {{ formset.management_form }}
-    {% for form in formset.forms %}
-      {% for field in form.hidden_fields %}
-        {{ field }}
-      {% endfor %}
-    {% endfor %}
 
-    {% for form in formset %}
-    <div class="block field">
-      <div class="row">
-      {% for field in form.visible_fields %}
-        <span class="column{% if forloop.last %} last{% endif %}">{{ field.label }}</span>
+    <div id="fields">
+      {% for form in formset %}
+        {% include "signupbox/includes/fields_form.html" %}
       {% endfor %}
-      </div>
-      <div class="row">
-      {% for field in form.visible_fields %}
-        <span class="column{% if forloop.last %} last{% endif %}">{{ field }}</span>
-      {% endfor %}
-      </div>
     </div>
-    {% endfor %}
+
+    <div id="add-field"><a href="#">{% trans "Add field" %}</a></div>
 
     <div><input type="submit" value="{% trans "Save" %}" /></div>
   </form>
@@ -41,6 +29,8 @@
 
 {% block templates %}
 <script type="text/html" id="TemplateFieldsAdd">
-{{ empty_form }}
+{% with formset.empty_form as form %}
+  {% include "signupbox/includes/fields_form.html" %}
+{% endwith %}
 </script>
 {% endblock templates %}

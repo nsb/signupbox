@@ -4,7 +4,7 @@ from django.forms.models import modelformset_factory
 from ..models import Field
 
 class FieldsForm(forms.ModelForm):
-    ordering = forms.IntegerField(widget=forms.HiddenInput)
+    ordering = forms.IntegerField(required=False, widget=forms.HiddenInput)
 
     class Meta:
         model = Field

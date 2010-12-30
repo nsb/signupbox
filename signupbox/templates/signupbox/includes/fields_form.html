@@ -1,0 +1,15 @@
+<div class="block field">
+  {% for field in form.hidden_fields %}
+    {{ field }}
+  {% endfor %}
+  <div class="row">
+  {% for field in form.visible_fields %}
+    <div class="column{% if forloop.last %} last{% endif %}">{{ field.label }} {{ field.errors }}</div>
+  {% endfor %}
+  </div>
+  <div class="row">
+  {% for field in form.visible_fields %}
+    <div class="column{% if forloop.last %} last{% endif %}">{{ field }}</div>
+  {% endfor %}
+  </div>
+</div>
