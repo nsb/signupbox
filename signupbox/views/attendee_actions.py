@@ -42,7 +42,7 @@ class AttendeeActions(object):
 
         writer = csv.writer(response)
 
-        if data == REGISTRATION_DATA:
+        if data == ATTENDEE_DATA:
 
             # attendee data
 

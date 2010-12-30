@@ -6,10 +6,15 @@ from django.test.client import Client
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
+from django.http import QueryDict
+from django.contrib.formtools.utils import security_hash
+from django.utils.http import urlencode
 
-from ..models import Account, Event, Booking
+from ..constants import *
+from ..models import Account, Event, Booking, Attendee
+from ..forms import attendeeactionsform_factory
 
-class IntegrationTestCase(test.TestCase):
+class BaseTestCase(test.TestCase):
     def setUp(self):
         self.username, self.email, self.password = 'myusername', 'myemail@example.com', 'mypassword'
         self.account = Account.objects.create(name='myaccount')
@@ -29,6 +34,8 @@ class IntegrationTestCase(test.TestCase):
         self.user.delete()
         self.account.delete()
 
+class SignupTestCase(test.TestCase):
+
     def testSignup(self):
 
         #Integration tests
@@ -39,6 +46,18 @@ class IntegrationTestCase(test.TestCase):
             {'accountname':'myotheraccount', 'email':'myotheremail@example.com', 'password':'mypassword', 'password2':'mypassword',}
         )
         self.failUnlessEqual(response.status_code, 302)
+
+class AdminTestCase(BaseTestCase):
+    def setUp(self):
+        super(AdminTestCase, self).setUp()
+        self.booking = Booking.objects.create(event=self.event, confirmed=True)
+        self.attendee = Attendee.objects.create(
+            booking=self.booking, ticket=self.event.tickets.get()
+        )
+
+    def tearDown(self):
+        self.booking.delete()
+        super(AdminTestCase, self).tearDown()
 
     def testDashboard(self):
         logged_in = self.client.login(username=self.username, password=self.password)
@@ -94,6 +113,41 @@ class IntegrationTestCase(test.TestCase):
         )
         self.failUnlessEqual(response.status_code, 200)
 
+
+    def testAttendeesExport(self):
+        self.client.login(username=self.username, password=self.password)
+
+        response = self.client.post(
+            reverse('event_attendees', kwargs={'slug':self.event.slug,}),
+            {
+                'wizard-step': 0,
+                '0-action':'export',
+                '0-attendees': self.attendee.id,
+            },
+        )
+        self.failUnlessEqual(response.status_code, 200)
+
+        hash_data = {
+            'action':'export',
+            'attendees': self.attendee.pk,
+        }
+
+        wizard_form_class = attendeeactionsform_factory(self.event.confirmed_attendees.all())
+
+        response = self.client.post(
+            reverse('event_attendees', kwargs={'slug':self.event.slug,}),
+            {
+                'wizard-step': 1,
+                '0-action':'export',
+                '0-attendees': self.attendee.pk,
+                'hash_0': security_hash(None, wizard_form_class(QueryDict(urlencode(hash_data)))),
+                '1-format': CSV_EXPORT,
+                '1-data': ATTENDEE_DATA,
+            },
+        )
+        self.failUnlessEqual(response.status_code, 200)
+
+class EventSiteTestCase(BaseTestCase):
 
     def testEventSite(self):
 

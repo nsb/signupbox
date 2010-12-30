@@ -318,7 +318,8 @@ class Attendee(models.Model):
     objects = AttendeeManager()
 
     def __unicode__(self):
-        return self.values.all()[0].value
+        # TODO: fix
+        return self.values.all()[0].value if self.values.count() else ''
 
 class FieldValue(models.Model):
     """

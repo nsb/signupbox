@@ -18,7 +18,7 @@ FORMAT_CHOICES = (
 )
 
 DATA_CHOICES = (
-    (REGISTRATION_DATA, _('Attendee data')),
+    (ATTENDEE_DATA, _('Attendee data')),
     (BOOKING_DATA, _('Booking data')),
 )
 
