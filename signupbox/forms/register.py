@@ -23,7 +23,7 @@ def attendeeform_factory(fields_qs, ticket_qs, is_extra, instance=None):
     if is_extra:
         fields_qs = fields_qs.filter(in_extra=True)
 
-    def _save(self, booking):
+    def _save(self, booking=None):
 
         fields = dict((field.name, field) for field in fields_qs)
 
