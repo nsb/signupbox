@@ -1,7 +1,7 @@
 label {
   width: 12em;
 }
-.required label, label.required {
+.required label, label.required, div.required {
   font-weight: bold;
 }
 input[type=text], input[type=email], input[type=password] {

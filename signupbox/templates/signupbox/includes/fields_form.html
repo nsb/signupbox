@@ -4,7 +4,10 @@
   {% endfor %}
   <div class="row">
   {% for field in form.visible_fields %}
-    <div class="column{% if forloop.last %} last{% endif %}">{{ field.label }} {{ field.errors }}</div>
+    <div class="column{% if forloop.last %} last{% endif %}{% if field.field.required %} required{% endif %}">
+      {{ field.label }}
+      {{ field.errors }}
+    </div>
   {% endfor %}
   </div>
   <div class="row">
