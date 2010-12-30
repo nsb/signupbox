@@ -14,3 +14,12 @@ input[type=text], input[type=email], input[type=password], textarea {
 .datetime input, input.datetime {
   width: 6em;
 }
+.fieldWrapper {
+  line-height: 30px;
+  margin-bottom: 1em;
+  overflow: hidden;
+
+  label, > div {
+    float: left;
+  }
+}
