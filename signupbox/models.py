@@ -266,7 +266,7 @@ class Field(models.Model):
     type = models.CharField(max_length=255, choices=FIELD_TYPE_CHOICES, verbose_name=_('Type'))
     required = models.BooleanField(default=False, verbose_name=_('Required'))
     in_extra = models.BooleanField(default=False, verbose_name=_('In extra forms'))
-    ordering = models.IntegerField(blank=True)
+    ordering = models.IntegerField()
     name = models.CharField(max_length=36, blank=True)
 
     def __unicode__(self):
@@ -278,7 +278,7 @@ class Field(models.Model):
             self.name = uuid.uuid4()
 
         if not self.ordering:
-            self.ordering = Field.objects.filter(event=self.event).aggregate(Max('ordering'))['ordering__max'] or 0 + 1
+            self.ordering = (Field.objects.filter(event=self.event).aggregate(Max('ordering'))['ordering__max'] or 0) + 1
 
         super(Field, self).save(*args, **kwargs)
 
@@ -299,6 +299,30 @@ class AttendeeManager(models.Manager):
         qs = self.filter(booking__event=event) if event else self.all()
         return self.filter(status=ATTENDEE_CANCELLED, booking__confirmed=True)
 
+    def get_query_set(self):
+        """
+        add display_value and email attributes to attendee queryset objects
+
+        """
+        return super(AttendeeManager, self).get_query_set().extra(
+            select={
+                'display_value':
+                """
+                SELECT value from signupbox_fieldvalue, signupbox_field WHERE
+                signupbox_fieldvalue.attendee_id = signupbox_attendee.id AND
+                signupbox_fieldvalue.field_id = signupbox_field.id AND
+                signupbox_field.ordering = 1
+                """,
+                'email':
+                """
+                SELECT value from signupbox_fieldvalue, signupbox_field WHERE
+                signupbox_fieldvalue.attendee_id = signupbox_attendee.id AND
+                signupbox_fieldvalue.field_id = signupbox_field.id AND
+                signupbox_field.type = '%s'
+                """ % EMAIL_FIELD
+            }
+        )
+
 ATTENDEE_STATUS_CHOICES = (
     ( ATTENDEE_CONFIRMED, _('Confirmed')),
     ( ATTENDEE_UNCONFIRMED, _('Unconfirmed')),
@@ -318,8 +342,13 @@ class Attendee(models.Model):
     objects = AttendeeManager()
 
     def __unicode__(self):
-        # TODO: fix
-        return self.values.all()[0].value if self.values.count() else ''
+        try:
+            return self.display_value
+        except ValueError:
+            try:
+                return self.values.all()[0].value
+            except KeyError:
+                return ''
 
 class FieldValue(models.Model):
     """
