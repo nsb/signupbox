@@ -5,10 +5,10 @@ label {
   font-weight: bold;
 }
 input[type=text], input[type=email], input[type=password] {
-  width: 26em;
   height: 26px;
 }
 input[type=text], input[type=email], input[type=password], textarea {
+  width: 26em;
   padding: 2px 10px;
 }
 .datetime input, input.datetime {
