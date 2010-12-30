@@ -10,14 +10,7 @@
   <form action="{% url event_edit event.slug %}" method="POST">
     {% csrf_token %}
     {% for field in form %}
-      <div class="fieldWrapper{% if field.field.required %} required{% endif %}">
-        {{ field.errors }}
-        {{ field.label_tag }}
-        <div>
-          {{ field }}
-          <div class="quiet">{{ field.help_text }}</div>
-        </div>
-      </div>
+      {% include "signupbox/includes/field.html" %}
     {% endfor %}
     <div>
       <input type="submit" value="{% trans "Update" %}" />

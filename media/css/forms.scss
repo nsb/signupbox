@@ -19,7 +19,11 @@ input[type=text], input[type=email], input[type=password], textarea {
   margin-bottom: 1em;
   overflow: hidden;
 
-  label, > div {
+  label, .input {
     float: left;
+  }
+
+  .error {
+    margin-left: 12em;
   }
 }

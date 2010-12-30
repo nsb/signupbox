@@ -18,5 +18,7 @@ input[type=text], input[type=email], input[type=password], textarea {
   line-height: 30px;
   margin-bottom: 1em;
   overflow: hidden; }
-  .fieldWrapper label, .fieldWrapper > div {
+  .fieldWrapper label, .fieldWrapper .input {
     float: left; }
+  .fieldWrapper .error {
+    margin-left: 12em; }
