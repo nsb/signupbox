@@ -1,8 +1,7 @@
 label {
-  float: left;
   width: 12em; }
 
-.required label {
+.required label, label.required {
   font-weight: bold; }
 
 input[type=text], input[type=email], input[type=password] {
@@ -12,27 +11,5 @@ input[type=text], input[type=email], input[type=password] {
 input[type=text], input[type=email], input[type=password], textarea {
   padding: 2px 10px; }
 
-.input-container {
-  overflow: hidden;
-  line-height: 30px;
-  margin: 1em 0; }
-  .input-container li label {
-    width: auto; }
-  .input-container.inline > div {
-    float: left; }
-    .input-container.inline > div > div {
-      margin-right: 30px; }
-    .input-container.inline > div input[type=text], .input-container.inline > div input[type=phone], .input-container.inline > div input[type=email] {
-      width: 15em; }
-    .input-container.inline > div label {
-      width: auto; }
-  .input-container .option input {
-    width: 10em;
-    margin-left: 15px; }
-
-.datetime input[type=text] {
+.datetime input, input.datetime {
   width: 6em; }
-
-.submit-line {
-  float: right;
-  margin-top: 5px; }

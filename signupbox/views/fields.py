@@ -24,5 +24,6 @@ def event_fields(request, slug):
         formset = FieldFormset(queryset=event.fields.all())
 
     return render_to_response(
-        'signupbox/event_fields.html', RequestContext(request, {'event':event, 'formset':formset}),
+        'signupbox/event_fields.html',
+        RequestContext(request, {'event':event, 'formset':formset, 'empty_form':formset.empty_form}),
     )

@@ -96,7 +96,7 @@ class DateTimeWidget(MultiWidget):
     """
     def __init__(self, *args, **kwargs):
         widgets = (
-            forms.DateInput(attrs={'class':'datepicker', 'autocomplete':'off'}),
+            forms.DateInput(attrs={'class':'datetime', 'autocomplete':'off'}),
             TimeSelectWidget,
         )
         super(DateTimeWidget, self).__init__(widgets, *args, **kwargs)

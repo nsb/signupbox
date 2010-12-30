@@ -5,8 +5,8 @@ from widgets import DateTimeField, DateTimeWidget
 from django.utils.translation import ugettext, ugettext_lazy as _
 
 class EventForm(forms.ModelForm):
-    begins = DateTimeField(widget=DateTimeWidget)
-    ends = DateTimeField(widget=DateTimeWidget)
+    begins = DateTimeField(required=True, widget=DateTimeWidget)
+    ends = DateTimeField(required=True, widget=DateTimeWidget)
 
     class Meta:
         model = Event
@@ -15,6 +15,6 @@ class EventForm(forms.ModelForm):
         )
 
     def clean(self):
-        if self.cleaned_data['begins'] > self.cleaned_data['ends']:
+        if set(('begins', 'ends')).issubset(self.cleaned_data) and self.cleaned_data['begins'] > self.cleaned_data['ends']:
             raise forms.ValidationError(_('Begin date must be before end date'))
         return self.cleaned_data
