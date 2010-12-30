@@ -33,12 +33,23 @@
   }
 
   .block {
-     margin-bottom: 20px;
-     display: table;
-     width: 100%;
-     border-top: solid 1px $color3;
-     border-bottom: solid 1px $color3;
-   }
+    margin-bottom: 20px;
+    display: table;
+    width: 100%;
+    border-top: solid 1px $color3;
+    border-bottom: solid 1px $color3;
+
+    &.field {
+      border: none;
+      background-color: $color4;
+      @include round;
+
+      &:hover {
+        background-color: $color3;
+      }
+    }
+
+  }
 
   .row, .empty {
      line-height: 40px;

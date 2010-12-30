@@ -12,11 +12,26 @@
   <form action="{% url event_fields event.slug %}" method="POST">
     {% csrf_token %}
     {{ formset.management_form }}
-    <table>
-    {% for form in formset %}
-      {{ form }}
+    {% for form in formset.forms %}
+      {% for field in form.hidden_fields %}
+        {{ field }}
+      {% endfor %}
     {% endfor %}
-    </table>
+
+    {% for form in formset %}
+    <div class="block field">
+      <div class="row">
+      {% for field in form.visible_fields %}
+        <span class="column{% if forloop.last %} last{% endif %}">{{ field.label }}</span>
+      {% endfor %}
+      </div>
+      <div class="row">
+      {% for field in form.visible_fields %}
+        <span class="column{% if forloop.last %} last{% endif %}">{{ field }}</span>
+      {% endfor %}
+      </div>
+    </div>
+    {% endfor %}
 
     <div><input type="submit" value="{% trans "Save" %}" /></div>
   </form>

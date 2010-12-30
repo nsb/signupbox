@@ -263,7 +263,7 @@ class Field(models.Model):
     event = models.ForeignKey(Event, related_name='fields')
     label = models.CharField(max_length=255, verbose_name=_('Label'))
     help_text = models.CharField(max_length=255, blank=True, verbose_name=_('Help text'))
-    type = models.CharField(max_length=255, choices=FIELD_TYPE_CHOICES, verbose_name=_('Type'))
+    type = models.CharField(max_length=255, choices=FIELD_TYPE_CHOICES, verbose_name=_('Type'), default=TEXT_FIELD)
     required = models.BooleanField(default=False, verbose_name=_('Required'))
     in_extra = models.BooleanField(default=False, verbose_name=_('In extra forms'))
     ordering = models.IntegerField()
