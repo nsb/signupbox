@@ -1,0 +1,25 @@
+{% extends "signupbox/event_sub_detail_base.html" %}
+{% load i18n %}
+
+{% block navclass %}fields{% endblock navclass %}
+
+{% block main %}
+<div class="headline indent">
+  <h2>{% trans "Form fields" %}</h2>
+</div>
+
+<div class="indent">
+  <form action="{% url event_fields event.slug %}" method="POST">
+    {% csrf_token %}
+    {{ formset.management_form }}
+    <table>
+    {% for form in formset %}
+      {{ form }}
+    {% endfor %}
+    </table>
+
+    <div><input type="submit" value="{% trans "Save" %}" /></div>
+  </form>
+</div>
+
+{% endblock main %}

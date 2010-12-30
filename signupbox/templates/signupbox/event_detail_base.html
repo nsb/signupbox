@@ -8,7 +8,7 @@
   <ul>
     <li class="attendees"><div><a href="{% url event_attendees event.slug %}">{% trans "Attendees" %}</a></div></li>
     <li class="tickets"><div><a href="">{% trans "Tickets" %}</a></div></li>
-    <li class="website"><div><a href="">{% trans "Website" %}</a></div></li>
+    <li class="fields"><div><a href="{% url event_fields event.slug %}">{% trans "Fields" %}</a></div></li>
   </ul>
 </div>
 {% endblock navigation %}
