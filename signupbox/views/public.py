@@ -5,7 +5,7 @@ from django.core.urlresolvers import reverse
 
 from ..decorators import with_account
 from ..models import Event, Booking
-from ..forms import bookingform_factory
+from ..forms import bookingform_factory, emptybookingform_factory
 
 @with_account
 def event_site(request, slug, account):
@@ -33,7 +33,7 @@ def event_register(request, slug, account):
 
     return render_to_response(
         'signupbox/event_register.html',
-        RequestContext(request, {'event':event, 'formset':formset}),
+        RequestContext(request, {'event':event, 'formset':formset, 'empty_form':emptybookingform_factory(event, True)}),
     )
 
 @with_account

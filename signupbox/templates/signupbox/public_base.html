@@ -28,9 +28,12 @@
       {% block main %}{% endblock main %}
     </div>
   </div>
-  <div id="modal"></div>
+  {% block templates %}{% endblock templates %}
 {% endblock page %}
 
 {% block javascript %}
-  {{ block.super }}
+  {% compress js %}
+    {{ block.super }}
+    <script type="text/javascript" src="{{ MEDIA_URL }}js/register.js" ></script>
+  {% endcompress %}
 {% endblock javascript %}

@@ -109,3 +109,12 @@ def bookingform_factory(event, extra=1):
         Field.objects.filter(event=event), Ticket.objects.filter(event=event), is_extra,
     )
     return formset_factory(attendee_form, formset=attendeeformset_factory(event), extra=extra)
+
+def emptybookingform_factory(event, is_extra=False):
+    """
+    Attendee formset for event
+    """
+    attendee_form = attendeeform_factory(
+        Field.objects.filter(event=event), Ticket.objects.filter(event=event), is_extra,
+    )
+    return formset_factory(attendee_form, formset=attendeeformset_factory(event), extra=0)().empty_form

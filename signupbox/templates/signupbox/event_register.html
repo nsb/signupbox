@@ -7,16 +7,30 @@
 {% csrf_token %}
 {{ formset.management_form }}
 
-{% for form in formset.forms %}
-
-  {% for field in form %}
-    {% include "signupbox/includes/field.html" %}
+  <div id="attendee-forms">
+  {% for form in formset.forms %}
+    <fieldset>
+    {% for field in form %}
+      {% include "signupbox/includes/field.html" %}
+    {% endfor %}
+    </fieldset>
   {% endfor %}
+  </div>
 
-{% endfor %}
+  <div id="add-attendee"><a href="#">{% trans "Add attendee" %}</a></div>
 <div>
   <input type="submit" value="{% trans "Continue" %}" />
 </div>
 </form>
 
 {% endblock main %}
+
+{% block templates %}
+<script type="text/html" id="AttendeeAddExtra">
+<fieldset>
+  {% for field in empty_form %}
+    {% include "signupbox/includes/field.html" %}
+  {% endfor %}
+</fieldset>
+</script>
+{% endblock templates %}
