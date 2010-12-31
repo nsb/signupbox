@@ -18,9 +18,9 @@ def create(request):
     if request.method == 'POST':
         form = EventForm(request.POST, instance=event)
         if form.is_valid():
-            form.save()
+            event = form.save()
             messages.success(request, _('Event added.'))
-            return redirect(reverse('index'))
+            return redirect(reverse('event_detail', kwargs={'slug':event.slug}))
     else:
         form = EventForm(
             instance=event,
