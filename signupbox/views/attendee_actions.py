@@ -3,8 +3,13 @@ import csv
 from django.template.defaultfilters import date, floatformat, capfirst
 from django.utils.translation import ugettext, ugettext_lazy as _
 from django.http import HttpResponse
+from django.contrib import messages
+from django.shortcuts import redirect
+from django.core.urlresolvers import reverse
 
 from ..constants import *
+
+from ..tasks import send_mail
 
 class AttendeeActions(object):
     def dispatch(self, request, attendees, action, event, **kwargs):
@@ -30,6 +35,17 @@ class AttendeeActions(object):
             return self.export_pdf(request, attendees, event, data)
         elif format == XLS_EXPORT:
             return self.export_xls(request, attendees, event, data)
+
+    def email(self, request, attendees, event, subject, message, receive_copy):
+
+        send_mail.delay(
+            [a.email for a in attendees],
+            subject,
+            message,
+        )
+
+        messages.success(request, _('Email sent'))
+        return redirect(reverse('event_attendees', kwargs={'slug':event.slug}))
 
     def export_csv(self, request, selected, event, data):
         """

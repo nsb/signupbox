@@ -114,6 +114,8 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.admin',
     'compressor',
+    'djcelery',
+    'ghettoq',
     'signupbox',
 )
 
@@ -125,3 +127,8 @@ COMPILER_FORMATS = {
         'arguments': '*.scss *.css'
     },  
 }
+
+import djcelery
+djcelery.setup_loader()
+
+CARROT_BACKEND = "ghettoq.taproot.Database"
