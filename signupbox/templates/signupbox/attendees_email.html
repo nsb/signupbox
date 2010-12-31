@@ -13,10 +13,9 @@
   {% csrf_token %}
   <input type="hidden" name="{{ step_field }}" value="{{ step0 }}" />
   {{ previous_fields|safe }}
-
-  <table>
-  {{ form }}
-  </table>
+  {% for field in form %}
+    {% include "signupbox/includes/field.html" %}
+  {% endfor %}
   <input type="submit" value="{% trans "Send" %}">
 
 </form>
