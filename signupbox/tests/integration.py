@@ -12,7 +12,7 @@ from django.utils.http import urlencode
 
 from ..constants import *
 from ..models import Account, Event, Booking, Attendee
-from ..forms import attendeeactionsform_factory
+from ..forms import attendeeactionsform_factory, AttendeesEmailForm
 
 class BaseTestCase(test.TestCase):
     def setUp(self):
@@ -45,7 +45,7 @@ class SignupTestCase(test.TestCase):
             reverse('signup',),
             {'accountname':'myotheraccount', 'email':'myotheremail@example.com', 'password':'mypassword', 'password2':'mypassword',}
         )
-        self.failUnlessEqual(response.status_code, 302)
+        self.assertRedirects(response, reverse('index',),)
 
 class AdminTestCase(BaseTestCase):
     def setUp(self):
@@ -81,7 +81,7 @@ class AdminTestCase(BaseTestCase):
                 'ends_1_1':'00',
             },
         )
-        self.failUnlessEqual(response.status_code, 302)
+        self.assertRedirects(response, reverse('event_detail', kwargs={'slug':'mynewtitle',}),)
         self.assertTrue(Event.objects.filter(title='mynewtitle').exists())
 
     def testEditEvent(self):
@@ -101,7 +101,7 @@ class AdminTestCase(BaseTestCase):
                 'ends_1_1':'00',
             },
         )
-        self.failUnlessEqual(response.status_code, 302)
+        self.assertRedirects(response, reverse('event_detail', kwargs={'slug':self.event.slug,}),)
         self.assertFalse(Event.objects.filter(title=self.event.title).exists())
         self.assertTrue(Event.objects.filter(title='mynewtitle').exists())
 
@@ -130,7 +130,7 @@ class AdminTestCase(BaseTestCase):
                 fields[2].name: 'niels@example.com',
             },
         )
-        self.failUnlessEqual(response.status_code, 302)
+        self.assertRedirects(response, reverse('event_attendees', kwargs={'slug':self.event.slug,}),)
         self.assertTrue(self.attendee.values.filter(value='Niels Sandholt Busch').exists())
 
     def testAttendeesExport(self):
@@ -139,7 +139,7 @@ class AdminTestCase(BaseTestCase):
         response = self.client.post(
             reverse('event_attendees', kwargs={'slug':self.event.slug,}),
             {
-                'wizard-step': 0,
+                'wizard_step': 0,
                 '0-action':'export',
                 '0-attendees': self.attendee.id,
             },
@@ -156,7 +156,7 @@ class AdminTestCase(BaseTestCase):
         response = self.client.post(
             reverse('event_attendees', kwargs={'slug':self.event.slug,}),
             {
-                'wizard-step': 1,
+                'wizard_step': 1,
                 '0-action':'export',
                 '0-attendees': self.attendee.pk,
                 'hash_0': security_hash(None, wizard_form_class(QueryDict(urlencode(hash_data)))),
@@ -165,6 +165,40 @@ class AdminTestCase(BaseTestCase):
             },
         )
         self.failUnlessEqual(response.status_code, 200)
+
+    def testAttendeesMail(self):
+        self.client.login(username=self.username, password=self.password)
+        action = 'email'
+
+        response = self.client.post(
+            reverse('event_attendees', kwargs={'slug':self.event.slug,}),
+            {
+                'wizard_step': 0,
+                '0-action':action,
+                '0-attendees': self.attendee.pk,
+            },
+        )
+        self.failUnlessEqual(response.status_code, 200)
+
+        hash_data = {
+            'action':action,
+            'attendees': self.attendee.pk,
+        }
+
+        wizard_form_class = attendeeactionsform_factory(self.event.confirmed_attendees.all())
+
+        response = self.client.post(
+            reverse('event_attendees', kwargs={'slug':self.event.slug,}),
+            {
+                'wizard_step': 1,
+                '0-action':action,
+                '0-attendees': self.attendee.pk,
+                'hash_0': security_hash(None, wizard_form_class(QueryDict(urlencode(hash_data)))),
+                '1-subject': 'my subject',
+                '1-message': 'my message',
+            },
+        )
+        self.assertRedirects(response, reverse('event_attendees', kwargs={'slug':self.event.slug,}),)
 
 class EventSiteTestCase(BaseTestCase):
 
@@ -212,15 +246,14 @@ class EventSiteTestCase(BaseTestCase):
             data,
             HTTP_HOST=self.http_host,
         )
-        self.failUnlessEqual(response.status_code, 302)
-        self.assertEquals(Event.objects.get(slug=self.event.slug).bookings.count(), 1) 
-        self.assertEquals(Event.objects.get(slug=self.event.slug).bookings.get().attendees.count(), 2)
-
         response = self.client.post(
             reverse('event_confirm', kwargs={'slug':self.event.slug, 'booking_id':Booking.objects.get().pk}),
             {},
             HTTP_HOST=self.http_host,
         )
+        self.failUnlessEqual(response.status_code, 302)
+        self.assertEquals(self.event.bookings.count(), 1) 
+        self.assertEquals(self.event.confirmed_attendees.count(), 2)
 
     def testComplete(self):
         response = self.client.get(
