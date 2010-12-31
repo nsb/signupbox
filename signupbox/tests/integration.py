@@ -165,6 +165,7 @@ class AdminTestCase(BaseTestCase):
             },
         )
         self.failUnlessEqual(response.status_code, 200)
+        self.assertEquals(response['Content-Type'], 'text/csv')
 
     def testAttendeesMail(self):
         self.client.login(username=self.username, password=self.password)
