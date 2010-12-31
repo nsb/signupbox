@@ -43,6 +43,12 @@ class AttendeeActions(object):
             subject,
             message,
         )
+        if receive_copy:
+            send_mail.delay(
+                [request.user.email],
+                subject,
+                message,
+            )
 
         messages.success(request, ungettext('Email sent', 'Emails sent', attendees.count()))
         return redirect(reverse('event_attendees', kwargs={'slug':event.slug}))
