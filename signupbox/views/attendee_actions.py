@@ -1,7 +1,7 @@
 import csv
 
 from django.template.defaultfilters import date, floatformat, capfirst
-from django.utils.translation import ugettext, ugettext_lazy as _
+from django.utils.translation import ugettext, ungettext, ugettext_lazy as _
 from django.http import HttpResponse
 from django.contrib import messages
 from django.shortcuts import redirect
@@ -44,7 +44,7 @@ class AttendeeActions(object):
             message,
         )
 
-        messages.success(request, _('Email sent'))
+        messages.success(request, ungettext('Email sent', 'Emails sent', attendees.count()))
         return redirect(reverse('event_attendees', kwargs={'slug':event.slug}))
 
     def export_csv(self, request, selected, event, data):
