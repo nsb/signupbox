@@ -12,7 +12,16 @@
   </div>
   <div class="row">
   {% for field in form.visible_fields %}
-    <div class="column{% if forloop.last %} last{% endif %}">{{ field }}</div>
+    <div class="column{% if forloop.last %} last{% endif %}">
+      {{ field }}
+      {% if forloop.first %}
+        <div>
+          {% for option in field.form.instance.options.all %}
+            <input type="text" name="{{ field.form.prefix }}-options" value="{{ option }}" />
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
   {% endfor %}
   </div>
 </div>
