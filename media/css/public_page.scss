@@ -3,11 +3,22 @@
 
 body {
   background-color: $color4;
+  height: auto;
 }
 
 #page {
-  margin: 0 auto;
+  margin: 40px auto 0 auto;
   width: 760px;
   background-color: $color0;
   border: solid 2px $color3;
+}
+
+#main {
+
+  padding: 20px 40px;
+
+  h3, p {
+    margin-bottom: 20px;
+  }
+
 }
