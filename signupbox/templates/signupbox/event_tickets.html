@@ -1,0 +1,28 @@
+{% extends "signupbox/event_sub_detail_base.html" %}
+{% load i18n %}
+{% load date_tags %}
+
+{% block navclass %}tickets{% endblock navclass %}
+
+{% block main %}
+<div class="headline indent">
+  <h2>{% trans "Tickets" %}</h2>
+  <div><a href="">{% trans "Add ticket" %}</a></div>
+</div>
+
+<h3 class="indent">{% trans "All tickets" %}</h3>
+{% if event.tickets.all %}
+<div class="ticket block">
+  {% for ticket in event.tickets.all %}
+    <div class="row {% cycle 'even' 'odd' %}">
+      <div class="column"><h4><a href="">{{ ticket.name }}</a></h4></div>
+      <div class="column last">{% date_span ticket.offered_from ticket.offered_to %}</div>
+    </div>
+  {% endfor %}
+</div>
+{% else %}
+  <div class="empty">{% trans "No tickets for this event" %}</div>
+{% endif %}
+
+
+{% endblock main %}
