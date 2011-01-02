@@ -7,9 +7,15 @@ label {
 input[type=text], input[type=email], input[type=password] {
   height: 26px;
 }
-input[type=text], input[type=email], input[type=password], textarea {
+input[type=text], input[type=email], input[type=password], textarea, .options {
   width: 26em;
   padding: 2px 10px;
+}
+.options {
+  text-align: right;
+}
+.option input[type=text] {
+  width: 13em;
 }
 .datetime input, input.datetime {
   width: 6em;
