@@ -19,9 +19,6 @@ def event_fields(request, slug):
         formset = formset_class(request.POST, queryset=event.fields.all())
         if formset.is_valid():
             fields = formset.save()
-            for field in fields:
-                field.event = event
-                field.save()
             messages.success(request, _('Form fields updated.'))
             return redirect(reverse('event_detail', kwargs={'slug':slug}))
     else:

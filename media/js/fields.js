@@ -1,5 +1,16 @@
 (function($, $S) {
 
+  function onTypeChanged(e) {
+    var fieldType = $(e.target).find("option:selected").val();
+    if( fieldType === 'select' || fieldType === 'radiobutton') {
+      if (!this.$('.options .option').length) {
+        this.$('.options').append($('#TemplateEventsiteAddOptionsRow').html());
+      }
+    } else {
+      this.$('.options').empty();
+    }
+  }
+
   function onAddOptionClicked(e) {
     var markup = $.tmpl($("#TemplateFieldsOptionAdd").html(), { "index" : this.index });
     $(e.target).parents('.option').after(markup);
@@ -18,6 +29,7 @@
     var self = this;
     $(this.elm).delegate('.add', 'click', function() {onAddOptionClicked.apply(self, arguments)});
     $(this.elm).delegate('.remove', 'click', function() {onRemoveOptionClicked.apply(self, arguments)});
+    $(this.elm).delegate('select', 'change', function() {onTypeChanged.apply(self, arguments)});
   }
 
   function setupFields() {
