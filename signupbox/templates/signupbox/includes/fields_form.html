@@ -1,3 +1,4 @@
+{% load i18n %}
 <div class="block field">
   {% for field in form.hidden_fields %}
     {{ field }}
@@ -15,9 +16,13 @@
     <div class="column{% if forloop.last %} last{% endif %}">
       {{ field }}
       {% if forloop.first %}
-        <div>
+        <div class="options">
           {% for option in field.form.instance.options.all %}
-            <input type="text" name="{{ field.form.prefix }}-options" value="{{ option }}" />
+            <div class="option">
+              <input type="text" name="{{ field.form.prefix }}-options" value="{{ option }}" />
+              <a class="add" href="#">{% trans "Add" %}</a>
+              <a class="remove" href="#">{% trans "Remove" %}</a>
+            </div>
           {% endfor %}
         </div>
       {% endif %}
