@@ -201,6 +201,28 @@ class AdminTestCase(BaseTestCase):
         )
         self.assertRedirects(response, reverse('event_attendees', kwargs={'slug':self.event.slug,}),)
 
+    def testFields(self):
+        self.client.login(username=self.username, password=self.password)
+
+        response = self.client.get(
+            reverse('event_fields', kwargs={'slug':self.event.slug}),
+        )
+        self.failUnlessEqual(response.status_code, 200)
+
+        response = self.client.post(
+            reverse('event_fields', kwargs={'slug':self.event.slug,},), 
+            {
+                'form-INITIAL_FORMS': 0,
+                'form-TOTAL_FORMS': 1,
+                'form-MAX_NUM_FORMS': u'',
+                'form-0-label':'mylabel',
+                'form-0-type':'text',
+                'form-0-required':True,
+                'form-0-in_extra':True,
+            },
+        )
+        self.assertRedirects(response, reverse('event_detail', kwargs={'slug':self.event.slug,}),)
+
 class EventSiteTestCase(BaseTestCase):
 
     def testEventSite(self):
