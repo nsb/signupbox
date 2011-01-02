@@ -2,7 +2,7 @@
 
   function onAddOptionClicked(e) {
     var markup = $.tmpl($("#TemplateFieldsOptionAdd").html(), { "index" : this.index });
-    $('.options', this.elm).append(markup);
+    $(e.target).parents('.option').after(markup);
     e.preventDefault();
   }
 
