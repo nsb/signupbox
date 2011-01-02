@@ -3,11 +3,11 @@
   function onTypeChanged(e) {
     var fieldType = $(e.target).find("option:selected").val();
     if( fieldType === 'select' || fieldType === 'radiobutton') {
-      if (!this.$('.options .option').length) {
-        this.$('.options').append($('#TemplateEventsiteAddOptionsRow').html());
+      if (!$('.options .option', this.elm).length) {
+        $('.options', this.elm).append($.tmpl($("#TemplateFieldsOptionAdd").html(), { "index" : this.index }));
       }
     } else {
-      this.$('.options').empty();
+      $('.options', this.elm).empty();
     }
   }
 
