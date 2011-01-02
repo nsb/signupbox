@@ -29,7 +29,8 @@
   function onAddFieldClicked(e) {
     var markup = $("#TemplateFieldsAdd").html();
     var totalForms = parseInt($('#id_form-TOTAL_FORMS').val());
-    markup = markup.replace(/__prefix__/g, totalForms);
+    markup = $(markup.replace(/__prefix__/g, totalForms));
+    new FieldView({index: totalForms, element: markup});
     $('#id_form-TOTAL_FORMS').val(++totalForms);
     $('#fields').append(markup);
     e.preventDefault();
