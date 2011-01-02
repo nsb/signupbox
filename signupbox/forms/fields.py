@@ -26,21 +26,3 @@ def fieldformset_factory(event):
 
     FieldFormset = modelformset_factory(Field, FieldsForm, extra=0, can_delete=True)
     return FieldFormset
-
-#def fieldeditform_factory(options, event=None):
-    #class FieldEditForm(forms.ModelForm):
-        #class Meta:
-            #model = Field
-            #fields = ('label', 'type', 'required', 'in_extra',)
-
-        #def save(self, *args, **kwargs):
-            #if event:
-                #self.instance.event = event
-            #super(FieldEditForm, self).save(*args, **kwargs)
-            #if 'commit' not in kwargs or kwargs['commit']:
-                #self.instance.options.all().delete()
-                #for value in options:
-                    #if value:
-                        #FieldOption.objects.create(field=self.instance, value=value)
-            #return self.instance
-    #return FieldEditForm
