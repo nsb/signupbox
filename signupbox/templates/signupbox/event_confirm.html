@@ -1,7 +1,23 @@
 {% extends "signupbox/public_base.html" %}
 {% load i18n %}
+{% load booking_tags %}
 
 {% block main %}
+
+{% regroup booking.attendees.all by ticket as summary_list %}
+
+<table>
+  <thead>
+    <tr><th>{% trans "Kategori" %}</th><th>{% trans "Count" %}</th><th>{% trans "Price" %}</th></tr>
+  </thead>
+  <tbody>
+  {% for s in summary_list %}
+    <tr>
+      <td>{{ s.grouper }}</td><td>{{ s.list|length }}</td><td>{% ticket_summary_price s.grouper s.list %}</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
 
 <form action="{% url event_confirm event.slug booking.id %}" method="post">
 {% csrf_token %}
