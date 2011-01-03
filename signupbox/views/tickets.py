@@ -29,6 +29,7 @@ def event_tickets_edit(request, slug, ticket_id):
     if request.method == 'POST':
         form = TicketForm(request.POST, instance=ticket)
         if form.is_valid():
+            form.save()
             messages.success(request, _('Ticket updated.'))
             return redirect(reverse('event_tickets', kwargs={'slug':slug}))
     else:

@@ -19,7 +19,7 @@
       <div class="column">{% date_span ticket.offered_from ticket.offered_to %}</div>
       <div class="column last">
         {% if ticket.price %}
-          {{ ticket.price }} {{ ticket.get_currencty_display }}
+          {{ ticket.price|floatformat }} {{ ticket.get_currency_display }}
         {% else %}
           {% trans "Free" %}
         {% endif %}

@@ -208,7 +208,7 @@ class Ticket(models.Model):
     offered_from = models.DateField(blank=True, null=True)
     offered_to = models.DateField(blank=True, null=True)
     price = models.DecimalField(max_digits=7, decimal_places=2, default=0)
-    currency = models.CharField(max_length=3, blank=True, default='DKK')
+    currency = models.CharField(max_length=3, choices=CURRENCY_CHOICES, blank=True, default='DKK')
 
     def __unicode__(self):
         return self.name
