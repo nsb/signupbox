@@ -13,7 +13,9 @@
   <tbody>
   {% for s in summary_list %}
     <tr>
-      <td>{{ s.grouper }}</td><td>{{ s.list|length }}</td><td>{% ticket_summary_price s.grouper s.list %}</td>
+      <td>{{ s.grouper }}</td>
+      <td>{{ s.list|length }}</td>
+      <td>{% ticket_summary_price s.grouper s.list %}</td>
     </tr>
   {% endfor %}
   </tbody>

@@ -7,7 +7,7 @@ register = template.Library()
 
 @register.simple_tag
 def ticket_summary_price(ticket, attendees):
-    return ticket.price * len(attendees) or _('Free')
+    return '%d %s' % (ticket.price * len(attendees), ticket.get_currency_display()) or _('Free')
 
 @register.simple_tag
 def price_range(tickets):
