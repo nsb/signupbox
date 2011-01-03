@@ -10,13 +10,15 @@
 <div class="indent">
   <form method="POST" action="{% url auth_login %}">
     {% csrf_token %}
-    <table>
-    {{ form }}
-    </table>
+    {% for field in form %}
+      {% include "signupbox/includes/field.html" %}
+    {% endfor %}
     <div>
       <input type="submit" value="{% trans "Login" %}"></input>
     </div>
   </form>
+
+
 
   <div>
     <a href="{% url auth_password_reset %}">Forgot password?</a>
