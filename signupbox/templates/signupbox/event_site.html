@@ -1,5 +1,7 @@
 {% extends "signupbox/public_base.html" %}
 {% load i18n %}
+{% load date_tags %}
+{% load booking_tags %}
 
 {% block main %}
 
@@ -8,10 +10,13 @@
   <p>{{ event.description }}</p>
 
   <h3>{% trans "Time and date" %}</h3>
-  <p>{{ event.date_formatted }}</p>
+  <p>{% date_span event.begins event.ends %}</p>
 
   <h3>{% trans "Where" %}</h3>
   <p>{{ event.venue }}</p>
+
+  <h3>{% trans "Price" %}</h3>
+  <p>{% price_range event.tickets.all %}</p>
 
   <h2><a href="{% url event_register event.slug %}">{% trans "Register" %}</a></h2>
 
