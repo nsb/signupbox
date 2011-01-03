@@ -15,8 +15,15 @@
 <div class="ticket block">
   {% for ticket in event.tickets.all %}
     <div class="row {% cycle 'even' 'odd' %}">
-      <div class="column"><h4><a href="">{{ ticket.name }}</a></h4></div>
-      <div class="column last">{% date_span ticket.offered_from ticket.offered_to %}</div>
+      <div class="column"><h4><a href="{% url event_tickets_edit event.slug ticket.id %}">{{ ticket.name }}</a></h4></div>
+      <div class="column">{% date_span ticket.offered_from ticket.offered_to %}</div>
+      <div class="column last">
+        {% if ticket.price %}
+          {{ ticket.price }} {{ ticket.get_currencty_display }}
+        {% else %}
+          {% trans "Free" %}
+        {% endif %}
+      </div>
     </div>
   {% endfor %}
 </div>

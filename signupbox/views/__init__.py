@@ -2,7 +2,7 @@
 from dashboard import index, signup
 from event import create as event_create, read as event_detail, edit as event_edit
 from attendees import event_attendees, event_attendees_edit
-from tickets import event_tickets
+from tickets import event_tickets, event_tickets_edit
 from fields import event_fields
 from public import event_site, event_register, event_confirm, event_complete
 __all__ = [
@@ -14,6 +14,7 @@ __all__ = [
     "event_attendees",
     "event_attendees_edit",
     "event_tickets",
+    "event_tickets_edit",
     "event_fields",
     "event_site",
     "event_register",
