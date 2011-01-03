@@ -118,3 +118,6 @@ def emptybookingform_factory(event, is_extra=False):
         Field.objects.filter(event=event), Ticket.objects.filter(event=event), is_extra,
     )
     return formset_factory(attendee_form, formset=attendeeformset_factory(event), extra=0)().empty_form
+
+class ConfirmForm(forms.Form):
+    pass

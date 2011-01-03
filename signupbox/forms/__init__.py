@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
 from registration import RegistrationForm
 from event import EventForm
-from register import bookingform_factory, emptybookingform_factory, attendeeform_factory
+from register import bookingform_factory, emptybookingform_factory, attendeeform_factory, ConfirmForm
 from attendees import attendeeactionsform_factory, AttendeesExportForm, AttendeesEmailForm
 from ticket import TicketForm
 from fields import fieldformset_factory
+from payment import QuickPayForm, PaypalForm
+
 __all__ = [
     "RegistrationForm",
     "EventForm",
@@ -12,5 +14,8 @@ __all__ = [
     "attendeeactionsform_factory",
     "AttendeesExportForm",
     "TicketForm",
-    "fieldformset_factory"
+    "fieldformset_factory",
+    "ConfirmForm",
+    "QuickPayForm",
+    "PaypalForm",
 ]
