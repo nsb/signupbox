@@ -1,0 +1,13 @@
+{% extends "signupbox/event_confirm.html" %}
+{% load i18n %}
+{% load booking_tags %}
+
+{% block confirm_form %}
+<form action="{% paypal_url %}" method="post">
+
+  {{ form }}
+
+  <input type="image" src="https://www.paypal.com/en_US/i/btn/btn_buynowCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+
+</form>
+{% endblock confirm_form %}

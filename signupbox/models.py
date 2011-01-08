@@ -37,6 +37,7 @@ class Account(models.Model):
     )
     merchant_id = models.CharField(max_length=255, verbose_name=_("PBS number"), blank=True)
     secret_key = models.CharField(max_length=255, verbose_name=_('Secret key'), blank=True)
+    paypal_business = models.CharField(max_length=255, blank=True)
     autocapture = models.BooleanField(
         verbose_name=_('Auto capture'), blank=True, help_text=_('Automatically capture payments'), default=False,
     )

@@ -21,15 +21,15 @@
   </tbody>
 </table>
 
+{% block confirm_form %}
 <form action="{% url event_confirm event.slug booking.id %}" method="post">
 
   {{ form }}
-
-  <input type="image" src="https://www.paypal.com/en_US/i/btn/btn_buynowCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
 
   <div>
     <input type="submit" value="{% trans "Confirm" %}" />
   </div>
 </form>
+{% endblock confirm_form %}
 
 {% endblock main %}

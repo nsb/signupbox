@@ -38,6 +38,28 @@ def event_register(request, slug, account):
         RequestContext(request, {'event':event, 'formset':formset, 'empty_form':emptybookingform_factory(event, True)}),
     )
 
+class FreeConfirmBackend(object):
+    def __init__(self, account, booking):
+        self.account = account
+        self.booking = booking
+
+    def get_form(self):
+        return ConfirmForm
+
+    def get_template(self):
+        return 'signupbox/event_confirm.html'
+
+class PaypalconfirmBackend(object):
+    def __init__(self, account, booking):
+        self.account = account
+        self.booking = booking
+
+    def get_form(self):
+        return PaypalForm
+
+    def get_template(self):
+        return 'signupbox/event_confirm_paypal.html'
+
 @with_account
 @csrf_view_exempt
 def event_confirm(request, slug, booking_id, account,):
@@ -49,21 +71,24 @@ def event_confirm(request, slug, booking_id, account,):
         attendees__id__in=booking.attendees.values_list('id', flat=True)
     ).aggregate(Sum('price'))['price__sum']
 
-    form_class = PaypalForm if amount else ConfirmForm
+
+    confirm_backend_class = PaypalconfirmBackend if amount else FreeConfirmBackend
+    confirm_backend = confirm_backend_class(account, booking)
 
     if request.method == 'POST':
 
-        form = form_class()
+        form = confirm_backend.get_form()(request.POST)
         if form.is_valid():
             booking.confirmed = True
             booking.save()
             return redirect(reverse('event_complete', kwargs={'slug':slug}))
     else:
 
-        form = form_class()
+        form = confirm_backend.get_form()
 
         return render_to_response(
-            'signupbox/event_confirm.html', RequestContext(request, {'event':event, 'booking': booking, 'form':form}),
+            confirm_backend.get_template(),
+            RequestContext(request, {'event':event, 'booking': booking, 'form':form}),
         )
 
 @with_account

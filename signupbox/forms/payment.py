@@ -114,7 +114,7 @@ class QuickPayForm(forms.Form):
 
 class PaypalForm(forms.Form):
     cmd = forms.CharField(initial="_xclick", widget=forms.HiddenInput)
-    business = forms.EmailField(initial=getattr(settings, 'PAYPAL_BUSINESS', 'payment@dis.dk'), widget=forms.HiddenInput)
+    business = forms.EmailField(widget=forms.HiddenInput)
     lc = forms.CharField(initial="US", widget=forms.HiddenInput)
     item_name = forms.CharField(widget=forms.HiddenInput)
     item_number = forms.CharField(widget=forms.HiddenInput)
