@@ -12,7 +12,7 @@ def paypal_url():
 
 @register.simple_tag
 def ticket_summary_price(ticket, attendees):
-    return '%d %s' % (ticket.price * len(attendees), ticket.get_currency_display()) or _('Free')
+    return '%d %s' % (ticket.price * len(attendees), ticket.event.get_currency_display()) if ticket.price else _('Free')
 
 @register.simple_tag
 def price_range(tickets):

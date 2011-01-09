@@ -16,6 +16,7 @@ from django.template import defaultfilters
 from constants import *
 
 PAYMENT_GATEWAY_CHOICES = (
+    ('paypal', _('PayPal')),
     ('quickpay', _('Quickpay')),
 )
 
@@ -163,6 +164,7 @@ class Event(models.Model):
         default='open',
         db_index=True
     )
+    currency = models.CharField(max_length=3, choices=CURRENCY_CHOICES, blank=True, default='DKK')
 
     objects = EventManager()
 
@@ -209,7 +211,6 @@ class Ticket(models.Model):
     offered_from = models.DateField(blank=True, null=True)
     offered_to = models.DateField(blank=True, null=True)
     price = models.DecimalField(max_digits=7, decimal_places=2, default=0)
-    currency = models.CharField(max_length=3, choices=CURRENCY_CHOICES, blank=True, default='DKK')
 
     def __unicode__(self):
         return self.name
@@ -219,7 +220,6 @@ class Booking(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True, db_index=True)
     notes = models.CharField(max_length=255, blank=True, verbose_name=_('Notes'))
     description = models.CharField(max_length=1024, blank=True)
-    ordernum = models.CharField(max_length=255)
     transaction = models.CharField(max_length=255, blank=True)
     cardtype = models.CharField(max_length=255, blank=True)
     amount = models.DecimalField(
@@ -228,6 +228,11 @@ class Booking(models.Model):
         default=0)
     currency = models.CharField(max_length=3, blank=True)
     confirmed = models.BooleanField(default=False)
+
+    @property
+    def ordernum(self):
+        # Quickpay requires ordernum to be at least 4 characaters long, so prepend with zero's
+        return ''.join(['0' for i in range(4-len(str(self.pk)))]) + str(self.pk)
 
     def __unicode__(self):
         return u'%s: #%s' % (self.event.title, self.id)

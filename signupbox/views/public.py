@@ -38,28 +38,6 @@ def event_register(request, slug, account):
         RequestContext(request, {'event':event, 'formset':formset, 'empty_form':emptybookingform_factory(event, True)}),
     )
 
-class FreeConfirmBackend(object):
-    def __init__(self, account, booking):
-        self.account = account
-        self.booking = booking
-
-    def get_form(self):
-        return ConfirmForm
-
-    def get_template(self):
-        return 'signupbox/event_confirm.html'
-
-class PaypalconfirmBackend(object):
-    def __init__(self, account, booking):
-        self.account = account
-        self.booking = booking
-
-    def get_form(self):
-        return PaypalForm
-
-    def get_template(self):
-        return 'signupbox/event_confirm_paypal.html'
-
 @with_account
 @csrf_view_exempt
 def event_confirm(request, slug, booking_id, account,):
@@ -71,23 +49,33 @@ def event_confirm(request, slug, booking_id, account,):
         attendees__id__in=booking.attendees.values_list('id', flat=True)
     ).aggregate(Sum('price'))['price__sum']
 
+    form_class = PaypalForm if amount else ConfirmForm
+    template_name = 'signupbox/event_confirm_paypal.html' if amount else 'signupbox/event_confirm.html'
 
-    confirm_backend_class = PaypalconfirmBackend if amount else FreeConfirmBackend
-    confirm_backend = confirm_backend_class(account, booking)
+    if amount:
+          # paypal
+          initial = {
+              'business':account.paypal_business,
+              'amount':amount,
+              'currency_code':event.currency,
+              'item_number': booking.ordernum,
+              'item_name': event.title,
+          }
+    else:
+          initial = {}
 
     if request.method == 'POST':
 
-        form = confirm_backend.get_form()(request.POST)
+        form = form_class(request.POST, initial=initial)
         if form.is_valid():
             booking.confirmed = True
             booking.save()
             return redirect(reverse('event_complete', kwargs={'slug':slug}))
     else:
-
-        form = confirm_backend.get_form()
+        form = form_class(initial=initial)
 
         return render_to_response(
-            confirm_backend.get_template(),
+            template_name,
             RequestContext(request, {'event':event, 'booking': booking, 'form':form}),
         )
 

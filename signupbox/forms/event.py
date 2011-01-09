@@ -11,7 +11,7 @@ class EventForm(forms.ModelForm):
     class Meta:
         model = Event
         fields = (
-            'title', 'description', 'venue', 'begins', 'ends', 'capacity',
+            'title', 'description', 'venue', 'begins', 'ends', 'capacity', 'currency',
         )
 
     def clean(self):

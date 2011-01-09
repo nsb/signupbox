@@ -9,16 +9,16 @@ from ..forms import AccountForm
 
 @login_required
 def account_settings(request):
-    a = request.user.accounts.get()
+    account = request.user.accounts.get()
 
     if request.method == 'POST':
-        form = AccountForm(request.POST, instance=a)
+        form = AccountForm(request.POST, instance=account)
         if form.is_valid():
             form.save()
             messages.success(request, _('Settings updated.'))
             return redirect(reverse('index'))
     else:
-        form = AccountForm(instance=a)
+        form = AccountForm(instance=account)
 
     return render_to_response(
         'signupbox/settings.html',
