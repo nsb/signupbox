@@ -120,7 +120,7 @@ INSTALLED_APPS = (
 PAYPAL_RECEIVER_EMAIL = ''
 
 # django-css
-#CACHE_BACKEND = 'dummy://'
+CACHE_BACKEND = 'dummy://'
 #COMPILER_FORMATS = {
    #'.scss': {
         #'binary_path':'sass',
