@@ -112,8 +112,12 @@ INSTALLED_APPS = (
     'compressor',
     'djcelery',
     'ghettoq',
+    'paypal.standard.ipn',
     'signupbox',
 )
+
+#django paypal
+PAYPAL_RECEIVER_EMAIL = ''
 
 # django-css
 CACHE_BACKEND = 'dummy://'

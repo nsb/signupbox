@@ -17,3 +17,7 @@ urlpatterns = patterns('signupbox.views',
     (r'^(?P<slug>[-\w]+)/register/confirm/(?P<booking_id>[\d]+)/$', 'event_confirm', {}, 'event_confirm',),
     (r'^(?P<slug>[-\w]+)/register/complete/$', 'event_complete', {}, 'event_complete',),
 )
+
+urlpatterns += patterns('',
+    (r'^payments/paypal/ipn/', include('paypal.standard.ipn.urls')),
+)

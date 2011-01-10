@@ -4,3 +4,5 @@ psycopg2
 -e svn+http://google-visualization-python.googlecode.com/svn/trunk/#egg=gviz
 django-celery
 ghettoq
+-e git://github.com/dcramer/django-paypal.git#egg=DjangoPayPal
+djangy
