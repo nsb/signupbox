@@ -5,10 +5,9 @@ from django.template import RequestContext
 from django.core.urlresolvers import reverse
 from django.contrib import messages
 from django.utils.translation import ugettext, ugettext_lazy as _
-from django.contrib.formtools.wizard import FormWizard
 
 from ..constants import *
-#from ..wizard import FormWizard
+from ..wizard import FormWizard
 from ..models import Event, Booking, Attendee, Field, Ticket
 from ..forms import attendeeactionsform_factory, AttendeesExportForm, AttendeesEmailForm, attendeeform_factory
 from attendee_actions import AttendeeActions
