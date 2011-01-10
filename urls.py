@@ -11,6 +11,7 @@ urlpatterns = patterns('',
     (r'^', include('signupbox.urls')),
 )
 
-urlpatterns += patterns('',
-    url(r'^static/(.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}),
-)
+if settings.DEBUG:
+    urlpatterns += patterns('',
+        url(r'^static/(.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}),
+    )
