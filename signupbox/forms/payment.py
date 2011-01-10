@@ -124,4 +124,5 @@ class PaypalForm(forms.Form):
     no_note = forms.IntegerField(initial=0, widget=forms.HiddenInput)
     bn = forms.CharField(initial="No_Value", widget=forms.HiddenInput)
     notify_url = forms.CharField(widget=forms.HiddenInput)
-    #return = forms.CharField(widget=forms.HiddenInput)
+    cancel_return = forms.CharField(widget=forms.HiddenInput())
+    return_url = forms.CharField(widget=forms.HiddenInput(attrs={"name":"return"}))

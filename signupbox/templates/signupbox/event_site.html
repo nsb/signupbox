@@ -16,7 +16,7 @@
   <p>{{ event.venue }}</p>
 
   <h3>{% trans "Price" %}</h3>
-  <p>{% price_range event.tickets.all %}</p>
+  <p>{% price_range event.tickets.all %} {{ event.get_currency_display }}</p>
 
   <h2><a href="{% url event_register event.slug %}">{% trans "Register" %}</a></h2>
 
