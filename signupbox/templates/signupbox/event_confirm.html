@@ -23,7 +23,7 @@
 
 {% block confirm_form %}
 <form action="{% url event_confirm event.slug booking.id %}" method="post">
-
+  {% csrf_token %}
   {{ form }}
 
   <div>
