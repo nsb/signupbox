@@ -5,9 +5,11 @@ from django.core.urlresolvers import reverse
 from django.db.models import Sum
 from django.views.decorators.csrf import csrf_view_exempt
 
+from paypal.standard.forms import PayPalPaymentsForm
+
 from ..decorators import with_account
 from ..models import Event, Booking, Ticket
-from ..forms import bookingform_factory, emptybookingform_factory, ConfirmForm, QuickPayForm, PaypalForm
+from ..forms import bookingform_factory, emptybookingform_factory, ConfirmForm, QuickPayForm
 
 @with_account
 def event_site(request, slug, account):
@@ -49,27 +51,31 @@ def event_confirm(request, slug, booking_id, account,):
         attendees__id__in=booking.attendees.values_list('id', flat=True)
     ).aggregate(Sum('price'))['price__sum']
 
-    form_class = PaypalForm if amount else ConfirmForm
+    form_class = PayPalPaymentsForm if amount else ConfirmForm
     template_name = 'signupbox/event_confirm_paypal.html' if amount else 'signupbox/event_confirm.html'
 
     if amount:
-          # paypal
-          initial = {
-              'business':account.paypal_business,
-              'amount':amount,
-              'currency_code':event.currency,
-              'item_number': booking.ordernum,
-              'item_name': event.title,
-          }
+        # paypal
+        initial = {
+            'business':account.paypal_business,
+            'amount':amount,
+            'currency_code':event.currency,
+            'item_number': booking.pk,
+            'item_name': event.title,
+            'invoice': booking.ordernum,
+            'notify_url': "http://%s%s" % (request.get_host(), reverse('paypal-ipn')),
+            'return_url': "http://%s%s" % (request.get_host(), reverse('event_complete', kwargs={'slug':slug})),
+            'cancel_return': "http://%s%s" % (request.get_host(), reverse('event_incomplete', kwargs={'slug':slug})),
+        }
+
     else:
-          initial = {}
+        initial = {}
 
     if request.method == 'POST':
 
-        form = form_class(request.POST, initial=initial)
+        form = form_class(request.POST, instance=booking, initial=initial)
         if form.is_valid():
-            booking.confirmed = True
-            booking.save()
+            form.save()
             return redirect(reverse('event_complete', kwargs={'slug':slug}))
     else:
         form = form_class(initial=initial)
@@ -82,3 +88,7 @@ def event_confirm(request, slug, booking_id, account,):
 @with_account
 def event_complete(request, slug, account,):
     return HttpResponse('hejsa')
+
+@with_account
+def event_incomplete(request, slug, account,):
+    return HttpResponse('davs')

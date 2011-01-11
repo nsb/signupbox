@@ -9,7 +9,7 @@ from django.core.urlresolvers import reverse
 
 from ..constants import *
 
-from ..tasks import send_mail
+from ..tasks import async_send_mail
 
 class AttendeeActions(object):
     def dispatch(self, request, attendees, action, event, **kwargs):
@@ -38,13 +38,13 @@ class AttendeeActions(object):
 
     def email(self, request, attendees, event, subject, message, receive_copy):
 
-        send_mail.delay(
+        async_send_mail.delay(
             [a.email for a in attendees],
             subject,
             message,
         )
         if receive_copy:
-            send_mail.delay(
+            async_send_mail.delay(
                 [request.user.email],
                 subject,
                 message,

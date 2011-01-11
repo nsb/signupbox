@@ -16,6 +16,7 @@ urlpatterns = patterns('signupbox.views',
     (r'^(?P<slug>[-\w]+)/register/$', 'event_register', {}, 'event_register',),
     (r'^(?P<slug>[-\w]+)/register/confirm/(?P<booking_id>[\d]+)/$', 'event_confirm', {}, 'event_confirm',),
     (r'^(?P<slug>[-\w]+)/register/complete/$', 'event_complete', {}, 'event_complete',),
+    (r'^(?P<slug>[-\w]+)/register/incomplete/$', 'event_incomplete', {}, 'event_incomplete',),
 )
 
 urlpatterns += patterns('',

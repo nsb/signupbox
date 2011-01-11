@@ -4,6 +4,7 @@ from django.forms.formsets import BaseFormSet, formset_factory
 
 from ..constants import *
 from ..models import Field, FieldValue, Ticket, Booking, Attendee
+from ..signals import booking_confirmed
 
 FIELD_TYPES = {
     TEXT_FIELD: forms.CharField,
@@ -119,5 +120,11 @@ def emptybookingform_factory(event, is_extra=False):
     )
     return formset_factory(attendee_form, formset=attendeeformset_factory(event), extra=0)().empty_form
 
-class ConfirmForm(forms.Form):
-    pass
+class ConfirmForm(forms.ModelForm):
+    class Meta:
+        model = Booking
+        fields = ()
+
+    def save(self, *args, **kwargs):
+        super(ConfirmForm, self).save(*args, **kwargs)
+        booking_confirmed.send(sender=self.instance, booking_id=self.instance.id)

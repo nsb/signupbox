@@ -13,7 +13,11 @@ from django.contrib.contenttypes import generic
 from django.contrib.sites.models import Site
 from django.template import defaultfilters
 
+from paypal.standard.ipn.signals import payment_was_successful
+
 from constants import *
+from signals import booking_confirmed
+from tasks import process_booking
 
 PAYMENT_GATEWAY_CHOICES = (
     ('paypal', _('PayPal')),
@@ -394,3 +398,19 @@ def create_default_tickets(sender, instance, created, **kwargs):
 
 # auto create default tickets
 signals.post_save.connect(create_default_tickets, sender=Event)
+
+def on_paypal_payment_successful(sender, **kwargs):
+    ipn_obj = sender
+    booking_confirmed.send(sender=ipn_obj, booking_id=int(ipn_obj.item_number))
+
+payment_was_successful.connect(on_paypal_payment_successful)
+
+def on_booking_confirmed(sender, booking_id, **kwargs):
+
+    booking = Booking.objects.get(pk=booking_id)
+    booking.confirmed = True
+    booking.save()
+
+    process_booking.delay(booking)
+
+booking_confirmed.connect(on_booking_confirmed)

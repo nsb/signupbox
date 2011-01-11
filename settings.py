@@ -130,8 +130,5 @@ COMPILER_FORMATS = {
 
 import djcelery
 djcelery.setup_loader()
-CELERY_IMPORTS = (
-   "tasks",
-)
 
 CARROT_BACKEND = "ghettoq.taproot.Database"
