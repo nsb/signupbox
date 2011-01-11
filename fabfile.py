@@ -10,7 +10,7 @@ def staging():
     env.hosts = ['niels@signupbox.com']
     env.directory = '~/webapps/signupbox3/'
     env.activate = 'workon signupbox3'
-    env.settings = 'settings_signupbox_com'
+    env.settings = 'settings_local'
 
 ## set staging as default
 staging()
@@ -26,7 +26,7 @@ def update():
     update src from svn
     """
     with cd(env.directory + 'src'):
-        run('hg pull && hg update')
+        run('git pull')
 
 def reload():
     """
