@@ -127,9 +127,6 @@ class EventManager(models.Manager):
     def previous(self):
         return self.filter(begins__lt=datetime.now())
 
-    def has_payments(self):
-        return self.tickets.filter(price__gt=0).exists()
-
 class Event(models.Model):
     """
     Event
@@ -182,6 +179,10 @@ class Event(models.Model):
     @property
     def website(self):
         return ''.join(('http://', self.account.domain_for_account(), '/', self.slug))
+
+    @property
+    def has_payments(self):
+        return self.tickets.filter(price__gt=0).exists()
 
     def save(self, *args, **kwargs):
 

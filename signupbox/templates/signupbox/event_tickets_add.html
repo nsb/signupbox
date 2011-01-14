@@ -1,0 +1,24 @@
+{% extends "signupbox/event_sub_detail_base.html" %}
+{% load i18n %}
+{% load date_tags %}
+
+{% block navclass %}tickets{% endblock navclass %}
+
+{% block main %}
+<div class="headline indent">
+  <h2>{% trans "Add ticket" %}</h2>
+</div>
+
+<div class="indent">
+  <form action="{% url event_tickets_add event.slug %}" method="POST">
+    {% csrf_token %}
+    {% for field in form %}
+      {% include "signupbox/includes/field.html" %}
+    {% endfor %}
+    <div>
+      <input type="submit" value="{% trans "Add" %}" />
+    </div>
+  </form>
+</div>
+
+{% endblock main %}

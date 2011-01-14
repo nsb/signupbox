@@ -22,4 +22,4 @@ def price_range(tickets):
     if min == max:
         return defaultfilters.floatformat(min)
     else:
-        return '%d - %d' % (defaultfilters.floatformat(min), defaultfilters.floatformat(max))
+        return '%s - %s' % (defaultfilters.floatformat(min), defaultfilters.floatformat(max))

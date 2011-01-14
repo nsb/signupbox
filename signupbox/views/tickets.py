@@ -39,3 +39,23 @@ def event_tickets_edit(request, slug, ticket_id):
         'signupbox/event_tickets_edit.html',
         RequestContext(request, {'event':event, 'ticket':ticket, 'form':form})
     )
+
+@login_required
+def event_tickets_add(request, slug):
+
+    account=request.user.accounts.get()
+    event = get_object_or_404(Event, account=account, slug=slug)
+
+    if request.method == 'POST':
+        form = TicketForm(request.POST, instance=Ticket(event=event))
+        if form.is_valid():
+            form.save()
+            messages.success(request, _('Ticket added.'))
+            return redirect(reverse('event_tickets', kwargs={'slug':slug}))
+    else:
+        form = TicketForm()
+
+    return render_to_response(
+        'signupbox/event_tickets_add.html',
+        RequestContext(request, {'event': event, 'form': form})
+    )

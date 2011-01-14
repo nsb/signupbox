@@ -7,7 +7,7 @@
 {% block main %}
 <div class="headline indent">
   <h2>{% trans "Tickets" %}</h2>
-  <div><a href="">{% trans "Add ticket" %}</a></div>
+  <div><a href="{% url event_tickets_add event.slug %}">{% trans "Add ticket" %}</a></div>
 </div>
 
 <h3 class="indent">{% trans "All tickets" %}</h3>
