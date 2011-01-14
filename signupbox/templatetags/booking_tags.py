@@ -1,3 +1,5 @@
+from datetime import date
+
 from django import template
 from django.utils.translation import ugettext_lazy as _
 from django.db.models import Min, Max
@@ -16,10 +18,11 @@ def ticket_summary_price(ticket, attendees):
 
 @register.simple_tag
 def price_range(tickets):
-    min = tickets.aggregate(Min('price'))['price__min']
-    max = tickets.aggregate(Max('price'))['price__max']
+    current_tickets = tickets.exclude(offered_from__gt=date.today(), offered_to__lt=date.today())
+    min_ticket = current_tickets.aggregate(Min('price'))['price__min']
+    max_ticket = current_tickets.aggregate(Max('price'))['price__max']
 
-    if min == max:
-        return defaultfilters.floatformat(min)
+    if min_ticket == max_ticket:
+        return defaultfilters.floatformat(min_ticket)
     else:
-        return '%s - %s' % (defaultfilters.floatformat(min), defaultfilters.floatformat(max))
+        return '%s - %s' % (defaultfilters.floatformat(min_ticket), defaultfilters.floatformat(max_ticket))
