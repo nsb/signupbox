@@ -3,25 +3,31 @@
 
 {% block main %}
 
-<form action="{% url event_register event.slug %}" method="post">
-{% csrf_token %}
-{{ formset.management_form }}
+<div id="event_register">
 
-  <div id="attendee-forms">
-  {% for form in formset.forms %}
-    <fieldset>
-    {% for field in form %}
-      {% include "signupbox/includes/field.html" %}
+  <h1>{% blocktrans with event.title as title %}registration for {{ title }}{% endblocktrans %}</h1>
+
+  <form action="{% url event_register event.slug %}" method="post">
+  {% csrf_token %}
+  {{ formset.management_form }}
+
+    <div id="attendee-forms">
+    {% for form in formset.forms %}
+      <fieldset>
+      {% for field in form %}
+        {% include "signupbox/includes/field.html" %}
+      {% endfor %}
+      </fieldset>
     {% endfor %}
-    </fieldset>
-  {% endfor %}
-  </div>
+    </div>
 
-  <div id="add-attendee"><a href="#">{% trans "Add extra attendee" %}</a></div>
-  <div>
-    <input type="submit" value="{% trans "Continue" %}" />
-  </div>
-</form>
+    <div id="add-attendee"><a href="#">{% trans "Add extra attendee" %}</a></div>
+    <div>
+      <input type="submit" value="{% trans "Continue" %}" />
+    </div>
+  </form>
+
+</div>
 
 {% endblock main %}
 

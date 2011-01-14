@@ -4,6 +4,7 @@
 {% load booking_tags %}
 
 {% block main %}
+<div id="event_site">
 
   <h1>{{ event.title }}</h1>
 
@@ -24,4 +25,5 @@
 
   <h2><a href="{% url event_register event.slug %}">{% trans "Register" %}</a></h2>
 
+</div>
 {% endblock main %}
