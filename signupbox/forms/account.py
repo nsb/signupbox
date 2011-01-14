@@ -6,7 +6,7 @@ class AccountForm(forms.ModelForm):
 
     class Meta:
         model = Account
-        fields = ('organization', 'street', 'payment_gateway', 'paypal_business',)
+        fields = ('organization', 'street', 'zip_code', 'city', 'country', 'phone', 'cvr', 'payment_gateway', 'paypal_business',)
 
 class ProfileForm(forms.ModelForm):
 
