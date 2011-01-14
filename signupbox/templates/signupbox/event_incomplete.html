@@ -1,0 +1,12 @@
+{% extends "signupbox/public_base.html" %}
+{% load i18n %}
+
+{% block main %}
+
+  <h1>Registration incomplete</h1>
+
+  <p>{% blocktrans with event.title as title %}The registration was not completed.{% endblocktrans %}</p>
+
+  {% blocktrans with event.website as website %}<a href="{{ website }}">Back to event site</a>{% endblocktrans %}
+
+{% endblock main %}
