@@ -97,4 +97,10 @@ def event_complete(request, slug, account,):
 
 @with_account
 def event_incomplete(request, slug, account,):
-    return HttpResponse('davs')
+
+    event = get_object_or_404(Event, account=account, slug=slug)
+
+    return render_to_response(
+        'signupbox/event_incomplete.html',
+        RequestContext(request, {'event': event})
+    )
