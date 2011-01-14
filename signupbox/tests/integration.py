@@ -4,35 +4,14 @@ from datetime import datetime, date, timedelta
 from django import test
 from django.test.client import Client
 from django.core.urlresolvers import reverse
-from django.contrib.auth.models import User
-from django.contrib.sites.models import Site
 from django.http import QueryDict
 from django.contrib.formtools.utils import security_hash
 from django.utils.http import urlencode
 
+from base import BaseTestCase
 from ..constants import *
-from ..models import Account, Event, Booking, Attendee
+from ..models import Account, Event, Booking, Attendee, Ticket
 from ..forms import attendeeactionsform_factory, AttendeesEmailForm
-
-class BaseTestCase(test.TestCase):
-    def setUp(self):
-        self.username, self.email, self.password = 'myusername', 'myemail@example.com', 'mypassword'
-        self.account = Account.objects.create(name='myaccount')
-        self.user = User.objects.create_user(self.username, self.email, self.password,)
-        self.account.users.add(self.user)
-
-        self.event = Event.objects.create(
-            account=self.account,
-            title='mytitle',
-            begins=datetime.today() + timedelta(days=7),
-            ends=datetime.today() + timedelta(days=8),
-        )
-
-        self.http_host = '.'.join((self.account.name, Site.objects.get_current().domain))
-
-    def tearDown(self):
-        self.user.delete()
-        self.account.delete()
 
 class SignupTestCase(test.TestCase):
 
@@ -268,12 +247,12 @@ class EventSiteTestCase(BaseTestCase):
             reverse('event_register', kwargs={'slug':self.event.slug,}),
             data,
             HTTP_HOST=self.http_host,
+            follow=True,
         )
-        response = self.client.post(
-            reverse('event_confirm', kwargs={'slug':self.event.slug, 'booking_id':Booking.objects.get().pk}),
-            {},
-            HTTP_HOST=self.http_host,
-        )
+        next, status_code = response.redirect_chain[0]
+
+        response = self.client.post(next, HTTP_HOST=self.http_host)
+
         self.failUnlessEqual(response.status_code, 302)
         self.assertEquals(self.event.bookings.count(), 1) 
         self.assertEquals(self.event.confirmed_attendees.count(), 2)
