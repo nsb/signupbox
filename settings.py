@@ -116,6 +116,9 @@ INSTALLED_APPS = (
     'signupbox',
 )
 
+AUTH_PROFILE_MODULE = 'signupbox.profile'
+LOGIN_REDIRECT_URL = '/admin/'
+
 #django paypal
 PAYPAL_RECEIVER_EMAIL = ''
 

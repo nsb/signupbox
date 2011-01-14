@@ -5,7 +5,7 @@ from django.core.urlresolvers import reverse
 from django.contrib import messages
 from django.utils.translation import ugettext, ugettext_lazy as _
 
-from ..forms import AccountForm
+from ..forms import AccountForm, ProfileForm
 
 @login_required
 def account_settings(request):
@@ -28,7 +28,13 @@ def account_settings(request):
 @login_required
 def account_profile(request):
     account = request.user.accounts.get()
+
+    if request.method == 'POST':
+        pass
+    else:
+        form = ProfileForm(instance = request.user.get_profile())
+
     return render_to_response(
         'signupbox/profile.html',
-        RequestContext(request),
+        RequestContext(request, {'form': form}),
     )
