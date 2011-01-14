@@ -90,7 +90,10 @@ def event_complete(request, slug, account,):
 
     event = get_object_or_404(Event, account=account, slug=slug)
 
-    return render_to_response('signupbox/event_complete.html', RequestContext(request, {'event': event}))
+    return render_to_response(
+        'signupbox/event_complete.html',
+        RequestContext(request, {'event': event})
+    )
 
 @with_account
 def event_incomplete(request, slug, account,):
