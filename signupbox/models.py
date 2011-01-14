@@ -178,7 +178,7 @@ class Event(models.Model):
 
     @property
     def website(self):
-        return ''.join(('http://', self.account.domain_for_account(), '/', self.slug))
+        return ''.join(('http://', self.account.domain_for_account(), '/', self.slug, '/'))
 
     @property
     def has_payments(self):

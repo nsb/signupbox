@@ -45,7 +45,7 @@ def event_register(request, slug, account):
 def event_confirm(request, slug, booking_id, account,):
 
     event = get_object_or_404(Event, account=account, slug=slug)
-    booking = get_object_or_404(Booking, event=event, id=booking_id)
+    booking = get_object_or_404(Booking, event=event, id=booking_id, confirmed=False)
 
     amount = Ticket.objects.filter(
         attendees__id__in=booking.attendees.values_list('id', flat=True)
@@ -87,7 +87,10 @@ def event_confirm(request, slug, booking_id, account,):
 
 @with_account
 def event_complete(request, slug, account,):
-    return HttpResponse('hejsa')
+
+    event = get_object_or_404(Event, account=account, slug=slug)
+
+    return render_to_response('signupbox/event_complete.html', RequestContext(request, {'event': event}))
 
 @with_account
 def event_incomplete(request, slug, account,):
