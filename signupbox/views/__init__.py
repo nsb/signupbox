@@ -5,7 +5,7 @@ from attendees import event_attendees, event_attendees_edit
 from tickets import event_tickets, event_tickets_edit, event_tickets_add
 from fields import event_fields
 from public import event_site, event_register, event_confirm, event_complete, event_incomplete
-from account import account_settings
+from account import account_settings, account_profile
 __all__ = [
     "index",
     "signup",

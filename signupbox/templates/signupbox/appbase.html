@@ -28,7 +28,7 @@
 
         <ul class="userbox">
           {% if user.is_authenticated %}
-            <li>{% trans "logged in as" %} [<a href="">{{ user.username }}</a>]</li>
+            <li>{% trans "logged in as" %} [<a href="{% url account_profile %}">{{ user.username }}</a>]</li>
             <li><a href="{% url account_settings %}">{% trans "settings" %}</a></li>
             <li><a href="{% url auth_logout %}">{% trans "logout" %}</a></li>
           {% else %}

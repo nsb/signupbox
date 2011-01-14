@@ -24,3 +24,11 @@ def account_settings(request):
         'signupbox/settings.html',
         RequestContext(request, {'form':form})
     )
+
+@login_required
+def account_profile(request):
+    account = request.user.accounts.get()
+    return render_to_response(
+        'signupbox/profile.html',
+        RequestContext(request),
+    )
