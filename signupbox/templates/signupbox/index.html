@@ -4,7 +4,7 @@
 
 {% block main %}
 <div class="headline indent">
-  <h2>{% blocktrans with account.name as account_name %}{{ account_name }}'s events{% endblocktrans %}</h2>
+  <h2>{% blocktrans with account.display_name as name %}{{ name }}'s events{% endblocktrans %}</h2>
   <div><a href="{% url event_create %}">{% trans "Add event" %}</a></div>
 </div>
 

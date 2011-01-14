@@ -67,6 +67,10 @@ class Account(models.Model):
     def __unicode__(self):
         return self.name
 
+    @property
+    def display_name(self):
+        return self.organization or self.name
+
     def domain_for_account(self, request=None):
         """
         find the domain for an accounts public site
