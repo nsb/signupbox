@@ -263,3 +263,10 @@ class EventSiteTestCase(BaseTestCase):
             HTTP_HOST=self.http_host,
         )
         self.failUnlessEqual(response.status_code, 200)
+
+    def testIncomplete(self):
+        response = self.client.get(
+            reverse('event_incomplete', kwargs={'slug':self.event.slug,}),
+            HTTP_HOST=self.http_host,
+        )
+        self.failUnlessEqual(response.status_code, 200)
