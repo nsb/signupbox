@@ -127,6 +127,9 @@ class EventManager(models.Manager):
     def previous(self):
         return self.filter(begins__lt=datetime.now())
 
+    def has_payments(self):
+        return self.tickets.filter(price__gt=0).exists()
+
 class Event(models.Model):
     """
     Event

@@ -12,11 +12,15 @@
   <h3>{% trans "Time and date" %}</h3>
   <p>{% date_span event.begins event.ends %}</p>
 
+  {% if event.venue %}
   <h3>{% trans "Where" %}</h3>
   <p>{{ event.venue }}</p>
+  {% endif %}
 
+  {% if event.has_payments %}
   <h3>{% trans "Price" %}</h3>
   <p>{% price_range event.tickets.all %} {{ event.get_currency_display }}</p>
+  {% endif %}
 
   <h2><a href="{% url event_register event.slug %}">{% trans "Register" %}</a></h2>
 
