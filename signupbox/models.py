@@ -221,7 +221,7 @@ class Ticket(models.Model):
     price = models.DecimalField(max_digits=7, decimal_places=2, default=0)
 
     def __unicode__(self):
-        return self.name
+        return '%s - %s %s' % (self.name, defaultfilters.floatformat(self.price), self.event.get_currency_display())
 
 class Booking(models.Model):
     event = models.ForeignKey(Event, related_name='bookings')
