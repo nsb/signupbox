@@ -264,7 +264,7 @@ class Booking(models.Model):
 
     @property
     def activity(self):
-        return 'this is the activity for booking %d' % self.pk
+        return ', '.join([attendee.display_value for attendee in self.attendees.all()])
 
     def __unicode__(self):
         return u'%s: #%s' % (self.event.title, self.id)
