@@ -89,10 +89,9 @@ def event_confirm(request, slug, booking_id, account,):
                 reverse('event_incomplete', kwargs={'slug':slug}),
                 request.GET.urlencode()
             )
-            callbackurl = 'http://%s%s?%s' % (
+            callbackurl = 'http://%s%s' % (
                 request.get_host(),
-                reverse('event_confirm', kwargs={'slug':slug, 'booking_id':booking.id}),
-                request.GET.urlencode()
+                reverse('quickpay_postback')
             )
             md_input = ''.join(
                 (str(protocol),

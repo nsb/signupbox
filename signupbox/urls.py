@@ -23,4 +23,5 @@ urlpatterns = patterns('signupbox.views',
 
 urlpatterns += patterns('',
     (r'^payments/paypal/ipn/', include('paypal.standard.ipn.urls')),
+    (r'^payments/quickpay/postback/', include('quickpay.urls')),
 )
