@@ -14,7 +14,7 @@ def index(request):
 
     return render_to_response(
         'signupbox/index.html',
-        RequestContext(request, {'events':account.events}),
+        RequestContext(request, {'account':account}),
     )
 
 def signup(request):

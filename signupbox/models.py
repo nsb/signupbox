@@ -9,6 +9,7 @@ from django.db.models import signals, Max, Sum
 from django.utils.translation import ugettext, ugettext_lazy as _
 from django.template import defaultfilters
 from django.contrib.auth.models import User, Group, Permission
+from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 from django.contrib.sites.models import Site
 from django.template import defaultfilters
@@ -114,6 +115,19 @@ def create_profile(sender, instance, created, **kwargs):
         Profile.objects.create(user=instance)
 signals.post_save.connect(create_profile, sender=User)
 
+class Activity(models.Model):
+    account = models.ForeignKey(Account, related_name = 'activities')
+
+    activity = models.CharField(max_length = 512)
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    content_type = models.ForeignKey(ContentType)
+    object_id = models.PositiveIntegerField()
+    content_object = generic.GenericForeignKey('content_type', 'object_id')
+
+    def __unicode__(self):
+        return self.activity
+
 EVENT_STATUS_CHOICES = (
     (EVENT_STATUS_OPEN, _('Open')),
     (EVENT_STATUS_CLOSED, _('Closed')),
@@ -173,6 +187,8 @@ class Event(models.Model):
         db_index=True
     )
     currency = models.CharField(max_length=3, choices=CURRENCY_CHOICES, blank=True, default='DKK')
+
+    activities = generic.GenericRelation(Activity)
 
     objects = EventManager()
 
@@ -245,6 +261,10 @@ class Booking(models.Model):
     def ordernum(self):
         # Quickpay requires ordernum to be at least 4 characaters long, so prepend with zero's
         return ''.join(['0' for i in range(4-len(str(self.pk)))]) + str(self.pk)
+
+    @property
+    def activity(self):
+        return 'this is the activity for booking %d' % self.pk
 
     def __unicode__(self):
         return u'%s: #%s' % (self.event.title, self.id)
@@ -418,6 +438,12 @@ def on_booking_confirmed(sender, booking_id, **kwargs):
     booking = Booking.objects.get(pk=booking_id)
     booking.confirmed = True
     booking.save()
+
+    Activity.objects.create(
+        account = booking.event.account,
+        content_object = booking,
+        activity = booking.activity,
+    )
 
     process_booking.delay(booking)
 
