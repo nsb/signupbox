@@ -36,7 +36,9 @@
   {% if account.activities.all %}
   <div class="activities block">
   {% for activity in account.activities.all %}
-    <div>{{ activity }}</div>
+    <div class="activity row">
+      <div class="column">{{ activity.timestamp|date }}</div><div class="column">{{ activity }}</div>
+    </div>
   {% endfor %} 
   </div>
   {% else %}
