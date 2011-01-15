@@ -81,7 +81,7 @@ def event_confirm(request, slug, booking_id, account,):
             )
             callbackurl = 'http://%s%s' % (
                 request.get_host(),
-                reverse('quickpay_postback')
+                reverse('quickpay_callback')
             )
             md_input = ''.join(
                 (str(protocol),
