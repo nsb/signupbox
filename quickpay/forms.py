@@ -4,29 +4,9 @@ from django.conf import settings
 class QuickpayForm(forms.Form):
     """
     """
-
-    #md_input = ''.join(
-        #(form.cleaned_data['msgtype'],
-          #form.cleaned_data['ordernumber'],
-          #form.cleaned_data['amount'],
-          #form.cleaned_data['currency'],
-          #form.cleaned_data['time'],
-          #form.cleaned_data['state'],
-          #form.cleaned_data['qpstat'],
-          #form.cleaned_data['qpstatmsg'],
-          #form.cleaned_data['chstat'],
-          #form.cleaned_data['chstatmsg'],
-          #form.cleaned_data['merchant'],
-          #form.cleaned_data['merchantemail'],
-          #form.cleaned_data['transaction'],
-          #form.cleaned_data['cardtype'],
-          #form.cleaned_data['cardnumber'],
-          #self.event.account.secret_key.strip())
-    #)
-    #self.valid = md5_constructor(md_input).hexdigest() == \
-        #form.cleaned_data['md5check'] and \
-            #form.cleaned_data['qpstat'] == '000'
-
+    def __init__(self, *args, **kwargs):
+        self.secret = kwargs.pop('secret')
+        super(QuickpayForm, self).__init__(*args, **kwargs)
 
     protocol = forms.IntegerField(widget=forms.HiddenInput, required=False, initial=3)
     msgtype = forms.CharField(widget=forms.HiddenInput, required=False, initial='authorize',)
@@ -57,3 +37,31 @@ class QuickpayForm(forms.Form):
     cardnumber = forms.CharField(widget=forms.HiddenInput, required=False)
     transaction = forms.CharField(widget=forms.HiddenInput, required=False)
     description = forms.CharField(widget=forms.HiddenInput, required=False)
+
+    def clean(self):
+
+        md_input = ''.join((
+            self.cleaned_data['msgtype'],
+            self.cleaned_data['ordernumber'],
+            self.cleaned_data['amount'],
+            self.cleaned_data['currency'],
+            self.cleaned_data['time'],
+            self.cleaned_data['state'],
+            self.cleaned_data['qpstat'],
+            self.cleaned_data['qpstatmsg'],
+            self.cleaned_data['chstat'],
+            self.cleaned_data['chstatmsg'],
+            self.cleaned_data['merchant'],
+            self.cleaned_data['merchantemail'],
+            self.cleaned_data['transaction'],
+            self.cleaned_data['cardtype'],
+            self.cleaned_data['cardnumber'],
+            self.secret.strip(),
+        ))
+        valid = md5_constructor(md_input).hexdigest() == \
+            self.cleaned_data['md5check'] and \
+                self.cleaned_data['qpstat'] == '000'
+        if not valid:
+            raise forms.ValidationError('Invalid quickpay transaction')
+
+        return self.cleaned_data

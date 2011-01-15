@@ -6,6 +6,7 @@ from django.db.models import Sum
 from django.views.decorators.csrf import csrf_view_exempt
 from django.utils.hashcompat import md5_constructor
 from django.conf import settings
+from django.utils.functional import curry
 
 from paypal.standard.forms import PayPalPaymentsForm
 from quickpay.forms import QuickpayForm
@@ -53,17 +54,6 @@ def event_confirm(request, slug, booking_id, account,):
     amount = Ticket.objects.filter(
         attendees__id__in=booking.attendees.values_list('id', flat=True)
     ).aggregate(Sum('price'))['price__sum']
-
-    if amount:
-        if account.payment_gateway == 'quickpay':
-            template_name = 'signupbox/event_confirm_quickpay.html'
-            form_class = QuickpayForm
-        else:
-            form_class = PayPalPaymentsForm
-            template_name = 'signupbox/event_confirm_paypal.html'
-    else:
-        form_class = ConfirmForm
-        template_name = 'signupbox/event_confirm.html'
 
     if amount:
         if account.payment_gateway == 'quickpay':
@@ -126,9 +116,9 @@ def event_confirm(request, slug, booking_id, account,):
                 'md5check':md5check
             }
 
+            template_name = 'signupbox/event_confirm_quickpay.html'
+            form_class = curry(QuickpayForm, initial=initial, secret=account.secret_key)
         else:
-
-            # paypal
             initial = {
                 'business':account.paypal_business,
                 'amount':amount,
@@ -141,17 +131,20 @@ def event_confirm(request, slug, booking_id, account,):
                 'cancel_return': "http://%s%s" % (request.get_host(), reverse('event_incomplete', kwargs={'slug':slug})),
             }
 
+            form_class = curry(PayPalPaymentsForm, initial=initial)
+            template_name = 'signupbox/event_confirm_paypal.html'
     else:
-        initial = {}
+        form_class = curry(ConfirmForm, instance=booking, initial={})
+        template_name = 'signupbox/event_confirm.html'
 
     if request.method == 'POST':
 
-        form = form_class(request.POST, instance=booking, initial=initial)
+        form = form_class(request.POST)
         if form.is_valid():
             form.save()
             return redirect(reverse('event_complete', kwargs={'slug':slug}))
     else:
-        form = form_class(initial=initial)
+        form = form_class()
 
         return render_to_response(
             template_name,
