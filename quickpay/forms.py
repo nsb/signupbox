@@ -1,7 +1,7 @@
 from django import forms
 from django.conf import settings
 
-class QuickPayForm(forms.Form):
+class QuickpayForm(forms.Form):
     """
     """
 

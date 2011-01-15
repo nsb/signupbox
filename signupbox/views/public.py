@@ -8,7 +8,7 @@ from django.utils.hashcompat import md5_constructor
 from django.conf import settings
 
 from paypal.standard.forms import PayPalPaymentsForm
-from quickpay.forms import QuickPayForm
+from quickpay.forms import QuickpayForm
 
 from ..decorators import with_account
 from ..models import Event, Booking, Ticket
@@ -57,7 +57,7 @@ def event_confirm(request, slug, booking_id, account,):
     if amount:
         if account.payment_gateway == 'quickpay':
             template_name = 'signupbox/event_confirm_quickpay.html'
-            form_class = QuickPayForm
+            form_class = QuickpayForm
         else:
             form_class = PayPalPaymentsForm
             template_name = 'signupbox/event_confirm_paypal.html'

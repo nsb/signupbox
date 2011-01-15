@@ -1,6 +1,6 @@
 from django.db import models
 
-class QuickPayTransaction(models.Model):
+class QuickpayTransaction(models.Model):
     amount = models.DecimalField(max_digits=7, decimal_places=2,)
     currency = models.CharField(max_length=3)
     time = models.DateTimeField()
