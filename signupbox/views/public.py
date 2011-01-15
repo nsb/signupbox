@@ -118,7 +118,7 @@ def event_confirm(request, slug, booking_id, account,):
 
             template_name = 'signupbox/event_confirm_quickpay.html'
             form_class = curry(QuickpayForm, initial=initial, secret=account.secret_key)
-        else:
+        elif account.payment_gateway == 'paypal':
             initial = {
                 'business':account.paypal_business,
                 'amount':amount,
