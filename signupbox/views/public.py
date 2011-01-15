@@ -76,7 +76,7 @@ def event_confirm(request, slug, booking_id, account,):
             cardtypelock = \
                 "3d-jcb,3d-mastercard,3d-mastercard-dk,3d-visa,3d-visa-dk,american-express," \
                 "american-express-dk,dankort,diners,diners-dk,jcb,mastercard,mastercard-dk,visa,visa-dk"
-            amount = amount * 100
+            amount = int(amount * 100)
             currency = event.currency
             merchant = account.merchant_id
             continueurl = 'http://%s%s?%s' % (
