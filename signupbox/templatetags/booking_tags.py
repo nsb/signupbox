@@ -13,6 +13,10 @@ def paypal_url():
     return getattr(settings, 'PAYPAL_URL', 'https://www.paypal.com/cgi-bin/webscr')
 
 @register.simple_tag
+def quickpay_url():
+    return getattr(settings, 'QUICKPAY_URL', 'https://secure.quickpay.dk/form/')
+
+@register.simple_tag
 def ticket_summary_price(ticket, attendees):
     return '%d %s' % (ticket.price * len(attendees), ticket.event.get_currency_display()) if ticket.price else _('Free')
 

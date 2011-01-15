@@ -4,12 +4,15 @@ from django.template import RequestContext
 from django.core.urlresolvers import reverse
 from django.db.models import Sum
 from django.views.decorators.csrf import csrf_view_exempt
+from django.utils.hashcompat import md5_constructor
+from django.conf import settings
 
 from paypal.standard.forms import PayPalPaymentsForm
+from quickpay.forms import QuickPayForm
 
 from ..decorators import with_account
 from ..models import Event, Booking, Ticket
-from ..forms import bookingform_factory, emptybookingform_factory, ConfirmForm, QuickPayForm
+from ..forms import bookingform_factory, emptybookingform_factory, ConfirmForm
 
 @with_account
 def event_site(request, slug, account):
@@ -51,22 +54,93 @@ def event_confirm(request, slug, booking_id, account,):
         attendees__id__in=booking.attendees.values_list('id', flat=True)
     ).aggregate(Sum('price'))['price__sum']
 
-    form_class = PayPalPaymentsForm if amount else ConfirmForm
-    template_name = 'signupbox/event_confirm_paypal.html' if amount else 'signupbox/event_confirm.html'
+    if amount:
+        if account.payment_gateway == 'quickpay':
+            template_name = 'signupbox/event_confirm_quickpay.html'
+            form_class = QuickPayForm
+        else:
+            form_class = PayPalPaymentsForm
+            template_name = 'signupbox/event_confirm_paypal.html'
+    else:
+        form_class = ConfirmForm
+        template_name = 'signupbox/event_confirm.html'
 
     if amount:
-        # paypal
-        initial = {
-            'business':account.paypal_business,
-            'amount':amount,
-            'currency_code':event.currency,
-            'item_number': booking.pk,
-            'item_name': event.title,
-            'invoice': booking.ordernum,
-            'notify_url': "http://%s%s" % (request.get_host(), reverse('paypal-ipn')),
-            'return_url': "http://%s%s" % (request.get_host(), reverse('event_complete', kwargs={'slug':slug})),
-            'cancel_return': "http://%s%s" % (request.get_host(), reverse('event_incomplete', kwargs={'slug':slug})),
-        }
+        if account.payment_gateway == 'quickpay':
+
+            protocol = 3
+            msgtype = 'authorize'
+            language = settings.LANGUAGE_CODE
+            ordernumber = booking.ordernum
+            autocapture = 1 if account.autocapture else 0
+            cardtypelock = \
+                "3d-jcb,3d-mastercard,3d-mastercard-dk,3d-visa,3d-visa-dk,american-express," \
+                "american-express-dk,dankort,diners,diners-dk,jcb,mastercard,mastercard-dk,visa,visa-dk"
+            amount = amount * 100
+            currency = event.currency
+            merchant = account.merchant_id
+            continueurl = 'http://%s%s?%s' % (
+                request.get_host(),
+                reverse('event_complete', kwargs={'slug':slug}),
+                request.GET.urlencode()
+            )
+            cancelurl = 'http://%s%s?%s' % (
+                request.get_host(),
+                reverse('event_incomplete', kwargs={'slug':slug}),
+                request.GET.urlencode()
+            )
+            callbackurl = 'http://%s%s?%s' % (
+                request.get_host(),
+                reverse('event_confirm', kwargs={'slug':slug, 'booking_id':booking.id}),
+                request.GET.urlencode()
+            )
+            md_input = ''.join(
+                (str(protocol),
+                  msgtype,
+                  merchant,
+                  language,
+                  ordernumber,
+                  str(amount),
+                  currency,
+                  continueurl,
+                  cancelurl,
+                  callbackurl,
+                  str(autocapture),
+                  cardtypelock,
+                  account.secret_key.strip())
+              )
+            md5check = md5_constructor(md_input).hexdigest().lower()
+
+            initial = {
+                'protocol':str(protocol),
+                'msgtype':msgtype,
+                'merchant':merchant,
+                'language':language,
+                'ordernumber':ordernumber,
+                'amount':str(amount),
+                'currency':currency,
+                'continueurl':continueurl,
+                'cancelurl':cancelurl,
+                'callbackurl':callbackurl,
+                'autocapture':str(autocapture),
+                'cardtypelock':cardtypelock,
+                'md5check':md5check
+            }
+
+        else:
+
+            # paypal
+            initial = {
+                'business':account.paypal_business,
+                'amount':amount,
+                'currency_code':event.currency,
+                'item_number': booking.pk,
+                'item_name': event.title,
+                'invoice': booking.ordernum,
+                'notify_url': "http://%s%s" % (request.get_host(), reverse('paypal-ipn')),
+                'return_url': "http://%s%s" % (request.get_host(), reverse('event_complete', kwargs={'slug':slug})),
+                'cancel_return': "http://%s%s" % (request.get_host(), reverse('event_incomplete', kwargs={'slug':slug})),
+            }
 
     else:
         initial = {}

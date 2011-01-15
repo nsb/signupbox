@@ -1,0 +1,13 @@
+{% extends "signupbox/event_confirm.html" %}
+{% load i18n %}
+{% load booking_tags %}
+
+{% block confirm_form %}
+<form action="{% quickpay_url %}" method="post">
+
+  {{ form }}
+
+  <input type="submit" value="{% trans "Confirm registration and continue to payment" %}">
+
+</form>
+{% endblock confirm_form %}
