@@ -34,7 +34,7 @@ class Account(models.Model):
     street = models.CharField(max_length=255, verbose_name=_('Street'), blank=True)
     zip_code = models.CharField(max_length=255, verbose_name=_('Zip code'), blank=True)
     city = models.CharField(max_length=255, verbose_name=_('City'), blank=True)
-    country = models.CharField(max_length=255, verbose_name=_('City'), blank=True)
+    country = models.CharField(max_length=255, verbose_name=_('Country'), blank=True)
     phone = models.CharField(max_length=32, verbose_name=_('Phone number'), blank=True)
     email = models.EmailField(verbose_name=_('Email address'), blank=True)
     cvr = models.CharField(max_length=32, verbose_name=_('CVR number'), blank=True)
