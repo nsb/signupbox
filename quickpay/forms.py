@@ -39,6 +39,7 @@ class QuickpayForm(forms.ModelForm):
     merchantemail = forms.EmailField(widget=forms.HiddenInput)
     cardtype = forms.CharField(widget=forms.HiddenInput)
     cardnumber = forms.CharField(widget=forms.HiddenInput, required=False)
+    cardexpire = forms.CharField(widget=forms.HiddenInput, required=False)
     transaction = forms.CharField(widget=forms.HiddenInput)
     description = forms.CharField(widget=forms.HiddenInput, required=False)
 
