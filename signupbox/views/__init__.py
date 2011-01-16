@@ -4,7 +4,7 @@ from event import create as event_create, read as event_detail, edit as event_ed
 from attendees import event_attendees, event_attendees_edit
 from tickets import event_tickets, event_tickets_edit, event_tickets_add
 from fields import event_fields
-from public import event_site, event_register, event_confirm, event_complete, event_incomplete
+from public import event_site, event_register, event_confirm, event_complete, event_incomplete, quickpay_callback
 from account import account_settings, account_profile
 __all__ = [
     "index",
@@ -24,4 +24,5 @@ __all__ = [
     "event_complete",
     "event_incomplete",
     "account_settings",
+    "quickpay_callback",
 ]

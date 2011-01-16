@@ -1,5 +1,6 @@
 from django.conf.urls.defaults import *
 
+
 urlpatterns = patterns('signupbox.views',
     (r'^signup/$', 'signup', {}, 'signup',),
     (r'^admin/settings/$', 'account_settings', {}, 'account_settings',),
@@ -19,9 +20,9 @@ urlpatterns = patterns('signupbox.views',
     (r'^(?P<slug>[-\w]+)/register/confirm/(?P<booking_id>[\d]+)/$', 'event_confirm', {}, 'event_confirm',),
     (r'^(?P<slug>[-\w]+)/register/complete/$', 'event_complete', {}, 'event_complete',),
     (r'^(?P<slug>[-\w]+)/register/incomplete/$', 'event_incomplete', {}, 'event_incomplete',),
+    (r'^payments/quickpay/callback/', 'quickpay_callback', {}, 'quickpay_callback'),
 )
 
 urlpatterns += patterns('',
     (r'^payments/paypal/ipn/', include('paypal.standard.ipn.urls')),
-    (r'^payments/quickpay/postback/', include('quickpay.urls')),
 )

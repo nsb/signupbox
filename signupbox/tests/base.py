@@ -10,7 +10,10 @@ from ..models import Account, Event, Booking, Attendee, Ticket
 class BaseTestCase(test.TestCase):
     def setUp(self):
         self.username, self.email, self.password = 'myusername', 'myemail@example.com', 'mypassword'
-        self.account = Account.objects.create(name='myaccount')
+        self.account = Account.objects.create(
+            name = 'myaccount',
+            merchant_id = 'merchant@example.com',
+        )
         self.user = User.objects.create_user(self.username, self.email, self.password,)
         self.account.users.add(self.user)
 

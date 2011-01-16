@@ -10,9 +10,10 @@ from django.utils.functional import curry
 
 from paypal.standard.forms import PayPalPaymentsForm
 from quickpay.forms import QuickpayForm
+from quickpay.views import BaseQuickpayCallback
 
 from ..decorators import with_account
-from ..models import Event, Booking, Ticket
+from ..models import Account, Event, Booking, Ticket
 from ..forms import bookingform_factory, emptybookingform_factory, ConfirmForm
 
 @with_account
@@ -61,7 +62,7 @@ def event_confirm(request, slug, booking_id, account,):
             protocol = 3
             msgtype = 'authorize'
             language = settings.LANGUAGE_CODE
-            ordernumber = booking.ordernum
+            ordernumber = booking.ordernumber
             autocapture = 1 if account.autocapture else 0
             cardtypelock = \
                 "3d-jcb,3d-mastercard,3d-mastercard-dk,3d-visa,3d-visa-dk,american-express," \
@@ -125,7 +126,7 @@ def event_confirm(request, slug, booking_id, account,):
                 'currency_code':event.currency,
                 'item_number': booking.pk,
                 'item_name': event.title,
-                'invoice': booking.ordernum,
+                'invoice': booking.ordernumber,
                 'notify_url': "http://%s%s" % (request.get_host(), reverse('paypal-ipn')),
                 'return_url': "http://%s%s" % (request.get_host(), reverse('event_complete', kwargs={'slug':slug})),
                 'cancel_return': "http://%s%s" % (request.get_host(), reverse('event_incomplete', kwargs={'slug':slug})),
@@ -152,7 +153,7 @@ def event_confirm(request, slug, booking_id, account,):
         )
 
 @with_account
-def event_complete(request, slug, account,):
+def event_complete(request, slug, account):
 
     event = get_object_or_404(Event, account=account, slug=slug)
 
@@ -162,7 +163,7 @@ def event_complete(request, slug, account,):
     )
 
 @with_account
-def event_incomplete(request, slug, account,):
+def event_incomplete(request, slug, account):
 
     event = get_object_or_404(Event, account=account, slug=slug)
 
@@ -170,3 +171,8 @@ def event_incomplete(request, slug, account,):
         'signupbox/event_incomplete.html',
         RequestContext(request, {'event': event})
     )
+
+class QuickpayCallback(BaseQuickpayCallback):
+    def get_secret(self, request):
+        return Account.objects.by_request(request).secret_key
+quickpay_callback = QuickpayCallback()

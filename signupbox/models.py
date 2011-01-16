@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from datetime import datetime
-import uuid
+import uuid, re
 from urlparse import urlparse
 
 from django.db import models
@@ -15,6 +15,7 @@ from django.contrib.sites.models import Site
 from django.template import defaultfilters
 
 from paypal.standard.ipn.signals import payment_was_successful
+from quickpay.signals import payment_was_successfull as quickpay_payment_was_successfull
 
 from constants import *
 from signals import booking_confirmed
@@ -24,6 +25,26 @@ PAYMENT_GATEWAY_CHOICES = (
     ('paypal', _('PayPal')),
     ('quickpay', _('Quickpay')),
 )
+
+class AccountManager(models.Manager):
+    def by_request(self, request):
+
+        account = None
+        #strip port number
+        host = request.get_host().partition(':')[0]
+        domain = Site.objects.get_current().domain
+
+        try:
+            account = self.get(domain=u'http://%s/' % host)
+        except Account.DoesNotExist:
+            m = re.match('(?P<account_name>[\w]+)\.%s' % domain, host, re.IGNORECASE)
+            if m:
+                try:
+                    account = self.get(name__iexact=m.group('account_name'))
+                except Account.DoesNotExist:
+                    pass
+        return account
+
 
 class Account(models.Model):
     """
@@ -64,6 +85,8 @@ class Account(models.Model):
     )
     account_permissions = models.ManyToManyField(Permission, verbose_name=_('account permissions'), blank=True)
     site = models.ForeignKey(Site, blank=True)
+
+    objects = AccountManager()
 
     def __unicode__(self):
         return self.name
@@ -256,15 +279,18 @@ class Booking(models.Model):
         default=0)
     currency = models.CharField(max_length=3, blank=True)
     confirmed = models.BooleanField(default=False)
-
-    @property
-    def ordernum(self):
-        # Quickpay requires ordernum to be at least 4 characaters long, so prepend with zero's
-        return ''.join(['0' for i in range(4-len(str(self.pk)))]) + str(self.pk)
+    ordernumber = models.CharField(max_length=20)
 
     @property
     def activity(self):
         return ', '.join([attendee.display_value for attendee in self.attendees.all()])
+
+    def save(self, *args, **kwargs):
+
+        if not self.ordernumber:
+            self.ordernumber = ''.join(['0' for i in range(4-len(str(self.pk)))]) + str(self.pk)
+
+        super(Booking, self).save(*args, **kwargs)
 
     def __unicode__(self):
         return u'%s: #%s' % (self.event.title, self.id)
@@ -427,11 +453,16 @@ def create_default_tickets(sender, instance, created, **kwargs):
 # auto create default tickets
 signals.post_save.connect(create_default_tickets, sender=Event)
 
-def on_paypal_payment_successful(sender, **kwargs):
+def on_paypal_payment_success(sender, **kwargs):
     ipn_obj = sender
     booking_confirmed.send(sender=ipn_obj, booking_id=int(ipn_obj.item_number))
+payment_was_successful.connect(on_paypal_payment_success)
 
-payment_was_successful.connect(on_paypal_payment_successful)
+def on_quickpay_payment_success(sender, **kwargs):
+    transaction = sender
+    booking = Booking.objects.get(ordernumber=transaction.ordernumber)
+    booking_confirmed.send(sender=transaction, booking_id=booking.id)
+quickpay_payment_was_successfull.connect(on_quickpay_payment_success)
 
 def on_booking_confirmed(sender, booking_id, **kwargs):
 
