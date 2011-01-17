@@ -36,6 +36,7 @@ class QuickpayForm(forms.ModelForm):
     cardexpire = forms.CharField(widget=forms.HiddenInput, required=False)
     transaction = forms.CharField(widget=forms.HiddenInput)
     description = forms.CharField(widget=forms.HiddenInput, required=False)
+    fee = forms.CharField(widget=forms.HiddenInput, required=False)
 
     class Meta:
         model = QuickpayTransaction

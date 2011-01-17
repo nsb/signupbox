@@ -20,6 +20,7 @@ class QuickpayTransaction(models.Model):
     cardtype = models.CharField(max_length=32, blank=True)
     cardnumber = models.CharField(max_length=32, blank=True)
     cardexpire = models.CharField(max_length=4, blank=True)
+    fee = models.CharField(max_length=10, blank=True)
     md5check = models.CharField(max_length=32)
 
     def __init__(self, *args, **kwargs):
@@ -48,6 +49,7 @@ class QuickpayTransaction(models.Model):
             self.transaction,
             self.cardtype,
             self.cardnumber,
+            self.fee,
             self.secret,
         ))
         valid = md5_constructor(md_input).hexdigest() == self.md5check and self.qpstat == '000'
