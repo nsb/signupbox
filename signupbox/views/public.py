@@ -51,7 +51,6 @@ def event_confirm(request, slug, booking_id, account,):
 
     event = get_object_or_404(Event, account=account, slug=slug)
     booking = get_object_or_404(Booking, event=event, id=booking_id, confirmed=False)
-
     amount = Ticket.objects.filter(
         attendees__id__in=booking.attendees.values_list('id', flat=True)
     ).aggregate(Sum('price'))['price__sum']
@@ -62,7 +61,7 @@ def event_confirm(request, slug, booking_id, account,):
             protocol = 3
             msgtype = 'authorize'
             language = settings.LANGUAGE_CODE
-            ordernumber = booking.ordernumber
+            ordernumber = ''.join(['0' for i in range(4-len(booking.ordernumber))]) + booking.ordernumber
             autocapture = 1 if account.autocapture else 0
             cardtypelock = \
                 "3d-jcb,3d-mastercard,3d-mastercard-dk,3d-visa,3d-visa-dk,american-express," \

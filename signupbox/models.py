@@ -279,18 +279,14 @@ class Booking(models.Model):
         default=0)
     currency = models.CharField(max_length=3, blank=True)
     confirmed = models.BooleanField(default=False)
-    ordernumber = models.CharField(max_length=20)
 
     @property
     def activity(self):
         return ', '.join([attendee.display_value for attendee in self.attendees.all()])
 
-    def save(self, *args, **kwargs):
-
-        if not self.ordernumber:
-            self.ordernumber = ''.join(['0' for i in range(4-len(str(self.pk)))]) + str(self.pk)
-
-        super(Booking, self).save(*args, **kwargs)
+    @property
+    def ordernumber(self):
+        return str(self.pk)
 
     def __unicode__(self):
         return u'%s: #%s' % (self.event.title, self.id)
@@ -460,7 +456,7 @@ payment_was_successful.connect(on_paypal_payment_success)
 
 def on_quickpay_payment_success(sender, **kwargs):
     transaction = sender
-    booking = Booking.objects.get(ordernumber=transaction.ordernumber)
+    booking = Booking.objects.get(pk=int(transaction.ordernumber.lstrip('0')))
     booking_confirmed.send(sender=transaction, booking_id=booking.id)
 quickpay_payment_was_successfull.connect(on_quickpay_payment_success)
 
