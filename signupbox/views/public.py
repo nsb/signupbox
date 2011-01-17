@@ -7,6 +7,7 @@ from django.views.decorators.csrf import csrf_view_exempt
 from django.utils.hashcompat import md5_constructor
 from django.conf import settings
 from django.utils.functional import curry
+from django.views.decorators.csrf import csrf_exempt
 
 from paypal.standard.forms import PayPalPaymentsForm
 from quickpay.forms import QuickpayForm
@@ -174,4 +175,5 @@ def event_incomplete(request, slug, account):
 class QuickpayCallback(BaseQuickpayCallback):
     def get_secret(self, request):
         return Account.objects.by_request(request).secret_key
-quickpay_callback = QuickpayCallback()
+
+quickpay_callback = csrf_exempt(QuickpayCallback())
