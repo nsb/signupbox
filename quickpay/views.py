@@ -3,12 +3,13 @@ from django.views.decorators.http import require_http_methods
 from django.http import HttpResponse, HttpResponseBadRequest
 
 from forms import QuickpayForm
+from models import QuickpayTransaction
 
 class BaseQuickpayCallback(object):
 
     def  __call__(self, request, *args, **kwargs):
         if request.method == 'POST':
-            form = QuickpayForm(request.POST, secret=self.get_secret(request))
+            form = QuickpayForm(request.POST, instance=QuickpayTransaction(secret=self.get_secret(request)))
             if form.is_valid():
                 transaction = form.save()
                 return HttpResponse()

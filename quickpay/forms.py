@@ -1,17 +1,11 @@
 from django import forms
 from django.conf import settings
-from django.utils.hashcompat import md5_constructor
 
 from models import QuickpayTransaction
-from signals import payment_was_successfull
 
 class QuickpayForm(forms.ModelForm):
     """
     """
-    def __init__(self, *args, **kwargs):
-        self.secret = kwargs.pop('secret')
-        super(QuickpayForm, self).__init__(*args, **kwargs)
-
     protocol = forms.IntegerField(widget=forms.HiddenInput, required=False, initial=3)
     msgtype = forms.CharField(widget=forms.HiddenInput, initial='authorize',)
     language = forms.CharField(initial=settings.LANGUAGE_CODE, required=False, widget=forms.HiddenInput)
@@ -42,39 +36,6 @@ class QuickpayForm(forms.ModelForm):
     cardexpire = forms.CharField(widget=forms.HiddenInput, required=False)
     transaction = forms.CharField(widget=forms.HiddenInput)
     description = forms.CharField(widget=forms.HiddenInput, required=False)
-
-    def clean(self):
-
-        md_input = ''.join((
-            self.cleaned_data['msgtype'],
-            self.cleaned_data['ordernumber'],
-            self.cleaned_data['amount'],
-            self.cleaned_data['currency'],
-            self.cleaned_data['time'],
-            str(self.cleaned_data['state']),
-            self.cleaned_data['qpstat'],
-            self.cleaned_data['qpstatmsg'],
-            self.cleaned_data['chstat'],
-            self.cleaned_data['chstatmsg'],
-            self.cleaned_data['merchant'],
-            self.cleaned_data['merchantemail'],
-            self.cleaned_data['transaction'],
-            self.cleaned_data['cardtype'],
-            self.cleaned_data['cardnumber'],
-            self.secret,
-        ))
-        valid = md5_constructor(md_input).hexdigest() == \
-            self.cleaned_data['md5check'] and \
-                self.cleaned_data['qpstat'] == '000'
-        if not valid:
-            raise forms.ValidationError('Invalid quickpay transaction')
-
-        return self.cleaned_data
-
-    def save(self, *args, **kwargs):
-        ret = super(QuickpayForm, self).save(*args, **kwargs)
-        payment_was_successfull.send(ret)
-        return ret
 
     class Meta:
         model = QuickpayTransaction
