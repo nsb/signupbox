@@ -28,4 +28,15 @@ body {
 
 #event_register {
 
+  fieldset {
+
+    margin-bottom: 10px;
+
+    &.extra {
+      padding-top: 20px;
+      border-top: solid $color3 1px;
+    }
+
+  }
+
 }

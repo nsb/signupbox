@@ -21,8 +21,8 @@
     {% endfor %}
     </div>
 
-    <div id="add-attendee"><a href="#">{% trans "Add extra attendee" %}</a></div>
     <div>
+      <span id="add-attendee"><a  href="#">{% trans "Add extra attendee" %}</a> {% trans "or" %}</span>
       <input type="submit" value="{% trans "Continue" %}" />
     </div>
   </form>
@@ -33,7 +33,7 @@
 
 {% block templates %}
 <script type="text/html" id="AttendeeAddExtra">
-<fieldset>
+<fieldset class="extra">
   {% for field in empty_form %}
     {% include "signupbox/includes/field.html" %}
   {% endfor %}
