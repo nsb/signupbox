@@ -115,6 +115,7 @@ INSTALLED_APPS = (
     'djcelery',
     'ghettoq',
     'paypal.standard.ipn',
+    'objperms',
     'quickpay',
     'signupbox',
 )

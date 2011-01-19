@@ -4,6 +4,8 @@ from django.contrib.auth import authenticate, login
 from django.shortcuts import render_to_response, redirect
 from django.template import RequestContext
 
+from objperms.models import ObjectPermission 
+
 from ..forms import RegistrationForm
 from ..models import Account
 
@@ -27,7 +29,14 @@ def signup(request):
                 form.cleaned_data['username'], form.cleaned_data['email'], form.cleaned_data['password']
             )
             account.users.add(user)
-            # TODO: make user admin for account !!!
+
+            ObjectPermission.objects.create(
+                user = user,
+                content_object = account,
+                can_view = True,
+                can_change = True,
+                can_delete = True,
+            )
 
             # log the user in
             user = authenticate(username=form.cleaned_data['username'], password=form.cleaned_data['password'])
