@@ -120,6 +120,11 @@ INSTALLED_APPS = (
     'signupbox',
 )
 
+AUTHENTICATION_BACKENDS = (
+    'objperms.backend.ObjectPermBackend',
+    'django.contrib.auth.backends.ModelBackend',
+)
+
 AUTH_PROFILE_MODULE = 'signupbox.profile'
 LOGIN_REDIRECT_URL = '/admin/'
 

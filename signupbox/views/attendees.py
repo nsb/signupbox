@@ -14,10 +14,28 @@ from attendee_actions import AttendeeActions
 
 class AttendeesActionWizard(FormWizard):
 
-    def parse_params(self, request, *args, **kwargs):
+    def parse_params(self, request, slug, *args, **kwargs):
 
-        account = request.user.accounts.get()
-        self.event = get_object_or_404(Event, account=account, slug=kwargs['slug'])
+        account=request.user.accounts.get()
+        self.event = get_object_or_404(Event, account=account, slug=slug)
+
+        #query = request.GET.copy()
+        #if not 'show' in query:
+            #query['show'] = 'confirmed'
+
+        #self.filter_form = RegistrationListFilterForm(query)
+        #if self.filter_form.is_valid():
+            #show = self.filter_form.cleaned_data['show']
+            #find = self.filter_form.cleaned_data['find']
+
+            #if show:
+                #qs = qs.filter(status=show)
+            #if find:
+                #qs = qs.filter(registrationdata__value__icontains=find).distinct()
+
+        attendees = self.event.confirmed_attendees.all()
+
+        self.form_list = [attendeeactionsform_factory(attendees), None]
 
     def get_template(self, step):
         if step == 0:
@@ -59,26 +77,7 @@ class AttendeesActionWizard(FormWizard):
 @login_required
 def event_attendees(request, slug,):
 
-        account=request.user.accounts.get()
-        event = get_object_or_404(Event, account=account, slug=slug)
-
-        #query = request.GET.copy()
-        #if not 'show' in query:
-            #query['show'] = 'confirmed'
-
-        #self.filter_form = RegistrationListFilterForm(query)
-        #if self.filter_form.is_valid():
-            #show = self.filter_form.cleaned_data['show']
-            #find = self.filter_form.cleaned_data['find']
-
-            #if show:
-                #qs = qs.filter(status=show)
-            #if find:
-                #qs = qs.filter(registrationdata__value__icontains=find).distinct()
-
-        attendees = event.confirmed_attendees.all()
-
-        return AttendeesActionWizard([attendeeactionsform_factory(attendees), None])(request, slug=slug)
+    return AttendeesActionWizard([None, None])(request, slug=slug)
 
 @login_required
 def event_attendees_edit(request, slug, attendee_id):
