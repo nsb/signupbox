@@ -117,6 +117,7 @@ INSTALLED_APPS = (
     'paypal.standard.ipn',
     'objperms',
     'quickpay',
+    'activities',
     'signupbox',
 )
 

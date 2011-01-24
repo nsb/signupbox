@@ -9,13 +9,13 @@ from django.db.models import signals, Max, Sum
 from django.utils.translation import ugettext, ugettext_lazy as _
 from django.template import defaultfilters
 from django.contrib.auth.models import User, Group, Permission
-from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 from django.contrib.sites.models import Site
 from django.template import defaultfilters
 
 from paypal.standard.ipn.signals import payment_was_successful
 from quickpay.signals import payment_was_successfull as quickpay_payment_was_successfull
+from activities.models import Activity
 
 from constants import *
 from signals import booking_confirmed
@@ -92,6 +92,10 @@ class Account(models.Model):
         return self.name
 
     @property
+    def activities(self):
+        return Activity.objects.filter(object_id__in=self.events.values_list('id', flat=True))
+
+    @property
     def display_name(self):
         return self.organization or self.name
 
@@ -137,19 +141,6 @@ def create_profile(sender, instance, created, **kwargs):
     if created:
         Profile.objects.create(user=instance)
 signals.post_save.connect(create_profile, sender=User)
-
-class Activity(models.Model):
-    account = models.ForeignKey(Account, related_name = 'activities')
-
-    activity = models.CharField(max_length = 512)
-    timestamp = models.DateTimeField(auto_now_add=True)
-
-    content_type = models.ForeignKey(ContentType)
-    object_id = models.PositiveIntegerField()
-    content_object = generic.GenericForeignKey('content_type', 'object_id')
-
-    def __unicode__(self):
-        return self.activity
 
 EVENT_STATUS_CHOICES = (
     (EVENT_STATUS_OPEN, _('Open')),
@@ -304,7 +295,7 @@ FIELD_TYPE_CHOICES = (
 class Field(models.Model):
     """
     """
-    event = models.ForeignKey(Event, related_name='fields')
+    event = models.ForeignKey(Event, related_name='fields', null=True)
     label = models.CharField(max_length=255, verbose_name=_('Label'))
     help_text = models.CharField(max_length=255, blank=True, verbose_name=_('Help text'))
     type = models.CharField(max_length=255, choices=FIELD_TYPE_CHOICES, verbose_name=_('Type'), default=TEXT_FIELD)
@@ -472,12 +463,6 @@ def on_booking_confirmed(sender, booking_id, **kwargs):
     booking = Booking.objects.get(pk=booking_id)
     booking.confirmed = True
     booking.save()
-
-    Activity.objects.create(
-        account = booking.event.account,
-        content_object = booking,
-        activity = booking.activity,
-    )
 
     process_booking.delay(booking)
 

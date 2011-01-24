@@ -2,6 +2,8 @@ from celery.decorators import task
 from django.core.mail import send_mass_mail, send_mail
 from django.contrib.sites.models import Site
 
+from activities.models import Activity
+
 @task
 def async_send_mail(recipients, subject, message):
     sender = 'noreply@%s' % Site.objects.get_current().domain
@@ -13,3 +15,8 @@ def process_booking(booking):
     Send mails on booking confirmed
     """
     send_mail('hejsa', 'davs', 'yo@example.com', ['test@example.com',],)
+
+    Activity.objects.create(
+        content_object = booking.event,
+        activity = booking.activity,
+    )
