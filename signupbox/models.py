@@ -374,6 +374,7 @@ ATTENDEE_STATUS_CHOICES = (
 )
 
 class Attendee(models.Model):
+    account = models.ForeignKey(Account, related_name='attendees')
     booking = models.ForeignKey(Booking, related_name='attendees')
     ticket = models.ForeignKey(Ticket, related_name='attendees')
     status = models.CharField(
@@ -384,6 +385,12 @@ class Attendee(models.Model):
     fields = models.ManyToManyField(Field, through="FieldValue")
 
     objects = AttendeeManager()
+
+    def save(self, *args, **kwargs):
+
+        if self.booking:
+            self.account = self.booking.event.account
+        super(Attendee, self).save( *args, **kwargs)
 
     def __unicode__(self):
         try:
