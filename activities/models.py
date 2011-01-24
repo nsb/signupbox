@@ -13,3 +13,7 @@ class Activity(models.Model):
 
     def __unicode__(self):
         return self.activity
+
+    class Meta:
+        verbose_name = 'Activity'
+        verbose_name_plural = 'Activities'
