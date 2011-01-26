@@ -1,0 +1,15 @@
+{% extends "signupbox/event_sub_detail_base.html" %}
+{% load i18n %}
+
+{% block navclass %}attendees{% endblock navclass %}
+
+{% block main %}
+<div class="headline indent">
+  <h2>{% trans "Booking" %}</h2>
+</div>
+
+<div class="indent">
+  {% trans "Booking date" %}: {{ booking.timestamp|date:"SHORT_DATETIME_FORMAT" }}
+</div>
+
+{% endblock main %}

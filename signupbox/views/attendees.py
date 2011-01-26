@@ -109,3 +109,16 @@ def event_attendees_edit(request, slug, attendee_id):
         'signupbox/attendee_edit.html',
         RequestContext(request, {'event':event, 'attendee': attendee, 'form':form}),
     )
+
+@login_required
+def event_booking_detail(request, slug, booking_id):
+
+    account=request.user.accounts.get()
+    event = get_object_or_404(Event, account=account, slug=slug)
+    booking = get_object_or_404(Booking, event=event, id=booking_id)
+
+    return render_to_response(
+        'signupbox/booking_detail.html',
+        RequestContext(request, {'event':event, 'booking':booking}),
+    )
+
