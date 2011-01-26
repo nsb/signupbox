@@ -273,7 +273,16 @@ class Booking(models.Model):
 
     @property
     def activity(self):
-        return ', '.join([attendee.display_value for attendee in self.attendees.all()])
+        count = self.attendees.count()
+        attendees = [attendee.display_value for attendee in self.attendees.all()]
+        if count == 0:
+            return ''
+        elif count == 1:
+            ret = attendees[0]
+        else:
+            ret = ugettext('%s and %s' % (', '.join(attendees[:-1]), attendees[-1]))
+        ret = ret + ugettext(' registered for %s.' % self.event.title)
+        return ret
 
     @property
     def ordernumber(self):
