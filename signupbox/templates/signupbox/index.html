@@ -37,7 +37,7 @@
   <div class="activities block">
   {% for activity in account.activities.all %}
     <div class="activity row">
-      <div class="column">{{ activity.timestamp|date }}</div><div class="column">{{ activity }}</div>
+      <div class="column">{{ activity.timestamp|date:"SHORT_DATETIME_FORMAT" }}</div><div class="column">{{ activity }}</div>
     </div>
   {% endfor %} 
   </div>
