@@ -11,7 +11,7 @@ def date_span(begins, ends):
     default = "j. F, Y"
     if begins and not ends:
         return defaultfilters.date(begins, default)
-    elif ends and begins:
+    elif ends and not begins:
         return defaultfilters.date(ends, default)
     elif not begins and not ends:
         return '-'
