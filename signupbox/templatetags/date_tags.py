@@ -1,5 +1,6 @@
 from django import template
 from django.template import defaultfilters
+from django.utils.translation import ugettext_lazy as _
 
 register = template.Library()
 
@@ -25,3 +26,15 @@ def date_span(begins, ends):
                 defaultfilters.date(begins, fmt), defaultfilters.date(ends, default)
             )
         )
+
+@register.simple_tag
+def datetime_span(begins, ends):
+    """
+    format begin and end date
+    """
+    default = "j. F, Y"
+    time_fmt = "H:i"
+    fn = lambda dt: _('%(date)s at %(time)s') % {'date':defaultfilters.date(dt, default),'time':defaultfilters.time(dt, time_fmt),}
+
+    same_date = begins.date() == ends.date()
+    return ' - '.join((fn(begins), defaultfilters.time(ends, time_fmt) if same_date else fn(ends)))

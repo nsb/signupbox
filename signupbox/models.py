@@ -345,11 +345,18 @@ class AttendeeManager(models.Manager):
 
     def get_query_set(self):
         """
-        add display_value and email attributes to attendee queryset objects
+        add display_label, display_value and email attributes to attendee queryset objects
 
         """
         return super(AttendeeManager, self).get_query_set().extra(
             select={
+                'display_label':
+                """
+                SELECT label from signupbox_fieldvalue, signupbox_field WHERE
+                signupbox_fieldvalue.attendee_id = signupbox_attendee.id AND
+                signupbox_fieldvalue.field_id = signupbox_field.id AND
+                signupbox_field.ordering = 1
+                """,
                 'display_value':
                 """
                 SELECT value from signupbox_fieldvalue, signupbox_field WHERE

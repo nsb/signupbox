@@ -1,5 +1,6 @@
 {% extends "signupbox/event_detail_base.html" %}
 {% load i18n %}
+{% load date_tags %}
 
 {% block main %}
 <div class="headline indent">
@@ -10,7 +11,7 @@
 
   <div class="box">
     <ul>
-      <li><strong>{% trans "Date" %}:</strong> {{ event.date_formatted }}</li>
+      <li><strong>{% trans "Date" %}:</strong> {% datetime_span event.begins event.ends %}</li>
       <li><strong>{% trans "Venue" %}:</strong> {{ event.venue }}</li>
       <li>
         <strong>{% trans "Capacity" %}:</strong>

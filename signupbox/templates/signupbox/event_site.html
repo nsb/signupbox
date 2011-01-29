@@ -11,7 +11,7 @@
   <p>{{ event.description }}</p>
 
   <h3>{% trans "Time and date" %}</h3>
-  <p>{% date_span event.begins event.ends %}</p>
+  <p>{% datetime_span event.begins event.ends %}</p>
 
   {% if event.venue %}
   <h3>{% trans "Where" %}</h3>
