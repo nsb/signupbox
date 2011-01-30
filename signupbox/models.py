@@ -260,7 +260,7 @@ class Ticket(models.Model):
 class Booking(models.Model):
     event = models.ForeignKey(Event, related_name='bookings')
     timestamp = models.DateTimeField(auto_now_add=True, db_index=True)
-    notes = models.CharField(max_length=255, blank=True, verbose_name=_('Notes'))
+    notes = models.TextField(blank=True)
     description = models.CharField(max_length=1024, blank=True)
     transaction = models.CharField(max_length=255, blank=True)
     cardtype = models.CharField(max_length=255, blank=True)
@@ -270,7 +270,6 @@ class Booking(models.Model):
         default=0)
     currency = models.CharField(max_length=3, blank=True)
     confirmed = models.BooleanField(default=False)
-    notes = models.TextField(blank=True)
 
     @property
     def activity(self):
