@@ -1,0 +1,1 @@
+{% load i18n %}{% blocktrans with event.title as title %}You have been registered for {{ title }}.{% endblocktrans %}

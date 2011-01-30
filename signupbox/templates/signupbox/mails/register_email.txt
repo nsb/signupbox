@@ -1,0 +1,18 @@
+{% load i18n %}
+{% load date_tags %}
+{% block intro %}{% blocktrans with event.title as title %}You have been registered for {{ title }}.{% endblocktrans %}{% endblock intro %}
+
+{% blocktrans with booking.id as booking %}Booking number: #{{ booking }}{% endblocktrans %}
+{{ attendee.display_label }}: {{ attendee.display_value }}
+{% trans "Event:" %} {{ event.title }} ({{ event.website }})
+{% trans "Place:" %} {{ event.venue }}, {{ event.address }}, {{ event.zip_code }} {{ event.city }}
+{% trans "Time and date:" %} {% date_span event.begins event.ends %}
+{% block booking_info %}{% endblock booking_info %}
+{{ extra_info }}
+--
+{% with event.account as account %} 
+{{ account.organization }}
+{{ account.street }}, {{ account.city }} {{ account.zip_code }}
+{% if account.phone %}{% trans "phone:" %} {{ account.phone }}{% endif %}
+{% if account.email %}{% trans "mail:" %} {{ account.email }}{% endif %}
+{% endwith %}

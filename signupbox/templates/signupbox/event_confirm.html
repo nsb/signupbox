@@ -4,22 +4,33 @@
 
 {% block main %}
 
-{% regroup booking.attendees.all by ticket as summary_list %}
+<div id="event_confirm">
 
+<h3>{% trans "Confirm registration" %}</h3>
+<p>{% blocktrans with event.title as title %}Registration for {{ title }}.{% endblocktrans %}</p>
+
+
+{% block summary %}
+{% regroup booking.attendees.all by ticket as summary_list %}
 <table>
   <thead>
-    <tr><th>{% trans "Kategori" %}</th><th>{% trans "Count" %}</th><th>{% trans "Price" %}</th></tr>
+    <tr>
+      <th>{% trans "Category" %}</th>
+      <th>{% trans "Count" %}</th>
+      <th class="last">{% trans "Collected price" %}</th>
+    </tr>
   </thead>
   <tbody>
   {% for s in summary_list %}
     <tr>
       <td>{{ s.grouper }}</td>
       <td>{{ s.list|length }}</td>
-      <td>{% ticket_summary_price s.grouper s.list %}</td>
+      <td class="last">{% trans "Free" %}</td>
     </tr>
   {% endfor %}
   </tbody>
 </table>
+{% endblock summary %}
 
 {% block confirm_form %}
 <form action="{% url event_confirm event.slug booking.id %}" method="post">
@@ -31,5 +42,7 @@
   </div>
 </form>
 {% endblock confirm_form %}
+
+</div>
 
 {% endblock main %}

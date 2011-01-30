@@ -1,0 +1,31 @@
+{% extends "signupbox/event_confirm.html" %}
+{% load i18n %}
+{% load booking_tags %}
+
+{% block summary %}
+{% regroup booking.attendees.all by ticket as summary_list %}
+<table>
+  <thead>
+    <tr>
+      <th>{% trans "Category" %}</th>
+      <th>{% trans "Item price" %}</th>
+      <th>{% trans "Count" %}</th>
+      <th class="last">{% trans "Collected price" %}</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for s in summary_list %}
+    <tr>
+      <td>{{ s.grouper }}</td>
+      <td>{{ s.grouper.price }} {{ event.get_currency_display }}</td>
+      <td>{{ s.list|length }}</td>
+      <td class="last">{% ticket_summary_price s.grouper s.list %}</td>
+    </tr>
+  {% endfor %}
+    <tr>
+      <th colspan="3">{% trans "Total price" %} <small>{% trans "Incl. vat" %}</small></th>
+      <td class="last">{{ total_price|floatformat:"-2" }} {{ event.get_currency_display }}</td>
+    </tr>
+  </tbody>
+</table>
+{% endblock summary %}

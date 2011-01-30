@@ -1,0 +1,11 @@
+{% extends "signupbox/mails/register_email.txt" %}
+{% load i18n %}
+{% block intro %}
+{% blocktrans with event.title as title %}Thank you for your recent booking for {{ title }}.{% endblocktrans %}
+{% endblock intro %}
+{% block booking_info %}
+{% blocktrans with booking.amount|floatformat:"-2" as amount and event.get_currency_display as currency %}Price: {{ amount }} {{ currency }}{% endblocktrans %}
+{% if booking.transaction %}
+{% blocktrans with booking.transaction as transaction %}Transaction no.: {{ transaction }}{% endblocktrans %}
+{% blocktrans with booking.timestamp|date as timestamp %}Transaction date: {{ timestamp }}{% endblocktrans %}{% endif %}
+{% endblock booking_info %}

@@ -40,3 +40,33 @@ body {
   }
 
 }
+
+
+#event_confirm {
+
+  table {
+  }
+
+  th, td {
+    padding: 10px;
+
+    &.last {
+      text-align: right;
+    } 
+  }
+
+  thead {
+    th {
+      background-color: $color3;
+    }
+  }
+
+  th {
+    font-weight: bold;
+  }
+
+  th, td {
+    background-color: $color4;
+  }
+
+}
