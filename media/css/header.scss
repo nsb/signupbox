@@ -10,7 +10,6 @@
   left: 0;
   right: 0;
   z-index: -1;
-  @include gradient($color1 - $dark);
 }
 #header {
   background-color: transparent;
@@ -34,7 +33,7 @@
 
     a {
       span {
-        /* color: $color5; */
+        color: $color5;
       }
     }
   }
