@@ -83,7 +83,6 @@ class Account(models.Model):
         blank=True,
         help_text=_("In addition to the permissions manually assigned, this account will also get all permissions granted to each group it is in.")
     )
-    account_permissions = models.ManyToManyField(Permission, verbose_name=_('account permissions'), blank=True)
     site = models.ForeignKey(Site, blank=True)
 
     objects = AccountManager()

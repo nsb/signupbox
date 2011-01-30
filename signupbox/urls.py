@@ -4,6 +4,8 @@ from django.conf.urls.defaults import *
 urlpatterns = patterns('signupbox.views',
     (r'^signup/$', 'signup', {}, 'signup',),
     (r'^admin/settings/$', 'account_settings', {}, 'account_settings',),
+    (r'^admin/members/$', 'account_members', {}, 'account_members',),
+    (r'^admin/permissions/(?P<user_id>[\d]+)/$', 'account_permissions', {}, 'account_permissions',),
     (r'^admin/profile/$', 'account_profile', {}, 'account_profile',),
     (r'^admin/add/$', 'event_create', {}, 'event_create',),
     (r'^admin/(?P<slug>[-\w]+)/$', 'event_detail', {}, 'event_detail',),

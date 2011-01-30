@@ -1,0 +1,43 @@
+{% extends "signupbox/appbase.html" %}
+{% load i18n %}
+
+{% block main %}
+<div class="headline indent">
+  <h2>{% trans "Access and Permissions" %}</h2>
+</div>
+
+<div class="indent">
+
+  <h3>{% trans "I want to..." %}</h3>
+
+  {% for user, form in members %}
+  <div>
+    <h4>{{ user.get_full_name|default:user }}</h4>
+    <a href="#">{% trans "Edit" %}</a>
+    <a href="#">{% trans "Delete" %}</a>
+
+    <form method="POST" action="{% url account_permissions user.id %}">
+      {% csrf_token %}
+      {% for field in form %}
+        {% include "signupbox/includes/field.html" %}
+      {% endfor %}
+      <div>
+        <input type="submit" value="{% trans "Save" %}" />
+      </div>
+    </form>
+  </div>
+  {% endfor %}
+
+  <form action="{% url account_settings %}" method="POST">
+    {% csrf_token %}
+    {% for field in form %}
+      {% include "signupbox/includes/field.html" %}
+    {% endfor %}
+    <div>
+      <input type="submit" value="{% trans "Send" %}" />
+    </div>
+  </form>
+
+</div>
+
+{% endblock main %}
