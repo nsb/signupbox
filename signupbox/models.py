@@ -270,6 +270,7 @@ class Booking(models.Model):
         default=0)
     currency = models.CharField(max_length=3, blank=True)
     confirmed = models.BooleanField(default=False)
+    notes = models.TextField(blank=True)
 
     @property
     def activity(self):

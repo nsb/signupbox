@@ -101,7 +101,7 @@ def attendeeformset_factory(event):
 
     return AttendeeFormSet
 
-def bookingform_factory(event, extra=1):
+def registerform_factory(event, extra=1):
     """
     Attendee formset for event
     """
@@ -111,7 +111,7 @@ def bookingform_factory(event, extra=1):
     )
     return formset_factory(attendee_form, formset=attendeeformset_factory(event), extra=extra)
 
-def emptybookingform_factory(event, is_extra=False):
+def emptyregisterform_factory(event, is_extra=False):
     """
     Attendee formset for event
     """

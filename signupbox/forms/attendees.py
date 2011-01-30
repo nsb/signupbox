@@ -3,6 +3,8 @@ from django.utils.translation import ungettext, ugettext, ugettext_lazy as _
 
 from ..constants import *
 
+from ..models import Booking
+
 ACTION_CHOICES = (
     ('', _('Actions...')),
     ('confirm', _('Confirm')),
@@ -48,3 +50,8 @@ def attendeeactionsform_factory(attendee_qs):
             queryset=attendee_qs,
         )
     return AttendeeActionsForm
+
+class BookingForm(forms.ModelForm):
+    class Meta:
+        model = Booking
+        fields = ('notes',)

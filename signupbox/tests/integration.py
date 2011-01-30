@@ -180,6 +180,21 @@ class AdminTestCase(BaseTestCase):
         )
         self.assertRedirects(response, reverse('event_attendees', kwargs={'slug':self.event.slug,}),)
 
+    def testBookingDetail(self):
+        self.client.login(username=self.username, password=self.password)
+
+        response = self.client.get(
+            reverse('event_booking_detail', kwargs={'slug':self.event.slug, 'booking_id':self.booking.pk,}),
+        )
+        self.failUnlessEqual(response.status_code, 200)
+
+        response = self.client.post(
+            reverse('event_booking_detail', kwargs={'slug':self.event.slug, 'booking_id':self.booking.pk,},), 
+            {'notes': 'my booking notes',},
+        )
+        self.assertRedirects(response, reverse('event_attendees', kwargs={'slug':self.event.slug,}),)
+        self.assertEquals('my booking notes', Booking.objects.get(pk=self.booking.pk).notes)
+
     def testFields(self):
         self.client.login(username=self.username, password=self.password)
 

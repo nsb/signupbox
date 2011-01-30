@@ -9,7 +9,7 @@ from django.contrib.formtools.wizard import FormWizard
 
 from ..constants import *
 from ..models import Event, Booking, Attendee, Field, Ticket
-from ..forms import attendeeactionsform_factory, AttendeesExportForm, AttendeesEmailForm, attendeeform_factory
+from ..forms import attendeeactionsform_factory, AttendeesExportForm, AttendeesEmailForm, attendeeform_factory, BookingForm
 from attendee_actions import AttendeeActions
 
 class AttendeesActionWizard(FormWizard):
@@ -117,8 +117,17 @@ def event_booking_detail(request, slug, booking_id):
     event = get_object_or_404(Event, account=account, slug=slug)
     booking = get_object_or_404(Booking, event=event, id=booking_id)
 
+    if request.method == 'POST':
+        form = BookingForm(request.POST, instance=booking)
+        if form.is_valid():
+            form.save()
+            messages.success(request, _('Booking updated.'))
+            return redirect(reverse('event_attendees', kwargs={'slug':slug}))
+    else:
+        form = BookingForm(instance=booking)
+
     return render_to_response(
         'signupbox/booking_detail.html',
-        RequestContext(request, {'event':event, 'booking':booking}),
+        RequestContext(request, {'event':event, 'booking':booking, 'form':form,}),
     )
 

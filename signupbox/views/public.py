@@ -15,7 +15,7 @@ from quickpay.views import BaseQuickpayCallback
 
 from ..decorators import with_account
 from ..models import Account, Event, Booking, Ticket
-from ..forms import bookingform_factory, emptybookingform_factory, ConfirmForm
+from ..forms import registerform_factory, emptyregisterform_factory, ConfirmForm
 
 @with_account
 def event_site(request, slug, account):
@@ -31,7 +31,7 @@ def event_site(request, slug, account):
 def event_register(request, slug, account):
 
     event = get_object_or_404(Event, account=account, slug=slug)
-    formset_class = bookingform_factory(event)
+    formset_class = registerform_factory(event)
 
     if request.method == 'POST':
         formset = formset_class(request.POST)
@@ -43,7 +43,7 @@ def event_register(request, slug, account):
 
     return render_to_response(
         'signupbox/event_register.html',
-        RequestContext(request, {'event':event, 'formset':formset, 'empty_form':emptybookingform_factory(event, True)}),
+        RequestContext(request, {'event':event, 'formset':formset, 'empty_form':emptyregisterform_factory(event, True)}),
     )
 
 @with_account
