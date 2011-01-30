@@ -19,7 +19,7 @@ def test():
     """
     run tests before deploy
     """
-    local('python manage.py test signupbox --settings=' + env.settings, capture=False)
+    local('python manage.py test signupbox quickpay objperms --settings=' + env.settings, capture=False)
 
 def update():
     """
