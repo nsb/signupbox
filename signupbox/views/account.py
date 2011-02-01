@@ -66,9 +66,7 @@ def account_permissions(request, user_id):
     if request.method == 'POST':
         form = PermissionsForm(request.POST)
         if form.is_valid():
-            if form.cleaned_data['is_admin']:
-                pass
-            else:
-                pass
+            is_admin = form.cleaned_data['is_admin']
+            account.set_admin_status(user, is_admin)
             messages.success(request, _('Permissions updated.'))
             return redirect(reverse('account_members'))

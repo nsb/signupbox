@@ -12,6 +12,9 @@ from django.contrib.auth.models import User, Group, Permission
 from django.contrib.contenttypes import generic
 from django.contrib.sites.models import Site
 from django.template import defaultfilters
+from django.contrib.contenttypes.models import ContentType
+
+from objperms.models import ObjectPermission
 
 from paypal.standard.ipn.signals import payment_was_successful
 from quickpay.signals import payment_was_successfull as quickpay_payment_was_successfull
@@ -97,6 +100,16 @@ class Account(models.Model):
     @property
     def display_name(self):
         return self.organization or self.name
+
+    def set_admin_status(self, user, is_admin):
+        perm, created = ObjectPermission.objects.get_or_create(
+            user=user,
+            object_id=self.pk,
+            content_type=ContentType.objects.get_for_model(self)
+        )
+        perm.can_view = is_admin
+        perm.can_change = is_admin
+        perm.save()
 
     def domain_for_account(self, request=None):
         """
