@@ -28,7 +28,9 @@ class ProfileForm(forms.ModelForm):
         fields = ()
 
 class InviteForm(forms.Form):
-    email_adresses = forms.CharField()
+    email_adresses = forms.CharField(
+        help_text=_('Add email addresses for each person you wish to invite. Seperate each email address with a space.')
+    )
     message = forms.CharField(widget=forms.Textarea)
     make_admins = forms.BooleanField(
         label = _("Make these users administrators?"),
