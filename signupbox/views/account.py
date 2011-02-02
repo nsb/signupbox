@@ -103,8 +103,10 @@ def account_permissions(request, user_id):
             messages.success(request, _('Permissions updated.'))
             return redirect(reverse('account_members'))
 
-def account_invitation(request):
+def account_invitation(request, key):
     pass
 
-def account_invitation_cancel(request):
-    pass
+@login_required
+@require_http_methods(['POST'])
+def account_invitation_cancel(request, key):
+    return redirect(reverse('account_members'))

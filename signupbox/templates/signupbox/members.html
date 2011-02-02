@@ -28,6 +28,20 @@
   </div>
   {% endfor %}
 
+  {% for invite in invites %}
+    <div>
+      <h4>{{ invite }}</h4>
+      <span>{% blocktrans with invite.created|timesince as timeago %}Invited {{ timeago }} ago{% endblocktrans %}</span>
+      <span class="quiet">{% trans "Awaiting reply" %}</span>
+      <a href="{% url account_invitation_cancel invite.key %}">{% trans "Cancel" %}</a>
+      <form method="POST" action="{% url account_invitation_cancel invite.key %}">
+        {% csrf_token %}
+        <span>{% trans "Cancel this invite" %}</span>
+        <input type="submit" value="{% trans "Cancel" %}" />
+      </form>
+    </div>
+  {% endfor %}
+
   <form action="{% url account_members %}" method="POST">
     {% csrf_token %}
     {% for field in form %}
