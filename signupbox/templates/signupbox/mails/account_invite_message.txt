@@ -1,0 +1,10 @@
+{% load i18n %}
+{% blocktrans with site.name|capfirst as name and site.domain as domain %}You have been invited to a {{ name }} account at http://{{ domain }}/.{% endblocktrans %}
+
+{{ message }}
+
+{% trans "### CLICK THE LINK BELOW TO ACCEPT THIS INVITATION ###" %}
+
+http://{{ invite.url }}
+
+{% trans "Support:" %} support@{{ site.domain }}

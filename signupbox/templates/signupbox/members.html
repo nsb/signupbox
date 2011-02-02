@@ -28,7 +28,7 @@
   </div>
   {% endfor %}
 
-  <form action="{% url account_settings %}" method="POST">
+  <form action="{% url account_members %}" method="POST">
     {% csrf_token %}
     {% for field in form %}
       {% include "signupbox/includes/field.html" %}

@@ -3,6 +3,7 @@
 from datetime import datetime
 import uuid, re
 from urlparse import urlparse
+from random import random
 
 from django.db import models
 from django.db.models import signals, Max, Sum
@@ -13,6 +14,7 @@ from django.contrib.contenttypes import generic
 from django.contrib.sites.models import Site
 from django.template import defaultfilters
 from django.contrib.contenttypes.models import ContentType
+from django.utils.hashcompat import sha_constructor
 
 from objperms.models import ObjectPermission
 
@@ -111,6 +113,10 @@ class Account(models.Model):
         perm.can_change = is_admin
         perm.save()
 
+    def remove_user(self, user):
+        self.set_admin_status(user, False)
+        self.users.remove(user)
+
     def domain_for_account(self, request=None):
         """
         find the domain for an accounts public site
@@ -131,6 +137,36 @@ class Account(models.Model):
     class Meta:
         verbose_name = _("Account")
         verbose_name_plural = _("Accounts")
+
+class AccountInvite(models.Model):
+    account = models.ForeignKey(Account, related_name='invites')
+    key = models.CharField(max_length=40)
+    email = models.EmailField(max_length=128)
+    is_admin = models.BooleanField()
+    is_accepted = models.BooleanField(default=False)
+    created = models.DateTimeField(auto_now_add=True)
+
+    def __unicode__(self):
+        return self.email
+
+    @models.permalink
+    def get_absolute_url(self):
+        return ('signupbox.views.account_invitation', [self.key,])
+
+    def url(self):
+        return '%s%s' % (Site.objects.get_current().domain, self.get_absolute_url()) 
+
+    def _create_key(self):
+        salt = sha_constructor(str(random())).hexdigest()[:5]
+        key = sha_constructor("%s%s%s" % (datetime.now(), salt, self.email)).hexdigest()
+        return key
+
+    def save(self, *args, **kwargs):
+
+        if not self.key:
+            self.key = self._create_key()
+
+        super(AccountInvite, self).save(*args, **kwargs)
 
 class Profile(models.Model):
     """

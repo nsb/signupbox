@@ -3,8 +3,11 @@ from django.conf.urls.defaults import *
 
 urlpatterns = patterns('signupbox.views',
     (r'^signup/$', 'signup', {}, 'signup',),
+    (r'^accounts/invitation/(?P<key>[-\w]{40})/$', 'account_invitation', {}, 'account_invitation',),
+    (r'^accounts/invitation/(?P<key>[-\w]{40})/cancel/$', 'account_invitation_cancel', {}, 'account_invitation_cancel',),
     (r'^admin/settings/$', 'account_settings', {}, 'account_settings',),
     (r'^admin/members/$', 'account_members', {}, 'account_members',),
+    (r'^admin/members/(?P<user_id>[\d]+)/delete/$', 'account_members_delete', {}, 'account_members_delete',),
     (r'^admin/permissions/(?P<user_id>[\d]+)/$', 'account_permissions', {}, 'account_permissions',),
     (r'^admin/profile/$', 'account_profile', {}, 'account_profile',),
     (r'^admin/add/$', 'event_create', {}, 'event_create',),

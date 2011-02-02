@@ -1,0 +1,1 @@
+{% load i18n %}{% blocktrans with site.name|capfirst as name %}You've been invited to a {{ name }} Account{% endblocktrans %}

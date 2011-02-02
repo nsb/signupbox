@@ -32,3 +32,19 @@ def process_booking(booking):
         content_object = booking.event,
         activity = booking.activity,
     )
+
+@task
+def account_send_invites(invites, message):
+    """
+    Send out invites to new account members
+    """
+    send_mass_mail([
+        (render_to_string(
+            'signupbox/mails/account_invite_subject.txt', {'invite':invite, 'site':Site.objects.get_current()}
+          ),
+          render_to_string(
+            'signupbox/mails/account_invite_message.txt', {'invite':invite, 'message':message, 'site':Site.objects.get_current()}
+          ),
+          'noreply@%s' % Site.objects.get_current().domain,
+          [invite.email]) for invite in invites
+    ])

@@ -28,14 +28,20 @@ class ProfileForm(forms.ModelForm):
         fields = ()
 
 class InviteForm(forms.Form):
-    email_adresses = forms.CharField(
+    email_addresses = forms.CharField(
         help_text=_('Add email addresses for each person you wish to invite. Seperate each email address with a space.')
     )
     message = forms.CharField(widget=forms.Textarea)
-    make_admins = forms.BooleanField(
+    is_admin = forms.BooleanField(
         label = _("Make these users administrators?"),
+        required = False,
         help_text = _("Administrators can invite new users and edit acocunt settings")
     )
+
+    def clean_email_addresses(self):
+        email_addresses = self.cleaned_data['email_addresses'].split(' ')
+        f = forms.EmailField()
+        return [f.clean(i) for i in email_addresses]
 
 class PermissionsForm(forms.Form):
     is_admin = forms.BooleanField(
