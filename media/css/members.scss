@@ -1,4 +1,5 @@
 @import "colors";
+@import "mixins";
 
 #members {
 
@@ -11,6 +12,7 @@
       display: inline-block;
       background-color: $color4;
       padding: 10px;
+      @include round;
 
       > div {
         float: left;
