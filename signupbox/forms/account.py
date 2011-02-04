@@ -1,5 +1,6 @@
 from django import forms
 from django.utils.translation import ungettext, ugettext, ugettext_lazy as _
+from django.contrib.auth.models import User
 
 from ..models import Account, Profile
 
@@ -20,6 +21,11 @@ class AccountForm(forms.ModelForm):
             'merchant_id',
             'secret_key',
         )
+
+class UserForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ('first_name', 'last_name')
 
 class ProfileForm(forms.ModelForm):
 

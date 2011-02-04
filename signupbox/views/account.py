@@ -11,7 +11,7 @@ from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
 
 from ..models import AccountInvite
-from ..forms import AccountForm, ProfileForm, InviteForm, PermissionsForm, InviteAcceptForm
+from ..forms import AccountForm, UserForm, ProfileForm, InviteForm, PermissionsForm, InviteAcceptForm
 from ..tasks import account_send_invites
 
 @login_required
@@ -37,13 +37,20 @@ def account_profile(request):
     account = request.user.accounts.get()
 
     if request.method == 'POST':
-        pass
+        user_form = UserForm(request.POST, instance = request.user)
+        profile_form = ProfileForm(request.POST, instance = request.user.get_profile())
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            profile_form.save()
+            messages.success(request, _('Profile updated.'))
+            return redirect(reverse('index'))
     else:
-        form = ProfileForm(instance = request.user.get_profile())
+        user_form = UserForm(instance = request.user)
+        profile_form = ProfileForm(instance = request.user.get_profile())
 
     return render_to_response(
         'signupbox/profile.html',
-        RequestContext(request, {'form': form}),
+        RequestContext(request, {'forms': [user_form, profile_form]}),
     )
 
 @login_required

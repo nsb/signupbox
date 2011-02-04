@@ -7,15 +7,18 @@
   <div><a href="{% url account_members_add %}">{% trans "Invite users to this account" %}</a></div>
 </div>
 
-<div class="indent">
+<div id="members" class="indent">
 
   {% for user, form in members %}
-  <div>
-    <h4>{{ user.get_full_name|default:user }}</h4>
-    <a href="#">{% trans "Edit" %}</a>
-    <a href="#">{% trans "Delete" %}</a>
+  <div class="member">
+    <div>
+      <div class="profile_pic"></div>
+      <h4>{{ user.get_full_name|default:user }}</h4>
+      <a href="#">{% trans "Edit permissions" %}</a>
+      <a href="#">{% trans "Remove from account" %}</a>
+    </div>
 
-    <form method="POST" action="{% url account_permissions user.id %}">
+    <form class="permissions" method="POST" action="{% url account_permissions user.id %}">
       {% csrf_token %}
       {% for field in form %}
         {% include "signupbox/includes/field.html" %}
@@ -24,8 +27,21 @@
         <input type="submit" value="{% trans "Save" %}" />
       </div>
     </form>
+
+    <form class="delete" method="POST" action="{% url account_members_delete user.id %}">
+      {% csrf_token %}
+      <div>{% trans "Remove account access for this user." %}</div>
+      <div>
+        <input type="submit" value="{% trans "Delete" %}" />
+      </div>
+    </form>
+
   </div>
+
   {% endfor %}
+
+
+
 
   {% for invite in invites %}
     <div>
