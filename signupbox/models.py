@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from datetime import datetime
+from datetime import datetime, timedelta
 import uuid, re
 from urlparse import urlparse
 from random import random
@@ -145,6 +145,8 @@ class AccountInvite(models.Model):
     is_admin = models.BooleanField()
     is_accepted = models.BooleanField(default=False)
     created = models.DateTimeField(auto_now_add=True)
+    expires = models.DateTimeField()
+    invited_by = models.ForeignKey(User)
 
     def __unicode__(self):
         return self.email
@@ -165,6 +167,9 @@ class AccountInvite(models.Model):
 
         if not self.key:
             self.key = self._create_key()
+
+        if not self.expires:
+            self.expires = datetime.now() + timedelta(days=7)
 
         super(AccountInvite, self).save(*args, **kwargs)
 

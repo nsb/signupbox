@@ -49,3 +49,15 @@ class PermissionsForm(forms.Form):
         required=False,
         help_text=_('Can invite new members and edit account settings'),
     )
+
+class InviteAcceptForm(forms.Form):
+    email = forms.EmailField()
+    password = forms.CharField(label = _('Password'), widget = forms.PasswordInput)
+    password2 = forms.CharField(label = _('Password (again)'), widget = forms.PasswordInput)
+
+    def clean(self):
+        cleaned_data = self.cleaned_data
+        if cleaned_data.get('password', '') != cleaned_data.get('password2', ''):
+            self._errors['password2'] = self.error_class(['Passwords must be the same.'])
+
+        return cleaned_data

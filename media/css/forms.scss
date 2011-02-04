@@ -31,5 +31,9 @@ input[type=text], input[type=email], input[type=password], textarea, .options {
 
   .error {
     margin-left: 12em;
+
+    li {
+      color: red;
+    }
   }
 }

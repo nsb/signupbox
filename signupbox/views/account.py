@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render_to_response, get_object_or_404, redirect
 from django.template import RequestContext
@@ -8,7 +10,7 @@ from django.views.decorators.http import require_http_methods
 from django.contrib.auth.models import User
 
 from ..models import AccountInvite
-from ..forms import AccountForm, ProfileForm, InviteForm, PermissionsForm
+from ..forms import AccountForm, ProfileForm, InviteForm, PermissionsForm, InviteAcceptForm
 from ..tasks import account_send_invites
 
 @login_required
@@ -55,6 +57,7 @@ def account_members(request):
                     account = account,
                     email = email,
                     is_admin = form.cleaned_data.get('is_admin', False),
+                    invited_by = request.user,
                 ) for email in form.cleaned_data['email_addresses']
             ]
             account_send_invites.delay(new_invites, form.cleaned_data['message'])
@@ -75,7 +78,7 @@ def account_members(request):
         'signupbox/members.html',
         RequestContext(
             request,
-            {'form': form, 'members': members, 'invites':account.invites.filter(is_accepted=False)}
+            {'form': form, 'members': members, 'invites':account.invites.filter(is_accepted=False, expires__gt=datetime.now())}
         ),
     )
 
@@ -104,9 +107,35 @@ def account_permissions(request, user_id):
             return redirect(reverse('account_members'))
 
 def account_invitation(request, key):
-    pass
+    account = request.user.accounts.get()
+    invitation = get_object_or_404(AccountInvite, key=key, account=account, is_accepted=False, expires__gt=datetime.now())
+
+    if request.method == 'POST':
+        form = InviteAcceptForm(request.POST)
+        if form.is_valid():
+            user = User.objects.create_user(
+                username = form.cleaned_data['email'],
+                email = form.cleaned_data['email'],
+                password = form.cleaned_data['password']
+            )
+            account.users.add(user)
+            account.set_admin_status(user, invitation.is_admin) 
+            invitation.accepted = True
+            invitation.save()
+            return redirect(reverse('index'))
+    else:
+        form = InviteAcceptForm(initial = { 'email': invitation.email })
+
+    return render_to_response(
+        'signupbox/account_invitation.html',
+        RequestContext(request, {'form': form, 'invitation': invitation}),
+    )
 
 @login_required
 @require_http_methods(['POST'])
 def account_invitation_cancel(request, key):
+    account = request.user.accounts.get()
+    invitation = get_object_or_404(AccountInvite, key=key, account=account)
+    invitation.delete()
+    messages.success(request, _('Invitation canceled.'))
     return redirect(reverse('account_members'))

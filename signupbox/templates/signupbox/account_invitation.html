@@ -1,0 +1,19 @@
+{% extends "signupbox/appbase.html" %}
+{% load i18n %}
+
+{% block main %}
+<div class="headline indent">
+  <h2>{% trans "Invitation" %}</h2>
+</div>
+
+<div class="indent">
+  <form action="{% url account_invitation invitation.key %}" method="POST">
+    {% csrf_token %}
+    {% for field in form %}
+      {% include "signupbox/includes/field.html" %}
+    {% endfor %}
+    <div><input type="submit" value="{% trans "Accept invitation" %}" /></div>
+  </form>
+</div>
+
+{% endblock main %}
