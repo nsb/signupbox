@@ -13,47 +13,51 @@
   <div class="member">
     <div>
       <div class="profile_pic"></div>
+      <div>
       <h4>{{ user.get_full_name|default:user }}</h4>
       <a href="#">{% trans "Edit permissions" %}</a>
       <a href="#">{% trans "Remove from account" %}</a>
+
+      <form class="permissions" method="POST" action="{% url account_permissions user.id %}">
+        {% csrf_token %}
+        {% for field in form %}
+          {% include "signupbox/includes/field.html" %}
+        {% endfor %}
+        <div>
+          <input type="submit" value="{% trans "Save" %}" />
+        </div>
+      </form>
+
+      <form class="delete" method="POST" action="{% url account_members_delete user.id %}">
+        {% csrf_token %}
+        <div>{% trans "Remove account access for this user." %}</div>
+        <div>
+          <input type="submit" value="{% trans "Delete" %}" />
+        </div>
+      </form>
+      </div>
     </div>
-
-    <form class="permissions" method="POST" action="{% url account_permissions user.id %}">
-      {% csrf_token %}
-      {% for field in form %}
-        {% include "signupbox/includes/field.html" %}
-      {% endfor %}
-      <div>
-        <input type="submit" value="{% trans "Save" %}" />
-      </div>
-    </form>
-
-    <form class="delete" method="POST" action="{% url account_members_delete user.id %}">
-      {% csrf_token %}
-      <div>{% trans "Remove account access for this user." %}</div>
-      <div>
-        <input type="submit" value="{% trans "Delete" %}" />
-      </div>
-    </form>
-
   </div>
 
   {% endfor %}
 
-
-
-
   {% for invite in invites %}
-    <div>
-      <h4>{{ invite }}</h4>
-      <span>{% blocktrans with invite.created|timesince as timeago %}Invited {{ timeago }} ago{% endblocktrans %}</span>
-      <span class="quiet">{% trans "Awaiting reply" %}</span>
-      <a href="{% url account_invitation_cancel invite.key %}">{% trans "Cancel" %}</a>
-      <form method="POST" action="{% url account_invitation_cancel invite.key %}">
-        {% csrf_token %}
-        <span>{% trans "Cancel this invite" %}</span>
-        <input type="submit" value="{% trans "Cancel" %}" />
-      </form>
+    <div class="member">
+      <div>
+        <div class="profile_pic"></div>
+        <div>
+          <h4>{{ invite }}</h4>
+          <span>{% blocktrans with invite.created|timesince as timeago %}Invited {{ timeago }} ago{% endblocktrans %}</span>
+          <span>{% trans "Awaiting reply" %}</span>
+          <a href="{% url account_invitation_cancel invite.key %}">{% trans "Cancel invitation" %}</a>
+
+          <form class="cancel" method="POST" action="{% url account_invitation_cancel invite.key %}">
+            {% csrf_token %}
+            <span>{% trans "Cancel this invite" %}</span>
+            <input type="submit" value="{% trans "Cancel" %}" />
+          </form>
+        </div>
+      </div>
     </div>
   {% endfor %}
 

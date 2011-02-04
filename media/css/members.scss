@@ -3,32 +3,32 @@
 #members {
 
   .member {
-    overflow: hidden;
-    height: 40px;
     margin-bottom: 20px;
     line-height: 20px;
 
-    .profile_pic {
-      float: left;
-      width: 40px;
-      height:40px;
-      background-color: $color3; 
-      margin: 0 16px 0 0;
-    }
-
     > div {
+      overflow: hidden;
 
-      a {
+      > div {
+        float: left;
+
+        &.profile_pic {
+          width: 40px;
+          height:40px;
+          background-color: $color3; 
+          margin: 0 16px 0 0;
+        }
+      }
+
+      a, span {
         margin-right: 10px;
       }
 
-    }
+      form {
+        display: none;
+      }
 
-    .permissions, .delete {
-      margin-left: 20px;
-      display: none;
     }
- 
 
   }
 
