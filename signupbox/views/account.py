@@ -9,6 +9,7 @@ from django.utils.translation import ugettext, ungettext, ugettext_lazy as _
 from django.views.decorators.http import require_http_methods
 from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
+from django.contrib.auth import authenticate, login
 
 from ..models import AccountInvite
 from ..forms import AccountForm, UserForm, ProfileForm, InviteForm, PermissionsForm, InviteAcceptForm
@@ -141,8 +142,18 @@ def account_invitation(request, key):
             account.set_admin_status(user, invitation.is_admin) 
             invitation.is_accepted = True
             invitation.save()
-            messages.success(request, _('Welcome to your %s account') % Site.objects.get_current().domain)
-            return redirect(reverse('index'))
+
+            # log the user in
+            user = authenticate(username=form.cleaned_data['email'], password=form.cleaned_data['password'])
+            if user is not None:
+                if user.is_active:
+                    login(request, user)
+                    # Redirect to a success page.
+                    messages.success(request, _('Welcome to your %s account.') % Site.objects.get_current().domain)
+                    return redirect(reverse('index'))
+                else:
+                    # Return a 'disabled account' error message
+                    pass
     else:
         form = InviteAcceptForm(initial = { 'email': invitation.email })
 
