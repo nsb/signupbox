@@ -3,11 +3,14 @@
 #members {
 
   .member {
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     line-height: 20px;
 
     > div {
       overflow: hidden;
+      display: inline-block;
+      background-color: $color4;
+      padding: 10px;
 
       > div {
         float: left;
