@@ -107,7 +107,7 @@ def account_members_delete(request, user_id):
     account = request.user.accounts.get()
     user = get_object_or_404(User, pk=user_id, pk__in=account.users.values_list('pk', flat=True))
     account.users.remove(user)
-    messages.success(request, _('User deleted.'))
+    messages.success(request, _('User removed.'))
     return redirect(reverse('account_members'))
 
 @login_required
