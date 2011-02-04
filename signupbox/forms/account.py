@@ -58,6 +58,6 @@ class InviteAcceptForm(forms.Form):
     def clean(self):
         cleaned_data = self.cleaned_data
         if cleaned_data.get('password', '') != cleaned_data.get('password2', ''):
-            self._errors['password2'] = self.error_class(['Passwords must be the same.'])
+            self._errors['password2'] = self.error_class(['Passwords must be identical.'])
 
         return cleaned_data
