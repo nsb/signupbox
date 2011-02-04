@@ -8,6 +8,7 @@ from django.contrib import messages
 from django.utils.translation import ugettext, ungettext, ugettext_lazy as _
 from django.views.decorators.http import require_http_methods
 from django.contrib.auth.models import User
+from django.contrib.sites.models import Site
 
 from ..models import AccountInvite
 from ..forms import AccountForm, ProfileForm, InviteForm, PermissionsForm, InviteAcceptForm
@@ -120,8 +121,9 @@ def account_invitation(request, key):
             )
             account.users.add(user)
             account.set_admin_status(user, invitation.is_admin) 
-            invitation.accepted = True
+            invitation.is_accepted = True
             invitation.save()
+            messages.success(request, _('Welcome to your %s account') % Site.objects.get_current().domain)
             return redirect(reverse('index'))
     else:
         form = InviteAcceptForm(initial = { 'email': invitation.email })

@@ -138,6 +138,12 @@ class Account(models.Model):
         verbose_name = _("Account")
         verbose_name_plural = _("Accounts")
 
+class AccountInviteManager(models.Manager):
+    def get_query_set(self):
+        return super(AccountInviteManager, self).get_query_set().filter(
+            is_accepted=False, expires__gt=datetime.now()
+        )
+
 class AccountInvite(models.Model):
     account = models.ForeignKey(Account, related_name='invites')
     key = models.CharField(max_length=40)
@@ -147,6 +153,8 @@ class AccountInvite(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     expires = models.DateTimeField()
     invited_by = models.ForeignKey(User)
+
+    objects = AccountInviteManager()
 
     def __unicode__(self):
         return self.email
