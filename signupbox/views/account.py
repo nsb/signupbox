@@ -50,6 +50,24 @@ def account_profile(request):
 def account_members(request):
     account = request.user.accounts.get()
 
+    form = InviteForm()
+
+    members = [
+        (user, PermissionsForm(initial={'is_admin':user.has_perm("change", account)}),) for user in account.users.all()
+    ]
+
+    return render_to_response(
+        'signupbox/members.html',
+        RequestContext(
+            request,
+            {'form': form, 'members': members, 'invites':account.invites.filter(is_accepted=False, expires__gt=datetime.now())}
+        ),
+    )
+
+@login_required
+def account_members_add(request):
+    account = request.user.accounts.get()
+
     if request.method == 'POST':
         form = InviteForm(request.POST)
         if form.is_valid():
@@ -71,16 +89,9 @@ def account_members(request):
     else:
         form = InviteForm()
 
-    members = [
-        (user, PermissionsForm(initial={'is_admin':user.has_perm("change", account)}),) for user in account.users.all()
-    ]
-
     return render_to_response(
-        'signupbox/members.html',
-        RequestContext(
-            request,
-            {'form': form, 'members': members, 'invites':account.invites.filter(is_accepted=False, expires__gt=datetime.now())}
-        ),
+        'signupbox/members_add.html',
+        RequestContext(request, {'form': form}),
     )
 
 @login_required
