@@ -127,8 +127,7 @@ def account_permissions(request, user_id):
             return redirect(reverse('account_members'))
 
 def account_invitation(request, key):
-    account = request.user.accounts.get()
-    invitation = get_object_or_404(AccountInvite, key=key, account=account, is_accepted=False, expires__gt=datetime.now())
+    invitation = get_object_or_404(AccountInvite, key=key, is_accepted=False, expires__gt=datetime.now())
 
     if request.method == 'POST':
         form = InviteAcceptForm(request.POST)
@@ -138,8 +137,8 @@ def account_invitation(request, key):
                 email = form.cleaned_data['email'],
                 password = form.cleaned_data['password']
             )
-            account.users.add(user)
-            account.set_admin_status(user, invitation.is_admin) 
+            invitation.account.users.add(user)
+            invitation.account.set_admin_status(user, invitation.is_admin) 
             invitation.is_accepted = True
             invitation.save()
 
