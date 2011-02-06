@@ -181,11 +181,11 @@ def account_invitation(request, key):
 @login_required
 @require_http_methods(['POST'])
 def account_invitation_cancel(request, key):
+    account = request.user.accounts.get()
 
     if not request.user.has_perm('change', account):
         return HttpResponseForbidden()
 
-    account = request.user.accounts.get()
     invitation = get_object_or_404(AccountInvite, key=key, account=account)
     invitation.delete()
     messages.success(request, _('Invitation canceled.'))
