@@ -49,7 +49,7 @@
           <h4>{{ invite }}</h4>
           <span>{% blocktrans with invite.created|timesince as timeago %}Invited {{ timeago }} ago{% endblocktrans %}</span>
           <span>{% trans "Awaiting reply" %}</span>
-          <a href="#">{% trans "Cancel invitation" %}</a>
+          <a class="cancel_invitation" href="#">{% trans "Cancel invitation" %}</a>
 
           <form class="cancel" method="POST" action="{% url account_invitation_cancel invite.key %}">
             {% csrf_token %}
