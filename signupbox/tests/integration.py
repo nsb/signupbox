@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import re
 from datetime import datetime, date, timedelta
 
 from django import test
@@ -7,6 +8,8 @@ from django.core.urlresolvers import reverse
 from django.http import QueryDict
 from django.contrib.formtools.utils import security_hash
 from django.utils.http import urlencode
+from django.core import mail
+from django.contrib.auth.models import User
 
 from base import BaseTestCase
 from ..constants import *
@@ -216,6 +219,62 @@ class AdminTestCase(BaseTestCase):
             },
         )
         self.assertRedirects(response, reverse('event_detail', kwargs={'slug':self.event.slug,}),)
+
+class AccountTestCase(BaseTestCase):
+
+    def testAccountProfile(self):
+        self.client.login(username=self.username, password=self.password)
+
+        response = self.client.get(reverse('account_profile'))
+        self.failUnlessEqual(response.status_code, 200)
+
+        response = self.client.post(reverse('account_profile'), {'first_name': 'myfirstname', 'last_name': 'mylastname'})
+        self.assertRedirects(response, reverse('index'))
+
+    def testAccountSettings(self):
+        self.client.login(username=self.username, password=self.password)
+
+        response = self.client.get(reverse('account_settings'))
+        self.failUnlessEqual(response.status_code, 200)
+
+        response = self.client.post(reverse('account_settings'), {'organization': 'My organization'})
+        self.assertRedirects(response, reverse('index'))
+
+    def testAccountMembers(self):
+        self.client.login(username=self.username, password=self.password)
+
+        response = self.client.get(reverse('account_members'))
+        self.failUnlessEqual(response.status_code, 200)
+
+        response = self.client.get(reverse('account_members_add'))
+        self.failUnlessEqual(response.status_code, 200)
+
+        response = self.client.post(
+            reverse('account_members_add'), {
+                'email_addresses': 'myemailaddress@example.com',
+                'message': 'mymessage',
+                'is_admin': '',
+            },
+        )
+        self.assertRedirects(response, reverse('account_members'))
+        self.assertEquals(len(mail.outbox), 1)
+
+        # get the invitation key from mail
+        m = re.search('accounts/invitation/(?P<key>[-\w]{40})/', mail.outbox[0].body)
+        accept_key = m.group(1)
+
+        response = self.client.get(reverse('account_invitation', kwargs={'key': accept_key}))
+        self.failUnlessEqual(response.status_code, 200)
+
+        response = self.client.post(
+            reverse('account_invitation', kwargs={'key': accept_key}), {
+                'email': 'myemailaddress@example.com',
+                'password': 'mypassword',
+                'password2': 'mypassword',
+            },
+        )
+        self.assertRedirects(response, reverse('index'))
+        self.assertTrue(User.objects.filter(username='myemailaddress@example.com').exists())
 
 class EventSiteTestCase(BaseTestCase):
 
