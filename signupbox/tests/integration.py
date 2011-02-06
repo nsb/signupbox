@@ -276,6 +276,16 @@ class AccountTestCase(BaseTestCase):
         self.assertRedirects(response, reverse('index'))
         self.assertTrue(User.objects.filter(username='myemailaddress@example.com').exists())
 
+        user = User.objects.get(username='myemailaddress@example.com')
+
+        self.client.login(username=self.username, password=self.password)
+
+        response = self.client.post(
+            reverse('account_members_delete', kwargs={'user_id': user.pk}), {},
+        )
+        self.assertRedirects(response, reverse('account_members'))
+        self.assertFalse(user in self.account.users.all())
+
 class EventSiteTestCase(BaseTestCase):
 
     def testEventSite(self):
