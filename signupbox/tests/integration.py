@@ -222,6 +222,13 @@ class AdminTestCase(BaseTestCase):
 
 class AccountTestCase(BaseTestCase):
 
+    def setUp(self):
+        super(AccountTestCase, self).setUp()
+        self.account.set_admin_status(self.user, True)
+
+    def tearDown(self):
+        super(AccountTestCase, self).tearDown()
+
     def testAccountProfile(self):
         self.client.login(username=self.username, password=self.password)
 

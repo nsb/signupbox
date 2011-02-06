@@ -10,6 +10,7 @@ from django.views.decorators.http import require_http_methods
 from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
 from django.contrib.auth import authenticate, login
+from django.http import HttpResponseForbidden
 
 from ..models import AccountInvite
 from ..forms import AccountForm, UserForm, ProfileForm, InviteForm, PermissionsForm, InviteAcceptForm
@@ -18,6 +19,9 @@ from ..tasks import account_send_invites
 @login_required
 def account_settings(request):
     account = request.user.accounts.get()
+
+    if not request.user.has_perm('view', account):
+        return HttpResponseForbidden()
 
     if request.method == 'POST':
         form = AccountForm(request.POST, instance=account)
@@ -58,6 +62,9 @@ def account_profile(request):
 def account_members(request):
     account = request.user.accounts.get()
 
+    if not request.user.has_perm('view', account):
+        return HttpResponseForbidden()
+
     form = InviteForm()
 
     members = [
@@ -75,6 +82,9 @@ def account_members(request):
 @login_required
 def account_members_add(request):
     account = request.user.accounts.get()
+
+    if not request.user.has_perm('change', account):
+        return HttpResponseForbidden()
 
     if request.method == 'POST':
         form = InviteForm(request.POST)
@@ -106,6 +116,10 @@ def account_members_add(request):
 @require_http_methods(['POST'])
 def account_members_delete(request, user_id):
     account = request.user.accounts.get()
+
+    if not request.user.has_perm('change', account):
+        return HttpResponseForbidden()
+
     user = get_object_or_404(User, pk=user_id, pk__in=account.users.values_list('pk', flat=True))
     account.users.remove(user)
     messages.success(request, _('User removed.'))
@@ -115,6 +129,9 @@ def account_members_delete(request, user_id):
 @require_http_methods(['POST'])
 def account_permissions(request, user_id):
     account = request.user.accounts.get()
+
+    if not request.user.has_perm('change', account):
+        return HttpResponseForbidden()
 
     user = get_object_or_404(User, pk=user_id, pk__in=account.users.values_list('pk', flat=True))
 
@@ -164,6 +181,10 @@ def account_invitation(request, key):
 @login_required
 @require_http_methods(['POST'])
 def account_invitation_cancel(request, key):
+
+    if not request.user.has_perm('change', account):
+        return HttpResponseForbidden()
+
     account = request.user.accounts.get()
     invitation = get_object_or_404(AccountInvite, key=key, account=account)
     invitation.delete()
