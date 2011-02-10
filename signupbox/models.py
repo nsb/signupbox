@@ -276,6 +276,10 @@ class Event(models.Model):
         return Attendee.objects.confirmed(event=self)
 
     @property
+    def confirmed_attendees_count(self):
+        return self.confirmed_attendees.aggregate(Sum('attendee_count'))['attendee_count__sum']
+
+    @property
     def website(self):
         return ''.join(('http://', self.account.domain_for_account(), '/', self.slug, '/'))
 

@@ -72,7 +72,7 @@ def attendeeform_factory(event, is_extra, instance=None):
                 choices=[
                     (val, val) for val in range(
                         1, min(
-                            event.capacity - event.confirmed_attendees.count() + 1 + (instance.attendee_count if instance else 0),
+                            event.capacity - event.confirmed_attendees_count + 1 + (instance.attendee_count if instance else 0),
                             51
                         ) if event.capacity else 51
                     )

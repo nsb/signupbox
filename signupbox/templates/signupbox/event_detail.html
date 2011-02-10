@@ -20,8 +20,8 @@
         {% else %}
           {% trans "Unlimited" %}
         {% endif %}
-        {% if event.confirmed_attendees.count %}
-          ({% blocktrans count event.confirmed_attendees.count as attendee_count %}
+        {% if event.confirmed_attendees_count %}
+          ({% blocktrans count event.confirmed_attendees_count as attendee_count %}
             <strong>{{ attendee_count }}</strong> attendee
             {% plural %}
             <strong>{{ attendee_count }}</strong> attendees
