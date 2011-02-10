@@ -24,7 +24,7 @@
   {% for s in summary_list %}
     <tr>
       <td>{{ s.grouper }}</td>
-      <td>{{ s.list|length }}</td>
+      <td>{% attendee_count s.list %}</td>
       <td class="last">{% trans "Free" %}</td>
     </tr>
   {% endfor %}

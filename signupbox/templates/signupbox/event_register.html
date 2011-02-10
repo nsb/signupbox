@@ -22,7 +22,9 @@
     </div>
 
     <div>
-      <span id="add-attendee"><a  href="#">{% trans "Add extra attendee" %}</a> {% trans "or" %}</span>
+      {% if event.has_extra_forms %}
+        <span id="add-attendee"><a  href="#">{% trans "Add extra attendee" %}</a> {% trans "or" %}</span>
+      {% endif %}
       <input type="submit" value="{% trans "Continue" %}" />
     </div>
   </form>

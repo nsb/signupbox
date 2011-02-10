@@ -86,9 +86,7 @@ def event_attendees_edit(request, slug, attendee_id):
     event = get_object_or_404(Event, account=account, slug=slug)
     attendee = get_object_or_404(Attendee, booking__event=event, id=attendee_id)
 
-    form_class = attendeeform_factory(
-        Field.objects.filter(event=event), Ticket.objects.filter(event=event), False, instance=attendee,
-    )
+    form_class = attendeeform_factory(event, False, instance=attendee)
 
     if request.method == 'POST':
         form = form_class(request.POST)

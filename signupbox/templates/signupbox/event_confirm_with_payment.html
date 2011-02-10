@@ -18,7 +18,7 @@
     <tr>
       <td>{{ s.grouper }}</td>
       <td>{{ s.grouper.price }} {{ event.get_currency_display }}</td>
-      <td>{{ s.list|length }}</td>
+      <td>{% attendee_count s.list %}</td>
       <td class="last">{% ticket_summary_price s.grouper s.list %}</td>
     </tr>
   {% endfor %}

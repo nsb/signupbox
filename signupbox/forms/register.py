@@ -1,6 +1,7 @@
 from django import forms
 from django.utils.functional import curry
 from django.forms.formsets import BaseFormSet, formset_factory
+from django.utils.translation import ugettext, ugettext_lazy as _
 
 from ..constants import *
 from ..models import Field, FieldValue, Ticket, Booking, Attendee
@@ -16,10 +17,13 @@ FIELD_TYPES = {
     PHONE_FIELD: forms.CharField,
 }
 
-def attendeeform_factory(fields_qs, ticket_qs, is_extra, instance=None):
+def attendeeform_factory(event, is_extra, instance=None):
     """
     creates a form from fields list
     """
+
+    fields_qs = event.fields.all()
+    ticket_qs = event.tickets.all()
 
     if is_extra:
         fields_qs = fields_qs.filter(in_extra=True)
@@ -30,7 +34,8 @@ def attendeeform_factory(fields_qs, ticket_qs, is_extra, instance=None):
 
         attendee = instance or Attendee.objects.create(
             booking=booking,
-            ticket=self.cleaned_data['ticket'] if ticket_qs.count() > 1 else ticket_qs.get()
+            ticket=self.cleaned_data['ticket'] if event.has_extra_forms and ticket_qs.count() > 1 else ticket_qs.all()[0],
+            attendee_count = self.cleaned_data['attendee_count'] if not event.has_extra_forms else 1
         )
 
         for field in fields:
@@ -58,8 +63,23 @@ def attendeeform_factory(fields_qs, ticket_qs, is_extra, instance=None):
 
         fields[field.name] = FIELD_TYPES[field.type](*field_args, **field_kwargs)
 
-    if ticket_qs.count() > 1:
+    if event.has_extra_forms and ticket_qs.count() > 1:
         fields['ticket'] = forms.ModelChoiceField(queryset=ticket_qs, empty_label=None)
+
+    if not event.has_extra_forms:
+        fields['attendee_count'] = \
+            forms.TypedChoiceField(
+                choices=[
+                    (val, val) for val in range(
+                        1, min(
+                            event.capacity - event.confirmed_attendees.count() + 1 + (instance.attendee_count if instance else 0),
+                            51
+                        ) if event.capacity else 51
+                    )
+                ],
+                label=_('Number of attendees'),
+                coerce=lambda x: int(x),
+            )
 
     return type('AttendeeForm', (forms.Form,), fields)
 
@@ -106,18 +126,14 @@ def registerform_factory(event, extra=1):
     Attendee formset for event
     """
     # late binding of is_extra, provided by formsets _construct_form
-    attendee_form = lambda formset_instance, is_extra: attendeeform_factory(
-        Field.objects.filter(event=event), Ticket.objects.filter(event=event), is_extra,
-    )
+    attendee_form = lambda formset_instance, is_extra: attendeeform_factory(event, is_extra)
     return formset_factory(attendee_form, formset=attendeeformset_factory(event), extra=extra)
 
 def emptyregisterform_factory(event, is_extra=False):
     """
     Attendee formset for event
     """
-    attendee_form = attendeeform_factory(
-        Field.objects.filter(event=event), Ticket.objects.filter(event=event), is_extra,
-    )
+    attendee_form = attendeeform_factory(event, is_extra)
     return formset_factory(attendee_form, formset=attendeeformset_factory(event), extra=0)().empty_form
 
 class ConfirmForm(forms.ModelForm):

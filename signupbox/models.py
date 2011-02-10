@@ -268,6 +268,10 @@ class Event(models.Model):
     objects = EventManager()
 
     @property
+    def has_extra_forms(self):
+        return self.fields.filter(in_extra=True).exists()
+
+    @property
     def confirmed_attendees(self):
         return Attendee.objects.confirmed(event=self)
 
@@ -451,6 +455,7 @@ class Attendee(models.Model):
         default=ATTENDEE_CONFIRMED,
     )
     fields = models.ManyToManyField(Field, through="FieldValue")
+    attendee_count = models.PositiveIntegerField(default=1)
 
     objects = AttendeeManager()
 
