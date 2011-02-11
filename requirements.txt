@@ -2,8 +2,10 @@ ipython
 psycopg2
 -e svn+http://code.djangoproject.com/svn/django/trunk/#egg=django
 -e svn+http://google-visualization-python.googlecode.com/svn/trunk/#egg=gviz
+south
 django-celery
 ghettoq
 BeautifulSoup
 -e git://github.com/dziegler/django-css.git#egg=DjangoCSS
 -e git://github.com/dcramer/django-paypal.git#egg=DjangoPayPal
+django-sentry

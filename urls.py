@@ -7,6 +7,7 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     (r'^myadmin/', include(admin.site.urls)),
+    (r'^sentry/', include('sentry.urls')),
     (r'^accounts/', include('auth_urls')),
     (r'^', include('signupbox.urls')),
 )
