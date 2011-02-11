@@ -346,7 +346,46 @@ class EventSiteTestCase(BaseTestCase):
 
         self.failUnlessEqual(response.status_code, 302)
         self.assertEquals(self.event.bookings.count(), 1) 
-        self.assertEquals(self.event.confirmed_attendees.count(), 2)
+        self.assertEquals(self.event.confirmed_attendees_count, 2)
+
+    def testEventRegisterWithNoExtraForms(self):
+
+        # remove fields from extra forms
+        self.event.fields.update(in_extra=False)
+
+        response = self.client.get(
+            reverse('event_register', kwargs={'slug':self.event.slug,}),
+            HTTP_HOST=self.http_host,
+        )
+        self.failUnlessEqual(response.status_code, 200)
+
+        #Register for event
+        fields = list(Event.objects.get(slug=self.event.slug).fields.all())
+
+        data = {
+            # form management data
+            'form-INITIAL_FORMS': 0,
+            'form-TOTAL_FORMS': 1,
+            'form-MAX_NUM_FORMS': u'',
+            # first attendee
+            'form-0-' + fields[0].name: 'Niels Sandholt Busch',
+            'form-0-' + fields[2].name: 'niels@example.com',
+            'form-0-attendee_count': '2'
+        }
+
+        response = self.client.post(
+            reverse('event_register', kwargs={'slug':self.event.slug,}),
+            data,
+            HTTP_HOST=self.http_host,
+            follow=True,
+        )
+        next, status_code = response.redirect_chain[0]
+
+        response = self.client.post(next, HTTP_HOST=self.http_host)
+
+        self.failUnlessEqual(response.status_code, 302)
+        self.assertEquals(self.event.bookings.count(), 1) 
+        self.assertEquals(self.event.confirmed_attendees_count, 2)
 
     def testComplete(self):
         response = self.client.get(
