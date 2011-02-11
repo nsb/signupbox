@@ -113,8 +113,8 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'south',
     'compressor',
+    'djkombu',
     'djcelery',
-    'ghettoq',
     'paypal.standard.ipn',
     'indexer',
     'paging',
@@ -151,7 +151,9 @@ COMPILER_FORMATS = {
     },  
 }
 
+SOUTH_TESTS_MIGRATE = False
+
 import djcelery
 djcelery.setup_loader()
 
-CARROT_BACKEND = "ghettoq.taproot.Database"
+BROKER_BACKEND = "djkombu.transport.DatabaseTransport"

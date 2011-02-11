@@ -3,6 +3,7 @@ psycopg2
 -e svn+http://code.djangoproject.com/svn/django/trunk/#egg=django
 -e svn+http://google-visualization-python.googlecode.com/svn/trunk/#egg=gviz
 south
+django-kombu
 django-celery
 ghettoq
 BeautifulSoup
