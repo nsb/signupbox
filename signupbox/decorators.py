@@ -3,7 +3,7 @@ from django.http import Http404
 
 from models import Account
 
-def with_account(f):
+def with_account(view):
 
     def wrapper(request, *args, **kwargs):
 
@@ -13,5 +13,6 @@ def with_account(f):
             raise Http404
 
         kwargs['account'] = account
-        return f(request, *args, **kwargs)
+        return view(request, *args, **kwargs)
+    wrapper.__name__ = view.__name__
     return wrapper
