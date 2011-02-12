@@ -271,7 +271,7 @@ msgstr "Standard billet"
 msgid ""
 "Add email addresses for each person you wish to invite. Seperate each email "
 "address with a space."
-msgstr "Angiv email adresser for hver person du vil invitere. Seperarer hver email adresse med et blank tegn."
+msgstr "Angiv email adresser for hver person du vil invitere. Separer hver email adresse med et blank tegn."
 
 #: forms/account.py:42
 msgid "Make these users administrators?"
