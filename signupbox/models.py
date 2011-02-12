@@ -488,7 +488,7 @@ class Attendee(models.Model):
         except ValueError:
             try:
                 return self.values.all()[0].value
-            except KeyError:
+            except IndexError:
                 return ''
 
 class FieldValue(models.Model):

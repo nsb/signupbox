@@ -115,7 +115,7 @@ class AdminTestCase(BaseTestCase):
         self.assertRedirects(response, reverse('event_attendees', kwargs={'slug':self.event.slug,}),)
         self.assertTrue(self.attendee.values.filter(value='Niels Sandholt Busch').exists())
 
-    def testAttendeesExport(self):
+    def _testAttendeesExport(self, format, data, mimetype):
         self.client.login(username=self.username, password=self.password)
 
         response = self.client.post(
@@ -142,12 +142,24 @@ class AdminTestCase(BaseTestCase):
                 '0-action':'export',
                 '0-attendees': self.attendee.pk,
                 'hash_0': security_hash(None, wizard_form_class(QueryDict(urlencode(hash_data)))),
-                '1-format': CSV_EXPORT,
-                '1-data': ATTENDEE_DATA,
+                '1-format': format,
+                '1-data': data,
             },
         )
         self.failUnlessEqual(response.status_code, 200)
-        self.assertEquals(response['Content-Type'], 'text/csv')
+        self.assertEquals(response['Content-Type'], mimetype)
+
+    def testAttendeesExportCSV(self):
+        self._testAttendeesExport(CSV_EXPORT, ATTENDEE_DATA, 'text/csv')
+
+    def testBookingExportCSV(self):
+        self._testAttendeesExport(CSV_EXPORT, BOOKING_DATA, 'text/csv')
+
+    def testAttendeesExportPDF(self):
+        self._testAttendeesExport(PDF_EXPORT, ATTENDEE_DATA, 'application/pdf')
+
+    def testAttendeesExportXLS(self):
+        self._testAttendeesExport(XLS_EXPORT, ATTENDEE_DATA, 'application/vnd.ms-excel')
 
     def testAttendeesMail(self):
         self.client.login(username=self.username, password=self.password)

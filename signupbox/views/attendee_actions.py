@@ -117,7 +117,6 @@ class AttendeeActions(object):
 
             writer.writerow(
                 [ugettext('Booking').encode('utf8'),
-                 event.fields.all()[0].label.encode('utf8'),
                  ugettext('Date and time').encode('utf8'),
                  ugettext('Ordernumber').encode('utf8'),
                  ugettext('Transaction').encode('utf8'),
@@ -131,7 +130,6 @@ class AttendeeActions(object):
             for b in bookings:
                 writer.writerow(
                     ['#%d' % b.id,
-                     str(b.attendees.order_by('id')[0]).encode('utf8') if b.attendees.order_by('id')[0] else None,
                      date(b.timestamp, "SHORT_DATETIME_FORMAT"),
                      b.ordernumber,
                      b.transaction,
