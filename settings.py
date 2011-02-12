@@ -163,7 +163,7 @@ LOGGING = {
         },
         'sentry': {
             'level': 'ERROR',
-            'class': 'utils.CustomLoggingHandler',
+            'class': 'signupbox.utils.CustomLoggingHandler',
             'filters': []
         },
     },
