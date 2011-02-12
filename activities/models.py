@@ -4,16 +4,7 @@ from django.db import models
 from django.contrib.contenttypes import generic
 from django.contrib.contenttypes.models import ContentType
 
-from sentry.client.handlers import SentryHandler
-
 logger = logging.getLogger('signupbox.default')
-logger.setLevel(logging.DEBUG)
-logger.addHandler(logging.StreamHandler())
-
-# ensure we havent already registered the handler
-if SentryHandler not in map(lambda x: x.__class__, logger.handlers):
-    handler = SentryHandler(level=logging.DEBUG)
-    logger.addHandler(handler)
 
 class Activity(models.Model):
 
