@@ -353,7 +353,7 @@ class Booking(models.Model):
         elif count == 1:
             ret = attendees[0]
         else:
-            ret = ugettext('%s and %s' % (', '.join(attendees[:-1]), attendees[-1]))
+            ret = ugettext('%(attendee1)s and %(attendee2)s' % {'attendee1': ', '.join(attendees[:-1]), 'attendee2': attendees[-1]})
         ret = ret + ugettext(' registered for %s.' % self.event.title)
         return ret
 
@@ -362,7 +362,7 @@ class Booking(models.Model):
         return str(self.pk)
 
     def __unicode__(self):
-        return u'%s: #%s' % (self.event.title, self.id)
+        return '%(title)s: #%(id)s' % {'title':self.event.title, 'id':self.id}
 
 class BookingAggregation(models.Model):
     """ Aggregates registrations per day """

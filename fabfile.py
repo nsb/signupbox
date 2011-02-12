@@ -50,6 +50,13 @@ def migrate():
         virtualenv('python manage.py migrate --settings=' + env.settings)
         virtualenv('python manage.py syncdb --noinput --settings=' + env.settings)
 
+def makemessages():
+        local('python ../manage.py makemessages --all -e html,txt --settings=' + env.settings)
+
+def compilemessages():
+    with cd(env.directory + 'signupox'):
+        virtualenv('python ../manage.py compilemessages --settings=' + env.settings)
+
 def deploy():
     """
     deploy
@@ -58,6 +65,7 @@ def deploy():
     update()
     install_requirements()
     migrate()
+    compilemessages()
     reload()
 
 def virtualenv(command):
