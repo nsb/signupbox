@@ -5,5 +5,5 @@
 <strong>{% trans "Time and date:" %}</strong> {% datetime_span event.begins event.ends %}<br/>
 {% if event.price %}<strong>{% trans "Price:" %}</strong> {{ event.price|floatformat:"-2" }} {{ event.get_currency_display }}<br/>{% endif %}
 {% if event.site_url %} <strong>{% trans "Website:" %}</strong> <a href="{{ event.site_url }}">{{ event.site_url }}</a><br/>{% endif %}
-<strong>{% trans "Total number of attendees:" %}</strong> {{ event.num_confirmed }}<br/>
+<strong>{% trans "Total number of attendees:" %}</strong> {{ event.confirmed_attendees_count }}<br/>
 </para>
