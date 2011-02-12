@@ -39,6 +39,7 @@ class EventFormTestCase(test.TestCase):
               'ends_0': date.today() + timedelta(days=7),
               'ends_1_0':'16',
               'ends_1_1':'00',
+              'status': 'open',
             },
             instance=Event(account=self.account),
         )
@@ -53,6 +54,7 @@ class EventFormTestCase(test.TestCase):
               'ends_0': date.today() + timedelta(days=5),
               'ends_1_0':'16',
               'ends_1_1':'00',
+              'status': 'open',
             },
             instance=Event(account=self.account),
         )

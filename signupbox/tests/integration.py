@@ -61,6 +61,7 @@ class AdminTestCase(BaseTestCase):
                 'ends_0': date.today() + timedelta(days=7),
                 'ends_1_0':'16',
                 'ends_1_1':'00',
+                'status': 'open',
             },
         )
         self.assertRedirects(response, reverse('event_detail', kwargs={'slug':'mynewtitle',}),)
@@ -81,6 +82,7 @@ class AdminTestCase(BaseTestCase):
                 'ends_0': date.today() + timedelta(days=7),
                 'ends_1_0':'16',
                 'ends_1_1':'00',
+                'status': 'open',
             },
         )
         self.assertRedirects(response, reverse('event_detail', kwargs={'slug':self.event.slug,}),)
