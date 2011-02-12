@@ -158,8 +158,14 @@ class AdminTestCase(BaseTestCase):
     def testAttendeesExportPDF(self):
         self._testAttendeesExport(PDF_EXPORT, ATTENDEE_DATA, 'application/pdf')
 
+    def testBookingExportPDF(self):
+        self._testAttendeesExport(PDF_EXPORT, BOOKING_DATA, 'application/pdf')
+
     def testAttendeesExportXLS(self):
         self._testAttendeesExport(XLS_EXPORT, ATTENDEE_DATA, 'application/vnd.ms-excel')
+
+    def testBookingExportXLS(self):
+        self._testAttendeesExport(XLS_EXPORT, BOOKING_DATA, 'application/vnd.ms-excel')
 
     def testAttendeesMail(self):
         self.client.login(username=self.username, password=self.password)
