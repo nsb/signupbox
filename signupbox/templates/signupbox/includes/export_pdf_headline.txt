@@ -1,0 +1,4 @@
+{% load i18n %}
+<para>
+{% blocktrans with event.title as title %}Event: {{ title }}{% endblocktrans %}
+</para>

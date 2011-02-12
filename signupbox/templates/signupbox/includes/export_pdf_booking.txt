@@ -1,0 +1,14 @@
+{% load i18n %}
+{% load date_tags %}
+<para>
+<strong>#{{ booking.id }}</strong> {{ booking.timestamp.date|date }} {% trans "at" %} {{ booking.timestamp.time|time:"H:i" }}<br/>
+{% if booking.transaction %}<strong>{% trans "Transaction" %}:</strong> {{ booking.transaction }}<br/>{% endif %}
+{% if booking.description %}<strong>{% trans "Description" %}:</strong> {{ booking.description }}<br/>{% endif %}
+{% if booking.ordernumber %}<strong>{% trans "Ordernumber" %}:</strong> {{ booking.ordernumber }}<br/>{% endif %}
+{% if booking.amount %}<strong>{% trans "Amount" %}:</strong> {{ booking.amount|floatformat:"-2" }} {{ booking.event.get_currency_display }}<br/>{% endif %}
+{% if booking.cardtype %}<strong>{% trans "Cardtype" %}:</strong> {{ booking.cardtype }}<br/>{% endif %}
+{% if booking.notes %}<strong>{% trans "Notes" %}:</strong> {{ booking.notes }}<br/>{% endif %}
+{% for attendee in booking.attendees.all %}
+  <strong>{{ attendee.display_label }}:</strong> {{ attendee.display_value }}<br/>
+{% endfor %}
+</para>
