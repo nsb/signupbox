@@ -679,7 +679,7 @@ msgstr "Kommende arrangementer"
 
 #: templates/signupbox/index.html:18
 msgid "in"
-msgstr "i"
+msgstr "om"
 
 #: templates/signupbox/index.html:32
 msgid "No upcoming events"
