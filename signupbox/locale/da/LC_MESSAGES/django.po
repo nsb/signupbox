@@ -407,7 +407,7 @@ msgstr "Du skal skrive det samme kodeord"
 
 #: forms/widgets.py:110 templates/signupbox/includes/export_pdf_booking.txt:4
 msgid "at"
-msgstr "hos"
+msgstr "kl."
 
 #: forms/widgets.py:118
 msgid "Enter a valid date."

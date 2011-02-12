@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from datetime import datetime, timedelta
+from datetime import date, datetime, timedelta
 import uuid, re
 from urlparse import urlparse
 from random import random
@@ -270,6 +270,12 @@ class Event(models.Model):
     activities = generic.GenericRelation(Activity)
 
     objects = EventManager()
+
+    @property
+    def is_open(self):
+        return self.status == EVENT_STATUS_OPEN and \
+            self.confirmed_attendees_count <= self.capacity if self.capacity > 0 else True and \
+                self.begins < date.today()
 
     @property
     def has_extra_forms(self):
