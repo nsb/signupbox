@@ -54,7 +54,7 @@ def makemessages():
         local('python ../manage.py makemessages --all -e html,txt --settings=' + env.settings)
 
 def compilemessages():
-    with cd(env.directory + 'src/signupox'):
+    with cd(env.directory + 'src/signupbox'):
         virtualenv('python ../manage.py compilemessages --settings=' + env.settings)
 
 def deploy():
