@@ -1,0 +1,962 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-02-12 20:56+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+
+#: models.py:30
+msgid "PayPal"
+msgstr "PayPal"
+
+#: models.py:31
+msgid "Quickpay"
+msgstr "Quickpay"
+
+#: models.py:58
+msgid "Account name"
+msgstr "Konto navn"
+
+#: models.py:59
+msgid "Company"
+msgstr "Firma"
+
+#: models.py:60 models.py:525
+msgid "Street"
+msgstr "Gade"
+
+#: models.py:61 models.py:526
+msgid "Zip code"
+msgstr "Post nummer"
+
+#: models.py:62 models.py:527
+msgid "City"
+msgstr "By"
+
+#: models.py:63 models.py:528
+msgid "Country"
+msgstr "Land"
+
+#: models.py:64 models.py:529
+msgid "Phone number"
+msgstr "Telefon nummer"
+
+#: models.py:65
+msgid "Email address"
+msgstr "Email adresse"
+
+#: models.py:66
+msgid "CVR number"
+msgstr "CVR nummer"
+
+#: models.py:68
+msgid "Payment gateway"
+msgstr "Betalings gateway"
+
+#: models.py:70
+msgid "PBS number"
+msgstr "PBS nummer"
+
+#: models.py:71
+msgid "Secret key"
+msgstr "Hemmelig nøgle"
+
+#: models.py:74
+msgid "Auto capture"
+msgstr "Automatisk hævning"
+
+#: models.py:74
+msgid "Automatically capture payments"
+msgstr "Hæv betalinger automatisk"
+
+#: models.py:76
+msgid "Domain"
+msgstr "Domæne"
+
+#: models.py:78
+msgid "Extra info"
+msgstr "Ekstra information"
+
+#: models.py:78
+msgid "Extra info to be included in the registration email."
+msgstr "Ekstra information som inkluderes i tilmeldingskvitteringen"
+
+#: models.py:80
+msgid "Terms and conditions"
+msgstr "Vilkår og betingelser"
+
+#: models.py:82
+msgid "Google analytics"
+msgstr "Google analytics"
+
+#: models.py:82
+msgid "Enter your Google analytics tracker code to enable tracking."
+msgstr "Angiv din Google analytics kode for at starte dataopsamling"
+
+#: models.py:84
+msgid "Users"
+msgstr "Brugere"
+
+#: models.py:89
+msgid ""
+"In addition to the permissions manually assigned, this account will also get "
+"all permissions granted to each group it is in."
+msgstr "I tillæg til alle rettigheder manuelt tildelt, vil denne konto også få alle rettigheder tildelt alle grupper den er i."
+
+#: models.py:142
+msgid "Account"
+msgstr "Konto"
+
+#: models.py:143
+msgid "Accounts"
+msgstr "Kontoer"
+
+#: models.py:201 templates/signupbox/profile.html:6
+msgid "Profile"
+msgstr "Profil"
+
+#: models.py:202
+msgid "Profiles"
+msgstr "Profiler"
+
+#: models.py:211
+msgid "Open"
+msgstr "Åben"
+
+#: models.py:212
+msgid "Closed"
+msgstr "Lukket"
+
+#: models.py:216
+msgid "dkk"
+msgstr "dkk"
+
+#: models.py:217
+msgid "euros"
+msgstr "euro"
+
+#: models.py:242
+msgid "What"
+msgstr "Hvad"
+
+#: models.py:242
+msgid "The event title"
+msgstr "Arrangementets navn"
+
+#: models.py:248 templates/signupbox/includes/export_pdf_booking.txt:6
+#: views/attendee_actions.py:126 views/attendee_actions.py:247
+msgid "Description"
+msgstr "Beskrivelse"
+
+#: models.py:249 templates/signupbox/event_site.html:17
+msgid "Where"
+msgstr "Hvor"
+
+#: models.py:249
+msgid "The event venue"
+msgstr "Arrangementets lokation"
+
+#: models.py:258 templates/signupbox/event_detail.html:17
+msgid "Capacity"
+msgstr "Kapacitet"
+
+#: models.py:259
+msgid "Leave blank for unlimited."
+msgstr "Blank for ubegrænset"
+
+#: models.py:263
+msgid "Status"
+msgstr "Status"
+
+#: models.py:356
+#, python-format
+msgid "%(attendee1)s and %(attendee2)s"
+msgstr "%(attendee1)s and %(attendee2)s"
+
+#: models.py:357
+#, python-format
+msgid " registered for %s."
+msgstr " tilmeldt til %s"
+
+#: models.py:377
+msgid "text"
+msgstr "tekst"
+
+#: models.py:378
+msgid "multiline text"
+msgstr "multilinie tekst"
+
+#: models.py:379
+msgid "checkbox"
+msgstr "tjekboks"
+
+#: models.py:380
+msgid "email"
+msgstr "email"
+
+#: models.py:381
+msgid "select options"
+msgstr "dropdown"
+
+#: models.py:382
+msgid "radio buttons"
+msgstr "radio knapper"
+
+#: models.py:383
+msgid "phone"
+msgstr "telefon"
+
+#: models.py:390
+msgid "Label"
+msgstr "Betegnelse"
+
+#: models.py:391
+msgid "Help text"
+msgstr "Hjælpetekst"
+
+#: models.py:392
+msgid "Type"
+msgstr "Type"
+
+#: models.py:393
+msgid "Required"
+msgstr "Påkrævet"
+
+#: models.py:394
+msgid "In extra forms"
+msgstr "I ekstra formularer"
+
+#: models.py:460
+msgid "Confirmed"
+msgstr "Bekræftet"
+
+#: models.py:461
+msgid "Unconfirmed"
+msgstr "Ubekræftet"
+
+#: models.py:462
+msgid "Cancelled"
+msgstr "Afmeldt"
+
+#: models.py:522
+msgid "Name"
+msgstr "Navn"
+
+#: models.py:523
+msgid "Organization"
+msgstr "Firma"
+
+#: models.py:524 views/attendee_actions.py:184
+msgid "Email"
+msgstr "Email"
+
+#: models.py:540
+msgid "Default ticket"
+msgstr "Standard billet"
+
+#: forms/account.py:38
+msgid ""
+"Add email addresses for each person you wish to invite. Seperate each email "
+"address with a space."
+msgstr "Angiv email adresser for hver person du vil invitere. Seperarer hver email adresse med et blank tegn."
+
+#: forms/account.py:42
+msgid "Make these users administrators?"
+msgstr "Gør disse brugere til administratorer?"
+
+#: forms/account.py:44
+msgid "Administrators can invite new users and edit acocunt settings"
+msgstr "Administratorer kan invitere nye brugere og redigere deres konto indstillinger"
+
+#: forms/account.py:54
+msgid "Account administrator"
+msgstr "Konto administrator"
+
+#: forms/account.py:56
+msgid "Can invite new members and edit account settings"
+msgstr "Kan invitere new brugere og redigere konto indstillinger"
+
+#: forms/account.py:61
+msgid "Password"
+msgstr "Kodeord"
+
+#: forms/account.py:62
+msgid "Password (again)"
+msgstr "Kodeord (igen)"
+
+#: forms/attendees.py:9
+msgid "Actions..."
+msgstr "Handlinger..."
+
+#: forms/attendees.py:10 templates/signupbox/event_confirm.html:41
+msgid "Confirm"
+msgstr "Bekræft"
+
+#: forms/attendees.py:11 templates/signupbox/members.html:57
+msgid "Cancel"
+msgstr "Fortryd"
+
+#: forms/attendees.py:12 templates/signupbox/attendees_email.html:8
+msgid "Send email"
+msgstr "Send email"
+
+#: forms/attendees.py:13 templates/signupbox/attendees_export.html:20
+msgid "Export"
+msgstr "Eksporter"
+
+#: forms/attendees.py:17
+msgid "Spreadsheet"
+msgstr "Regneark"
+
+#: forms/attendees.py:18
+msgid "PDF"
+msgstr "PDF"
+
+#: forms/attendees.py:19
+msgid "Excel"
+msgstr "Excel"
+
+#: forms/attendees.py:23 views/attendee_actions.py:221
+msgid "Attendee data"
+msgstr "Deltager data"
+
+#: forms/attendees.py:24 views/attendee_actions.py:234
+msgid "Booking data"
+msgstr "Tilmeldings data"
+
+#: forms/attendees.py:30
+msgid "Export as"
+msgstr "Eksporter som"
+
+#: forms/attendees.py:36
+msgid "Data to export"
+msgstr "Data der skal eksporteres"
+
+#: forms/attendees.py:42
+msgid "Subject"
+msgstr "Emne"
+
+#: forms/attendees.py:43
+msgid "Message"
+msgstr "Besked"
+
+#: forms/attendees.py:44
+msgid "Send copy to self?"
+msgstr "Send kopi til dig selv?"
+
+#: forms/event.py:19
+msgid "Begin date must be before end date"
+msgstr "Start dato skal være tidligere end slut dato"
+
+#: forms/register.py:80
+msgid "Number of attendees"
+msgstr "Antal deltagere"
+
+#: forms/registration.py:14
+msgid "URL"
+msgstr "URL"
+
+#: forms/registration.py:16
+msgid "email address"
+msgstr "email adresse"
+
+#: forms/registration.py:17
+msgid "password"
+msgstr "kodeord"
+
+#: forms/registration.py:18
+msgid "password (again)"
+msgstr "kodeord (igen)"
+
+#: forms/registration.py:30
+msgid "This url is already taken. Please choose another."
+msgstr "Denne url er taget. Vælg venligst en anden."
+
+#: forms/registration.py:39
+msgid ""
+"This email address is already in use. Please supply a different email "
+"address."
+msgstr "Denne email adresse er taget. Vælg venligst en anden email adresse."
+
+#: forms/registration.py:53
+msgid "You must type the same password each time"
+msgstr "Du skal skrive det samme kodeord"
+
+#: forms/widgets.py:110 templates/signupbox/includes/export_pdf_booking.txt:4
+msgid "at"
+msgstr "hos"
+
+#: forms/widgets.py:118
+msgid "Enter a valid date."
+msgstr "Angiv en gyldig dato."
+
+#: forms/widgets.py:119
+msgid "Enter a valid time."
+msgstr "Angiv et gyldigt tidspunkt."
+
+#: templates/signupbox/account_invitation.html:6
+msgid "Invitation"
+msgstr "Invitation"
+
+#: templates/signupbox/account_invitation.html:15
+msgid "Accept invitation"
+msgstr "Accepter invitation"
+
+#: templates/signupbox/appbase.html:32
+msgid "logged in as"
+msgstr "logget ind som"
+
+#: templates/signupbox/appbase.html:33
+msgid "Access &amp; Permissions"
+msgstr "Adgang &amp; Rettigheder"
+
+#: templates/signupbox/appbase.html:34
+msgid "settings"
+msgstr "indstillinger"
+
+#: templates/signupbox/appbase.html:35
+msgid "logout"
+msgstr "log ud"
+
+#: templates/signupbox/appbase.html:37
+msgid "login"
+msgstr "log ind"
+
+#: templates/signupbox/attendee_edit.html:8
+msgid "Edit attendee"
+msgstr "Rediger deltager"
+
+#: templates/signupbox/attendee_edit.html:17
+#: templates/signupbox/booking_detail.html:22
+#: templates/signupbox/event_edit.html:16
+#: templates/signupbox/event_fields.html:24
+#: templates/signupbox/event_tickets_edit.html:19
+#: templates/signupbox/members.html:27 templates/signupbox/profile.html:18
+#: templates/signupbox/settings.html:16
+msgid "Save"
+msgstr "Gem"
+
+#: templates/signupbox/attendees.html:9
+#: templates/signupbox/event_detail_base.html:9
+msgid "Attendees"
+msgstr "Deltagere"
+
+#: templates/signupbox/attendees.html:20
+msgid "Go"
+msgstr "Udfør"
+
+#: templates/signupbox/attendees_email.html:19
+#: templates/signupbox/members_add.html:19
+msgid "Send"
+msgstr "Send"
+
+#: templates/signupbox/attendees_export.html:8
+msgid "Export attendee data"
+msgstr "Eksporter deltager data"
+
+#: templates/signupbox/booking_detail.html:8 views/attendee_actions.py:119
+#: views/attendee_actions.py:239
+msgid "Booking"
+msgstr "Tilmelding"
+
+#: templates/signupbox/booking_detail.html:19
+msgid "Booking date"
+msgstr "Tilmeldings dato"
+
+#: templates/signupbox/event_complete.html:8
+msgid "We have sent you an email with a receipt of your registration."
+msgstr "Vi har sendt dig en email med en kvittering på din tilmelding."
+
+#: templates/signupbox/event_complete.html:10
+#: templates/signupbox/event_incomplete.html:10
+#, python-format
+msgid "<a href=\"%(website)s\">Back to event site</a>"
+msgstr "<a href=\"%(website)s\">Tilbage til arrangementssiden</a>"
+
+#: templates/signupbox/event_confirm.html:9
+msgid "Confirm registration"
+msgstr "Bekræft tilmelding"
+
+#: templates/signupbox/event_confirm.html:10
+#, python-format
+msgid "Registration for %(title)s."
+msgstr "Tilmelding til %(title)s."
+
+#: templates/signupbox/event_confirm.html:18
+#: templates/signupbox/event_confirm_with_payment.html:10
+msgid "Category"
+msgstr "Kategori"
+
+#: templates/signupbox/event_confirm.html:19
+#: templates/signupbox/event_confirm_with_payment.html:12
+msgid "Count"
+msgstr "Antal"
+
+#: templates/signupbox/event_confirm.html:20
+#: templates/signupbox/event_confirm_with_payment.html:13
+msgid "Collected price"
+msgstr "Samlet pris"
+
+#: templates/signupbox/event_confirm.html:28
+#: templates/signupbox/event_tickets.html:24 templatetags/booking_tags.py:25
+msgid "Free"
+msgstr "Gratis"
+
+#: templates/signupbox/event_confirm_quickpay.html:10
+msgid "Confirm registration and continue to payment"
+msgstr "Bekræft tilmelding og fortsæt til betaling"
+
+#: templates/signupbox/event_confirm_with_payment.html:11
+msgid "Item price"
+msgstr "Stk. pris"
+
+#: templates/signupbox/event_confirm_with_payment.html:26
+msgid "Total price"
+msgstr "Pris i alt"
+
+#: templates/signupbox/event_confirm_with_payment.html:26
+msgid "Incl. vat"
+msgstr "Inkl. moms"
+
+#: templates/signupbox/event_create.html:6 templates/signupbox/index.html:8
+msgid "Add event"
+msgstr "Tilføj arrangement"
+
+#: templates/signupbox/event_create.html:16
+#: templates/signupbox/event_fields.html:39
+#: templates/signupbox/event_tickets_add.html:19
+#: templates/signupbox/includes/fields_form.html:23
+msgid "Add"
+msgstr "Tilføj"
+
+#: templates/signupbox/event_detail.html:14
+msgid "Date"
+msgstr "Dato"
+
+#: templates/signupbox/event_detail.html:15
+msgid "Venue"
+msgstr "Lokation"
+
+#: templates/signupbox/event_detail.html:21
+msgid "Unlimited"
+msgstr "Ubegrænset"
+
+#: templates/signupbox/event_detail.html:24 templates/signupbox/index.html:21
+#, python-format
+msgid ""
+"\n"
+"            <strong>%(attendee_count)s</strong> attendee\n"
+"            "
+msgid_plural ""
+"\n"
+"            <strong>%(attendee_count)s</strong> attendees\n"
+"          "
+msgstr[0] "\n<strong>%(attendee_count)s</strong> deltager"
+msgstr[1] "\n<strong>%(attendee_count)s</strong> deltagere"
+
+#: templates/signupbox/event_detail.html:31
+msgid "Website"
+msgstr "Website"
+
+#: templates/signupbox/event_detail.html:33
+#: templates/signupbox/event_edit.html:6
+msgid "Edit event"
+msgstr "Rediger arrangement"
+
+#: templates/signupbox/event_detail_base.html:6
+msgid "My events"
+msgstr "Mine arrangementer"
+
+#: templates/signupbox/event_detail_base.html:10
+#: templates/signupbox/event_tickets.html:9
+msgid "Tickets"
+msgstr "Billetter"
+
+#: templates/signupbox/event_detail_base.html:11
+msgid "Fields"
+msgstr "Felter"
+
+#: templates/signupbox/event_fields.html:8
+msgid "Form fields"
+msgstr "Form felter"
+
+#: templates/signupbox/event_fields.html:22
+msgid "Add field"
+msgstr "Tilføj felter"
+
+#: templates/signupbox/event_fields.html:40
+#: templates/signupbox/members.html:35
+#: templates/signupbox/includes/fields_form.html:24
+msgid "Remove"
+msgstr "Fjern"
+
+#: templates/signupbox/event_incomplete.html:8
+msgid "The registration was not completed."
+msgstr "Tilmelding blev ikke fuldført."
+
+#: templates/signupbox/event_register.html:8
+#, python-format
+msgid "registration for %(title)s"
+msgstr "Tilmelding til %(title)s"
+
+#: templates/signupbox/event_register.html:26
+msgid "Add extra attendee"
+msgstr "Tilføj ekstra deltager"
+
+#: templates/signupbox/event_register.html:26
+#: templates/signupbox/members.html:27 templates/signupbox/members.html:35
+msgid "or"
+msgstr "eller"
+
+#: templates/signupbox/event_register.html:28
+msgid "Continue"
+msgstr "Fortsæt"
+
+#: templates/signupbox/event_site.html:13
+msgid "Time and date"
+msgstr "Dato og tid"
+
+#: templates/signupbox/event_site.html:22
+msgid "Price"
+msgstr "Pris"
+
+#: templates/signupbox/event_site.html:26
+msgid "Register"
+msgstr "Tilmelding"
+
+#: templates/signupbox/event_tickets.html:10
+#: templates/signupbox/event_tickets_add.html:9
+msgid "Add ticket"
+msgstr "Tilføj billet"
+
+#: templates/signupbox/event_tickets.html:13
+msgid "All tickets"
+msgstr "Alle billetter"
+
+#: templates/signupbox/event_tickets.html:31
+msgid "No tickets for this event"
+msgstr "Ingen billetter for dette arrangement"
+
+#: templates/signupbox/event_tickets_edit.html:9
+msgid "Edit ticket"
+msgstr "Rediger billet"
+
+#: templates/signupbox/index.html:7
+#, python-format
+msgid "%(name)s's events"
+msgstr "%(name)s's arrangement"
+
+#: templates/signupbox/index.html:11
+msgid "Upcoming events"
+msgstr "Kommende arrangementer"
+
+#: templates/signupbox/index.html:18
+msgid "in"
+msgstr "i"
+
+#: templates/signupbox/index.html:32
+msgid "No upcoming events"
+msgstr "Ingen kommende arrangementer"
+
+#: templates/signupbox/index.html:35
+msgid "Recent activities"
+msgstr "Senester aktiviteter"
+
+#: templates/signupbox/index.html:45
+msgid "No recent activites"
+msgstr "Ingen senester aktiviteter"
+
+#: templates/signupbox/index.html:48
+msgid "Previous events"
+msgstr "Tidligere arrangementer"
+
+#: templates/signupbox/index.html:56
+#, python-format
+msgid "%(attendee_count)s attendees"
+msgstr "%(attendee_count)s deltagere"
+
+#: templates/signupbox/index.html:62
+msgid "No previous events"
+msgstr "Ingen tidligere arrangementer"
+
+#: templates/signupbox/login.html:7 templates/signupbox/login.html.py:17
+msgid "Login"
+msgstr "Login"
+
+#: templates/signupbox/members.html:6
+msgid "Access and Permissions"
+msgstr "Adgang og rettigheder"
+
+#: templates/signupbox/members.html:7
+msgid "Invite users to this account"
+msgstr "Inviter brugere til denne konto"
+
+#: templates/signupbox/members.html:18
+msgid "Edit permissions"
+msgstr "Rediger rettigheder"
+
+#: templates/signupbox/members.html:19
+msgid "Remove from account"
+msgstr "Fjern fra konto"
+
+#: templates/signupbox/members.html:27 templates/signupbox/members.html:35
+msgid "cancel"
+msgstr "fortryd"
+
+#: templates/signupbox/members.html:33
+msgid "Remove account access for this user."
+msgstr "Fjern kontoadgang for denne bruger."
+
+#: templates/signupbox/members.html:50
+#, python-format
+msgid "Invited %(timeago)s ago"
+msgstr "Inviteret for %(timeago)s siden"
+
+#: templates/signupbox/members.html:51
+msgid "Awaiting reply"
+msgstr "Afventer svar"
+
+#: templates/signupbox/members.html:52
+msgid "Cancel invitation"
+msgstr "Fortryd invitation"
+
+#: templates/signupbox/members.html:56
+msgid "Cancel this invite"
+msgstr "Fortryd denne invitation"
+
+#: templates/signupbox/members_add.html:6
+msgid "Invite users"
+msgstr "Inviter brugere"
+
+#: templates/signupbox/members_add.html:11
+msgid "Invite users to this account via email."
+msgstr "Inviter brugere til denne konto via email."
+
+#: templates/signupbox/settings.html:6
+msgid "Settings"
+msgstr "Indstillinger"
+
+#: templates/signupbox/signup.html:7 templates/signupbox/signup.html.py:17
+msgid "Signup"
+msgstr "Opret"
+
+#: templates/signupbox/includes/export_pdf_booking.txt:5
+#: views/attendee_actions.py:122 views/attendee_actions.py:243
+msgid "Transaction"
+msgstr "Transaktion"
+
+#: templates/signupbox/includes/export_pdf_booking.txt:7
+#: views/attendee_actions.py:121 views/attendee_actions.py:242
+msgid "Ordernumber"
+msgstr "Ordrenummer"
+
+#: templates/signupbox/includes/export_pdf_booking.txt:8
+#: views/attendee_actions.py:123 views/attendee_actions.py:244
+msgid "Amount"
+msgstr "Beløb"
+
+#: templates/signupbox/includes/export_pdf_booking.txt:9
+#: views/attendee_actions.py:125 views/attendee_actions.py:246
+msgid "Cardtype"
+msgstr "Korttype"
+
+#: templates/signupbox/includes/export_pdf_booking.txt:10
+#: views/attendee_actions.py:127 views/attendee_actions.py:248
+msgid "Notes"
+msgstr "Noter"
+
+#: templates/signupbox/includes/export_pdf_details.txt:4
+msgid "Venue:"
+msgstr "Lokation"
+
+#: templates/signupbox/includes/export_pdf_details.txt:5
+#: templates/signupbox/mails/register_email.txt:9
+msgid "Time and date:"
+msgstr "Dato og tid"
+
+#: templates/signupbox/includes/export_pdf_details.txt:6
+msgid "Price:"
+msgstr "Pris"
+
+#: templates/signupbox/includes/export_pdf_details.txt:7
+msgid "Website:"
+msgstr "Website"
+
+#: templates/signupbox/includes/export_pdf_details.txt:8
+msgid "Total number of attendees:"
+msgstr "Deltagere i alt"
+
+#: templates/signupbox/includes/export_pdf_headline.txt:3
+#, python-format
+msgid "Event: %(title)s"
+msgstr "Arrangement: %(title)s"
+
+#: templates/signupbox/mails/account_invite_message.txt:2
+#, python-format
+msgid "You have been invited to a %(name)s account at http://%(domain)s/."
+msgstr "Du er inviteret til %(name)s konto på http://%(domain)s/."
+
+#: templates/signupbox/mails/account_invite_message.txt:6
+msgid "### CLICK THE LINK BELOW TO ACCEPT THIS INVITATION ###"
+msgstr "### KLIK PÅ LINKET NEDENFOR FOR AT ACCEPTERE DENNE INVITATION ###"
+
+#: templates/signupbox/mails/account_invite_message.txt:10
+msgid "Support:"
+msgstr "Hjælp:"
+
+#: templates/signupbox/mails/account_invite_subject.txt:1
+#, python-format
+msgid "You've been invited to a %(name)s Account"
+msgstr "Du er inviteret til %(name)s konto"
+
+#: templates/signupbox/mails/register_email.txt:3
+#: templates/signupbox/mails/register_email_subject.txt:1
+#, python-format
+msgid "You have been registered for %(title)s."
+msgstr "Du er blevet tilmeldt %(title)s."
+
+#: templates/signupbox/mails/register_email.txt:5
+#, python-format
+msgid "Booking number: #%(booking)s"
+msgstr "Tilmeldingsnummer: #%(booking)s"
+
+#: templates/signupbox/mails/register_email.txt:7
+msgid "Event:"
+msgstr "Arrangement:"
+
+#: templates/signupbox/mails/register_email.txt:8
+msgid "Place:"
+msgstr "Lokation:"
+
+#: templates/signupbox/mails/register_email.txt:16
+msgid "phone:"
+msgstr "telefon"
+
+#: templates/signupbox/mails/register_email.txt:17
+msgid "mail:"
+msgstr "email:"
+
+#: templates/signupbox/mails/register_email_registrant.txt:4
+#, python-format
+msgid "Thank you for your recent booking for %(title)s."
+msgstr "Tak for din tilmelding til %(title)s."
+
+#: templates/signupbox/mails/register_email_registrant.txt:7
+#, python-format
+msgid "Price: %(amount)s %(currency)s"
+msgstr "Pris: %(amount)s %(currency)s"
+
+#: templates/signupbox/mails/register_email_registrant.txt:9
+#, python-format
+msgid "Transaction no.: %(transaction)s"
+msgstr "Transaktionsnummer.: %(transaction)s"
+
+#: templates/signupbox/mails/register_email_registrant.txt:10
+#, python-format
+msgid "Transaction date: %(timestamp)s"
+msgstr "Transaktionsdato: %(timestamp)s"
+
+#: templates/signupbox/mails/register_email_subject_registrant.txt:1
+#, python-format
+msgid "Your registration for %(title)s."
+msgstr "Din tilmelding til %(title)s."
+
+#: templatetags/date_tags.py:37
+#, python-format
+msgid "%(date)s at %(time)s"
+msgstr "%(date)s kl. %(time)s"
+
+#: views/account.py:30
+msgid "Settings updated."
+msgstr "Indstillinger opdateret."
+
+#: views/account.py:50
+msgid "Profile updated."
+msgstr "Profil opdateret."
+
+#: views/account.py:104
+msgid "Invitation sent."
+msgid_plural "Invitations sent."
+msgstr[0] "Invitation sendt."
+msgstr[1] "Invitationer sendt."
+
+#: views/account.py:125
+msgid "User removed."
+msgstr "Bruger fjernet"
+
+#: views/account.py:143
+msgid "Permissions updated."
+msgstr "Rettigheder opdateret."
+
+#: views/account.py:168
+#, python-format
+msgid "Welcome to your %s account."
+msgstr "Velkommen til din %s konto."
+
+#: views/account.py:191
+msgid "Invitation canceled."
+msgstr "Invitation fjernet."
+
+#: views/attendee_actions.py:43
+#, python-format
+msgid "Page %(page_num)d of %(page_count)d"
+msgstr "Side %(page_num)d af %(page_count)d"
+
+#: views/attendee_actions.py:85
+msgid "Email sent"
+msgid_plural "Emails sent"
+msgstr[0] "Email sendt"
+msgstr[1] "Emails sendt"
+
+#: views/attendee_actions.py:120 views/attendee_actions.py:241
+msgid "Date and time"
+msgstr "Dato og tid"
+
+#: views/attendee_actions.py:124 views/attendee_actions.py:245
+msgid "Currency"
+msgstr "Valuta"
+
+#: views/attendee_actions.py:225
+msgid "Attendee count"
+msgstr "Deltager antal"
+
+#: views/attendees.py:95
+msgid "Attendee updated."
+msgstr "Deltager opdateret."
+
+#: views/attendees.py:122
+msgid "Booking updated."
+msgstr "Tilmelding opdateret."
+
+#: views/event.py:22
+msgid "Event added."
+msgstr "Arrangement tilføjet."
+
+#: views/event.py:61
+msgid "Event updated."
+msgstr "Arrangement opdateret."
+
+#: views/fields.py:22
+msgid "Form fields updated."
+msgstr "Form felter opdateret."
+
+#: views/tickets.py:33
+msgid "Ticket updated."
+msgstr "Billet opdateret."
+
+#: views/tickets.py:53
+msgid "Ticket added."
+msgstr "Billet tilføjet."

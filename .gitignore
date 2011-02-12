@@ -1,3 +1,4 @@
+*.mo
 *.pyc
 settings_local.py
 *.db
