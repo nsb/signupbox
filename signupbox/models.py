@@ -100,6 +100,10 @@ class Account(models.Model):
         return Activity.objects.filter(object_id__in=self.events.values_list('id', flat=True))
 
     @property
+    def activities_short_list(self, count=10):
+        return self.activities.all()[:count]
+
+    @property
     def display_name(self):
         return self.organization or self.name
 
@@ -359,6 +363,15 @@ class Booking(models.Model):
 
     def __unicode__(self):
         return u'%s: #%s' % (self.event.title, self.id)
+
+class BookingAggregation(models.Model):
+    """ Aggregates registrations per day """
+    date = models.DateField()
+    event = models.ForeignKey(Event)
+    count = models.PositiveIntegerField(default = 0)
+
+    class Meta:
+        unique_together = ('date', 'event')
 
 FIELD_TYPE_CHOICES = (
     (TEXT_FIELD, _('text')),

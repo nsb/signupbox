@@ -35,7 +35,7 @@
   <h3 class="indent">{% trans "Recent activities" %}</h3>
   {% if account.activities.all %}
   <div class="activities block">
-  {% for activity in account.activities.all %}
+  {% for activity in account.activities_short_list %}
     <div class="activity row">
       <div class="column">{{ activity.timestamp|date:"SHORT_DATETIME_FORMAT" }}</div><div class="column">{{ activity }}</div>
     </div>

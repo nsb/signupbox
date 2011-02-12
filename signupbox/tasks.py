@@ -1,7 +1,10 @@
-from celery.decorators import task
+from datetime import timedelta
+
 from django.core.mail import send_mass_mail, send_mail
 from django.contrib.sites.models import Site
 from django.template.loader import render_to_string
+
+from celery.decorators import task, periodic_task
 
 from activities.models import Activity
 
@@ -48,3 +51,8 @@ def account_send_invites(invites, message):
           'noreply@%s' % Site.objects.get_current().domain,
           [invite.email]) for invite in invites
     ])
+
+
+@periodic_task(run_every=timedelta(hours=1))
+def process_booking_aggregations():
+    pass
