@@ -1,15 +1,45 @@
 import csv
 
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, tables, TableStyle
+from reportlab.lib import styles, colors
+from reportlab.pdfgen import canvas
+from reportlab.lib.units import mm
+
 from django.template.defaultfilters import date, floatformat, capfirst
 from django.utils.translation import ugettext, ungettext, ugettext_lazy as _
 from django.http import HttpResponse
 from django.contrib import messages
 from django.shortcuts import redirect
 from django.core.urlresolvers import reverse
+from django.template.loader import render_to_string
 
 from ..constants import *
 
 from ..tasks import async_send_mail
+
+class NumberedCanvas(canvas.Canvas):
+    def __init__(self, *args, **kwargs):
+        canvas.Canvas.__init__(self, *args, **kwargs)
+        self._saved_page_states = []
+
+    def showPage(self):
+        self._saved_page_states.append(dict(self.__dict__))
+        self._startPage()
+
+    def save(self):
+        """add page info to each page (page x of y)"""
+        num_pages = len(self._saved_page_states)
+        for state in self._saved_page_states:
+            self.__dict__.update(state)
+            self.draw_page_number(num_pages)
+            canvas.Canvas.showPage(self)
+        canvas.Canvas.save(self)
+
+    def draw_page_number(self, page_count):
+        self.setFont("Helvetica", 7)
+        self.drawRightString(200*mm, 20*mm,
+            _("Page %(page_num)d of %(page_count)d") % {'page_num':self._pageNumber, 'page_count': page_count}
+        )
 
 class AttendeeActions(object):
     def dispatch(self, request, attendees, action, event, **kwargs):
@@ -81,7 +111,7 @@ class AttendeeActions(object):
 
             # booking data
 
-            bookings = Booking.objects.filter(id__in=selected.values_list('booking__id', flat=True))
+            bookings = event.bookings.filter(id__in=selected.values_list('booking__id', flat=True))
 
             writer.writerow(
                 [ugettext('Booking').encode('utf8'),
@@ -100,8 +130,8 @@ class AttendeeActions(object):
                 writer.writerow(
                     ['#%d' % b.id,
                      str(b.attendees.order_by('id')[0]).encode('utf8') if b.attendees.order_by('id')[0] else None,
-                     date(b.timestamp, "d/m/Y H:i"),
-                     b.ordernum,
+                     date(b.timestamp, "SHORT_DATETIME_FORMAT"),
+                     b.ordernumber,
                      b.transaction,
                      floatformat(b.amount,-2),
                      b.currency.encode('utf8'),
@@ -109,5 +139,71 @@ class AttendeeActions(object):
                      b.description.encode('utf8'),
                      b.notes.encode('utf-8'),]
                 )
+
+        return response
+
+    def export_pdf(self, request, selected, event, data):
+        """
+        Export data pdf.
+
+        """
+
+        response = HttpResponse(mimetype='application/pdf')
+        response['Content-Disposition'] = 'attachment; filename="%s.pdf"' % event.title.encode('utf8')
+
+        style = styles.getSampleStyleSheet()
+        story = []
+
+        # headline
+        story.append(
+            Paragraph(
+                render_to_string('signupbox/includes/export_pdf_headline.txt', {'event':event}),
+                style["Heading1"],
+            )
+        )
+
+        # event details
+        story.append(
+            Paragraph(
+                render_to_string('signupbox/includes/export_pdf_details.txt', {'event':event}),
+                style["Normal"],
+            )
+        )
+
+        if data == ATTENDEE_DATA:
+
+            # attendee data
+
+            attendee_style = TableStyle([
+                ('BACKGROUND', (0,0), (2,0), "#F6F6F6"),
+            ])
+
+            t = tables.Table(
+                [[None,
+                  event.fields.all()[0].label,
+                  ugettext('Email'),]] + \
+                [['#%d' % r.booking.id,
+                  '%s %s' % (r.display_value, '(%d)' % r.attendee_count if r.attendee_count != 1 else ''),
+                  r.email,] for r in selected],
+                  style = attendee_style,
+                  hAlign = 'LEFT',
+            )
+
+            story.append(t)
+
+        elif data == BOOKING_DATA:
+
+            # booking data
+
+            bookings = event.bookings.filter(id__in=selected.values_list('booking__id', flat=True))
+
+            for booking in bookings:
+                story.append(Paragraph(
+                    render_to_string('signupbox/includes/export_pdf_booking.txt',{'booking':booking}),
+                    style["Normal"]),
+                )
+
+        doc = SimpleDocTemplate(response)
+        doc.build(story, canvasmaker=NumberedCanvas)
 
         return response

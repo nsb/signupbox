@@ -10,3 +10,4 @@ BeautifulSoup
 -e git://github.com/dziegler/django-css.git#egg=DjangoCSS
 -e git://github.com/dcramer/django-paypal.git#egg=DjangoPayPal
 django-sentry
+reportlab
