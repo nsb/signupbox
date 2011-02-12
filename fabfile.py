@@ -47,7 +47,7 @@ def migrate():
     migrate the database
     """
     with cd(env.directory + 'src'):
-        #virtualenv('python manage.py migrate --settings=' + env.settings)
+        virtualenv('python manage.py migrate --settings=' + env.settings)
         virtualenv('python manage.py syncdb --noinput --settings=' + env.settings)
 
 def deploy():
