@@ -64,7 +64,7 @@ def attendeeform_factory(event, is_extra, instance=None):
         fields[field.name] = FIELD_TYPES[field.type](*field_args, **field_kwargs)
 
     if event.has_extra_forms and ticket_qs.count() > 1:
-        fields['ticket'] = forms.ModelChoiceField(queryset=ticket_qs, empty_label=None)
+        fields['ticket'] = forms.ModelChoiceField(queryset=ticket_qs, empty_label=None, label=_('Ticket'))
 
     if not event.has_extra_forms:
         fields['attendee_count'] = \

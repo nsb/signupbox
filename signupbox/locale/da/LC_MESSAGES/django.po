@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-02-12 20:56+0100\n"
+"POT-Creation-Date: 2011-02-12 23:07+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -114,7 +114,9 @@ msgstr "Brugere"
 msgid ""
 "In addition to the permissions manually assigned, this account will also get "
 "all permissions granted to each group it is in."
-msgstr "I tillæg til alle rettigheder manuelt tildelt, vil denne konto også få alle rettigheder tildelt alle grupper den er i."
+msgstr ""
+"I tillæg til alle rettigheder manuelt tildelt, vil denne konto også få alle "
+"rettigheder tildelt alle grupper den er i."
 
 #: models.py:142
 msgid "Account"
@@ -271,7 +273,9 @@ msgstr "Standard billet"
 msgid ""
 "Add email addresses for each person you wish to invite. Seperate each email "
 "address with a space."
-msgstr "Angiv email adresser for hver person du vil invitere. Separer hver email adresse med et blank tegn."
+msgstr ""
+"Angiv email adresser for hver person du vil invitere. Separer hver email "
+"adresse med et blank tegn."
 
 #: forms/account.py:42
 msgid "Make these users administrators?"
@@ -279,7 +283,9 @@ msgstr "Gør disse brugere til administratorer?"
 
 #: forms/account.py:44
 msgid "Administrators can invite new users and edit acocunt settings"
-msgstr "Administratorer kan invitere nye brugere og redigere deres konto indstillinger"
+msgstr ""
+"Administratorer kan invitere nye brugere og redigere deres konto "
+"indstillinger"
 
 #: forms/account.py:54
 msgid "Account administrator"
@@ -360,6 +366,10 @@ msgstr "Send kopi til dig selv?"
 #: forms/event.py:19
 msgid "Begin date must be before end date"
 msgstr "Start dato skal være tidligere end slut dato"
+
+#: forms/register.py:67
+msgid "Ticket"
+msgstr "Billet"
 
 #: forms/register.py:80
 msgid "Number of attendees"
@@ -564,8 +574,12 @@ msgid_plural ""
 "\n"
 "            <strong>%(attendee_count)s</strong> attendees\n"
 "          "
-msgstr[0] "\n<strong>%(attendee_count)s</strong> deltager"
-msgstr[1] "\n<strong>%(attendee_count)s</strong> deltagere"
+msgstr[0] ""
+"\n"
+"<strong>%(attendee_count)s</strong> deltager"
+msgstr[1] ""
+"\n"
+"<strong>%(attendee_count)s</strong> deltagere"
 
 #: templates/signupbox/event_detail.html:31
 msgid "Website"
