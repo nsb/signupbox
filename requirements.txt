@@ -11,3 +11,4 @@ BeautifulSoup
 -e git://github.com/dcramer/django-paypal.git#egg=DjangoPayPal
 django-sentry
 reportlab
+xlwt

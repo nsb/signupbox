@@ -5,6 +5,8 @@ from reportlab.lib import styles, colors
 from reportlab.pdfgen import canvas
 from reportlab.lib.units import mm
 
+from xlwt import Workbook
+
 from django.template.defaultfilters import date, floatformat, capfirst
 from django.utils.translation import ugettext, ungettext, ugettext_lazy as _
 from django.http import HttpResponse
@@ -205,5 +207,73 @@ class AttendeeActions(object):
 
         doc = SimpleDocTemplate(response)
         doc.build(story, canvasmaker=NumberedCanvas)
+
+        return response
+
+    def export_xls(self, request, selected, event, data):
+        """
+        Export data excel
+
+        """
+
+        wb = Workbook()
+
+        if data == ATTENDEE_DATA:
+
+            ws = wb.add_sheet(_('Attendee data'))
+
+            for column, field in enumerate(event.fields.all()):
+                ws.row(0).write(column, capfirst(field.label))
+            ws.row(0).write(event.fields.count(), capfirst(_('Attendee count')))
+
+            for row, r in enumerate(selected):
+                for column, field in enumerate(r.values.all()):
+                    ws.row(row + 1).write(column, field.value)
+                ws.row(row + 1).write(event.fields.count(), '%d' % r.attendee_count)
+
+        elif data == BOOKING_DATA:
+
+            ws = wb.add_sheet(_('Booking data'))
+
+            bookings = event.bookings.filter(id__in=selected.values_list('booking__id', flat=True))
+
+            column_names = [
+                ugettext('Booking'),
+                ugettext(event.fields.all()[0].label),
+                ugettext('Date and time'),
+                ugettext('Ordernumber'),
+                ugettext('Transaction'),
+                ugettext('Amount'),
+                ugettext('Currency'),
+                ugettext('Cardtype'),
+                ugettext('Description'),
+                ugettext('Notes'),
+            ]
+
+            for column, name in enumerate(column_names):
+                ws.row(0).write(column, name)
+
+            for row, b in enumerate(bookings):
+
+                column_data = [
+                    '#%d' % b.id,
+                    b.attendees.order_by('id')[0].display_value if b.attendees.order_by('id')[0].display_value else None,
+                    date(b.timestamp, "d/m/Y H:i"),
+                    b.ordernumber,
+                    b.transaction,
+                    floatformat(b.amount,-2),
+                    b.currency,
+                    b.cardtype,
+                    b.description,
+                    b.notes,
+                ]
+
+                for column, data in enumerate(column_data):
+                    ws.row(row + 1).write(column, data)
+
+        response = HttpResponse(mimetype='application/vnd.ms-excel')
+        response['Content-Disposition'] = 'attachment; filename="%s.xls"' % event.title.encode('utf8')
+
+        wb.save(response)
 
         return response
