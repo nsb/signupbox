@@ -1,10 +1,6 @@
-import logging
-
 from django.db import models
 from django.contrib.contenttypes import generic
 from django.contrib.contenttypes.models import ContentType
-
-logger = logging.getLogger('signupbox.default')
 
 class Activity(models.Model):
 
@@ -17,11 +13,6 @@ class Activity(models.Model):
 
     def __unicode__(self):
         return self.activity
-
-    def save(self, *args, **kwargs):
-        super(Activity, self).save(*args, **kwargs)
-        logger.info(self.activity)
-        return self
 
     class Meta:
         verbose_name = 'Activity'
