@@ -133,6 +133,7 @@ AUTHENTICATION_BACKENDS = (
 )
 
 AUTH_PROFILE_MODULE = 'signupbox.profile'
+LOGIN_URL = '/accounts/login/'
 LOGIN_REDIRECT_URL = '/admin/'
 
 LOGGING = {
