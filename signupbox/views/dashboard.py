@@ -3,11 +3,15 @@ from django.contrib.auth.models import User, Group
 from django.contrib.auth import authenticate, login
 from django.shortcuts import render_to_response, redirect
 from django.template import RequestContext
+from django.core.urlresolvers import reverse
 
 from objperms.models import ObjectPermission 
 
 from ..forms import RegistrationForm
 from ..models import Account
+
+def frontpage(request):
+    return redirect(reverse('index'))
 
 @login_required
 def index(request):
