@@ -18,6 +18,10 @@ from ..forms import attendeeactionsform_factory, AttendeesEmailForm
 
 class SignupTestCase(test.TestCase):
 
+    def testFrontpage(self):
+        response = self.client.get(reverse('frontpage'))
+        self.assertRedirects(response, reverse('index'), target_status_code = 302)
+
     def testSignup(self):
 
         #Integration tests
@@ -27,7 +31,7 @@ class SignupTestCase(test.TestCase):
             reverse('signup',),
             {'accountname':'myotheraccount', 'email':'myotheremail@example.com', 'password':'mypassword', 'password2':'mypassword',}
         )
-        self.assertRedirects(response, reverse('index',),)
+        self.assertRedirects(response, reverse('index',))
 
 class AdminTestCase(BaseTestCase):
     def setUp(self):
