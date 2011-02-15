@@ -68,6 +68,17 @@ class AttendeeActions(object):
         elif format == XLS_EXPORT:
             return self.export_xls(request, attendees, event, data)
 
+    def _update_status(self, request, attendees, event, status):
+        attendees.update(status=status)
+        messages.success(request, _('Attendee status updated.'))
+        return redirect(reverse('event_attendees', kwargs={'slug':event.slug}))
+
+    def cancel(self, request, attendees, event):
+        return self._update_status(request, attendees, event, 'cancelled')
+
+    def confirm(self, request, attendees, event):
+        return self._update_status(request, attendees, event, 'confirmed')
+
     def email(self, request, attendees, event, subject, message, receive_copy):
 
         async_send_mail.delay(
