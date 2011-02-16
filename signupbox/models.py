@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from datetime import date, datetime, timedelta
+from datetime import datetime, date, time, timedelta
 import uuid, re
 from urlparse import urlparse
 from random import random
@@ -24,7 +24,6 @@ from activities.models import Activity
 
 from constants import *
 from signals import booking_confirmed
-from tasks import process_booking
 
 PAYMENT_GATEWAY_CHOICES = (
     ('paypal', _('PayPal')),
@@ -336,6 +335,15 @@ class Ticket(models.Model):
     def __unicode__(self):
         return self.name
 
+class BookingManager(models.Manager):
+    def today(self):
+        return self.filter(
+            timestamp__range=(
+                datetime.combine(date.today(), time.min),
+                datetime.combine(date.today(), time.max)
+            )
+        )
+
 class Booking(models.Model):
     event = models.ForeignKey(Event, related_name='bookings')
     timestamp = models.DateTimeField(auto_now_add=True, db_index=True)
@@ -349,6 +357,8 @@ class Booking(models.Model):
         default=0)
     currency = models.CharField(max_length=3, blank=True)
     confirmed = models.BooleanField(default=False)
+
+    objects = BookingManager()
 
     @property
     def activity(self):
@@ -370,11 +380,21 @@ class Booking(models.Model):
     def __unicode__(self):
         return '%(title)s: #%(id)s' % {'title':self.event.title, 'id':self.id}
 
+class BookingAggregationManager(models.Manager):
+    def recent(self, days=7):
+        delta = date.today() - timedelta(days=7)
+        return self.filter(date__gt=delta)
+
 class BookingAggregation(models.Model):
     """ Aggregates registrations per day """
     date = models.DateField()
     event = models.ForeignKey(Event)
-    count = models.PositiveIntegerField(default = 0)
+    count = models.PositiveIntegerField(default=0)
+
+    objects = BookingAggregationManager()
+
+    def __unicode__(self):
+        return '%s, %s: %d' % (self.event, self.date, self.count)
 
     class Meta:
         unique_together = ('date', 'event')
@@ -562,13 +582,3 @@ def on_quickpay_payment_success(sender, **kwargs):
     booking = Booking.objects.get(pk=int(transaction.ordernumber.lstrip('0')))
     booking_confirmed.send(sender=transaction, booking_id=booking.id)
 quickpay_payment_was_successfull.connect(on_quickpay_payment_success)
-
-def on_booking_confirmed(sender, booking_id, **kwargs):
-
-    booking = Booking.objects.get(pk=booking_id)
-    booking.confirmed = True
-    booking.save()
-
-    process_booking.delay(booking)
-
-booking_confirmed.connect(on_booking_confirmed)

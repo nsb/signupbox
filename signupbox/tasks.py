@@ -1,12 +1,14 @@
-from datetime import timedelta
+from datetime import datetime, date, time, timedelta
 
 from django.core.mail import send_mass_mail, send_mail
 from django.contrib.sites.models import Site
 from django.template.loader import render_to_string
+from django.db.models import signals, Max, Sum
 
 from celery.decorators import task, periodic_task
 
 from activities.models import Activity
+from models import Booking, BookingAggregation, Attendee
 
 @task
 def async_send_mail(recipients, subject, message):
@@ -35,6 +37,12 @@ def process_booking(booking):
         content_object = booking.event,
         activity = booking.activity,
     )
+
+    ba, created = BookingAggregation.objects.get_or_create(date=date.today(), event=booking.event)
+    ba.count = Attendee.objects.filter(
+        booking__in=Booking.objects.today().filter(event=booking.event), status='confirmed'
+    ).aggregate(Sum('attendee_count'))['attendee_count__sum'] or 0
+    ba.save()
 
 @task
 def account_send_invites(invites, message):

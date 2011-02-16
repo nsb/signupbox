@@ -33,17 +33,20 @@
   {% endif %}
 
   <h3 class="indent">{% trans "Recent activities" %}</h3>
-  {% if account.activities.all %}
   <div class="activities block">
-  {% for activity in account.activities_short_list %}
-    <div class="activity row">
-      <div class="column">{{ activity.timestamp|date:"SHORT_DATETIME_FORMAT" }}</div><div class="column">{{ activity }}</div>
+    <div>
+    {% for activity in account.activities_short_list %}
+      <div class="activity row">
+        <div class="column">{{ activity.timestamp|date:"SHORT_DATETIME_FORMAT" }}</div><div class="column">{{ activity }}</div>
+      </div>
+    {% empty %}
+      <div class="empty">{% trans "No recent activites" %}</div>
+    {% endfor %}
     </div>
-  {% endfor %} 
+
+    <div id="gviz"></div>
+ 
   </div>
-  {% else %}
-    <div class="empty">{% trans "No recent activites" %}</div>
-  {% endif %}
 
   <h3 class="indent">{% trans "Previous events" %}</h3>
   {% if account.events.previous %}
@@ -63,3 +66,51 @@
   {% endif %}
 
 {% endblock main %}
+
+{% block javascript %}
+  {{ block.super }}
+
+<script type="text/javascript">
+
+google.load('visualization', '1', {'packages':['columnchart']});
+google.setOnLoadCallback(drawChart);
+
+function drawChart() {
+  var query = new google.visualization.Query('/admin/gviz/');
+  query.send(handleQueryResponse);
+}
+
+function handleQueryResponse(response) {
+  if (response.isError()) {
+    alert('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
+    return;
+  }
+
+  var data = response.getDataTable();
+
+  visualization = new google.visualization.ColumnChart(document.getElementById('gviz'));
+
+  var do_draw = function() {
+    visualization.draw(data, {
+      height: 200,
+      is3D: true,
+      isStacked: true,
+      min: 0,
+      title: '{% trans "Registrations the last seven days" %}',
+      colors: ['#2B3E42', '#747E80', '#D5E1DD', '#F7F3E8', '#F2583E', '#77BED2']}
+    );
+  };
+
+  if (visualization) {
+    do_draw();
+
+    $(window).resize(function(){
+      do_draw();
+    });
+  }
+
+}
+</script>
+
+
+{% endblock javascript %}

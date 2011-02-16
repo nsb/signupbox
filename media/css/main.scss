@@ -40,6 +40,17 @@
     border-top: solid 1px $color3;
     border-bottom: solid 1px $color3;
 
+    &.activities {
+      border-top: none;
+      border-bottom: none;
+      overflow: hidden;
+
+      > div {
+        float: left;
+        width: 50%;
+      }
+    }
+
     &.field {
       border: none;
       background-color: $color4;
