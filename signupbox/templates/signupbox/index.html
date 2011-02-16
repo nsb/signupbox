@@ -37,7 +37,9 @@
     <div>
     {% for activity in account.activities_short_list %}
       <div class="activity indent row">
-          <div class="quiet column">{% blocktrans with activity.timestamp|timesince as since %}{{ since }} ago{% endblocktrans %}</div>
+          <div class="quiet column timestamp">
+            {% blocktrans with activity.timestamp|timesince as since %}{{ since }} ago{% endblocktrans %}
+          </div>
           <div class="column">{{ activity }}</div>
       </div>
     {% empty %}
