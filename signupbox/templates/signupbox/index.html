@@ -33,18 +33,19 @@
   {% endif %}
 
   <h3 class="indent">{% trans "Recent activities" %}</h3>
-  <div class="activities block">
+  <div class="activities">
     <div>
     {% for activity in account.activities_short_list %}
-      <div class="activity row">
-        <div class="column">{{ activity.timestamp|date:"SHORT_DATETIME_FORMAT" }}</div><div class="column">{{ activity }}</div>
+      <div class="activity indent row">
+          <div class="quiet column">{% blocktrans with activity.timestamp|timesince as since %}{{ since }} ago{% endblocktrans %}</div>
+          <div class="column">{{ activity }}</div>
       </div>
     {% empty %}
       <div class="empty">{% trans "No recent activites" %}</div>
     {% endfor %}
     </div>
 
-    <div id="gviz"></div>
+    <div id="gviz" class="column"></div>
  
   </div>
 
@@ -92,7 +93,7 @@ function handleQueryResponse(response) {
 
   var do_draw = function() {
     visualization.draw(data, {
-      height: 200,
+      height: 240,
       is3D: true,
       isStacked: true,
       min: 0,

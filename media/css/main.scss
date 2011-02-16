@@ -33,23 +33,28 @@
     margin-right: 20px;
   }
 
+  .activities {
+    overflow: hidden;
+    width: 100%;
+
+    > div {
+      float: left;
+      width: 50%;
+    }
+
+    .activity {
+      margin-left: 40px;
+      height: 40px;
+    }
+
+  }
+
   .block {
     margin-bottom: 20px;
     display: table;
     width: 100%;
     border-top: solid 1px $color3;
     border-bottom: solid 1px $color3;
-
-    &.activities {
-      border-top: none;
-      border-bottom: none;
-      overflow: hidden;
-
-      > div {
-        float: left;
-        width: 50%;
-      }
-    }
 
     &.field {
       border: none;

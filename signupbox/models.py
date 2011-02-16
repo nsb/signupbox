@@ -99,7 +99,7 @@ class Account(models.Model):
         return Activity.objects.filter(object_id__in=self.events.values_list('id', flat=True))
 
     @property
-    def activities_short_list(self, count=10):
+    def activities_short_list(self, count=6):
         return self.activities.all()[:count]
 
     @property
