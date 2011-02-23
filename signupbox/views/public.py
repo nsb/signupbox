@@ -1,4 +1,4 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseBadRequest
 from django.shortcuts import render_to_response, get_object_or_404, redirect
 from django.template import RequestContext
 from django.core.urlresolvers import reverse
@@ -34,6 +34,8 @@ def event_register(request, slug, account):
     formset_class = registerform_factory(event)
 
     if request.method == 'POST':
+        if not event.is_open:
+            return HttpResponseBadRequest()
         formset = formset_class(request.POST)
         if formset.is_valid():
             booking = formset.save()
@@ -42,7 +44,7 @@ def event_register(request, slug, account):
         formset = formset_class()
 
     return render_to_response(
-        'signupbox/event_register.html',
+        'signupbox/event_register.html' if event.is_open else 'signupbox/event_register_closed.html',
         RequestContext(request, {'event':event, 'formset':formset, 'empty_form':emptyregisterform_factory(event, True)}),
     )
 

@@ -274,7 +274,8 @@ class Event(models.Model):
     def is_open(self):
         return self.status == EVENT_STATUS_OPEN and \
             self.confirmed_attendees_count <= self.capacity if self.capacity > 0 else True and \
-                self.begins < date.today()
+                self.begins > datetime.now() and \
+                    self.tickets.exclude(offered_from__gt=date.today()).exclude(offered_to__lt=date.today()).exists()
 
     @property
     def has_extra_forms(self):

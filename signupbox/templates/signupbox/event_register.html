@@ -7,6 +7,7 @@
 
   <h1>{% blocktrans with event.title as title %}registration for {{ title }}{% endblocktrans %}</h1>
 
+  {% block register_form %}
   <form action="{% url event_register event.slug %}" method="post">
   {% csrf_token %}
   {{ formset.management_form }}
@@ -28,6 +29,7 @@
       <input type="submit" value="{% trans "Continue" %}" />
     </div>
   </form>
+  {% endblock register_form %}
 
 </div>
 
