@@ -59,7 +59,11 @@
         <div class="column"><h4><a href="{% url event_detail event.slug %}">{{ event.title }}</a></h4></div>
         <div class="column">{% date_span event.begins event.ends %}</div>
         <div class="column">
-          {% blocktrans with event.attendee_count as attendee_count %}{{ attendee_count }} attendees{% endblocktrans %}
+          {% blocktrans count event.confirmed_attendees_count as attendee_count %}
+            <strong>{{ attendee_count }}</strong> attendee
+            {% plural %}
+            <strong>{{ attendee_count }}</strong> attendees
+          {% endblocktrans %}
         </div>
       </div>
     {% endfor %}
