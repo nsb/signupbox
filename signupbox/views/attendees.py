@@ -9,7 +9,7 @@ from django.contrib.formtools.wizard import FormWizard
 
 from ..constants import *
 from ..models import Event, Booking, Attendee, Field, Ticket
-from ..forms import attendeeactionsform_factory, AttendeesExportForm, AttendeesEmailForm, attendeeform_factory, BookingForm
+from ..forms import attendeeactionsform_factory, AttendeesExportForm, AttendeesEmailForm, attendeeform_factory, BookingForm, FilterForm
 from attendee_actions import AttendeeActions
 
 class AttendeesActionWizard(FormWizard):
@@ -18,24 +18,23 @@ class AttendeesActionWizard(FormWizard):
 
         account=request.user.accounts.get()
         self.event = get_object_or_404(Event, account=account, slug=slug)
+        self.qs = Attendee.objects.filter(booking__event=self.event)
 
-        #query = request.GET.copy()
-        #if not 'show' in query:
-            #query['show'] = 'confirmed'
+        query = request.GET.copy()
+        if not 'show' in query:
+            query['show'] = ATTENDEE_CONFIRMED
 
-        #self.filter_form = RegistrationListFilterForm(query)
-        #if self.filter_form.is_valid():
-            #show = self.filter_form.cleaned_data['show']
-            #find = self.filter_form.cleaned_data['find']
+        self.filter_form = FilterForm(query)
+        if self.filter_form.is_valid():
+            show = self.filter_form.cleaned_data['show']
+            find = self.filter_form.cleaned_data['find']
 
-            #if show:
-                #qs = qs.filter(status=show)
-            #if find:
-                #qs = qs.filter(registrationdata__value__icontains=find).distinct()
+            if show:
+                self.qs = self.qs.filter(status=show)
+            if find:
+                self.qs = self.qs.filter(values__value__icontains=find).distinct()
 
-        attendees = self.event.confirmed_attendees.all()
-
-        self.form_list = [attendeeactionsform_factory(attendees), None]
+        self.form_list = [attendeeactionsform_factory(self.qs), None]
 
     def get_template(self, step):
         if step == 0:
@@ -49,7 +48,7 @@ class AttendeesActionWizard(FormWizard):
     def render_template(self, request, form, previous_fields, step, context=None):
 
         context = context or {}
-        context.update({'event':self.event})
+        context.update({'event':self.event, 'attendees': self.qs, 'filter_form':self.filter_form})
 
         return super(AttendeesActionWizard, self).render_template(
             request, form, previous_fields, step, context

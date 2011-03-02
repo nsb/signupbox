@@ -55,3 +55,12 @@ class BookingForm(forms.ModelForm):
     class Meta:
         model = Booking
         fields = ('notes',)
+
+class FilterForm(forms.Form):
+    find = forms.CharField(label=_('Search'), required=False)
+    show = forms.ChoiceField(
+        label=_('Show'),
+        choices=(('', _('All')), (ATTENDEE_CONFIRMED, _('Confirmed')), (ATTENDEE_CANCELLED, _('Cancelled'))),
+        required=False,
+        widget=forms.RadioSelect
+    )

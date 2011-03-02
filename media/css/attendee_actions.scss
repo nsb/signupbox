@@ -1,17 +1,47 @@
 @import "colors";
+@import "mixins";
 
-#attendee-actions {
+#attendee_actions {
+  position: relative;
 
-  line-height: 40px;
+  .filter_form {
+    position: absolute;
+    right: 40px;
 
-  > div, ul {
-    display: inline-block;
+    .fieldWrapper {
+      background-color: $color4;
+      @include round-top;
+      overflow: hidden;
+      float: left;
+      line-height: 40px;
+      margin: 0 0 0 10px;
+      padding: 0 5px;
+
+      label {
+        width: auto;
+        padding: 0 5px;
+      }
+
+      li {
+        float: left;
+      }
+
+    }
   }
 
-  li {
-    position: relative;
-    float: left;
-    margin-right: 40px;
+  .attendees {
+
+    line-height: 40px;
+
+    > div, ul {
+      display: inline-block;
+    }
+
+    li {
+      position: relative;
+      float: left;
+      margin-right: 40px;
+    }
   }
 
 }

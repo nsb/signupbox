@@ -9,9 +9,9 @@
   function onCheckboxClicked(e) {
     var checked = $(".attendee.block input:checkbox").is(':checked');
     if(checked)
-      $("#attendee-actions input:submit, #attendee-actions select").removeAttr("disabled")
+      $("#attendee_actions .attendees input:submit, #attendee_actions .attendees select").removeAttr("disabled")
     else
-      $("#attendee-actions").find("select, input:submit").attr("disabled", "disabled");
+      $("#attendee_actions .attendees").find("select, input:submit").attr("disabled", "disabled");
   }
 
   $(function() {

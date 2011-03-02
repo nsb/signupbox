@@ -9,26 +9,37 @@
   <h2>{% trans "Attendees" %}</h2>
 </div>
 
-<form action="{% url event_attendees event.slug %}" method="POST">
-  {% csrf_token %}
-  <input type="hidden" name="{{ step_field }}" value="{{ step0 }}" />
-  {{ previous_fields|safe }}
+<div id="attendee_actions">
 
-  <div id="attendee-actions" class="indent">
-    <div class="indent checkbox"><input id="attendees-check-all" type="checkbox" /></div>
-    {{ form.action }}
-    <input type="submit" disabled="disabled" value="{% trans "Go" %}" />
+  <div class="filter_form">
+    <form action="" method="GET">
+      {% for field in filter_form %}
+        {% include "signupbox/includes/field.html" %}
+      {% endfor %}
+    </form>
   </div>
-  <div class="attendee block">
-    {% for attendee in event.confirmed_attendees %}
-    <div class="row {% cycle 'even' 'odd' %}">
-      <div class="column checkbox"><input type="checkbox" name="0-attendees" value="{{ attendee.id }}" /></div>
-      <div class="column"><a href="{% url event_attendees_edit event.slug attendee.id %}">{{ attendee.display_value }}</a></div>
-      <div class="column"><a href="{% url event_booking_detail event.slug attendee.booking.id %}">#{{ attendee.booking.id }}</a></div>
-      <div class="column last">{{ attendee.booking.timestamp|date }}</div>
+
+  <form action="{% url event_attendees event.slug %}" method="POST">
+    {% csrf_token %}
+    <input type="hidden" name="{{ step_field }}" value="{{ step0 }}" />
+    {{ previous_fields|safe }}
+
+    <div class="attendees indent">
+      <div class="indent checkbox"><input id="attendees-check-all" type="checkbox" /></div>
+      {{ form.action }}
+      <input type="submit" disabled="disabled" value="{% trans "Go" %}" />
     </div>
-    {% endfor %}
-  </div>
-</form>
+    <div class="attendee block">
+      {% for attendee in attendees %}
+      <div class="row {% cycle 'even' 'odd' %}">
+        <div class="column checkbox"><input type="checkbox" name="0-attendees" value="{{ attendee.id }}" /></div>
+        <div class="column"><a href="{% url event_attendees_edit event.slug attendee.id %}">{{ attendee.display_value }}</a></div>
+        <div class="column"><a href="{% url event_booking_detail event.slug attendee.booking.id %}">#{{ attendee.booking.id }}</a></div>
+        <div class="column last">{{ attendee.booking.timestamp|date }}</div>
+      </div>
+      {% endfor %}
+    </div>
+  </form>
+</div>
 
 {% endblock main %}
