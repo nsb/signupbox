@@ -687,7 +687,7 @@ msgstr "Ingen kommende arrangementer"
 
 #: templates/signupbox/index.html:35
 msgid "Recent activities"
-msgstr "Senester aktiviteter"
+msgstr "Seneste aktiviteter"
 
 #: templates/signupbox/index.html:45
 msgid "No recent activites"
