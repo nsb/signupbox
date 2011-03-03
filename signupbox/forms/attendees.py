@@ -5,6 +5,8 @@ from ..constants import *
 
 from ..models import Booking
 
+from widgets import SearchInput
+
 ACTION_CHOICES = (
     ('', _('Actions...')),
     ('confirm', _('Confirm')),
@@ -57,7 +59,7 @@ class BookingForm(forms.ModelForm):
         fields = ('notes',)
 
 class FilterForm(forms.Form):
-    find = forms.CharField(label=_('Search'), required=False)
+    find = forms.CharField(label=_('Search'), required=False, widget=SearchInput)
     show = forms.ChoiceField(
         label=_('Show'),
         choices=(('', _('All')), (ATTENDEE_CONFIRMED, _('Confirmed')), (ATTENDEE_CANCELLED, _('Cancelled'))),
