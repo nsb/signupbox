@@ -5,7 +5,7 @@ from django.core.management.base import BaseCommand, CommandError
 from django.db import transaction
 
 from django.contrib.auth.models import User
-from signupbox.models import Account, Event, Ticket
+from signupbox.models import Account, Event, Ticket, Field, FieldValue, FieldOption
 
 class Command(BaseCommand):
 
@@ -86,7 +86,9 @@ class Command(BaseCommand):
                     e.capacity = event['capacity']
                     e.status = event['status']
                     e.currency = event['currency']
+                    e.save()
 
+                    # add tickets
                     e.tickets.all().delete()
                     e.tickets.add(
                         Ticket.objects.create(
@@ -98,9 +100,19 @@ class Command(BaseCommand):
                         )
                     )
 
-                    e.save()
 
-                    # TODO: add fields
+                    e.fields.all().delete()
+                    field_cur = conn.cursor(cursor_factory=DictCursor)
+                    field_cur.execute("SELECT * from core_formfield where event_id = %s;", (event['id'],))
+                    for field in field_cur:
+                        Field.objects.create(
+                            event = e,
+                            label = field['label'],
+                            help_text = field['help_text'],
+                            required = field['required'],
+                            in_extra = field['in_extra'],
+                            ordering = field['order']
+                        )
 
             transaction.commit()
         finally:
