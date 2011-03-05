@@ -5,7 +5,8 @@ from django.core.management.base import BaseCommand, CommandError
 from django.db import transaction
 
 from django.contrib.auth.models import User
-from signupbox.models import Account, Event, Ticket, Field, FieldValue, FieldOption
+from signupbox.models import Account, Event, Booking, Ticket, Field, FieldValue, FieldOption, Attendee
+from signupbox.signals import booking_confirmed
 
 class Command(BaseCommand):
 
@@ -94,18 +95,16 @@ class Command(BaseCommand):
                         Ticket.objects.create(
                             event=e,
                             name='Standard billet',
-                            offered_from=e.begins,
-                            offered_to=e.ends,
                             price=event['price']
                         )
                     )
 
-
+                    # add fields
                     e.fields.all().delete()
                     field_cur = conn.cursor(cursor_factory=DictCursor)
                     field_cur.execute("SELECT * from core_formfield where event_id = %s;", (event['id'],))
                     for field in field_cur:
-                        Field.objects.create(
+                        f = Field.objects.create(
                             event = e,
                             label = field['label'],
                             help_text = field['help_text'],
@@ -113,6 +112,57 @@ class Command(BaseCommand):
                             in_extra = field['in_extra'],
                             ordering = field['order']
                         )
+
+                        # add field options
+                        field_option_cur = conn.cursor(cursor_factory=DictCursor)
+                        field_option_cur.execute("SELECT * from core_choicevalue where parent_id = %s;", (field['id'],))
+                        for field_option in field_option_cur:
+                            FieldOption.objects.create(
+                                field = f,
+                                value = field_option['value'],
+                            )
+
+
+                    # add bookings
+                    e.bookings.all().delete()
+                    booking_cur = conn.cursor(cursor_factory=DictCursor)
+                    booking_cur.execute("SELECT * from core_booking where event_id = %s;", (event['id'],))
+                    for booking in booking_cur:
+                        b = Booking.objects.create(
+                            event = e,
+                            timestamp = booking['timestamp'],
+                            notes = booking['notes'],
+                            description = booking['description'],
+                            transaction = booking['transaction'],
+                            cardtype = booking['cardtype'],
+                            amount = booking['amount'],
+                            currency = booking['currency'],
+                            confirmed = True,
+                        )
+
+                        # add attendees
+                        attendee_cur = conn.cursor(cursor_factory=DictCursor)
+                        attendee_cur.execute("SELECT * from core_registration where booking_id = %s;", (booking['id'],))
+                        ticket = e.tickets.get()
+                        for attendee in attendee_cur:
+                            at = Attendee.objects.create(
+                                account = a,
+                                booking = b,
+                                ticket = ticket,
+                                attendee_count = attendee['num_attendees'],
+                            )
+
+                            # add field values
+                            field_value_cur = conn.cursor(cursor_factory=DictCursor)
+                            field_value_cur.execute("SELECT * from core_registrationdata, core_formfield where registration_id = %s and field_id = core_formfield.id;", (attendee['id'],))
+                            for field_value in field_value_cur:
+                                FieldValue.objects.create(
+                                    attendee = at,
+                                    field = e.fields.get(ordering=field_value['order']),
+                                    value = field_value['value']
+                                )
+
+                        #booking_confirmed.send(sender=b, booking_id=b.id)
 
             transaction.commit()
         finally:
