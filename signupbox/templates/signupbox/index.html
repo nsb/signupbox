@@ -18,7 +18,7 @@
         <div class="column">{% trans "in" %} {{ event.begins|timeuntil }}</div>
         <div class="column">{% if event.venue %}{{ event.venue }}{% else %}<div class="dashed"></div>{% endif %}</div>
         <div class="column">
-          {% blocktrans count event.confirmed_attendees_count as attendee_count %}
+          {% blocktrans count event.confirmed_attendees_count|default_if_none:"0" as attendee_count %}
             <strong>{{ attendee_count }}</strong> attendee
             {% plural %}
             <strong>{{ attendee_count }}</strong> attendees
@@ -59,7 +59,7 @@
         <div class="column"><h4><a href="{% url event_detail event.slug %}">{{ event.title }}</a></h4></div>
         <div class="column">{% date_span event.begins event.ends %}</div>
         <div class="column">
-          {% blocktrans count event.confirmed_attendees_count as attendee_count %}
+          {% blocktrans count event.confirmed_attendees_count|default_if_none:"0" as attendee_count %}
             <strong>{{ attendee_count }}</strong> attendee
             {% plural %}
             <strong>{{ attendee_count }}</strong> attendees
