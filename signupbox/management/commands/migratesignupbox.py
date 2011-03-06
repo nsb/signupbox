@@ -130,7 +130,6 @@ class Command(BaseCommand):
                     for booking in booking_cur:
                         b = Booking.objects.create(
                             event = e,
-                            timestamp = booking['timestamp'],
                             notes = booking['notes'],
                             description = booking['description'],
                             transaction = booking['transaction'],
@@ -139,6 +138,8 @@ class Command(BaseCommand):
                             currency = booking['currency'],
                             confirmed = True,
                         )
+                        b.timestamp = booking['timestamp']
+                        b.save()
 
                         # add attendees
                         attendee_cur = conn.cursor(cursor_factory=DictCursor)
