@@ -110,7 +110,8 @@ class Command(BaseCommand):
                             help_text = field['help_text'],
                             required = field['required'],
                             in_extra = field['in_extra'],
-                            ordering = field['order']
+                            ordering = field['order'],
+                            type = field['field_type'],
                         )
 
                         # add field options
