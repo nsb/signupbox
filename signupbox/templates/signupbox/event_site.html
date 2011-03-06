@@ -8,7 +8,7 @@
 
   <h1>{{ event.title }}</h1>
 
-  <p>{{ event.description }}</p>
+  <p>{{ event.description|safe }}</p>
 
   <h3>{% trans "Time and date" %}</h3>
   <p>{% datetime_span event.begins event.ends %}</p>
