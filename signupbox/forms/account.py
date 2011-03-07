@@ -20,6 +20,10 @@ class AccountForm(forms.ModelForm):
             'paypal_business',
             'merchant_id',
             'secret_key',
+            'autocapture',
+            'google_analytics',
+            'terms',
+            'extra_info',
         )
 
 class UserForm(forms.ModelForm):
