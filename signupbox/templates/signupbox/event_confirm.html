@@ -32,6 +32,8 @@
 </table>
 {% endblock summary %}
 
+<p class="small quiet">{% blocktrans with event.terms_url as terms_url %}By confirming this registration you agree to our <a href="{{ terms_url }}" class="new-window">terms and conditions</a>.{% endblocktrans %}</p>
+
 {% block confirm_form %}
 <form action="{% url event_confirm event.slug booking.id %}" method="post">
   {% csrf_token %}

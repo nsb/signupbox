@@ -15,6 +15,7 @@ from django.contrib.sites.models import Site
 from django.template import defaultfilters
 from django.contrib.contenttypes.models import ContentType
 from django.utils.hashcompat import sha_constructor
+from django.core.urlresolvers import reverse
 
 from objperms.models import ObjectPermission
 
@@ -296,6 +297,10 @@ class Event(models.Model):
     @property
     def has_payments(self):
         return self.tickets.filter(price__gt=0).exists()
+
+    @property
+    def terms_url(self):
+        return reverse('event_terms', kwargs={'slug':self.slug})
 
     def save(self, *args, **kwargs):
 

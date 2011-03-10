@@ -8,6 +8,7 @@ from django.utils.hashcompat import md5_constructor
 from django.conf import settings
 from django.utils.functional import curry
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.sites.models import Site
 
 from paypal.standard.forms import PayPalPaymentsForm
 from quickpay.forms import QuickpayForm
@@ -172,6 +173,19 @@ def event_incomplete(request, slug, account):
     return render_to_response(
         'signupbox/event_incomplete.html',
         RequestContext(request, {'event': event})
+    )
+
+@with_account
+def event_terms(request, slug, account):
+
+    event = get_object_or_404(Event, account=account, slug=slug)
+
+    return render_to_response(
+        'signupbox/event_terms.html',
+        RequestContext(
+            request,
+            {'event': event, 'site': Site.objects.get_current(), 'terms': account.terms}
+        )
     )
 
 class QuickpayCallback(BaseQuickpayCallback):

@@ -29,6 +29,7 @@ urlpatterns = patterns('signupbox.views',
     (r'^(?P<slug>[-\w]+)/register/confirm/(?P<booking_id>[\d]+)/$', 'event_confirm', {}, 'event_confirm',),
     (r'^(?P<slug>[-\w]+)/register/complete/$', 'event_complete', {}, 'event_complete',),
     (r'^(?P<slug>[-\w]+)/register/incomplete/$', 'event_incomplete', {}, 'event_incomplete',),
+    (r'^(?P<slug>[-\w]+)/register/terms/$', 'event_terms', {}, 'event_terms',),
     (r'^payments/quickpay/callback/', 'quickpay_callback', {}, 'quickpay_callback'),
 )
 

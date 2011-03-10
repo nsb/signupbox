@@ -1,0 +1,18 @@
+{% extends "signupbox/public_base.html" %}
+{% load i18n %}
+
+{% block main %}
+  <h2>{% trans "Terms and conditions" %}</h2>
+  <p><strong>{% trans "By confirming your booking you accept the following terms and conditions:" %}</strong></p>
+
+  <p>{{ terms|safe }}</p>
+
+  <h3>{{ site.name }}</h3>
+  <p>{% blocktrans with site.name as name and site.domain as domain %}The event you are registering for, uses <strong><a class="new-window" href="http://{{ domain }}">{{ name }}</a></strong>. A webbased application for handling registrations and attendees for events.{% endblocktrans %}</p>
+
+  <p>{% trans "By registering you acknowledge that:" %}</p>
+  <ul>
+    <li>{% trans "This event and all related information, including content on the events website, is the responsibility of the event provider." %}</li>
+    <li>{% blocktrans with site.name as name %}No payments regarding event registration is handled by {{ name }}, and all requests regarding payments must be directed to the event provider.{% endblocktrans %}</li>
+  </ul>
+{% endblock main %}
