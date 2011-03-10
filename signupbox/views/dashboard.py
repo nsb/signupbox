@@ -43,19 +43,16 @@ def event_gviz(request):
     account = request.user.accounts.get()
     events = Event.objects.upcoming().filter(account=account)
 
-    a = {}
     rows = []
     for d in dateIterator(from_date=date.today() - timedelta(days=6)):
         for event in events:
-            a[d] = a.get(d, {})
-            a[d][event] = a[d].get(event, 0)
-
-            a[d][event] = Attendee.objects.filter(
+ 
+            num = Attendee.objects.filter(
                 booking__timestamp__range=(datetime.combine(d, time.min), datetime.combine(d, time.max)),
                 booking__event=event
             ).aggregate(Sum('attendee_count'))['attendee_count__sum']
 
-            rows.append({'date': d, 'id': event.id, 'attendees': a[d][event]})
+            rows.append({'date': d, 'id': event.id, 'attendees': num})
 
     description = {
         ('date', 'date', 'Date') : [(str(event.id), 'number', event.title) for event in events]
