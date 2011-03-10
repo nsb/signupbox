@@ -426,3 +426,10 @@ class EventSiteTestCase(BaseTestCase):
             HTTP_HOST=self.http_host,
         )
         self.failUnlessEqual(response.status_code, 200)
+
+    def testTerms(self):
+        response = self.client.get(
+            reverse('event_terms', kwargs={'slug':self.event.slug,}),
+            HTTP_HOST=self.http_host,
+        )
+        self.failUnlessEqual(response.status_code, 200)
