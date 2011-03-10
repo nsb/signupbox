@@ -381,25 +381,6 @@ class Booking(models.Model):
     def __unicode__(self):
         return '%(title)s: #%(id)s' % {'title':self.event.title, 'id':self.id}
 
-class BookingAggregationManager(models.Manager):
-    def recent(self, days=7):
-        delta = date.today() - timedelta(days=7)
-        return self.filter(date__gt=delta)
-
-class BookingAggregation(models.Model):
-    """ Aggregates registrations per day """
-    date = models.DateField()
-    event = models.ForeignKey(Event)
-    count = models.PositiveIntegerField(default=0)
-
-    objects = BookingAggregationManager()
-
-    def __unicode__(self):
-        return '%s, %s: %d' % (self.event, self.date, self.count)
-
-    class Meta:
-        unique_together = ('date', 'event')
-
 FIELD_TYPE_CHOICES = (
     (TEXT_FIELD, _('text')),
     (TEXTAREA_FIELD, _('multiline text')),

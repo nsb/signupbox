@@ -8,7 +8,7 @@ from django.db.models import signals, Max, Sum
 from celery.decorators import task, periodic_task
 
 from activities.models import Activity
-from models import Booking, BookingAggregation, Attendee
+from models import Booking, Attendee
 
 @task
 def async_send_mail(recipients, subject, message):
@@ -38,12 +38,6 @@ def process_booking(booking):
         activity = booking.activity,
     )
 
-    ba, created = BookingAggregation.objects.get_or_create(date=date.today(), event=booking.event)
-    ba.count = Attendee.objects.filter(
-        booking__in=Booking.objects.today().filter(event=booking.event), status='confirmed'
-    ).aggregate(Sum('attendee_count'))['attendee_count__sum'] or 0
-    ba.save()
-
 @task
 def account_send_invites(invites, message):
     """
@@ -59,8 +53,3 @@ def account_send_invites(invites, message):
           'noreply@%s' % Site.objects.get_current().domain,
           [invite.email]) for invite in invites
     ])
-
-
-@periodic_task(run_every=timedelta(hours=1))
-def process_booking_aggregations():
-    pass

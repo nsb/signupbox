@@ -1,5 +1,6 @@
-from datetime import datetime, date, timedelta
+from datetime import datetime, date, time, timedelta
 
+from django.db.models import Sum
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User, Group
 from django.contrib.auth import authenticate, login
@@ -14,7 +15,7 @@ import gviz_api
 from objperms.models import ObjectPermission 
 
 from ..forms import RegistrationForm
-from ..models import Account, Event, Booking, BookingAggregation
+from ..models import Account, Event, Booking, Attendee
 
 def dateIterator(from_date=None, to_date=None, delta=timedelta(days=1)):
     to_date = to_date or date.today()
@@ -40,22 +41,20 @@ def index(request):
 def event_gviz(request):
 
     account = request.user.accounts.get()
-    events = Event.objects.upcoming()
+    events = Event.objects.upcoming().filter(account=account)
 
     a = {}
-    for aggrs in BookingAggregation.objects.recent(days=7):
-        a[aggrs.date] = a.get(aggrs.date, {})
-        a[aggrs.date][aggrs.event] = a[aggrs.date].get(aggrs.event, [])
-        a[aggrs.date][aggrs.event] = aggrs.count
-
     rows = []
     for d in dateIterator(from_date=date.today() - timedelta(days=6)):
         for event in events:
-            if d in a and event in a[d]:
-                count = a[d][event]
-            else:
-                count = 0
-            rows.append({'date': d, 'id': event.id, 'attendees': count})
+            a[d] = a.get(d, {})
+            a[d][event] = a[d].get(event, 0)
+
+            a[d][event] = Attendee.objects.filter(
+                booking__timestamp__range=(datetime.combine(d, time.min), datetime.combine(d, time.max)),
+            ).aggregate(Sum('attendee_count'))['attendee_count__sum']
+
+            rows.append({'date': d, 'id': event.id, 'attendees': a[d][event]})
 
     description = {
         ('date', 'date', 'Date') : [(str(event.id), 'number', event.title) for event in events]
