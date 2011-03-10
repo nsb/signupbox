@@ -28,6 +28,21 @@
       {% block main %}{% endblock main %}
     </div>
   </div>
+
+  {% block footer %}
+  <div id="footer">
+    <p class="small quiet">
+    {{ account.organization }}
+    {% if account.street %}, {{ account.street }}{% endif %}
+    {% if account.city %}, {{ account.city }} {{ account.zip_code }}{% endif %}
+    {% if account.phone %}, {% trans "Phone" %}: {{ account.phone }}{% endif %}
+    {% if account.cvr %}, {% trans "CVR no." %}: {{ account.cvr }}{% endif %}
+    {% if account.email %}, <a href="mailto:{{ account.email }}">{% trans "Contact" %}</a>.{% endif %}
+    </p>
+  </div>
+  {% endblock footer %}
+
+
   {% block templates %}{% endblock templates %}
 {% endblock page %}
 

@@ -6,9 +6,17 @@ body {
   height: auto;
 }
 
+#page, #footer {
+  width: 760px;
+}
+
+#footer {
+  text-align: center;
+  margin: 10px auto 0 auto;
+}
+
 #page {
   margin: 40px auto 0 auto;
-  width: 760px;
   background-color: $color0;
   border: solid 2px $color3;
 }
