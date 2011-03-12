@@ -426,17 +426,18 @@ class Field(models.Model):
         ordering = ('id',)
 
 class AttendeeManager(models.Manager):
+
     def confirmed(self, event=None):
         qs = self.filter(booking__event=event) if event else self.all()
-        return qs.filter(status=ATTENDEE_CONFIRMED, booking__confirmed=True)
+        return qs.filter(status=ATTENDEE_CONFIRMED)
 
     def unconfirmed(self, event=None):
         qs = self.filter(booking__event=event) if event else self.all()
-        return self.filter(status=ATTENDEE_UNCONFIRMED, booking__confirmed=True)
+        return self.filter(status=ATTENDEE_UNCONFIRMED)
 
     def cancelled(self, event=None):
         qs = self.filter(booking__event=event) if event else self.all()
-        return self.filter(status=ATTENDEE_CANCELLED, booking__confirmed=True)
+        return self.filter(status=ATTENDEE_CANCELLED)
 
     def get_query_set(self):
         """
@@ -467,7 +468,7 @@ class AttendeeManager(models.Manager):
                 signupbox_field.type = '%s'
                 """ % EMAIL_FIELD
             }
-        )
+        ).filter(booking__confirmed=True)
 
 ATTENDEE_STATUS_CHOICES = (
     ( ATTENDEE_CONFIRMED, _('Confirmed')),
