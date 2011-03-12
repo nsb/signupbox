@@ -25,6 +25,7 @@ class BaseTestCase(test.TestCase):
         )
 
         self.http_host = '.'.join((self.account.name, Site.objects.get_current().domain))
+        self.client = Client(HTTP_HOST=self.http_host)
 
     def tearDown(self):
         self.user.delete()

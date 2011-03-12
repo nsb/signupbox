@@ -10,6 +10,7 @@ from django.contrib.formtools.wizard import FormWizard
 from ..constants import *
 from ..models import Event, Booking, Attendee, Field, Ticket
 from ..forms import attendeeactionsform_factory, AttendeesExportForm, AttendeesEmailForm, attendeeform_factory, BookingForm, FilterForm
+from ..decorators import with_account
 from attendee_actions import AttendeeActions
 
 class AttendeesActionWizard(FormWizard):
@@ -74,14 +75,15 @@ class AttendeesActionWizard(FormWizard):
         return AttendeeActions().dispatch(request, self.attendees, self.action, self.event, **extra_args)
 
 @login_required
-def event_attendees(request, slug,):
+@with_account
+def event_attendees(request, slug, account):
 
     return AttendeesActionWizard([None, None])(request, slug=slug)
 
 @login_required
-def event_attendees_edit(request, slug, attendee_id):
+@with_account
+def event_attendees_edit(request, slug, attendee_id, account):
 
-    account=request.user.accounts.get()
     event = get_object_or_404(Event, account=account, slug=slug)
     attendee = get_object_or_404(Attendee, booking__event=event, id=attendee_id)
 
@@ -108,9 +110,9 @@ def event_attendees_edit(request, slug, attendee_id):
     )
 
 @login_required
-def event_booking_detail(request, slug, booking_id):
+@with_account
+def event_booking_detail(request, slug, booking_id, account):
 
-    account=request.user.accounts.get()
     event = get_object_or_404(Event, account=account, slug=slug)
     booking = get_object_or_404(Booking, event=event, id=booking_id)
 

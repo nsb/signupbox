@@ -9,11 +9,13 @@ from django.views.generic.list_detail import object_detail
 
 from ..models import Event
 from ..forms import EventForm
+from ..decorators import with_account
 
 @login_required
-def create(request):
+@with_account
+def create(request, account):
 
-    event = Event(account=request.user.accounts.get())
+    event = Event(account=account)
 
     if request.method == 'POST':
         form = EventForm(request.POST, instance=event)
@@ -36,9 +38,8 @@ def create(request):
     )
 
 @login_required
-def read(request, slug):
-
-    account = request.user.accounts.get()
+@with_account
+def read(request, slug, account):
 
     return object_detail(
         request,
@@ -49,9 +50,9 @@ def read(request, slug):
     )
 
 @login_required
-def edit(request, slug):
+@with_account
+def edit(request, slug, account):
 
-    account=request.user.accounts.get()
     event = get_object_or_404(Event, account=account, slug=slug)
 
     if request.method == 'POST':

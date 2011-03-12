@@ -14,13 +14,12 @@ from paypal.standard.forms import PayPalPaymentsForm
 from quickpay.forms import QuickpayForm
 from quickpay.views import BaseQuickpayCallback
 
-from ..decorators import with_account
 from ..models import Account, Event, Booking, Ticket
 from ..forms import registerform_factory, emptyregisterform_factory, ConfirmForm
 
-@with_account
-def event_site(request, slug, account):
+def event_site(request, slug):
 
+    account = Account.objects.by_request(request)
     event = get_object_or_404(Event, account=account, slug=slug)
 
     return render_to_response(
@@ -28,9 +27,9 @@ def event_site(request, slug, account):
         RequestContext(request, {'event':event}),
     )
 
-@with_account
-def event_register(request, slug, account):
+def event_register(request, slug):
 
+    account = Account.objects.by_request(request)
     event = get_object_or_404(Event, account=account, slug=slug)
     formset_class = registerform_factory(event)
 
@@ -49,10 +48,10 @@ def event_register(request, slug, account):
         RequestContext(request, {'event':event, 'formset':formset, 'empty_form':emptyregisterform_factory(event, True)}),
     )
 
-@with_account
 @csrf_view_exempt
-def event_confirm(request, slug, booking_id, account,):
+def event_confirm(request, slug, booking_id):
 
+    account = Account.objects.by_request(request)
     event = get_object_or_404(Event, account=account, slug=slug)
     booking = get_object_or_404(Booking, event=event, id=booking_id, confirmed=False)
     amount = Ticket.objects.filter(
@@ -155,9 +154,9 @@ def event_confirm(request, slug, booking_id, account,):
             RequestContext(request, {'event':event, 'booking': booking, 'form':form}),
         )
 
-@with_account
-def event_complete(request, slug, account):
+def event_complete(request, slug):
 
+    account = Account.objects.by_request(request)
     event = get_object_or_404(Event, account=account, slug=slug)
 
     return render_to_response(
@@ -165,9 +164,9 @@ def event_complete(request, slug, account):
         RequestContext(request, {'event': event})
     )
 
-@with_account
-def event_incomplete(request, slug, account):
+def event_incomplete(request, slug):
 
+    account = Account.objects.by_request(request)
     event = get_object_or_404(Event, account=account, slug=slug)
 
     return render_to_response(
@@ -175,9 +174,9 @@ def event_incomplete(request, slug, account):
         RequestContext(request, {'event': event})
     )
 
-@with_account
-def event_terms(request, slug, account):
+def event_terms(request, slug):
 
+    account = Account.objects.by_request(request)
     event = get_object_or_404(Event, account=account, slug=slug)
 
     return render_to_response(

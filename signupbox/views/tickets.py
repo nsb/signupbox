@@ -7,11 +7,12 @@ from django.utils.translation import ugettext, ugettext_lazy as _
 
 from ..models import Event, Ticket
 from ..forms import TicketForm
+from ..decorators import with_account
 
 @login_required
-def event_tickets(request, slug):
+@with_account
+def event_tickets(request, slug, account):
 
-    account=request.user.accounts.get()
     event = get_object_or_404(Event, account=account, slug=slug)
 
     return render_to_response(
@@ -20,9 +21,9 @@ def event_tickets(request, slug):
     )
 
 @login_required
-def event_tickets_edit(request, slug, ticket_id):
+@with_account
+def event_tickets_edit(request, slug, ticket_id, account):
 
-    account=request.user.accounts.get()
     event = get_object_or_404(Event, account=account, slug=slug)
     ticket = get_object_or_404(Ticket, event__slug=slug, id=ticket_id)
 
@@ -41,9 +42,9 @@ def event_tickets_edit(request, slug, ticket_id):
     )
 
 @login_required
-def event_tickets_add(request, slug):
+@with_account
+def event_tickets_add(request, slug, account):
 
-    account=request.user.accounts.get()
     event = get_object_or_404(Event, account=account, slug=slug)
 
     if request.method == 'POST':

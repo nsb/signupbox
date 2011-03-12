@@ -14,11 +14,12 @@ from django.http import HttpResponseForbidden
 
 from ..models import AccountInvite
 from ..forms import AccountForm, UserForm, ProfileForm, InviteForm, PermissionsForm, InviteAcceptForm
+from ..decorators import with_account
 from ..tasks import account_send_invites
 
 @login_required
-def account_settings(request):
-    account = request.user.accounts.get()
+@with_account
+def account_settings(request, account):
 
     if not request.user.has_perm('view', account):
         return HttpResponseForbidden()
@@ -38,8 +39,8 @@ def account_settings(request):
     )
 
 @login_required
-def account_profile(request):
-    account = request.user.accounts.get()
+@with_account
+def account_profile(request, account):
 
     if request.method == 'POST':
         user_form = UserForm(request.POST, instance = request.user)
@@ -59,8 +60,8 @@ def account_profile(request):
     )
 
 @login_required
-def account_members(request):
-    account = request.user.accounts.get()
+@with_account
+def account_members(request, account):
 
     if not request.user.has_perm('view', account):
         return HttpResponseForbidden()
@@ -80,8 +81,8 @@ def account_members(request):
     )
 
 @login_required
-def account_members_add(request):
-    account = request.user.accounts.get()
+@with_account
+def account_members_add(request, account):
 
     if not request.user.has_perm('change', account):
         return HttpResponseForbidden()
@@ -113,9 +114,9 @@ def account_members_add(request):
     )
 
 @login_required
+@with_account
 @require_http_methods(['POST'])
-def account_members_delete(request, user_id):
-    account = request.user.accounts.get()
+def account_members_delete(request, user_id, account):
 
     if not request.user.has_perm('change', account):
         return HttpResponseForbidden()
@@ -126,9 +127,9 @@ def account_members_delete(request, user_id):
     return redirect(reverse('account_members'))
 
 @login_required
+@with_account
 @require_http_methods(['POST'])
-def account_permissions(request, user_id):
-    account = request.user.accounts.get()
+def account_permissions(request, user_id, account):
 
     if not request.user.has_perm('change', account):
         return HttpResponseForbidden()
@@ -179,9 +180,9 @@ def account_invitation(request, key):
     )
 
 @login_required
+@with_account
 @require_http_methods(['POST'])
-def account_invitation_cancel(request, key):
-    account = request.user.accounts.get()
+def account_invitation_cancel(request, key, account):
 
     if not request.user.has_perm('change', account):
         return HttpResponseForbidden()

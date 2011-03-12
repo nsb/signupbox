@@ -7,11 +7,12 @@ from django.core.urlresolvers import reverse
 
 from ..models import Event
 from ..forms import fieldformset_factory
+from ..decorators import with_account
 
 @login_required
-def event_fields(request, slug):
+@with_account
+def event_fields(request, slug, account):
 
-    account=request.user.accounts.get()
     event = get_object_or_404(Event, account=account, slug=slug)
     formset_class = fieldformset_factory(event)
 

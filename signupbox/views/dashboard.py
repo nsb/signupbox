@@ -16,6 +16,7 @@ from objperms.models import ObjectPermission
 
 from ..forms import RegistrationForm
 from ..models import Account, Event, Booking, Attendee
+from ..decorators import with_account
 
 def dateIterator(from_date=None, to_date=None, delta=timedelta(days=1)):
     to_date = to_date or date.today()
@@ -28,9 +29,8 @@ def frontpage(request):
     return redirect(reverse('index'))
 
 @login_required
-def index(request):
-
-    account = request.user.accounts.get()
+@with_account
+def index(request, account):
 
     return render_to_response(
         'signupbox/index.html',
@@ -38,9 +38,9 @@ def index(request):
     )
 
 @login_required
-def event_gviz(request):
+@with_account
+def event_gviz(request, account):
 
-    account = request.user.accounts.get()
     events = Event.objects.upcoming().filter(account=account)
 
     rows = []
