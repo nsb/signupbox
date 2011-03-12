@@ -51,7 +51,7 @@ def migrate():
         virtualenv('python manage.py syncdb --noinput --settings=' + env.settings)
 
 def makemessages():
-        local('python ../manage.py makemessages --all -e html,txt --settings=' + env.settings)
+        local('python manage.py makemessages --all -e html,txt --settings=' + env.settings)
 
 def compilemessages():
     with cd(env.directory + 'src/signupbox'):
