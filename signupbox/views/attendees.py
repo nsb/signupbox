@@ -96,7 +96,7 @@ def event_attendees_edit(request, slug, attendee_id, account):
             messages.success(request, _('Attendee updated.'))
             return redirect(reverse('event_attendees', kwargs={'slug':slug}))
     else:
-        initial = {}
+        initial = {'ticket':attendee.ticket}
         for data in attendee.values.all():
             # fix boolean field
             value = False if data.value == "false" else True if data.field.type == CHECKBOX_FIELD else data.value

@@ -136,6 +136,9 @@ def event_confirm(request, slug, booking_id):
 
             form_class = curry(PayPalPaymentsForm, initial=initial)
             template_name = 'signupbox/event_confirm_paypal.html'
+        else:
+            form_class = curry(ConfirmForm, instance=booking, initial={})
+            template_name = 'signupbox/event_confirm_with_payment.html'
     else:
         form_class = curry(ConfirmForm, instance=booking, initial={})
         template_name = 'signupbox/event_confirm.html'
