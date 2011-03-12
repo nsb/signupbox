@@ -380,6 +380,10 @@ class Booking(models.Model):
         return ret
 
     @property
+    def unconfirmed_attendees(self):
+        return Attendee.unconfirmed_objects.filter(booking=self)
+
+    @property
     def ordernumber(self):
         return str(self.pk)
 
@@ -470,6 +474,11 @@ class AttendeeManager(models.Manager):
             }
         ).filter(booking__confirmed=True)
 
+class UnconfirmedAttendeesManager(models.Manager):
+    pass
+    #def get_query_set(self):
+        #return self.filter(booking__confirmed=False)
+
 ATTENDEE_STATUS_CHOICES = (
     ( ATTENDEE_CONFIRMED, _('Confirmed')),
     ( ATTENDEE_UNCONFIRMED, _('Unconfirmed')),
@@ -489,6 +498,7 @@ class Attendee(models.Model):
     attendee_count = models.PositiveIntegerField(default=1)
 
     objects = AttendeeManager()
+    unconfirmed_objects = UnconfirmedAttendeesManager()
 
     def save(self, *args, **kwargs):
 

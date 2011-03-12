@@ -11,6 +11,12 @@
 
   $(function() {
     $('#add-attendee a').click(onAddAttendeeClicked);
+
+    $('a.new_window').click(function(){
+      window.open(this.href, 'popup');
+      return false;
+    });
+
   });
 
 })(jQuery);
