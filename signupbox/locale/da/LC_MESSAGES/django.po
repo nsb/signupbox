@@ -705,7 +705,7 @@ msgstr "Dette arrangement og al relateret information, inklusive indhold på arr
 msgid ""
 "No payments regarding event registration is handled by %(name)s, and all "
 "requests regarding payments must be directed to the event provider."
-msgstr "Ingen betalinger vedrørende denne tilmelding bliver håndteret af %(name)s, og alle forespørgsler vedrørende betalinger skal rettes til arrengementsudbyderen."
+msgstr "Ingen betalinger vedrørende denne tilmelding bliver håndteret af %(name)s, og alle forespørgsler vedrørende betalinger skal rettes til arrangementsudbyderen."
 
 #: templates/signupbox/event_tickets.html:10
 #: templates/signupbox/event_tickets_add.html:9
