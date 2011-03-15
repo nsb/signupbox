@@ -8,6 +8,7 @@
 </div>
 
 <div class="indent">
+  <div>{{ form.non_field_errors }}</div>
   <form method="POST" action="{% url auth_login %}">
     {% csrf_token %}
     {% for field in form %}
