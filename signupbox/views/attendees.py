@@ -111,6 +111,27 @@ def event_attendees_edit(request, slug, attendee_id, account):
 
 @login_required
 @with_account
+def event_attendees_add(request, slug, account):
+
+    event = get_object_or_404(Event, account=account, slug=slug)
+    form_class = attendeeform_factory(event, False)
+
+    if request.method == 'POST':
+        form = form_class(request.POST)
+        if form.is_valid():
+            form.save(booking=Booking.objects.create(event=event, confirmed=True))
+            messages.success(request, _('Attendee added.'))
+            return redirect(reverse('event_attendees', kwargs={'slug':slug}))
+    else:
+        form = form_class()
+
+    return render_to_response(
+        'signupbox/attendee_add.html',
+        RequestContext(request, {'event':event, 'form':form}),
+    )
+
+@login_required
+@with_account
 def event_booking_detail(request, slug, booking_id, account):
 
     event = get_object_or_404(Event, account=account, slug=slug)
