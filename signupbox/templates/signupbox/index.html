@@ -10,7 +10,7 @@
 
   {% if not account.events.upcoming and not account.events.previous %}
   <div class="oobe indent">
-    <h3>{% blocktrans with site.name as name %}Welcome to your new <strong>{{ name }}</strong> account!{% endblocktrans %}</h3>
+    <h3>{% blocktrans with site.name as name %}Welcome to your new <span class="site_name"><strong>{{ name }}</strong></span> account!{% endblocktrans %}</h3>
     <p>{% trans "When you get started with your events, you will see this page be filled with events and activities. But for now, here are some tips that will help you get started." %}</p>
   </div>
   {% endif %}
