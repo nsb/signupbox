@@ -33,5 +33,16 @@
     <div><a href="{% url event_edit event.slug %}">{% trans "Edit event" %}</a></div>
   </div>
 
+  {% if not event.confirmed_attendees_count %}
+  <div class="oobe">
+    <h3>{% trans "A new event!" %}</h3>
+    <p>{% blocktrans with attendees_url as attendees_url and tickets_url as tickets_url and fields_url as fields_url and event.website as website %}
+    You can navigate the administration for this event by using the three menu entries, <a href="{{ attendees_url }}">Attendees</a>, <a href="{{ tickets_url }}">Tickets</a> and <a href="{{ fields_url }}">Form fields</a>.
+    By the way, you also get a <a href="{{ website }}">public web site</a> for this event.
+    Remember if you have any doubts about any of the features, please ask us using the <a href="">contact form</a>.
+    {% endblocktrans %}</p>
+  </div>
+  {% endif %}
+
 </div>
 {% endblock main %}

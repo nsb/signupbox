@@ -139,10 +139,17 @@
     display: inline-block;
     background-color: $color3;
     line-height: 2em;
+    margin-bottom: 20px;
 
     li {
       list-style: square inside;
     }
+  }
+
+  .oobe {
+    background-color: $color6;
+    padding: 10px 20px;
+    @include round;
   }
 
 }

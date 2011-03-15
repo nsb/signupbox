@@ -41,12 +41,19 @@ def create(request, account):
 @with_account
 def read(request, slug, account):
 
+    event = get_object_or_404(Event, account=account, slug=slug)
+
     return object_detail(
         request,
         queryset=account.events,
         slug=slug,
         template_object_name='event',
         template_name='signupbox/event_detail.html',
+        extra_context = {
+            'attendees_url': reverse('event_attendees', kwargs={'slug': event.slug}),
+            'tickets_url': reverse('event_tickets', kwargs={'slug': event.slug}),
+            'fields_url': reverse('event_fields', kwargs={'slug': event.slug}),
+        },
     )
 
 @login_required
