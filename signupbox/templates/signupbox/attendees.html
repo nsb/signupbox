@@ -7,6 +7,7 @@
 {% block main %}
 <div class="headline indent">
   <h2>{% trans "Attendees" %}</h2>
+  <div><a href="{% url event_attendees_add event.slug %}">{% trans "Add attendee" %}</a></div>
 </div>
 
 <div id="attendee_actions">
