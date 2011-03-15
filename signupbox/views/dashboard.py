@@ -34,7 +34,9 @@ def index(request, account):
 
     return render_to_response(
         'signupbox/index.html',
-        RequestContext(request, {'account':account}),
+        RequestContext(request, {
+            'account':account, 'event_add_url': reverse('event_create')
+        }),
     )
 
 @login_required

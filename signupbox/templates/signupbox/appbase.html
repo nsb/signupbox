@@ -21,7 +21,7 @@
   <div id="page">
     <div id="header">
       {% block header %}
-        <div class="logo"><a href="{% url index %}">signup<span>box</span></a></div>
+        <div class="logo"><a href="{% url index %}">{{ site.name }}</a></div>
 
         <div class="navigation">
           {% block navigation %}{% endblock navigation %}
