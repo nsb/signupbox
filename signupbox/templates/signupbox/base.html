@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>signupbox</title>
+    <title>{% block title %}{{ site.name }}{% endblock title %}</title>
     {% block css %}
       <link rel="stylesheet" href="{{ MEDIA_URL }}css/reset.scss" type="text/css">
       <link rel="stylesheet" href="{{ MEDIA_URL }}css/fonts.scss" type="text/css">
