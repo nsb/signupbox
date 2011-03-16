@@ -206,7 +206,9 @@ COMPILER_FORMATS = {
 
 SOUTH_TESTS_MIGRATE = False
 
+BROKER_BACKEND = "djkombu.transport.DatabaseTransport"
+CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
+
 import djcelery
 djcelery.setup_loader()
 
-BROKER_BACKEND = "djkombu.transport.DatabaseTransport"
