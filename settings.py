@@ -208,6 +208,7 @@ SOUTH_TESTS_MIGRATE = False
 
 BROKER_BACKEND = "djkombu.transport.DatabaseTransport"
 CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
+CELERYD_CONCURRENCY = 1
 
 import djcelery
 djcelery.setup_loader()
