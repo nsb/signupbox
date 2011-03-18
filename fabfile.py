@@ -64,7 +64,6 @@ def deploy():
     update()
     install_requirements()
     migrate()
-    compilemessages()
     reload()
 
 def virtualenv(command):
