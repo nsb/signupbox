@@ -3,7 +3,6 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
@@ -365,15 +364,15 @@ msgstr "Send kopi til dig selv?"
 
 #: forms/attendees.py:62
 msgid "Search"
-msgstr ""
+msgstr "Søg"
 
 #: forms/attendees.py:64
 msgid "Show"
-msgstr ""
+msgstr "Vis"
 
 #: forms/attendees.py:65
 msgid "All"
-msgstr ""
+msgstr "Alle"
 
 #: forms/event.py:19
 msgid "Begin date must be before end date"
@@ -660,9 +659,8 @@ msgid "Continue"
 msgstr "Fortsæt"
 
 #: templates/signupbox/event_register_closed.html:5
-#, fuzzy
 msgid "Registration is closed."
-msgstr "Tilmelding til %(title)s."
+msgstr "Tilmelding er lukket."
 
 #: templates/signupbox/event_site.html:13
 msgid "Time and date"
@@ -820,9 +818,8 @@ msgid "Invite users to this account via email."
 msgstr "Inviter brugere til denne konto via email."
 
 #: templates/signupbox/public_base.html:38
-#, fuzzy
 msgid "Phone"
-msgstr "telefon"
+msgstr "Telefon"
 
 #: templates/signupbox/public_base.html:39
 msgid "CVR no."
@@ -1003,9 +1000,8 @@ msgid "Page %(page_num)d of %(page_count)d"
 msgstr "Side %(page_num)d af %(page_count)d"
 
 #: views/attendee_actions.py:73
-#, fuzzy
 msgid "Attendee status updated."
-msgstr "Deltager opdateret."
+msgstr "Deltager status opdateret."
 
 #: views/attendee_actions.py:96
 msgid "Email sent"
