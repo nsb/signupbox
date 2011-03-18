@@ -3,8 +3,9 @@ from psycopg2.extras import DictCursor
 
 from django.core.management.base import BaseCommand, CommandError
 from django.db import transaction
-
 from django.contrib.auth.models import User
+
+from objperms.models import ObjectPermission
 from signupbox.models import Account, Event, Booking, Ticket, Field, FieldValue, FieldOption, Attendee
 from signupbox.signals import booking_confirmed
 
@@ -66,6 +67,13 @@ class Command(BaseCommand):
                 )
                 for user in account_user_cur:
                     a.users.add(User.objects.get(username=user['username']))
+                    obj_perm, created = ObjectPermission.objects.get_or_create(
+                        user = user, content_object = a,
+                    )
+                    obj_perm.can_view = True
+                    obj_perm.can_change = True
+                    obj_perm.can_delete = True
+                    obj_per.save()
 
                 event_cur = conn.cursor(cursor_factory=DictCursor)
                 event_cur.execute("SELECT * from core_event where account_id = %s;", (account['id'],))
