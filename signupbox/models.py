@@ -249,8 +249,8 @@ class Event(models.Model):
     venue = models.CharField(max_length=1024, verbose_name=_('Where'), blank=True, help_text=_('The event venue'),)
 
     # date and time fields
-    begins = models.DateTimeField()
-    ends = models.DateTimeField()
+    begins = models.DateTimeField(verbose_name=_('Begins'))
+    ends = models.DateTimeField(verbose_name=_('Ends'))
 
     capacity = models.IntegerField(
         blank=True,
@@ -265,7 +265,7 @@ class Event(models.Model):
         default='open',
         db_index=True
     )
-    currency = models.CharField(max_length=3, choices=CURRENCY_CHOICES, blank=True, default='DKK')
+    currency = models.CharField(max_length=3, choices=CURRENCY_CHOICES, blank=True, default='DKK', verbose_name=_('Currency'))
 
     activities = generic.GenericRelation(Activity)
 

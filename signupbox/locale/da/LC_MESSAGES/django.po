@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-03-13 00:09+0100\n"
+"POT-Creation-Date: 2011-03-19 00:29+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -33,23 +33,23 @@ msgstr "Konto navn"
 msgid "Company"
 msgstr "Firma"
 
-#: models.py:60 models.py:549
+#: models.py:60 models.py:542
 msgid "Street"
 msgstr "Gade"
 
-#: models.py:61 models.py:550
+#: models.py:61 models.py:543
 msgid "Zip code"
 msgstr "Post nummer"
 
-#: models.py:62 models.py:551
+#: models.py:62 models.py:544
 msgid "City"
 msgstr "By"
 
-#: models.py:63 models.py:552
+#: models.py:63 models.py:545
 msgid "Country"
 msgstr "Land"
 
-#: models.py:64 models.py:553
+#: models.py:64 models.py:546
 msgid "Phone number"
 msgstr "Telefon nummer"
 
@@ -142,8 +142,8 @@ msgid "Closed"
 msgstr "Lukket"
 
 #: models.py:216
-msgid "dkk"
-msgstr "dkk"
+msgid "kr."
+msgstr "kr."
 
 #: models.py:217
 msgid "euros"
@@ -170,6 +170,14 @@ msgstr "Hvor"
 msgid "The event venue"
 msgstr "Arrangementets lokation"
 
+#: models.py:252
+msgid "Begins"
+msgstr "Begynder"
+
+#: models.py:253
+msgid "Ends"
+msgstr "Slutter"
+
 #: models.py:258 templates/signupbox/event_detail.html:17
 msgid "Capacity"
 msgstr "Kapacitet"
@@ -182,6 +190,10 @@ msgstr "Blank for ubegrænset"
 msgid "Status"
 msgstr "Status"
 
+#: models.py:268 views/attendee_actions.py:135 views/attendee_actions.py:256
+msgid "Currency"
+msgstr "Valuta"
+
 #: models.py:378
 #, python-format
 msgid "%(attendee1)s and %(attendee2)s"
@@ -192,79 +204,79 @@ msgstr "%(attendee1)s og %(attendee2)s"
 msgid " registered for %s."
 msgstr " tilmeldt til %s"
 
-#: models.py:394
+#: models.py:390
 msgid "text"
 msgstr "tekst"
 
-#: models.py:395
+#: models.py:391
 msgid "multiline text"
 msgstr "multilinie tekst"
 
-#: models.py:396
+#: models.py:392
 msgid "checkbox"
 msgstr "tjekboks"
 
-#: models.py:397
+#: models.py:393
 msgid "email"
 msgstr "email"
 
-#: models.py:398
+#: models.py:394
 msgid "select options"
 msgstr "dropdown"
 
-#: models.py:399
+#: models.py:395
 msgid "radio buttons"
 msgstr "radio knapper"
 
-#: models.py:400
+#: models.py:396
 msgid "phone"
 msgstr "telefon"
 
-#: models.py:407
+#: models.py:403
 msgid "Label"
 msgstr "Betegnelse"
 
-#: models.py:408
+#: models.py:404
 msgid "Help text"
 msgstr "Hjælpetekst"
 
-#: models.py:409
+#: models.py:405
 msgid "Type"
 msgstr "Type"
 
-#: models.py:410
+#: models.py:406
 msgid "Required"
 msgstr "Påkrævet"
 
-#: models.py:411
+#: models.py:407
 msgid "In extra forms"
 msgstr "I ekstra formularer"
 
-#: models.py:483 forms/attendees.py:65
+#: models.py:474 forms/attendees.py:65
 msgid "Confirmed"
 msgstr "Bekræftet"
 
-#: models.py:484
+#: models.py:475
 msgid "Unconfirmed"
 msgstr "Ubekræftet"
 
-#: models.py:485 forms/attendees.py:65
+#: models.py:476 forms/attendees.py:65
 msgid "Cancelled"
 msgstr "Afmeldt"
 
-#: models.py:546
+#: models.py:539
 msgid "Name"
 msgstr "Navn"
 
-#: models.py:547
+#: models.py:540
 msgid "Organization"
 msgstr "Firma"
 
-#: models.py:548 views/attendee_actions.py:195
+#: models.py:541 views/attendee_actions.py:195
 msgid "Email"
 msgstr "Email"
 
-#: models.py:564
+#: models.py:557
 msgid "Default ticket"
 msgstr "Standard billet"
 
@@ -456,10 +468,12 @@ msgstr "log ud"
 msgid "login"
 msgstr "log ind"
 
-#: templates/signupbox/attendee_edit.html:8
-msgid "Edit attendee"
-msgstr "Rediger deltager"
+#: templates/signupbox/attendee_add.html:8
+#: templates/signupbox/attendees.html:10
+msgid "Add attendee"
+msgstr "Tilføj deltager"
 
+#: templates/signupbox/attendee_add.html:17
 #: templates/signupbox/attendee_edit.html:17
 #: templates/signupbox/booking_detail.html:22
 #: templates/signupbox/event_edit.html:16
@@ -470,12 +484,16 @@ msgstr "Rediger deltager"
 msgid "Save"
 msgstr "Gem"
 
+#: templates/signupbox/attendee_edit.html:8
+msgid "Edit attendee"
+msgstr "Rediger deltager"
+
 #: templates/signupbox/attendees.html:9
 #: templates/signupbox/event_detail_base.html:9
 msgid "Attendees"
 msgstr "Deltagere"
 
-#: templates/signupbox/attendees.html:30
+#: templates/signupbox/attendees.html:31
 msgid "Go"
 msgstr "Udfør"
 
@@ -542,8 +560,9 @@ msgid ""
 "By confirming this registration you agree to our <a href=\"%(terms_url)s\" "
 "class=\"new_window\">terms and conditions</a>."
 msgstr ""
-"Ved at bekræfte denne tilmelding, erklærer du samtidig at du anerkender vores <a href=\"%(terms_url)s\" "
-"class=\"new_window\">vilkår og betingelser.</a>"
+"Ved at bekræfte denne tilmelding, erklærer du samtidig at du anerkender "
+"vores <a href=\"%(terms_url)s\" class=\"new_window\">vilkår og betingelser.</"
+"a>"
 
 #: templates/signupbox/event_confirm_quickpay.html:10
 msgid "Confirm registration and continue to payment"
@@ -553,11 +572,11 @@ msgstr "Bekræft tilmelding og fortsæt til betaling"
 msgid "Item price"
 msgstr "Stk. pris"
 
-#: templates/signupbox/event_confirm_with_payment.html:26
+#: templates/signupbox/event_confirm_with_payment.html:28
 msgid "Total price"
 msgstr "Pris i alt"
 
-#: templates/signupbox/event_confirm_with_payment.html:26
+#: templates/signupbox/event_confirm_with_payment.html:28
 msgid "Incl. vat"
 msgstr "Inkl. moms"
 
@@ -584,8 +603,8 @@ msgstr "Lokation"
 msgid "Unlimited"
 msgstr "Ubegrænset"
 
-#: templates/signupbox/event_detail.html:24 templates/signupbox/index.html:21
-#: templates/signupbox/index.html.py:62
+#: templates/signupbox/event_detail.html:24 templates/signupbox/index.html:28
+#: templates/signupbox/index.html.py:84
 #, python-format
 msgid ""
 "\n"
@@ -610,6 +629,29 @@ msgstr "Website"
 #: templates/signupbox/event_edit.html:6
 msgid "Edit event"
 msgstr "Rediger arrangement"
+
+#: templates/signupbox/event_detail.html:38
+msgid "A new event!"
+msgstr "Et nyt arrangement"
+
+#: templates/signupbox/event_detail.html:39
+#, python-format
+msgid ""
+"\n"
+"    You can navigate the administration for this event by using the three "
+"menu entries, <a href=\"%(attendees_url)s\">Attendees</a>, <a href="
+"\"%(tickets_url)s\">Tickets</a> and <a href=\"%(fields_url)s\">Form fields</"
+"a>.\n"
+"    By the way, you also get a <a href=\"%(website)s\">public web site</a> "
+"for this event.\n"
+"    Remember if you have any doubts about any of the features, please ask us "
+"using the <a href=\"\">contact form</a>.\n"
+"    "
+msgstr ""
+"\n"
+"Du kan navigere administrationen for dette arrangement, ved brug af de tre menufelter, <a href=\"%(attendees_url)s\">Deltagere</a>, <a href="
+"\"%(tickets_url)s\">Billetter</a> og <a href=\"%(fields_url)s\">Form felter</"
+"a>. Forresten har vi også oprettet et <a href=\"%(website)s\">offentligt website</a> for dette arrangement. Husk at hvis du er tvivl om noget, så spørg os ved at bruge <a href=\"\">kontaktformularen</a>."
 
 #: templates/signupbox/event_detail_base.html:6
 msgid "My events"
@@ -679,7 +721,9 @@ msgstr "Tilmelding"
 #: templates/signupbox/event_terms.html:6
 msgid ""
 "By confirming your booking you accept the following terms and conditions:"
-msgstr "Ved at bekræfte denne tilmelding, accepterer du følgende vilkår og betingelser:"
+msgstr ""
+"Ved at bekræfte denne tilmelding, accepterer du følgende vilkår og "
+"betingelser:"
 
 #: templates/signupbox/event_terms.html:11
 #, python-format
@@ -687,8 +731,10 @@ msgid ""
 "The event you are registering for, uses <strong><a class=\"new-window\" href="
 "\"http://%(domain)s\">%(name)s</a></strong>. A webbased application for "
 "handling registrations and attendees for events."
-msgstr "Det arrangement du tilmelder dig, bruger <strong><a class=\"new-window\" href="
-"\"http://%(domain)s\">%(name)s</a></strong>. Et webbaseret system til at håndtere tilmeldinger for arrangementer."
+msgstr ""
+"Det arrangement du tilmelder dig, bruger <strong><a class=\"new-window\" "
+"href=\"http://%(domain)s\">%(name)s</a></strong>. Et webbaseret system til "
+"at håndtere tilmeldinger for arrangementer."
 
 #: templates/signupbox/event_terms.html:13
 msgid "By registering you acknowledge that:"
@@ -698,14 +744,19 @@ msgstr "Ved at tilmelde dig vedgår du at:"
 msgid ""
 "This event and all related information, including content on the events "
 "website, is the responsibility of the event provider."
-msgstr "Dette arrangement og al relateret information, inklusive indhold på arrangementets webside, er arrangementudbyderens ansvar."
+msgstr ""
+"Dette arrangement og al relateret information, inklusive indhold på "
+"arrangementets webside, er arrangementudbyderens ansvar."
 
 #: templates/signupbox/event_terms.html:16
 #, python-format
 msgid ""
 "No payments regarding event registration is handled by %(name)s, and all "
 "requests regarding payments must be directed to the event provider."
-msgstr "Ingen betalinger vedrørende denne tilmelding bliver håndteret af %(name)s, og alle forespørgsler vedrørende betalinger skal rettes til arrangementsudbyderen."
+msgstr ""
+"Ingen betalinger vedrørende denne tilmelding bliver håndteret af %(name)s, "
+"og alle forespørgsler vedrørende betalinger skal rettes til "
+"arrangementsudbyderen."
 
 #: templates/signupbox/event_tickets.html:10
 #: templates/signupbox/event_tickets_add.html:9
@@ -729,44 +780,80 @@ msgstr "Rediger billet"
 msgid "%(name)s's events"
 msgstr "%(name)s's arrangement"
 
-#: templates/signupbox/index.html:11
+#: templates/signupbox/index.html:13
+#, python-format
+msgid ""
+"Welcome to your new <span class=\"site_name\"><strong>%(name)s</strong></"
+"span> account!"
+msgstr ""
+
+#: templates/signupbox/index.html:14
+msgid ""
+"When you get started with your events, you will see this page be filled with "
+"events and activities. But for now, here are some tips that will help you "
+"get started."
+msgstr ""
+
+#: templates/signupbox/index.html:18
 msgid "Upcoming events"
 msgstr "Kommende arrangementer"
 
-#: templates/signupbox/index.html:18
+#: templates/signupbox/index.html:25
 msgid "in"
 msgstr "om"
 
-#: templates/signupbox/index.html:32
+#: templates/signupbox/index.html:39
 msgid "No upcoming events"
 msgstr "Ingen kommende arrangementer"
 
-#: templates/signupbox/index.html:35
+#: templates/signupbox/index.html:44
+msgid "Next step: Add an event"
+msgstr ""
+
+#: templates/signupbox/index.html:45
+#, python-format
+msgid ""
+"The first thing you will propably want to do, is to <a href="
+"\"%(event_add_url)s\">add an event</a>. You can have as many events in you "
+"account as you like."
+msgstr ""
+
+#: templates/signupbox/index.html:49
 msgid "Recent activities"
 msgstr "Seneste aktiviteter"
 
-#: templates/signupbox/index.html:41
+#: templates/signupbox/index.html:55
 #, python-format
 msgid "%(since)s ago"
 msgstr "%(since)s siden"
 
-#: templates/signupbox/index.html:46
+#: templates/signupbox/index.html:60
 msgid "No recent activites"
 msgstr "Ingen senester aktiviteter"
 
-#: templates/signupbox/index.html:54
+#: templates/signupbox/index.html:71
+msgid "Help!"
+msgstr ""
+
+#: templates/signupbox/index.html:72
+msgid ""
+"If you become unsure about what to do, or how a feature works, don't "
+"hesitate to ask us by using the <a href=\"\">contact form</a>."
+msgstr ""
+
+#: templates/signupbox/index.html:76
 msgid "Previous events"
 msgstr "Tidligere arrangementer"
 
-#: templates/signupbox/index.html:72
+#: templates/signupbox/index.html:94
 msgid "No previous events"
 msgstr "Ingen tidligere arrangementer"
 
-#: templates/signupbox/index.html:106
+#: templates/signupbox/index.html:128
 msgid "Registrations the last seven days"
 msgstr "Tilmeldinger de seneste syv dage"
 
-#: templates/signupbox/login.html:7 templates/signupbox/login.html.py:17
+#: templates/signupbox/login.html:7 templates/signupbox/login.html.py:18
 msgid "Login"
 msgstr "Login"
 
@@ -819,15 +906,15 @@ msgstr "Inviter brugere"
 msgid "Invite users to this account via email."
 msgstr "Inviter brugere til denne konto via email."
 
-#: templates/signupbox/public_base.html:38
+#: templates/signupbox/public_base.html:40
 msgid "Phone"
 msgstr "Telefon"
 
-#: templates/signupbox/public_base.html:39
+#: templates/signupbox/public_base.html:41
 msgid "CVR no."
 msgstr "CVR nummer"
 
-#: templates/signupbox/public_base.html:40
+#: templates/signupbox/public_base.html:42
 msgid "Contact"
 msgstr "Kontakt"
 
@@ -1015,10 +1102,6 @@ msgstr[1] "Emails sendt"
 msgid "Date and time"
 msgstr "Dato og tid"
 
-#: views/attendee_actions.py:135 views/attendee_actions.py:256
-msgid "Currency"
-msgstr "Valuta"
-
 #: views/attendee_actions.py:236
 msgid "Attendee count"
 msgstr "Deltager antal"
@@ -1028,6 +1111,10 @@ msgid "Attendee updated."
 msgstr "Deltager opdateret."
 
 #: views/attendees.py:123
+msgid "Attendee added."
+msgstr "Deltager tilføjet."
+
+#: views/attendees.py:144
 msgid "Booking updated."
 msgstr "Tilmelding opdateret."
 
@@ -1035,7 +1122,7 @@ msgstr "Tilmelding opdateret."
 msgid "Event added."
 msgstr "Arrangement tilføjet."
 
-#: views/event.py:62
+#: views/event.py:69
 msgid "Event updated."
 msgstr "Arrangement opdateret."
 
