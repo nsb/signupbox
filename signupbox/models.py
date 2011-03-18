@@ -213,7 +213,7 @@ EVENT_STATUS_CHOICES = (
 )
 
 CURRENCY_CHOICES = (
-    (CURRENCY_DKK, _('dkk')),
+    (CURRENCY_DKK, _('kr.')),
     (CURRENCY_EUR, _('euros')),
 )
 
