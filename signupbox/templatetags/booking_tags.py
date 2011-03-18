@@ -26,7 +26,7 @@ def ticket_summary_price(ticket, attendees):
 
 @register.simple_tag
 def total_price(attendees):
-    return sum((attendee.ticket.price * attendee.attendee_count for attendee in attendees))
+    return defaultfilters.floatformat(sum((attendee.ticket.price * attendee.attendee_count for attendee in attendees)), -2)
 
 @register.simple_tag
 def price_range(tickets):
