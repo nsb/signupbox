@@ -380,10 +380,6 @@ class Booking(models.Model):
         return ret
 
     @property
-    def unconfirmed_attendees(self):
-        return Attendee.objects.filter(booking=self, booking__confirmed=False)
-
-    @property
     def ordernumber(self):
         return str(self.pk)
 

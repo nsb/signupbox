@@ -25,6 +25,10 @@ def ticket_summary_price(ticket, attendees):
     return '%d %s' % (ticket.price * attendee_count(attendees), ticket.event.get_currency_display()) if ticket.price else _('Free')
 
 @register.simple_tag
+def total_price(attendees):
+    return sum((attendee.ticket.price * attendee.attendee_count for attendee in attendees))
+
+@register.simple_tag
 def price_range(tickets):
     current_tickets = tickets.exclude(offered_from__gt=date.today(), offered_to__lt=date.today())
     min_ticket = current_tickets.aggregate(Min('price'))['price__min']

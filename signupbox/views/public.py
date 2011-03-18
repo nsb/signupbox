@@ -55,12 +55,9 @@ def event_confirm(request, slug, booking_id):
     account = Account.objects.by_request(request)
     event = get_object_or_404(Event, account=account, slug=slug)
     booking = get_object_or_404(Booking, event=event, id=booking_id, confirmed=False)
-    amount = Ticket.objects.filter(
-        attendees__id__in=booking.attendees.values_list('id', flat=True)
-    ).aggregate(Sum('price'))['price__sum']
+    amount = sum((attendee.ticket.price * attendee.attendee_count for attendee in booking.attendees.all()))
 
     if amount:
-        context['total_price'] = amount
         if account.payment_gateway == 'quickpay':
 
             protocol = 3
@@ -155,11 +152,9 @@ def event_confirm(request, slug, booking_id):
     else:
         form = form_class()
 
-        context.update({'event':event, 'booking': booking, 'form':form})
-
         return render_to_response(
             template_name,
-            RequestContext(request, context),
+            RequestContext(request, {'event':event, 'booking': booking, 'form':form}),
         )
 
 def event_complete(request, slug):

@@ -3,7 +3,7 @@
 {% load booking_tags %}
 
 {% block summary %}
-{% regroup booking.unconfirmed_attendees.all by ticket as summary_list %}
+{% regroup booking.attendees.all by ticket as summary_list %}
 <table>
   <thead>
     <tr>
@@ -26,7 +26,7 @@
   {% endfor %}
     <tr>
       <th colspan="3">{% trans "Total price" %} <small>{% trans "Incl. vat" %}</small></th>
-      <td class="last">{{ total_price|floatformat:"-2" }} {{ event.get_currency_display }}</td>
+      <td class="last">{% total_price booking.attendees.all %} {{ event.get_currency_display }}</td>
     </tr>
   </tbody>
 </table>
