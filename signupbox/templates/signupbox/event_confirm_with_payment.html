@@ -18,7 +18,7 @@
     {% with s.grouper as ticket and s.list as attendees %}
     <tr>
       <td>{{ ticket }}</td>
-      <td>{{ ticket.price }} {{ event.get_currency_display }}</td>
+      <td>{{ ticket.price|floatformat:"-2" }} {{ event.get_currency_display }}</td>
       <td>{% attendee_count attendees %}</td>
       <td class="last">{% ticket_summary_price ticket attendees %}</td>
     </tr>
