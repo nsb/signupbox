@@ -34,7 +34,7 @@
       {% for attendee in attendees %}
       <div class="row {% cycle 'even' 'odd' %}">
         <div class="column checkbox"><input type="checkbox" name="0-attendees" value="{{ attendee.id }}" /></div>
-        <div class="column"><a href="{% url event_attendees_edit event.slug attendee.id %}">{{ attendee.display_value }}</a></div>
+        <div class="column"><a href="{% url event_attendees_edit event.slug attendee.id %}">{{ attendee.display_value }} {% if attendee.attendee_count > 1 %}({{ attendee.attendee_count }}){% endif %}</a></div>
         <div class="column"><a href="{% url event_booking_detail event.slug attendee.booking.id %}">#{{ attendee.booking.id }}</a></div>
         <div class="column last">{{ attendee.booking.timestamp|date }}</div>
       </div>
