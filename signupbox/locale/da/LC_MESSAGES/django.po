@@ -542,6 +542,8 @@ msgid ""
 "By confirming this registration you agree to our <a href=\"%(terms_url)s\" "
 "class=\"new_window\">terms and conditions</a>."
 msgstr ""
+"Ved at bekræfte denne tilmelding, erklærer du samtidig at du anerkender vores <a href=\"%(terms_url)s\" "
+"class=\"new_window\">vilkår og betingelser.</a>"
 
 #: templates/signupbox/event_confirm_quickpay.html:10
 msgid "Confirm registration and continue to payment"
