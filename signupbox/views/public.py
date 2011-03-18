@@ -14,7 +14,7 @@ from paypal.standard.forms import PayPalPaymentsForm
 from quickpay.forms import QuickpayForm
 from quickpay.views import BaseQuickpayCallback
 
-from ..models import Account, Event, Booking, Ticket
+from ..models import Account, Event, Booking, Ticket, Attendee
 from ..forms import registerform_factory, emptyregisterform_factory, ConfirmForm
 
 def event_site(request, slug):
@@ -51,14 +51,16 @@ def event_register(request, slug):
 @csrf_view_exempt
 def event_confirm(request, slug, booking_id):
 
+    context = {}
     account = Account.objects.by_request(request)
     event = get_object_or_404(Event, account=account, slug=slug)
     booking = get_object_or_404(Booking, event=event, id=booking_id, confirmed=False)
     amount = Ticket.objects.filter(
-        attendees__id__in=booking.attendees.values_list('id', flat=True)
+        attendees__id__in=Attendee.unconfirmed_objects.filter(booking=booking).values_list('id', flat=True)
     ).aggregate(Sum('price'))['price__sum']
 
     if amount:
+        context['total_price'] = amount
         if account.payment_gateway == 'quickpay':
 
             protocol = 3
@@ -139,6 +141,7 @@ def event_confirm(request, slug, booking_id):
         else:
             form_class = curry(ConfirmForm, instance=booking, initial={})
             template_name = 'signupbox/event_confirm_with_payment.html'
+
     else:
         form_class = curry(ConfirmForm, instance=booking, initial={})
         template_name = 'signupbox/event_confirm.html'
@@ -152,9 +155,11 @@ def event_confirm(request, slug, booking_id):
     else:
         form = form_class()
 
+        context.update({'event':event, 'booking': booking, 'form':form})
+
         return render_to_response(
             template_name,
-            RequestContext(request, {'event':event, 'booking': booking, 'form':form}),
+            RequestContext(request, context),
         )
 
 def event_complete(request, slug):

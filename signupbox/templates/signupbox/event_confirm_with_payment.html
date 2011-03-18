@@ -3,7 +3,7 @@
 {% load booking_tags %}
 
 {% block summary %}
-{% regroup booking.attendees.all by ticket as summary_list %}
+{% regroup booking.unconfirmed_attendees.all by ticket as summary_list %}
 <table>
   <thead>
     <tr>
@@ -15,12 +15,14 @@
   </thead>
   <tbody>
   {% for s in summary_list %}
+    {% with s.grouper as ticket and s.list as attendees %}
     <tr>
-      <td>{{ s.grouper }}</td>
-      <td>{{ s.grouper.price }} {{ event.get_currency_display }}</td>
-      <td>{% attendee_count s.list %}</td>
-      <td class="last">{% ticket_summary_price s.grouper s.list %}</td>
+      <td>{{ ticket }}</td>
+      <td>{{ ticket.price }} {{ event.get_currency_display }}</td>
+      <td>{% attendee_count attendees %}</td>
+      <td class="last">{% ticket_summary_price ticket attendees %}</td>
     </tr>
+    {% endwith %}
   {% endfor %}
     <tr>
       <th colspan="3">{% trans "Total price" %} <small>{% trans "Incl. vat" %}</small></th>
