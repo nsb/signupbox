@@ -56,7 +56,7 @@ def event_confirm(request, slug, booking_id):
     event = get_object_or_404(Event, account=account, slug=slug)
     booking = get_object_or_404(Booking, event=event, id=booking_id, confirmed=False)
     amount = Ticket.objects.filter(
-        attendees__id__in=Attendee.unconfirmed_objects.filter(booking=booking).values_list('id', flat=True)
+        attendees__id__in=booking.attendees.values_list('id', flat=True)
     ).aggregate(Sum('price'))['price__sum']
 
     if amount:

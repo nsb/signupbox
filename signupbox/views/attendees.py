@@ -19,7 +19,7 @@ class AttendeesActionWizard(FormWizard):
 
         account=request.user.accounts.get()
         self.event = get_object_or_404(Event, account=account, slug=slug)
-        self.qs = Attendee.objects.filter(booking__event=self.event)
+        self.qs = Attendee.objects.filter(booking__event=self.event, booking__confirmed=True)
 
         query = request.GET.copy()
         if not 'show' in query:

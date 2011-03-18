@@ -381,7 +381,7 @@ class Booking(models.Model):
 
     @property
     def unconfirmed_attendees(self):
-        return Attendee.unconfirmed_objects.filter(booking=self)
+        return Attendee.objects.filter(booking=self, booking__confirmed=False)
 
     @property
     def ordernumber(self):
@@ -433,15 +433,15 @@ class AttendeeManager(models.Manager):
 
     def confirmed(self, event=None):
         qs = self.filter(booking__event=event) if event else self.all()
-        return qs.filter(status=ATTENDEE_CONFIRMED)
+        return qs.filter(status=ATTENDEE_CONFIRMED, booking__confirmed=True)
 
     def unconfirmed(self, event=None):
         qs = self.filter(booking__event=event) if event else self.all()
-        return self.filter(status=ATTENDEE_UNCONFIRMED)
+        return self.filter(status=ATTENDEE_UNCONFIRMED, booking__confirmed=True)
 
     def cancelled(self, event=None):
         qs = self.filter(booking__event=event) if event else self.all()
-        return self.filter(status=ATTENDEE_CANCELLED)
+        return self.filter(status=ATTENDEE_CANCELLED, booking__confirmed=True)
 
     def get_query_set(self):
         """
@@ -472,12 +472,7 @@ class AttendeeManager(models.Manager):
                 signupbox_field.type = '%s'
                 """ % EMAIL_FIELD
             }
-        ).filter(booking__confirmed=True)
-
-class UnconfirmedAttendeesManager(models.Manager):
-    pass
-    #def get_query_set(self):
-        #return self.filter(booking__confirmed=False)
+        )
 
 ATTENDEE_STATUS_CHOICES = (
     ( ATTENDEE_CONFIRMED, _('Confirmed')),
@@ -498,7 +493,6 @@ class Attendee(models.Model):
     attendee_count = models.PositiveIntegerField(default=1)
 
     objects = AttendeeManager()
-    unconfirmed_objects = UnconfirmedAttendeesManager()
 
     def save(self, *args, **kwargs):
 
