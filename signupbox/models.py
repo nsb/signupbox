@@ -515,6 +515,9 @@ class Attendee(models.Model):
             except IndexError:
                 return ''
 
+    class Meta:
+        ordering = ('-id',)
+
 class FieldValue(models.Model):
     """
     """
