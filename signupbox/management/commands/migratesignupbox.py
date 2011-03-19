@@ -66,7 +66,9 @@ class Command(BaseCommand):
                        and accounts_account.id = account_id and accounts_account.name = %s;""", (a.name,)
                 )
                 for user in account_user_cur:
-                    a.users.add(User.objects.get(username=user['username']))
+                    u = User.objects.get(username=user['username'])
+                    a.users.add(u)
+                    a.set_admin_status(u, True)
 
                 event_cur = conn.cursor(cursor_factory=DictCursor)
                 event_cur.execute("SELECT * from core_event where account_id = %s;", (account['id'],))
