@@ -5,6 +5,8 @@ from django.contrib.sites.models import Site
 from django.template.loader import render_to_string
 from django.db.models import signals, Max, Sum
 from django.template import Context
+from django.utils import translation
+from django.conf import settings
 
 from celery.decorators import task, periodic_task
 
@@ -21,6 +23,8 @@ def process_booking(booking):
     """
     Send mails on booking confirmed
     """
+    translation.activate(settings.LANGUAGE_CODE)
+
     send_mass_mail(
         ((render_to_string(
             'signupbox/mails/register_email_subject.txt' if index else 'signupbox/mails/register_email_subject_registrant.txt',
@@ -44,6 +48,8 @@ def account_send_invites(invites, message):
     """
     Send out invites to new account members
     """
+    translation.activate(settings.LANGUAGE_CODE)
+
     send_mass_mail([
         (render_to_string(
             'signupbox/mails/account_invite_subject.txt',
