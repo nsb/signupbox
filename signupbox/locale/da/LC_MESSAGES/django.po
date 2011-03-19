@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-03-19 23:11+0100\n"
+"POT-Creation-Date: 2011-03-19 23:42+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -874,6 +874,10 @@ msgstr "Tilmeldinger de seneste syv dage"
 #: templates/signupbox/login.html:7 templates/signupbox/login.html.py:18
 msgid "Login"
 msgstr "Login"
+
+#: templates/signupbox/login.html:25
+msgid "Forgot password?"
+msgstr "Glemt adgangskode?"
 
 #: templates/signupbox/members.html:6
 msgid "Access and Permissions"
