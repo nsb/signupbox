@@ -11,7 +11,7 @@
 
 
 {% block summary %}
-{% regroup booking.unconfirmed_attendees.all by ticket as summary_list %}
+{% regroup booking.attendees.all by ticket as summary_list %}
 <table>
   <thead>
     <tr>

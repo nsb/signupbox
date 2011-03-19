@@ -51,7 +51,8 @@ def event_gviz(request, account):
  
             num = Attendee.objects.filter(
                 booking__timestamp__range=(datetime.combine(d, time.min), datetime.combine(d, time.max)),
-                booking__event=event
+                booking__event=event,
+                booking__confirmed=True,
             ).aggregate(Sum('attendee_count'))['attendee_count__sum']
 
             rows.append({'date': d, 'id': event.id, 'attendees': num})
