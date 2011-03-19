@@ -5,7 +5,7 @@ from django.core.management.base import BaseCommand, CommandError
 from django.db import transaction
 from django.contrib.auth.models import User
 
-from objperms.models import ObjectPermission
+from signupbox.constants import *
 from signupbox.models import Account, Event, Booking, Ticket, Field, FieldValue, FieldOption, Attendee
 from signupbox.signals import booking_confirmed
 
@@ -67,13 +67,6 @@ class Command(BaseCommand):
                 )
                 for user in account_user_cur:
                     a.users.add(User.objects.get(username=user['username']))
-                    obj_perm, created = ObjectPermission.objects.get_or_create(
-                        user = user, content_object = a,
-                    )
-                    obj_perm.can_view = True
-                    obj_perm.can_change = True
-                    obj_perm.can_delete = True
-                    obj_per.save()
 
                 event_cur = conn.cursor(cursor_factory=DictCursor)
                 event_cur.execute("SELECT * from core_event where account_id = %s;", (account['id'],))
@@ -107,6 +100,15 @@ class Command(BaseCommand):
                         )
                     )
 
+                    field_mapping = {
+                        0: TEXT_FIELD,
+                        1: TEXTAREA_FIELD,
+                        2: CHECKBOX_FIELD,
+                        3: EMAIL_FIELD,
+                        4: SELECT_FIELD,
+                        5: RADIOBUTTON_FIELD,
+                    }
+
                     # add fields
                     e.fields.all().delete()
                     field_cur = conn.cursor(cursor_factory=DictCursor)
@@ -119,7 +121,7 @@ class Command(BaseCommand):
                             required = field['required'],
                             in_extra = field['in_extra'],
                             ordering = field['order'],
-                            type = field['field_type'],
+                            type = field_mapping[field['field_type']],
                         )
 
                         # add field options

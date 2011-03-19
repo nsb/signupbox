@@ -310,7 +310,7 @@ class Event(models.Model):
             i = 2
             while True:
                 try:
-                    Event.objects.get(slug__exact=slug)
+                    Event.objects.get(slug__exact=slug, account=self.account)
                     slug = u'%s-%d' % (defaultfilters.slugify(self.title), i)
                     i += 1
                 except Event.DoesNotExist:
