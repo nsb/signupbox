@@ -112,7 +112,7 @@ class Command(BaseCommand):
                     # add fields
                     e.fields.all().delete()
                     field_cur = conn.cursor(cursor_factory=DictCursor)
-                    field_cur.execute("SELECT * from core_formfield where event_id = %s;", (event['id'],))
+                    field_cur.execute("SELECT * from core_formfield where event_id = %s ORDER BY core_formfield.order;", (event['id'],))
                     for field in field_cur:
                         f = Field.objects.create(
                             event = e,
