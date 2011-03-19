@@ -5,8 +5,8 @@ from widgets import DateTimeField, DateTimeWidget
 from django.utils.translation import ugettext, ugettext_lazy as _
 
 class EventForm(forms.ModelForm):
-    begins = DateTimeField(required=True, widget=DateTimeWidget)
-    ends = DateTimeField(required=True, widget=DateTimeWidget)
+    begins = DateTimeField(required=True, widget=DateTimeWidget, label=_('Begins'))
+    ends = DateTimeField(required=True, widget=DateTimeWidget, label=_('Ends'))
 
     class Meta:
         model = Event
