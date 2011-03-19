@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-03-19 23:42+0100\n"
+"POT-Creation-Date: 2011-03-19 23:47+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -687,9 +687,13 @@ msgstr "Tilføj felter"
 msgid "Remove"
 msgstr "Fjern"
 
+#: templates/signupbox/event_incomplete.html:6
+msgid "Registration incomplete"
+msgstr "Tilmelding ikke fuldført."
+
 #: templates/signupbox/event_incomplete.html:8
 msgid "The registration was not completed."
-msgstr "Tilmelding blev ikke fuldført."
+msgstr "Tilmeldingen blev ikke fuldført."
 
 #: templates/signupbox/event_register.html:8
 #, python-format
