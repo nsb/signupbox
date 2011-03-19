@@ -29,7 +29,7 @@ def process_booking(booking):
             {'event': booking.event, 'booking': booking, 'attendee': attendee},
         ), 'noreply@%s' % Site.objects.get_current().domain, 
         [attendee.email])
-            for index, attendee in enumerate(booking.attendees.all()) if attendee.email
+            for index, attendee in enumerate(booking.attendees.order_by('id')) if attendee.email
         )
     )
 
