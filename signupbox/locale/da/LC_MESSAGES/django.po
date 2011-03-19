@@ -689,7 +689,7 @@ msgstr "Fjern"
 
 #: templates/signupbox/event_incomplete.html:6
 msgid "Registration incomplete"
-msgstr "Tilmelding ikke fuldført."
+msgstr "Tilmelding ikke fuldført"
 
 #: templates/signupbox/event_incomplete.html:8
 msgid "The registration was not completed."
