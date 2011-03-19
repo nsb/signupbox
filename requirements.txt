@@ -9,6 +9,6 @@ ghettoq
 BeautifulSoup
 -e git://github.com/dziegler/django-css.git#egg=DjangoCSS
 -e git://github.com/dcramer/django-paypal.git#egg=DjangoPayPal
-django-sentry
+-e git://github.com/dcramer/django-sentry.git#egg=DjangoSentry
 reportlab
 xlwt

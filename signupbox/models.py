@@ -578,7 +578,7 @@ signals.post_save.connect(create_default_tickets, sender=Event)
 
 def on_paypal_payment_success(sender, **kwargs):
     ipn_obj = sender
-    booking = Booking.objects.get(ordernumber=transaction.ordernumber)
+    booking = Booking.objects.get(ordernumber=ipn_obj.item_number)
     booking_confirmed.send(sender=ipn_obj, booking_id=booking.pk)
 payment_was_successful.connect(on_paypal_payment_success)
 

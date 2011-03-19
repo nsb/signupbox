@@ -22,7 +22,7 @@ class PayPalTestCase(BaseTestCase):
     def testPayPalPayments(self):
 
         PayPalIPN.objects.create(
-            item_number='%s' % self.booking.pk,
+            item_number='%s' % self.booking.ordernumber,
             payment_status='complete',
             ipaddress='1.2.3.4',
             txn_id='123456789'
