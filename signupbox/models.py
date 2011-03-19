@@ -363,6 +363,7 @@ class Booking(models.Model):
         default=0)
     currency = models.CharField(max_length=3, blank=True)
     confirmed = models.BooleanField(default=False)
+    ordernumber = models.CharField(max_length=20)
 
     objects = BookingManager()
 
@@ -379,9 +380,21 @@ class Booking(models.Model):
         ret = ret + ugettext(' registered for %s.' % self.event.title)
         return ret
 
-    @property
-    def ordernumber(self):
-        return str(self.pk)
+
+    def save(self, *args, **kwargs):
+        """
+        get ordernumber from database sequence
+
+        """
+        if not self.ordernumber:
+            from django.db import connection
+            cursor = connection.cursor()
+
+            cursor.execute("SELECT nextval('booking_ordernum_seq')")
+            (ordernum,) = cursor.fetchone()
+            self.ordernumber = str(ordernum)
+
+        return super(Booking, self).save(*args, **kwargs)
 
     def __unicode__(self):
         return '%(title)s: #%(id)s' % {'title':self.event.title, 'id':self.id}
@@ -565,11 +578,12 @@ signals.post_save.connect(create_default_tickets, sender=Event)
 
 def on_paypal_payment_success(sender, **kwargs):
     ipn_obj = sender
-    booking_confirmed.send(sender=ipn_obj, booking_id=int(ipn_obj.item_number))
+    booking = Booking.objects.get(ordernumber=transaction.ordernumber)
+    booking_confirmed.send(sender=ipn_obj, booking_id=booking.pk)
 payment_was_successful.connect(on_paypal_payment_success)
 
 def on_quickpay_payment_success(sender, **kwargs):
     transaction = sender
-    booking = Booking.objects.get(pk=int(transaction.ordernumber.lstrip('0')))
+    booking = Booking.objects.get(ordernumber=transaction.ordernumber.lstrip('0'))
     booking_confirmed.send(sender=transaction, booking_id=booking.id)
 quickpay_payment_was_successfull.connect(on_quickpay_payment_success)
