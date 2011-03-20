@@ -2,12 +2,15 @@ from datetime import datetime, time
 
 from django import forms
 from django.forms.fields import MultiValueField, EMPTY_VALUES
-from django.forms.widgets import MultiWidget, TextInput
+from django.forms.widgets import MultiWidget, Input
 from django.contrib.sites.models import Site
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext, ugettext_lazy as _
 
-class SearchInput(TextInput):
+class DateInput(forms.DateInput):
+    input_type = 'date'
+
+class SearchInput(Input):
     input_type = 'search'
 
 class AccountWidget(forms.TextInput):
@@ -99,7 +102,7 @@ class DateTimeWidget(MultiWidget):
     """
     def __init__(self, *args, **kwargs):
         widgets = (
-            forms.DateInput(attrs={'class':'datetime', 'autocomplete':'off'}),
+            DateInput(attrs={'class':'datetime', 'autocomplete':'off'}),
             TimeSelectWidget,
         )
         super(DateTimeWidget, self).__init__(widgets, *args, **kwargs)
