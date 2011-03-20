@@ -2,7 +2,7 @@
 {% load i18n %}
 {% load compress %}
 {% block css %}
-  <link href='http://fonts.googleapis.com/css?family=Molengo' rel='stylesheet' type='text/css'>
+  <link href='//fonts.googleapis.com/css?family=Molengo' rel='stylesheet' type='text/css'>
   {% compress css %}
   {{ block.super }}
   <link rel="stylesheet" href="{{ MEDIA_URL }}css/global.scss" type="text/css">
@@ -55,7 +55,6 @@
 
 {% block javascript %}
   {{ block.super }}
-  <script type="text/javascript" src="http://ajax.microsoft.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js" ></script>
   {% compress js %}
     <script type="text/javascript" src="{{ MEDIA_URL }}js/modal.js" ></script>
     <script type="text/javascript" src="{{ MEDIA_URL }}js/attendee_actions.js" ></script>
