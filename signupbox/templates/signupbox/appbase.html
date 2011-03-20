@@ -61,4 +61,13 @@
     <script type="text/javascript" src="{{ MEDIA_URL }}js/fields.js" ></script>
     <script type="text/javascript" src="{{ MEDIA_URL }}js/access_permissions.js" ></script>
   {% endcompress %}
+
+  <script type="text/javascript" src="{{ MEDIA_URL }}tiny_mce/tiny_mce.js" ></script>
+  <script type="text/javascript">
+    tinyMCE.init({
+      mode : "textareas",
+      theme : "simple"    //(n.b. no trailing comma, this will be critical as you experiment later)
+    });
+  </script>
+
 {% endblock javascript %}
