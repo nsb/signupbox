@@ -1,6 +1,9 @@
 
 from django.http import Http404, HttpResponseRedirect
 from django.contrib.sites.models import Site
+from django.contrib.contenttypes.models import ContentType
+
+from objperms.models import ObjectPermission
 
 from models import Account
 
@@ -12,15 +15,21 @@ def with_account(view):
 
         if not account:
             try:
+                obj_perm = ObjectPermission.objects.get(
+                    user=request.user,
+                    content_type=ContentType.objects.get_for_model(Account)
+                )
+                account = obj_perm.content_object
+
                 return HttpResponseRedirect(
                       'http%(secure)s://%(account)s.%(host)s%(path)s' % {
                           'secure': 's' if request.is_secure() else '',
-                          'account': request.user.accounts.get().name,
-                          'host': request.get_host(),
+                          'account': account.name,
+                          'host': '.'.join(request.get_host().rsplit('.', 2)[-2:]),
                           'path': request.get_full_path()
                       }
                 )
-            except Account.DoesNotExist:
+            except ObjectPermission.DoesNotExist:
                 raise Http404
 
         kwargs['account'] = account
