@@ -9,7 +9,7 @@ from django.contrib.formtools.wizard import FormWizard
 from django.http import HttpResponseForbidden
 
 from ..constants import *
-from ..models import Event, Booking, Attendee, Field, Ticket
+from ..models import Account, Event, Booking, Attendee, Field, Ticket
 from ..forms import attendeeactionsform_factory, AttendeesExportForm, AttendeesEmailForm, attendeeform_factory, BookingForm, FilterForm
 from ..decorators import with_account
 from attendee_actions import AttendeeActions
@@ -18,7 +18,7 @@ class AttendeesActionWizard(FormWizard):
 
     def parse_params(self, request, slug, *args, **kwargs):
 
-        account=request.user.accounts.get()
+        account = Account.objects.by_request(request)
         self.event = get_object_or_404(Event, account=account, slug=slug)
         self.qs = Attendee.objects.filter(booking__event=self.event, booking__confirmed=True)
 
