@@ -10,6 +10,7 @@ from django.contrib.formtools.utils import security_hash
 from django.utils.http import urlencode
 from django.core import mail
 from django.contrib.auth.models import User
+from django.template import defaultfilters
 
 from base import BaseTestCase
 from ..constants import *
@@ -59,10 +60,11 @@ class AdminTestCase(BaseTestCase):
             reverse('event_create'), 
             {
                 'title':'mynewtitle',
-                'begins_0':date.today() + timedelta(days=7),
+                'begins_0':defaultfilters.date(date.today() + timedelta(days=7), 'SHORT_DATE_FORMAT')
+,
                 'begins_1_0':'9',
                 'begins_1_1':'00',
-                'ends_0': date.today() + timedelta(days=7),
+                'ends_0': defaultfilters.date(date.today() + timedelta(days=7), 'SHORT_DATE_FORMAT'),
                 'ends_1_0':'16',
                 'ends_1_1':'00',
                 'status': 'open',
@@ -80,10 +82,10 @@ class AdminTestCase(BaseTestCase):
             reverse('event_edit', kwargs={'slug':self.event.slug},), 
             {
                 'title':'mynewtitle',
-                'begins_0':date.today() + timedelta(days=7),
+                'begins_0':defaultfilters.date(date.today() + timedelta(days=7), 'SHORT_DATE_FORMAT'),
                 'begins_1_0':'9',
                 'begins_1_1':'00',
-                'ends_0': date.today() + timedelta(days=7),
+                'ends_0': defaultfilters.date(date.today() + timedelta(days=7), 'SHORT_DATE_FORMAT'),
                 'ends_1_0':'16',
                 'ends_1_1':'00',
                 'status': 'open',
