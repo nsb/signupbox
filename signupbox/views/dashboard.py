@@ -47,16 +47,20 @@ def event_gviz(request, account):
     if not request.user.has_perm('view', account):
         return HttpResponseForbidden()
 
-    events = Event.objects.upcoming().filter(account=account)
+    since = date.today() - timedelta(days=6)
+
+    events = Event.objects.filter(
+        account=account,
+        bookings__in=Booking.objects.filter(timestamp__gt=datetime.combine(since, time.min))
+    ).distinct()
 
     rows = []
-    for d in dateIterator(from_date=date.today() - timedelta(days=6)):
+    for d in dateIterator(from_date=since):
         for event in events:
  
             num = Attendee.objects.filter(
                 booking__timestamp__range=(datetime.combine(d, time.min), datetime.combine(d, time.max)),
-                booking__event=event,
-                booking__confirmed=True,
+                booking__event=event, booking__confirmed=True,
             ).aggregate(Sum('attendee_count'))['attendee_count__sum']
 
             rows.append({'date': d, 'id': event.id, 'attendees': num})
