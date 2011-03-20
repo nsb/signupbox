@@ -17,7 +17,8 @@ def with_account(view):
             try:
                 obj_perm = ObjectPermission.objects.get(
                     user=request.user,
-                    content_type=ContentType.objects.get_for_model(Account)
+                    content_type=ContentType.objects.get_for_model(Account),
+                    can_view = True
                 )
                 account = obj_perm.content_object
 
