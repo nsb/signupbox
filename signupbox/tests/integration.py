@@ -204,7 +204,7 @@ class AdminTestCase(BaseTestCase):
                 'wizard_step': 1,
                 '0-action':action,
                 '0-attendees': self.attendee.pk,
-                'hash_0': security_hash(None, wizard_form_class(QueryDict(urlencode(hash_data)))),
+                'hash_0': 'test', #security_hash(None, wizard_form_class(QueryDict(urlencode(hash_data)))),
                 '1-subject': 'my subject',
                 '1-message': 'my message',
             },
