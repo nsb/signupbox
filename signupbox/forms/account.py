@@ -6,6 +6,18 @@ from ..models import Account, Profile
 
 class AccountForm(forms.ModelForm):
 
+    terms = forms.CharField(
+        widget=forms.Textarea(attrs={'class': 'mceEditor'}),
+        required=False,
+        label=_('Terms and conditions')
+    )
+    extra_info = forms.CharField(
+        widget=forms.Textarea(attrs={'class': 'mceEditor'}),
+        label=_('Extra info'),
+        required=False,
+        help_text=_('Extra info to be included in the registration email.')
+    )
+
     class Meta:
         model = Account
         fields = (
