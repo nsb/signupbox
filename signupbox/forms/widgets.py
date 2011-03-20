@@ -8,7 +8,8 @@ from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext, ugettext_lazy as _
 
 class DateInput(forms.DateInput):
-    input_type = 'date'
+    #input_type = 'date'
+    pass
 
 class SearchInput(Input):
     input_type = 'search'
