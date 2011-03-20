@@ -42,6 +42,9 @@ def account_settings(request, account):
 @with_account
 def account_profile(request, account):
 
+    if not request.user.has_perm('view', account):
+        return HttpResponseForbidden()
+
     if request.method == 'POST':
         user_form = UserForm(request.POST, instance = request.user)
         profile_form = ProfileForm(request.POST, instance = request.user.get_profile())
@@ -62,6 +65,9 @@ def account_profile(request, account):
 @login_required
 @with_account
 def account_members(request, account):
+
+    if not request.user.has_perm('view', account):
+        return HttpResponseForbidden()
 
     if not request.user.has_perm('view', account):
         return HttpResponseForbidden()
@@ -140,7 +146,7 @@ def account_permissions(request, user_id, account):
         form = PermissionsForm(request.POST)
         if form.is_valid():
             is_admin = form.cleaned_data['is_admin']
-            account.set_admin_status(user, is_admin)
+            account.set_perms(user, change=is_admin)
             messages.success(request, _('Permissions updated.'))
             return redirect(reverse('account_members'))
 
@@ -156,7 +162,7 @@ def account_invitation(request, key):
                 password = form.cleaned_data['password']
             )
             invitation.account.users.add(user)
-            invitation.account.set_admin_status(user, invitation.is_admin) 
+            invitation.account.set_perms(user, view=True, change=invitation.is_admin) 
             invitation.is_accepted = True
             invitation.save()
 

@@ -8,11 +8,9 @@ from django.shortcuts import render_to_response, redirect
 from django.template import RequestContext
 from django.core.urlresolvers import reverse
 from django.contrib.humanize.templatetags.humanize import naturalday
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseForbidden
 
 import gviz_api
-
-from objperms.models import ObjectPermission 
 
 from ..forms import RegistrationForm
 from ..models import Account, Event, Booking, Attendee
@@ -32,6 +30,9 @@ def frontpage(request):
 @with_account
 def index(request, account):
 
+    if not request.user.has_perm('view', account):
+        return HttpResponseForbidden()
+
     return render_to_response(
         'signupbox/index.html',
         RequestContext(request, {
@@ -42,6 +43,9 @@ def index(request, account):
 @login_required
 @with_account
 def event_gviz(request, account):
+
+    if not request.user.has_perm('view', account):
+        return HttpResponseForbidden()
 
     events = Event.objects.upcoming().filter(account=account)
 
@@ -85,14 +89,7 @@ def signup(request):
                 form.cleaned_data['username'], form.cleaned_data['email'], form.cleaned_data['password']
             )
             account.users.add(user)
-
-            ObjectPermission.objects.create(
-                user = user,
-                content_object = account,
-                can_view = True,
-                can_change = True,
-                can_delete = True,
-            )
+            account.set_perms(user, view=True, change=True)
 
             # log the user in
             user = authenticate(username=form.cleaned_data['username'], password=form.cleaned_data['password'])

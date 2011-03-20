@@ -6,6 +6,7 @@ from django.core.urlresolvers import reverse
 from django.contrib import messages
 from django.utils.translation import ugettext, ugettext_lazy as _
 from django.contrib.formtools.wizard import FormWizard
+from django.http import HttpResponseForbidden
 
 from ..constants import *
 from ..models import Event, Booking, Attendee, Field, Ticket
@@ -78,11 +79,17 @@ class AttendeesActionWizard(FormWizard):
 @with_account
 def event_attendees(request, slug, account):
 
+    if not request.user.has_perm('view', account):
+        return HttpResponseForbidden()
+
     return AttendeesActionWizard([None, None])(request, slug=slug)
 
 @login_required
 @with_account
 def event_attendees_edit(request, slug, attendee_id, account):
+
+    if not request.user.has_perm('view', account):
+        return HttpResponseForbidden()
 
     event = get_object_or_404(Event, account=account, slug=slug)
     attendee = get_object_or_404(Attendee, booking__event=event, id=attendee_id)
@@ -113,6 +120,9 @@ def event_attendees_edit(request, slug, attendee_id, account):
 @with_account
 def event_attendees_add(request, slug, account):
 
+    if not request.user.has_perm('view', account):
+        return HttpResponseForbidden()
+
     event = get_object_or_404(Event, account=account, slug=slug)
     form_class = attendeeform_factory(event, False)
 
@@ -134,6 +144,9 @@ def event_attendees_add(request, slug, account):
 @with_account
 def event_booking_detail(request, slug, booking_id, account):
 
+    if not request.user.has_perm('view', account):
+        return HttpResponseForbidden()
+
     event = get_object_or_404(Event, account=account, slug=slug)
     booking = get_object_or_404(Booking, event=event, id=booking_id)
 
@@ -150,4 +163,3 @@ def event_booking_detail(request, slug, booking_id, account):
         'signupbox/booking_detail.html',
         RequestContext(request, {'event':event, 'booking':booking, 'form':form,}),
     )
-

@@ -16,6 +16,7 @@ class BaseTestCase(test.TestCase):
         )
         self.user = User.objects.create_user(self.username, self.email, self.password,)
         self.account.users.add(self.user)
+        self.account.set_perms(self.user, view=True)
 
         self.event = Event.objects.create(
             account=self.account,

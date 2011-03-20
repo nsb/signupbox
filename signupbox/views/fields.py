@@ -4,6 +4,7 @@ from django.template import RequestContext
 from django.contrib import messages
 from django.utils.translation import ugettext, ugettext_lazy as _
 from django.core.urlresolvers import reverse
+from django.http import HttpResponseForbidden
 
 from ..models import Event
 from ..forms import fieldformset_factory
@@ -12,6 +13,9 @@ from ..decorators import with_account
 @login_required
 @with_account
 def event_fields(request, slug, account):
+
+    if not request.user.has_perm('view', account):
+        return HttpResponseForbidden()
 
     event = get_object_or_404(Event, account=account, slug=slug)
     formset_class = fieldformset_factory(event)

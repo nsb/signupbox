@@ -250,7 +250,7 @@ class AccountTestCase(BaseTestCase):
 
     def setUp(self):
         super(AccountTestCase, self).setUp()
-        self.account.set_admin_status(self.user, True)
+        self.account.set_perms(self.user, change=True)
 
     def tearDown(self):
         super(AccountTestCase, self).tearDown()

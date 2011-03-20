@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from django.contrib import messages
 from django.utils.translation import ugettext, ugettext_lazy as _
+from django.http import HttpResponseForbidden
 
 from ..models import Event, Ticket
 from ..forms import TicketForm
@@ -12,6 +13,9 @@ from ..decorators import with_account
 @login_required
 @with_account
 def event_tickets(request, slug, account):
+
+    if not request.user.has_perm('view', account):
+        return HttpResponseForbidden()
 
     event = get_object_or_404(Event, account=account, slug=slug)
 
@@ -23,6 +27,9 @@ def event_tickets(request, slug, account):
 @login_required
 @with_account
 def event_tickets_edit(request, slug, ticket_id, account):
+
+    if not request.user.has_perm('view', account):
+        return HttpResponseForbidden()
 
     event = get_object_or_404(Event, account=account, slug=slug)
     ticket = get_object_or_404(Ticket, event__slug=slug, id=ticket_id)
@@ -44,6 +51,9 @@ def event_tickets_edit(request, slug, ticket_id, account):
 @login_required
 @with_account
 def event_tickets_add(request, slug, account):
+
+    if not request.user.has_perm('view', account):
+        return HttpResponseForbidden()
 
     event = get_object_or_404(Event, account=account, slug=slug)
 

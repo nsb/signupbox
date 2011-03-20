@@ -6,6 +6,7 @@ from django.core.urlresolvers import reverse
 from django.contrib import messages
 from django.utils.translation import ugettext, ugettext_lazy as _
 from django.views.generic.list_detail import object_detail
+from django.http import HttpResponseForbidden
 
 from ..models import Event
 from ..forms import EventForm
@@ -14,6 +15,9 @@ from ..decorators import with_account
 @login_required
 @with_account
 def create(request, account):
+
+    if not request.user.has_perm('view', account):
+        return HttpResponseForbidden()
 
     event = Event(account=account)
 
@@ -41,6 +45,9 @@ def create(request, account):
 @with_account
 def read(request, slug, account):
 
+    if not request.user.has_perm('view', account):
+        return HttpResponseForbidden()
+
     event = get_object_or_404(Event, account=account, slug=slug)
 
     return object_detail(
@@ -59,6 +66,9 @@ def read(request, slug, account):
 @login_required
 @with_account
 def edit(request, slug, account):
+
+    if not request.user.has_perm('view', account):
+        return HttpResponseForbidden()
 
     event = get_object_or_404(Event, account=account, slug=slug)
 

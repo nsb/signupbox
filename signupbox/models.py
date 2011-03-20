@@ -107,18 +107,22 @@ class Account(models.Model):
     def display_name(self):
         return self.organization or self.name
 
-    def set_admin_status(self, user, is_admin):
+    def set_perms(self, user, view=None, change=None, delete=None):
         perm, created = ObjectPermission.objects.get_or_create(
             user=user,
             object_id=self.pk,
             content_type=ContentType.objects.get_for_model(self)
         )
-        perm.can_view = is_admin
-        perm.can_change = is_admin
+        if view is not None:
+            perm.can_view = view
+        if change is not None:
+            perm.can_change = change
+        if delete is not None:
+            perm.can_delete = delete
         perm.save()
 
     def remove_user(self, user):
-        self.set_admin_status(user, False)
+        self.set_perms(user, view=False, change=False, delete=False)
         self.users.remove(user)
 
     def domain_for_account(self, request=None):
