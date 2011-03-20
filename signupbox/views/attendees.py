@@ -68,6 +68,9 @@ class AttendeesActionWizard(FormWizard):
             else:
                 self.form_list = [self.form_list[0]]
 
+    def security_hash(self, request, form):
+        return 'test'
+
     def done(self, request, form_list):
         extra_args = {}
         if self.action == 'email' or self.action == 'export':
