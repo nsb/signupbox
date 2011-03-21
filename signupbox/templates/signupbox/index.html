@@ -20,7 +20,7 @@
   <div class="event block upcoming">
     {% for event in account.events.upcoming %}
       <div class="event row {% cycle 'even' 'odd' %}">
-        <div class="column"><h4><a href="{% url event_detail event.slug %}">{{ event.title }}</a></h4></div>
+        <div class="column"><h4><a href="{% url event_detail event.slug %}" title="{{ event.title }}">{{ event.title }}</a></h4></div>
         <div class="column">{% date_span event.begins event.ends %}</div>
         <div class="column">{% trans "in" %} {{ event.begins|timeuntil }}</div>
         <div class="column">{% if event.venue %}{{ event.venue }}{% else %}<div class="dashed"></div>{% endif %}</div>
@@ -78,7 +78,7 @@
   <div class="event block previous">
     {% for event in account.events.previous %}
       <div class="event row {% cycle 'even' 'odd' %}">
-        <div class="column"><h4><a href="{% url event_detail event.slug %}">{{ event.title }}</a></h4></div>
+        <div class="column"><h4><a href="{% url event_detail event.slug %}" title="{{ event.title }}>{{ event.title }}</a></h4></div>
         <div class="column">{% date_span event.begins event.ends %}</div>
         <div class="column">
           {% blocktrans count event.confirmed_attendees_count|default_if_none:"0" as attendee_count %}
