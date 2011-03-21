@@ -12,3 +12,4 @@ BeautifulSoup
 -e git://github.com/dcramer/django-sentry.git#egg=DjangoSentry
 reportlab
 xlwt
+-e git://github.com/nsb/django-object-permissions.git#egg=DjangoObjectPermissions

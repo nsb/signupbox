@@ -7,7 +7,8 @@ from django.utils.translation import ugettext, ugettext_lazy as _
 class EventForm(forms.ModelForm):
     begins = DateTimeField(required=True, widget=DateTimeWidget, label=_('Begins'))
     ends = DateTimeField(required=True, widget=DateTimeWidget, label=_('Ends'))
-    description = forms.CharField(widget=forms.Textarea(attrs={'class': 'mceEditor'}))
+    description = forms.CharField(
+        widget=forms.Textarea(attrs={'class': 'mceEditor'}), required=False)
 
     class Meta:
         model = Event
