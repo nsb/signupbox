@@ -103,7 +103,8 @@
         padding-right: 10px;
         text-overflow:ellipsis;
         overflow: hidden;
-        white-space: normal;
+        white-space: nowrap;
+        max-width: 400px;
       }
 
       &:first-child {
