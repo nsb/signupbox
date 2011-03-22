@@ -226,7 +226,7 @@ class EventManager(models.Manager):
         return self.filter(begins__gt=datetime.now())
 
     def previous(self):
-        return self.filter(begins__lt=datetime.now())
+        return self.filter(begins__lt=datetime.now()).order_by('-begins')
 
 class Event(models.Model):
     """
