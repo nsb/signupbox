@@ -1,6 +1,7 @@
 from django import forms
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import User
+from django.contrib.sites.models import Site
 
 from ..models import Account
 from widgets import AccountWidget
@@ -24,7 +25,7 @@ class RegistrationForm(forms.Form):
 
         """
         try:
-            account = Account.objects.get(name__iexact=self.cleaned_data['accountname'])
+            account = Account.objects.get(name__iexact=self.cleaned_data['accountname'], site=Site.objects.get_current())
         except Account.DoesNotExist:
             return self.cleaned_data['accountname']
         raise forms.ValidationError(_(u'This url is already taken. Please choose another.'))

@@ -45,7 +45,7 @@ class AccountManager(models.Manager):
             m = re.match('(?P<account_name>[\w]+)\.%s' % domain, host, re.IGNORECASE)
             if m:
                 try:
-                    account = self.get(name__iexact=m.group('account_name'))
+                    account = self.get(name__iexact=m.group('account_name'), site=Site.objects.get_current())
                 except Account.DoesNotExist:
                     pass
         return account
@@ -88,7 +88,7 @@ class Account(models.Model):
         blank=True,
         help_text=_("In addition to the permissions manually assigned, this account will also get all permissions granted to each group it is in.")
     )
-    site = models.ForeignKey(Site, blank=True)
+    site = models.ForeignKey(Site)
 
     objects = AccountManager()
 

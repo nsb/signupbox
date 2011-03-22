@@ -9,6 +9,7 @@ from django.template import RequestContext
 from django.core.urlresolvers import reverse
 from django.contrib.humanize.templatetags.humanize import naturalday
 from django.http import HttpResponse, HttpResponseForbidden
+from django.contrib.sites.models import Site
 
 import gviz_api
 
@@ -88,7 +89,7 @@ def signup(request):
         form = RegistrationForm(request.POST)
 
         if form.is_valid():
-            account = Account.objects.create(name=form.cleaned_data['accountname'])
+            account = Account.objects.create(name=form.cleaned_data['accountname'], site=Site.objects.get_current())
             user = User.objects.create_user(
                 form.cleaned_data['username'], form.cleaned_data['email'], form.cleaned_data['password']
             )
