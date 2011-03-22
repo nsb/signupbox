@@ -99,6 +99,10 @@
       overflow: hidden;
       white-space:nowrap;
 
+      &.venue {
+        max-width: 200px;
+      }
+
       h4 {
         padding-right: 10px;
         text-overflow:ellipsis;
