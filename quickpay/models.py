@@ -54,4 +54,4 @@ class QuickpayTransaction(models.Model):
         ))
         valid = md5_constructor(md_input).hexdigest() == self.md5check and self.qpstat == '000'
         if valid:
-            payment_was_successfull.send(self)
+            payment_was_successfull.send(sender=self, ordernumber=self.ordernumber)

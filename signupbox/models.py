@@ -586,8 +586,7 @@ def on_paypal_payment_success(sender, **kwargs):
     booking_confirmed.send(sender=ipn_obj, booking_id=booking.pk)
 payment_was_successful.connect(on_paypal_payment_success)
 
-def on_quickpay_payment_success(sender, **kwargs):
-    transaction = sender
-    booking = Booking.objects.get(ordernumber=transaction.ordernumber.lstrip('0'))
-    booking_confirmed.send(sender=transaction, booking_id=booking.id)
+def on_quickpay_payment_success(sender, ordernumber, **kwargs):
+    booking = Booking.objects.get(ordernumber=ordernumber.lstrip('0'))
+    booking_confirmed.send(sender=sender, booking_id=booking.id)
 quickpay_payment_was_successfull.connect(on_quickpay_payment_success)
