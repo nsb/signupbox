@@ -11,6 +11,7 @@ from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
 from django.contrib.auth import authenticate, login
 from django.http import HttpResponseForbidden
+from django.conf import settings
 
 from ..models import AccountInvite
 from ..forms import AccountForm, UserForm, ProfileForm, InviteForm, PermissionsForm, InviteAcceptForm
@@ -104,7 +105,7 @@ def account_members_add(request, account):
                     invited_by = request.user,
                 ) for email in form.cleaned_data['email_addresses']
             ]
-            account_send_invites.delay(new_invites, form.cleaned_data['message'])
+            account_send_invites.delay(new_invites, form.cleaned_data['message'], settings.LANGUAGE_CODE)
 
             messages.success(
                 request, 

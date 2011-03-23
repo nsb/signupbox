@@ -14,6 +14,7 @@ from django.contrib import messages
 from django.shortcuts import redirect
 from django.core.urlresolvers import reverse
 from django.template.loader import render_to_string
+from django.conf import settings
 
 from ..constants import *
 
@@ -85,12 +86,14 @@ class AttendeeActions(object):
             [a.email for a in attendees],
             subject,
             message,
+            settings.LANGUAGE_CODE
         )
         if receive_copy:
             async_send_mail.delay(
                 [request.user.email],
                 subject,
                 message,
+                settings.LANGUAGE_CODE
             )
 
         messages.success(request, ungettext('Email sent', 'Emails sent', attendees.count()))

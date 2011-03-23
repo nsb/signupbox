@@ -14,16 +14,22 @@ from activities.models import Activity
 from models import Booking, Attendee
 
 @task
-def async_send_mail(recipients, subject, message):
+def async_send_mail(recipients, subject, message, language_code):
+    """
+    Send mails asynchronyously
+    """
+
+    translation.activate(language_code)
+
     sender = 'noreply@%s' % Site.objects.get_current().domain
     send_mass_mail(((subject, message, sender, [recipient]) for recipient in recipients))
 
 @task
-def process_booking(booking):
+def process_booking(booking, language_code):
     """
     Send mails on booking confirmed
     """
-    translation.activate(settings.LANGUAGE_CODE)
+    translation.activate(language_code)
 
     send_mass_mail(
         ((render_to_string(
@@ -44,11 +50,11 @@ def process_booking(booking):
     )
 
 @task
-def account_send_invites(invites, message):
+def account_send_invites(invites, message, language_code):
     """
     Send out invites to new account members
     """
-    translation.activate(settings.LANGUAGE_CODE)
+    translation.activate(language_code)
 
     send_mass_mail([
         (render_to_string(

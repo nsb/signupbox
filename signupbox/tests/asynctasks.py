@@ -1,3 +1,4 @@
+from django.conf import settings
 from django import test
 from django.core import mail
 
@@ -10,7 +11,7 @@ class BackgroundJobsTestCase(test.TestCase):
         subject = 'my subject'
         message = 'my message'
 
-        async_send_mail(recipients, subject, message)
+        async_send_mail(recipients, subject, message, settings.LANGUAGE_CODE)
 
         self.assertEquals(len(mail.outbox), 2)
         self.assertEquals(mail.outbox[0].subject, 'my subject')

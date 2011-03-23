@@ -1,3 +1,5 @@
+from django.conf import settings
+
 from models import Booking
 
 from tasks import process_booking
@@ -10,6 +12,6 @@ def on_booking_confirmed(sender, booking_id, **kwargs):
     booking.confirmed = True
     booking.save()
 
-    process_booking.delay(booking)
+    process_booking.delay(booking, settings.LANGUAGE_CODE)
 
 booking_confirmed.connect(on_booking_confirmed)
