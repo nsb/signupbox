@@ -13,3 +13,4 @@ BeautifulSoup
 reportlab
 xlwt
 -e git://github.com/nsb/django-object-permissions.git#egg=DjangoObjectPermissions
+-e git://github.com/nsb/django-quickpay.git#egg=DjangoQuickpay
