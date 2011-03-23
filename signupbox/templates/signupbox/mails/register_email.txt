@@ -8,7 +8,7 @@
 {% trans "Place:" %} {{ event.venue }}, {{ event.address }}, {{ event.zip_code }} {{ event.city }}
 {% trans "Time and date:" %} {% date_span event.begins event.ends %}
 {% block booking_info %}{% endblock booking_info %}
-{{ extra_info }}
+{{ event.account.extra_info }}
 --
 {% with event.account as account %} 
 {{ account.organization }}
