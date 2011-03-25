@@ -4,7 +4,7 @@
     var fieldType = $(e.target).find("option:selected").val();
     if( fieldType === 'select' || fieldType === 'radiobutton') {
       if (!$('.options .option', this.elm).length) {
-        $('.options', this.elm).append($.tmpl($("#TemplateFieldsOptionAdd").html(), { "index" : this.index }));
+        $('.options', this.elm).append(_.template($("#TemplateFieldsOptionAdd").html())({ "index" : this.index }));
       }
     } else {
       $('.options', this.elm).empty();
@@ -12,8 +12,8 @@
   }
 
   function onAddOptionClicked(e) {
-    var markup = $.tmpl($("#TemplateFieldsOptionAdd").html(), { "index" : this.index });
-    $(e.target).parents('.option').after(markup);
+    var markup = _.template($("#TemplateFieldsOptionAdd").html());
+    $(e.target).parents('.option').after(markup({ "index" : this.index }));
     e.preventDefault();
   }
 

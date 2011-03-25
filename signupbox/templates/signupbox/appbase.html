@@ -56,6 +56,7 @@
 {% block javascript %}
   {{ block.super }}
   {% compress js %}
+    <script type="text/javascript" src="{{ MEDIA_URL }}js/underscore.js" ></script>
     <script type="text/javascript" src="{{ MEDIA_URL }}js/modal.js" ></script>
     <script type="text/javascript" src="{{ MEDIA_URL }}js/attendee_actions.js" ></script>
     <script type="text/javascript" src="{{ MEDIA_URL }}js/fields.js" ></script>
