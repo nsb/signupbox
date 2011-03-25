@@ -14,9 +14,15 @@
       $("#attendee_actions .attendees").find("select, input:submit").attr("disabled", "disabled");
   }
 
+  function onFilterFormShowChanged(e) {
+    $(e.target).parents('form').submit();
+    e.preventDefault();
+  }
+
   $(function() {
     $('#attendees-check-all').click(onToggleAllClicked);
     $('input:checkbox').click(onCheckboxClicked);
+    $('#attendee_actions .filter_form input[type=radio]').change(onFilterFormShowChanged);
   });
 
 })(jQuery, Signupbox);
