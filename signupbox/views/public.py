@@ -55,7 +55,7 @@ def event_confirm(request, slug, booking_id):
     account = Account.objects.by_request(request)
     event = get_object_or_404(Event, account=account, slug=slug)
     booking = get_object_or_404(Booking, event=event, id=booking_id, confirmed=False)
-    amount = sum((attendee.ticket.price * attendee.attendee_count for attendee in booking.attendees.all()))
+    amount = booking.amount
 
     if amount:
         if account.payment_gateway == 'quickpay':

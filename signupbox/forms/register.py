@@ -113,6 +113,8 @@ def attendeeformset_factory(event):
             for form in self.forms:
                 if form.is_valid() and form.cleaned_data:
                     form.save(booking)
+            booking.amount = sum((attendee.ticket.price * attendee.attendee_count for attendee in booking.attendees.all()))
+            booking.save()
             return booking
 
         def get_summary(self):
