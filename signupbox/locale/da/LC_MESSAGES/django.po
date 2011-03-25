@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-03-22 00:19+0100\n"
+"POT-Creation-Date: 2011-03-26 00:12+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -157,8 +157,9 @@ msgstr "Hvad"
 msgid "The event title"
 msgstr "Arrangementets navn"
 
-#: models.py:252 templates/signupbox/includes/export_pdf_booking.txt:6
-#: views/attendee_actions.py:137 views/attendee_actions.py:258
+#: models.py:252 forms/event.py:11
+#: templates/signupbox/includes/export_pdf_booking.txt:6
+#: views/attendee_actions.py:140 views/attendee_actions.py:261
 msgid "Description"
 msgstr "Beskrivelse"
 
@@ -190,7 +191,7 @@ msgstr "Blank for ubegrænset"
 msgid "Status"
 msgstr "Status"
 
-#: models.py:272 views/attendee_actions.py:135 views/attendee_actions.py:256
+#: models.py:272 views/attendee_actions.py:138 views/attendee_actions.py:259
 msgid "Currency"
 msgstr "Valuta"
 
@@ -272,7 +273,7 @@ msgstr "Navn"
 msgid "Organization"
 msgstr "Firma"
 
-#: models.py:558 views/attendee_actions.py:195
+#: models.py:558 views/attendee_actions.py:198
 msgid "Email"
 msgstr "Email"
 
@@ -354,11 +355,11 @@ msgstr "PDF"
 msgid "Excel"
 msgstr "Excel"
 
-#: forms/attendees.py:25 views/attendee_actions.py:232
+#: forms/attendees.py:25 views/attendee_actions.py:235
 msgid "Attendee data"
 msgstr "Deltager data"
 
-#: forms/attendees.py:26 views/attendee_actions.py:245
+#: forms/attendees.py:26 views/attendee_actions.py:248
 msgid "Booking data"
 msgstr "Tilmeldings data"
 
@@ -402,33 +403,33 @@ msgstr "Billet"
 msgid "Number of attendees"
 msgstr "Antal deltagere"
 
-#: forms/registration.py:14
+#: forms/registration.py:15
 msgid "URL"
 msgstr "URL"
 
-#: forms/registration.py:16
+#: forms/registration.py:17
 msgid "email address"
 msgstr "email adresse"
 
-#: forms/registration.py:17
+#: forms/registration.py:18
 msgid "password"
 msgstr "kodeord"
 
-#: forms/registration.py:18
+#: forms/registration.py:19
 msgid "password (again)"
 msgstr "kodeord (igen)"
 
-#: forms/registration.py:30
+#: forms/registration.py:31
 msgid "This url is already taken. Please choose another."
 msgstr "Denne url er taget. Vælg venligst en anden."
 
-#: forms/registration.py:39
+#: forms/registration.py:40
 msgid ""
 "This email address is already in use. Please supply a different email "
 "address."
 msgstr "Denne email adresse er taget. Vælg venligst en anden email adresse."
 
-#: forms/registration.py:53
+#: forms/registration.py:54
 msgid "You must type the same password each time"
 msgstr "Du skal skrive det samme kodeord"
 
@@ -510,8 +511,8 @@ msgstr "Send"
 msgid "Export attendee data"
 msgstr "Eksporter deltager data"
 
-#: templates/signupbox/booking_detail.html:8 views/attendee_actions.py:130
-#: views/attendee_actions.py:250
+#: templates/signupbox/booking_detail.html:8 views/attendee_actions.py:133
+#: views/attendee_actions.py:253
 msgid "Booking"
 msgstr "Tilmelding"
 
@@ -793,7 +794,7 @@ msgstr "Rediger billet"
 #: templates/signupbox/index.html:7
 #, python-format
 msgid "%(name)s's events"
-msgstr "%(name)s's arrangement"
+msgstr "%(name)s's arrangementer"
 
 #: templates/signupbox/index.html:13
 #, python-format
@@ -957,27 +958,27 @@ msgid "Signup"
 msgstr "Opret"
 
 #: templates/signupbox/includes/export_pdf_booking.txt:5
-#: views/attendee_actions.py:133 views/attendee_actions.py:254
+#: views/attendee_actions.py:136 views/attendee_actions.py:257
 msgid "Transaction"
 msgstr "Transaktion"
 
 #: templates/signupbox/includes/export_pdf_booking.txt:7
-#: views/attendee_actions.py:132 views/attendee_actions.py:253
+#: views/attendee_actions.py:135 views/attendee_actions.py:256
 msgid "Ordernumber"
 msgstr "Ordrenummer"
 
 #: templates/signupbox/includes/export_pdf_booking.txt:8
-#: views/attendee_actions.py:134 views/attendee_actions.py:255
+#: views/attendee_actions.py:137 views/attendee_actions.py:258
 msgid "Amount"
 msgstr "Beløb"
 
 #: templates/signupbox/includes/export_pdf_booking.txt:9
-#: views/attendee_actions.py:136 views/attendee_actions.py:257
+#: views/attendee_actions.py:139 views/attendee_actions.py:260
 msgid "Cardtype"
 msgstr "Korttype"
 
 #: templates/signupbox/includes/export_pdf_booking.txt:10
-#: views/attendee_actions.py:138 views/attendee_actions.py:259
+#: views/attendee_actions.py:141 views/attendee_actions.py:262
 msgid "Notes"
 msgstr "Noter"
 
@@ -1082,69 +1083,69 @@ msgstr "Din tilmelding til %(title)s."
 msgid "%(date)s at %(time)s"
 msgstr "%(date)s kl. %(time)s"
 
-#: views/account.py:31
+#: views/account.py:32
 msgid "Settings updated."
 msgstr "Indstillinger opdateret."
 
-#: views/account.py:54
+#: views/account.py:55
 msgid "Profile updated."
 msgstr "Profil opdateret."
 
-#: views/account.py:111
+#: views/account.py:112
 msgid "Invitation sent."
 msgid_plural "Invitations sent."
 msgstr[0] "Invitation sendt."
 msgstr[1] "Invitationer sendt."
 
-#: views/account.py:132
+#: views/account.py:133
 msgid "User removed."
 msgstr "Bruger fjernet"
 
-#: views/account.py:150
+#: views/account.py:151
 msgid "Permissions updated."
 msgstr "Rettigheder opdateret."
 
-#: views/account.py:175
+#: views/account.py:176
 #, python-format
 msgid "Welcome to your %s account."
 msgstr "Velkommen til din %s konto."
 
-#: views/account.py:198
+#: views/account.py:199
 msgid "Invitation canceled."
 msgstr "Invitation fjernet."
 
-#: views/attendee_actions.py:43
+#: views/attendee_actions.py:44
 #, python-format
 msgid "Page %(page_num)d of %(page_count)d"
 msgstr "Side %(page_num)d af %(page_count)d"
 
-#: views/attendee_actions.py:73
+#: views/attendee_actions.py:74
 msgid "Attendee status updated."
 msgstr "Deltager status opdateret."
 
-#: views/attendee_actions.py:96
+#: views/attendee_actions.py:99
 msgid "Email sent"
 msgid_plural "Emails sent"
 msgstr[0] "Email sendt"
 msgstr[1] "Emails sendt"
 
-#: views/attendee_actions.py:131 views/attendee_actions.py:252
+#: views/attendee_actions.py:134 views/attendee_actions.py:255
 msgid "Date and time"
 msgstr "Dato og tid"
 
-#: views/attendee_actions.py:236
+#: views/attendee_actions.py:239
 msgid "Attendee count"
 msgstr "Deltager antal"
 
-#: views/attendees.py:106
+#: views/attendees.py:108
 msgid "Attendee updated."
 msgstr "Deltager opdateret."
 
-#: views/attendees.py:136
+#: views/attendees.py:138
 msgid "Attendee added."
 msgstr "Deltager tilføjet."
 
-#: views/attendees.py:160
+#: views/attendees.py:162
 msgid "Booking updated."
 msgstr "Tilmelding opdateret."
 
