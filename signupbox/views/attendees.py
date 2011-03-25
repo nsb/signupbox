@@ -20,7 +20,8 @@ class AttendeesActionWizard(FormWizard):
 
         account = Account.objects.by_request(request)
         self.event = get_object_or_404(Event, account=account, slug=slug)
-        self.qs = Attendee.objects.filter(booking__event=self.event, booking__confirmed=True).order_by('display_value')
+        self.qs = Attendee.objects.filter(
+            booking__event=self.event, booking__confirmed=True).order_by('display_value')
 
         query = request.GET.copy()
         if not 'show' in query:
@@ -76,7 +77,8 @@ class AttendeesActionWizard(FormWizard):
         if self.action == 'email' or self.action == 'export':
             extra_args.update(form_list[1].cleaned_data)
 
-        return AttendeeActions().dispatch(request, self.attendees, self.action, self.event, **extra_args)
+        return AttendeeActions().dispatch(
+            request, self.attendees, self.action, self.event, **extra_args)
 
 @login_required
 @with_account
