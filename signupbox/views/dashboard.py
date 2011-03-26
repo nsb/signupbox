@@ -10,7 +10,6 @@ from django.core.urlresolvers import reverse
 from django.contrib.humanize.templatetags.humanize import naturalday
 from django.http import HttpResponse, HttpResponseForbidden
 from django.contrib.sites.models import Site
-from django.core.cache import cache
 
 import gviz_api
 
@@ -51,31 +50,25 @@ def event_gviz(request, account):
 
     since = date.today() - timedelta(days=6)
 
-    events = account.events.filter(
-        bookings__in=Booking.objects.filter(
-            timestamp__gt=datetime.combine(since, time.min))).distinct()
+    events = Event.objects.filter(
+        account=account,
+        bookings__in=Booking.objects.filter(timestamp__gt=datetime.combine(since, time.min))
+    ).distinct()
 
     rows = []
-    cache_keys = []
-    cached = {}
     for d in dateIterator(from_date=since):
         for event in events:
-            cache_keys.append(((d, event.pk)))
  
-    cached = cache.get_many(cache_keys)
-    if not cached:
-        for d in dateIterator(from_date=since):
-            for event in events:
-                num = Attendee.objects.filter(booking__timestamp__range=(
-                    datetime.combine(d, time.min), datetime.combine(d, time.max)), booking__event=event, 
-                        booking__confirmed=True).aggregate(Sum('attendee_count'))['attendee_count__sum']
-                cached[(d, event.pk)] = num
-        cache.set_many(cached)
- 
-    rows = ({'date': d, 'id': id, 'attendees': cached.get((d, id))} for d, id in cached)
+            num = Attendee.objects.filter(
+                booking__timestamp__range=(datetime.combine(d, time.min), datetime.combine(d, time.max)),
+                booking__event=event, booking__confirmed=True,
+            ).aggregate(Sum('attendee_count'))['attendee_count__sum']
 
-    description = {('date', 'date', 'Date') : [
-        (str(event.id), 'number', event.title) for event in events]}
+            rows.append({'date': d, 'id': event.id, 'attendees': num})
+
+    description = {
+        ('date', 'date', 'Date') : [(str(event.id), 'number', event.title) for event in events]
+    }
 
     data = {}
     for index, row in enumerate(rows):
