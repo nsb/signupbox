@@ -69,7 +69,7 @@ def event_gviz(request, account):
                 num = Attendee.objects.filter(booking__timestamp__range=(
                     datetime.combine(d, time.min), datetime.combine(d, time.max)), booking__event=event, 
                         booking__confirmed=True).aggregate(Sum('attendee_count'))['attendee_count__sum']
-            cached[(d, event.pk)] = num
+                cached[(d, event.pk)] = num
         cache.set_many(cached)
  
     rows = ({'date': d, 'id': id, 'attendees': cached.get((d, id))} for d, id in cached)
