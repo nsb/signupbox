@@ -32,11 +32,9 @@ def attendeeform_factory(event, is_extra, instance=None):
 
         fields = dict((field.name, field) for field in fields_qs)
 
-        attendee = instance or Attendee.objects.create(
-            booking=booking,
+        attendee = instance or Attendee.objects.create(booking=booking,
             ticket=self.cleaned_data['ticket'] if event.has_extra_forms and ticket_qs.count() > 1 else ticket_qs.all()[0],
-            attendee_count = self.cleaned_data['attendee_count'] if not event.has_extra_forms else 1
-        )
+                attendee_count = self.cleaned_data['attendee_count'] if not event.has_extra_forms else 1)
 
         for field in fields:
             fv, created = FieldValue.objects.get_or_create(attendee=attendee, field=fields[field])
@@ -67,19 +65,13 @@ def attendeeform_factory(event, is_extra, instance=None):
         fields['ticket'] = forms.ModelChoiceField(queryset=ticket_qs, empty_label=None, label=_('Ticket'))
 
     if not event.has_extra_forms:
-        fields['attendee_count'] = \
-            forms.TypedChoiceField(
-                choices=[
-                    (val, val) for val in range(
-                        1, min(
-                            event.capacity - event.confirmed_attendees_count + 1 + (instance.attendee_count if instance else 0),
-                            51
-                        ) if event.capacity else 51
-                    )
-                ],
-                label=_('Number of attendees'),
-                coerce=lambda x: int(x),
-            )
+
+        max_available = min(event.capacity - event.confirmed_attendees_count + 1 + (
+            instance.attendee_count if instance else 0), 51) if event.capacity else 51
+
+        fields['attendee_count'] = forms.TypedChoiceField(
+            choices=[(val, val) for val in range(1, max_available)],
+                label=_('Number of attendees'), coerce=lambda x: int(x))
 
     return type('AttendeeForm', (forms.Form,), fields)
 
@@ -127,9 +119,12 @@ def registerform_factory(event, extra=1):
     """
     Attendee formset for event
     """
+
+    max_available = min(event.capacity - event.confirmed_attendees_count, 50) if event.capacity else 50
+
     # late binding of is_extra, provided by formsets _construct_form
     attendee_form = lambda formset_instance, is_extra: attendeeform_factory(event, is_extra)
-    return formset_factory(attendee_form, formset=attendeeformset_factory(event), extra=extra)
+    return formset_factory(attendee_form, formset=attendeeformset_factory(event), extra=extra, max_num=max_available)
 
 def emptyregisterform_factory(event, is_extra=False):
     """
