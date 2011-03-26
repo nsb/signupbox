@@ -380,8 +380,8 @@ class Booking(models.Model):
         elif count == 1:
             attendee_names = ''.join(attendees)
         else:
-            attendee_names = ugettext('%(attendee1)s and %(attendee2)s' % {
-                  'attendee1': ', '.join(attendees[:-1]), 'attendee2': attendees[-1]})
+            attendee_names = ugettext('%(attendee1)s and %(attendee2)s') % {
+                'attendee1': ', '.join(attendees[:-1]), 'attendee2': attendees[-1]}
 
         return ugettext('%(name)s registered for %(event)s.') % {
             'name': attendee_names, 'event': self.event.title} 
