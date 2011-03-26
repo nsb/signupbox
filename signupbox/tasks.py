@@ -52,10 +52,8 @@ def process_booking(booking, language_code):
     except SMTPException, exc:
         process_booking.retry(exc=exc)
 
-    Activity.objects.create(
-        content_object = booking.event,
-        activity = booking.activity,
-    )
+    Activity.objects.create(content_object = booking.event,
+        activity = booking.activity)
 
 @task
 def account_send_invites(invites, message, language_code):

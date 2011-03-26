@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-03-26 00:12+0100\n"
+"POT-Creation-Date: 2011-03-26 02:46+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -33,23 +33,23 @@ msgstr "Konto navn"
 msgid "Company"
 msgstr "Firma"
 
-#: models.py:60 models.py:559
+#: models.py:60 models.py:560
 msgid "Street"
 msgstr "Gade"
 
-#: models.py:61 models.py:560
+#: models.py:61 models.py:561
 msgid "Zip code"
 msgstr "Post nummer"
 
-#: models.py:62 models.py:561
+#: models.py:62 models.py:562
 msgid "City"
 msgstr "By"
 
-#: models.py:63 models.py:562
+#: models.py:63 models.py:563
 msgid "Country"
 msgstr "Land"
 
-#: models.py:64 models.py:563
+#: models.py:64 models.py:564
 msgid "Phone number"
 msgstr "Telefon nummer"
 
@@ -200,84 +200,84 @@ msgstr "Valuta"
 msgid "%(attendee1)s and %(attendee2)s"
 msgstr "%(attendee1)s og %(attendee2)s"
 
-#: models.py:384
+#: models.py:386
 #, python-format
-msgid " registered for %s."
-msgstr " tilmeldt til %s"
+msgid "%(name)s registered for %(event)s."
+msgstr "%(name)s tilmeldte sig %(event)s"
 
-#: models.py:407
+#: models.py:408
 msgid "text"
 msgstr "tekst"
 
-#: models.py:408
+#: models.py:409
 msgid "multiline text"
 msgstr "multilinie tekst"
 
-#: models.py:409
+#: models.py:410
 msgid "checkbox"
 msgstr "tjekboks"
 
-#: models.py:410
+#: models.py:411
 msgid "email"
 msgstr "email"
 
-#: models.py:411
+#: models.py:412
 msgid "select options"
 msgstr "dropdown"
 
-#: models.py:412
+#: models.py:413
 msgid "radio buttons"
 msgstr "radio knapper"
 
-#: models.py:413
+#: models.py:414
 msgid "phone"
 msgstr "telefon"
 
-#: models.py:420
+#: models.py:421
 msgid "Label"
 msgstr "Betegnelse"
 
-#: models.py:421
+#: models.py:422
 msgid "Help text"
 msgstr "Hjælpetekst"
 
-#: models.py:422
+#: models.py:423
 msgid "Type"
 msgstr "Type"
 
-#: models.py:423
+#: models.py:424
 msgid "Required"
 msgstr "Påkrævet"
 
-#: models.py:424
+#: models.py:425
 msgid "In extra forms"
 msgstr "I ekstra formularer"
 
-#: models.py:491 forms/attendees.py:65
+#: models.py:492 forms/attendees.py:65
 msgid "Confirmed"
 msgstr "Bekræftet"
 
-#: models.py:492
+#: models.py:493
 msgid "Unconfirmed"
 msgstr "Ubekræftet"
 
-#: models.py:493 forms/attendees.py:65
+#: models.py:494 forms/attendees.py:65
 msgid "Cancelled"
 msgstr "Afmeldt"
 
-#: models.py:556
+#: models.py:557
 msgid "Name"
 msgstr "Navn"
 
-#: models.py:557
+#: models.py:558
 msgid "Organization"
 msgstr "Firma"
 
-#: models.py:558 views/attendee_actions.py:198
+#: models.py:559 views/attendee_actions.py:198
 msgid "Email"
 msgstr "Email"
 
-#: models.py:574
+#: models.py:575
 msgid "Default ticket"
 msgstr "Standard billet"
 
@@ -395,11 +395,11 @@ msgstr "Alle"
 msgid "Begin date must be before end date"
 msgstr "Start dato skal være tidligere end slut dato"
 
-#: forms/register.py:67
+#: forms/register.py:65
 msgid "Ticket"
 msgstr "Billet"
 
-#: forms/register.py:80
+#: forms/register.py:74
 msgid "Number of attendees"
 msgstr "Antal deltagere"
 
