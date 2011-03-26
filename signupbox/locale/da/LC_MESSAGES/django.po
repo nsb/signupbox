@@ -203,7 +203,7 @@ msgstr "%(attendee1)s og %(attendee2)s"
 #: models.py:386
 #, python-format
 msgid "%(name)s registered for %(event)s."
-msgstr "%(name)s tilmeldte sig %(event)s"
+msgstr "%(name)s tilmeldte sig %(event)s."
 
 #: models.py:408
 msgid "text"
