@@ -45,7 +45,8 @@ class AccountManager(models.Manager):
             m = re.match('(?P<account_name>[\w]+)\.%s' % domain, host, re.IGNORECASE)
             if m:
                 try:
-                    account = self.get(name__iexact=m.group('account_name'), site=Site.objects.get_current())
+                    account = self.get(name__iexact=m.group('account_name'),
+                        site=Site.objects.get_current())
                 except Account.DoesNotExist:
                     pass
         return account
@@ -64,30 +65,23 @@ class Account(models.Model):
     phone = models.CharField(max_length=32, verbose_name=_('Phone number'), blank=True)
     email = models.EmailField(verbose_name=_('Email address'), blank=True)
     cvr = models.CharField(max_length=32, verbose_name=_('CVR number'), blank=True)
-    payment_gateway = models.CharField(
-        max_length=255, blank=True, verbose_name=_('Payment gateway'), choices=PAYMENT_GATEWAY_CHOICES
-    )
+    payment_gateway = models.CharField(max_length=255, blank=True,
+        verbose_name=_('Payment gateway'), choices=PAYMENT_GATEWAY_CHOICES)
     merchant_id = models.CharField(max_length=255, verbose_name=_("PBS number"), blank=True)
     secret_key = models.CharField(max_length=255, verbose_name=_('Secret key'), blank=True)
     paypal_business = models.CharField(max_length=255, blank=True)
-    autocapture = models.BooleanField(
-        verbose_name=_('Auto capture'), blank=True, help_text=_('Automatically capture payments'), default=False,
-    )
+    autocapture = models.BooleanField(verbose_name=_('Auto capture'),
+        blank=True, help_text=_('Automatically capture payments'), default=False)
     domain = models.URLField(blank=True, verbose_name=_('Domain')) 
-    extra_info = models.TextField(
-        verbose_name=_('Extra info'), blank=True, help_text=_('Extra info to be included in the registration email.')
-    )
+    extra_info = models.TextField(verbose_name=_('Extra info'), blank=True,
+        help_text=_('Extra info to be included in the registration email.'))
     terms = models.TextField(verbose_name=_('Terms and conditions'), blank=True)
-    google_analytics = models.CharField(
-        max_length=100, verbose_name=_('Google analytics'), blank=True, help_text=_('Enter your Google analytics tracker code to enable tracking.')
-    )
+    google_analytics = models.CharField(max_length=100, verbose_name=_('Google analytics'),
+        blank=True, help_text=_('Enter your Google analytics tracker code to enable tracking.'))
     users = models.ManyToManyField(User, related_name='accounts', verbose_name=_('Users'),)
-    groups = models.ManyToManyField(
-        Group,
-        related_name='groups',
-        blank=True,
-        help_text=_("In addition to the permissions manually assigned, this account will also get all permissions granted to each group it is in.")
-    )
+    groups = models.ManyToManyField(Group, related_name='groups', blank=True,
+        help_text=_("""In addition to the permissions manually assigned, 
+            this account will also get all permissions granted to each group it is in."""))
     site = models.ForeignKey(Site)
 
     objects = AccountManager()
@@ -97,7 +91,8 @@ class Account(models.Model):
 
     @property
     def activities(self):
-        return Activity.objects.filter(object_id__in=self.events.values_list('id', flat=True))
+        return Activity.objects.filter(
+            object_id__in=self.events.values_list('id', flat=True))
 
     @property
     def activities_short_list(self, count=6):
@@ -108,11 +103,8 @@ class Account(models.Model):
         return self.organization or self.name
 
     def set_perms(self, user, view=None, change=None, delete=None):
-        perm, created = ObjectPermission.objects.get_or_create(
-            user=user,
-            object_id=self.pk,
-            content_type=ContentType.objects.get_for_model(self)
-        )
+        perm, created = ObjectPermission.objects.get_or_create(user=user,
+            object_id=self.pk, content_type=ContentType.objects.get_for_model(self))
         if view is not None:
             perm.can_view = view
         if change is not None:
@@ -134,7 +126,8 @@ class Account(models.Model):
             return urlparse(self.domain).netloc.rstrip('/')
         else:
             p_host = request.get_host().partition(':') if request else ('', '', '')
-            return u'%s.%s%s%s' % (self.name.lower(), Site.objects.get_current(), p_host[1], p_host[2])
+            return u'%s.%s%s%s' % (self.name.lower(),
+                Site.objects.get_current(), p_host[1], p_host[2])
 
     def save(self, *args, **kwargs):
 
@@ -250,26 +243,19 @@ class Event(models.Model):
     account = models.ForeignKey(Account, related_name='events')
 
     description = models.TextField(blank=True, verbose_name=_('Description'))
-    venue = models.CharField(max_length=1024, verbose_name=_('Where'), blank=True, help_text=_('The event venue'),)
+    venue = models.CharField(max_length=1024,
+        verbose_name=_('Where'), blank=True, help_text=_('The event venue'),)
 
     # date and time fields
     begins = models.DateTimeField(verbose_name=_('Begins'))
     ends = models.DateTimeField(verbose_name=_('Ends'))
 
-    capacity = models.IntegerField(
-        blank=True,
-        null=True,
-        verbose_name=_('Capacity'),
-        help_text=_('Leave blank for unlimited.')
-    )
-    status = models.CharField(
-        max_length=32,
-        verbose_name=_('Status'),
-        choices=EVENT_STATUS_CHOICES,
-        default='open',
-        db_index=True
-    )
-    currency = models.CharField(max_length=3, choices=CURRENCY_CHOICES, blank=True, default='DKK', verbose_name=_('Currency'))
+    capacity = models.IntegerField(blank=True, null=True,
+        verbose_name=_('Capacity'), help_text=_('Leave blank for unlimited.'))
+    status = models.CharField(max_length=32, verbose_name=_('Status'),
+        choices=EVENT_STATUS_CHOICES, default='open', db_index=True)
+    currency = models.CharField(max_length=3, choices=CURRENCY_CHOICES,
+        blank=True, default='DKK', verbose_name=_('Currency'))
 
     activities = generic.GenericRelation(Activity)
 
@@ -292,7 +278,8 @@ class Event(models.Model):
 
     @property
     def confirmed_attendees_count(self):
-        return self.confirmed_attendees.aggregate(Sum('attendee_count'))['attendee_count__sum'] or 0
+        return self.confirmed_attendees.aggregate(
+            Sum('attendee_count'))['attendee_count__sum'] or 0
 
     @property
     def website(self):
@@ -347,12 +334,8 @@ class Ticket(models.Model):
 
 class BookingManager(models.Manager):
     def today(self):
-        return self.filter(
-            timestamp__range=(
-                datetime.combine(date.today(), time.min),
-                datetime.combine(date.today(), time.max)
-            )
-        )
+        return self.filter(timestamp__range=(datetime.combine(
+            date.today(), time.min), datetime.combine(date.today(), time.max)))
 
 class Booking(models.Model):
     event = models.ForeignKey(Event, related_name='bookings')
@@ -361,10 +344,7 @@ class Booking(models.Model):
     description = models.CharField(max_length=1024, blank=True)
     transaction = models.CharField(max_length=255, blank=True)
     cardtype = models.CharField(max_length=255, blank=True)
-    amount = models.DecimalField(
-        max_digits=7,
-        decimal_places=2,
-        default=0)
+    amount = models.DecimalField(max_digits=7, decimal_places=2, default=0)
     currency = models.CharField(max_length=3, blank=True)
     confirmed = models.BooleanField(default=False)
     ordernumber = models.CharField(max_length=20)
@@ -420,7 +400,8 @@ class Field(models.Model):
     event = models.ForeignKey(Event, related_name='fields', null=True)
     label = models.CharField(max_length=255, verbose_name=_('Label'))
     help_text = models.CharField(max_length=255, blank=True, verbose_name=_('Help text'))
-    type = models.CharField(max_length=255, choices=FIELD_TYPE_CHOICES, verbose_name=_('Type'), default=TEXT_FIELD)
+    type = models.CharField(max_length=255,
+        choices=FIELD_TYPE_CHOICES, verbose_name=_('Type'), default=TEXT_FIELD)
     required = models.BooleanField(default=False, verbose_name=_('Required'))
     in_extra = models.BooleanField(default=False, verbose_name=_('In extra forms'))
     ordering = models.IntegerField()
@@ -435,7 +416,8 @@ class Field(models.Model):
             self.name = uuid.uuid4()
 
         if not self.ordering:
-            self.ordering = (Field.objects.filter(event=self.event).aggregate(Max('ordering'))['ordering__max'] or 0) + 1
+            self.ordering = (Field.objects.filter(
+                event=self.event).aggregate(Max('ordering'))['ordering__max'] or 0) + 1
 
         super(Field, self).save(*args, **kwargs)
 
@@ -498,11 +480,8 @@ class Attendee(models.Model):
     account = models.ForeignKey(Account, related_name='attendees')
     booking = models.ForeignKey(Booking, related_name='attendees')
     ticket = models.ForeignKey(Ticket, related_name='attendees')
-    status = models.CharField(
-        max_length=32,
-        choices=ATTENDEE_STATUS_CHOICES,
-        default=ATTENDEE_CONFIRMED,
-    )
+    status = models.CharField(max_length=32,
+        choices=ATTENDEE_STATUS_CHOICES, default=ATTENDEE_CONFIRMED)
     fields = models.ManyToManyField(Field, through="FieldValue")
     attendee_count = models.PositiveIntegerField(default=1)
 
