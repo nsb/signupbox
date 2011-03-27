@@ -292,7 +292,7 @@ class Event(models.Model):
 
     @property
     def confirmed_attendees_count(self):
-        return self.confirmed_attendees.aggregate(Sum('attendee_count'))['attendee_count__sum']
+        return self.confirmed_attendees.aggregate(Sum('attendee_count'))['attendee_count__sum'] or 0
 
     @property
     def website(self):
