@@ -33,8 +33,11 @@ def attendeeform_factory(event, is_extra, instance=None):
         fields = dict((field.name, field) for field in fields_qs)
 
         attendee = instance or Attendee.objects.create(booking=booking,
-            ticket=self.cleaned_data['ticket'] if event.has_extra_forms and ticket_qs.count() > 1 else ticket_qs.all()[0],
-                attendee_count = self.cleaned_data['attendee_count'] if not event.has_extra_forms else 1)
+            ticket=self.cleaned_data['ticket'] if event.has_extra_forms and ticket_qs.count() > 1 else ticket_qs.all()[0])
+
+        if self.cleaned_data.get('attendee_count', False) and not event.has_extra_forms:
+            attendee.attendee_count = self.cleaned_data.get('attendee_count', 1)
+            attendee.save()
 
         for field in fields:
             fv, created = FieldValue.objects.get_or_create(attendee=attendee, field=fields[field])
@@ -70,8 +73,8 @@ def attendeeform_factory(event, is_extra, instance=None):
             instance.attendee_count if instance else 0), 51) if event.capacity else 51
 
         fields['attendee_count'] = forms.TypedChoiceField(
-            choices=[(val, val) for val in range(1, max_available)],
-                label=_('Number of attendees'), coerce=lambda x: int(x))
+            choices=[(val, val) for val in range(1, max_available)], label=_('Number of attendees'),
+                coerce=lambda x: int(x), initial=instance.attendee_count if instance else 1)
 
     return type('AttendeeForm', (forms.Form,), fields)
 
