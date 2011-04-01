@@ -264,7 +264,7 @@ class Event(models.Model):
     @property
     def is_open(self):
         return self.status == EVENT_STATUS_OPEN and \
-            self.confirmed_attendees_count < self.capacity if self.capacity else True and \
+            (self.confirmed_attendees_count < self.capacity if self.capacity else True) and \
                 self.begins > datetime.now() and self.tickets.exclude(
                     offered_from__gt=date.today()).exclude(offered_to__lt=date.today()).exists()
 
