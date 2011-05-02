@@ -107,10 +107,7 @@ def account_members_add(request, account):
                 ) for email in form.cleaned_data['email_addresses']
             ]
             account_send_invites.delay(new_invites, smart_str(form.cleaned_data['message']), settings.LANGUAGE_CODE)
-            messages.success(
-                request, 
-                ungettext('Invitation sent.', 'Invitations sent.', len(new_invites))
-            )
+            messages.success(request, ungettext('Invitation sent.', 'Invitations sent.', len(new_invites)))
             return redirect(reverse('account_members'))
     else:
         form = InviteForm()
