@@ -292,6 +292,7 @@ class AccountTestCase(BaseTestCase):
             },
         )
         self.failUnlessEqual(response.status_code, 302)
+        self.assertEquals(len(mail.outbox), 1)
 
         # get the invitation key from mail
         m = re.search('accounts/invitation/(?P<key>[-\w]{40})/', mail.outbox[0].body)
