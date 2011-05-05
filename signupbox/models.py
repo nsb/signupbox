@@ -568,5 +568,5 @@ payment_was_successful.connect(on_paypal_payment_success)
 
 def on_quickpay_payment_success(sender, ordernumber, **kwargs):
     booking = Booking.objects.get(ordernumber=ordernumber.lstrip('0'))
-    booking_confirmed.send(sender=sender, booking_id=booking.id)
+    booking_confirmed.send(sender=sender, booking_id=booking.id, cardtype=sender.cardtype)
 quickpay_payment_was_successfull.connect(on_quickpay_payment_success)

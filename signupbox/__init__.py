@@ -10,6 +10,7 @@ def on_booking_confirmed(sender, booking_id, **kwargs):
 
     booking = Booking.objects.get(pk=booking_id)
     booking.confirmed = True
+    booking.cardtype = kwargs.get("cardtype", "")
     booking.save()
 
     process_booking.delay(booking, settings.LANGUAGE_CODE)
