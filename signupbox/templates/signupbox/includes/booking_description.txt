@@ -1,0 +1,1 @@
+{% regroup booking.attendees.all by ticket as ticket_list %}{% for ticket in ticket_list %}{{ ticket.list|length }} x {{ ticket.grouper }}{% if not forloop.last %}, {% endif %}{% endfor %}.

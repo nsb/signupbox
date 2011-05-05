@@ -4,6 +4,7 @@
 {% blocktrans with event.title as title %}Thank you for your recent booking for {{ title }}.{% endblocktrans %}
 {% endblock intro %}
 {% block booking_info %}
+{% include "signupbox/includes/booking_description.txt" %}
 {% blocktrans with booking.amount|floatformat:"-2" as amount and event.get_currency_display as currency %}Price: {{ amount }} {{ currency }}{% endblocktrans %}
 {% if booking.transaction %}
 {% blocktrans with booking.transaction as transaction %}Transaction no.: {{ transaction }}{% endblocktrans %}
