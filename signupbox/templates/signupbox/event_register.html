@@ -8,11 +8,14 @@
   <h1>{% blocktrans with event.title as title %}registration for {{ title }}{% endblocktrans %}</h1>
 
   {% block register_form %}
+  {% if formset.non_form_errors %}
   <ul>
   {% for error in formset.non_form_errors %}
     <li>{{ error }}</li>
   {% endfor %}
   </ul>
+  {% endif %}
+
   <form action="{% url event_register event.slug %}" method="post">
   {% csrf_token %}
   {{ formset.management_form }}

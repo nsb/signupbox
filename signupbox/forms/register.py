@@ -1,7 +1,7 @@
 from django import forms
 from django.utils.functional import curry
 from django.forms.formsets import BaseFormSet, formset_factory
-from django.utils.translation import ugettext, ugettext_lazy as _
+from django.utils.translation import ugettext, ungettext, ugettext_lazy as _
 
 from ..constants import *
 from ..models import Field, FieldValue, Ticket, Booking, Attendee
@@ -117,12 +117,14 @@ def attendeeformset_factory(event):
 
             for pk in ticket_map:
                 ticket = Ticket.objects.get(pk=pk)
-                if (ticket.available or 0) < (ticket.confirmed_attendee_count + ticket_map[pk]):
-                    raise forms.ValidationError(_('There are only %(available)d %(ticket_name)s left. Please adjust your ticket choices.') % {
-                        'available': ticket.available - ticket.confirmed_attendee_count,
+                if ticket.available and ticket.available < (ticket.confirmed_attendee_count + ticket_map[pk]):
+                    count = ticket.available - ticket.confirmed_attendee_count
+                    raise forms.ValidationError(ungettext(
+                        'There is only %(available)d %(ticket_name)s left. Please adjust your ticket choices.',
+                        'There are only %(available)d %(ticket_name)s left. Please adjust your ticket choices.', count) % {
+                        'available': count,
                         'ticket_name': ticket
                     })
-
 
         def save(self):
             booking = Booking.objects.create(event=event)

@@ -338,7 +338,7 @@ class Ticket(models.Model):
 
     @property
     def confirmed_attendees(self):
-        return self.attendees.filter(status=ATTENDEE_CONFIRMED)
+        return self.attendees.filter(status=ATTENDEE_CONFIRMED, booking__confirmed=True)
 
     @property
     def confirmed_attendee_count(self):
