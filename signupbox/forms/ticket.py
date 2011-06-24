@@ -6,4 +6,4 @@ class TicketForm(forms.ModelForm):
 
     class Meta:
         model = Ticket
-        fields = ('name', 'offered_from', 'offered_to', 'price',)
+        fields = ('name', 'offered_from', 'offered_to', 'available', 'price',)

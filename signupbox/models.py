@@ -293,6 +293,12 @@ class Event(models.Model):
     def terms_url(self):
         return reverse('event_terms', kwargs={'slug':self.slug})
 
+    @property
+    def tickets_available(self):
+
+        tickets = [ticket.pk for ticket in self.tickets.all() if not ticket.available or ticket.confirmed_attendee_count < ticket.available]
+        return Ticket.objects.filter(pk__in=tickets)
+
     def save(self, *args, **kwargs):
 
         # auto create slug
@@ -328,6 +334,15 @@ class Ticket(models.Model):
     offered_from = models.DateField(blank=True, null=True)
     offered_to = models.DateField(blank=True, null=True)
     price = models.DecimalField(max_digits=7, decimal_places=2, default=0)
+    available = models.PositiveIntegerField(null=True, blank=True, verbose_name=_('Available'), help_text=_('Number of available tickets. Leave blank for event capacity.'))
+
+    @property
+    def confirmed_attendees(self):
+        return self.attendees.filter(status=ATTENDEE_CONFIRMED)
+
+    @property
+    def confirmed_attendee_count(self):
+        return self.confirmed_attendees.aggregate(Sum('attendee_count'))['attendee_count__sum'] or 0
 
     def __unicode__(self):
         return self.name

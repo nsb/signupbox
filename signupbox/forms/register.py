@@ -23,7 +23,7 @@ def attendeeform_factory(event, is_extra, instance=None):
     """
 
     fields_qs = event.fields.all()
-    ticket_qs = event.tickets.all()
+    ticket_qs = event.tickets_available.all()
 
     if is_extra:
         fields_qs = fields_qs.filter(in_extra=True)
@@ -102,6 +102,28 @@ def attendeeformset_factory(event):
             self.add_fields(form, i)
             return form
 
+        def clean(self):
+            if any(self.errors):
+                # Don't bother validating the formset unless each form is valid on its own
+                return
+
+            ticket_map = {}
+            for form in self.forms:
+                try:
+                    ticket = form.cleaned_data['ticket']
+                    ticket_map[ticket.pk] = ticket_map.get(ticket.pk, 0) + 1
+                except KeyError:
+                    continue
+
+            for pk in ticket_map:
+                ticket = Ticket.objects.get(pk=pk)
+                if (ticket.available or 0) < (ticket.confirmed_attendee_count + ticket_map[pk]):
+                    raise forms.ValidationError(_('There are only %(available)d %(ticket_name)s left. Please adjust your ticket choices.') % {
+                        'available': ticket.available - ticket.confirmed_attendee_count,
+                        'ticket_name': ticket
+                    })
+
+
         def save(self):
             booking = Booking.objects.create(event=event)
             for form in self.forms:
@@ -110,10 +132,6 @@ def attendeeformset_factory(event):
             booking.amount = sum((attendee.ticket.price * attendee.attendee_count for attendee in booking.attendees.all()))
             booking.save()
             return booking
-
-        def get_summary(self):
-            summaries = []
-            return summaries
 
     return AttendeeFormSet
 
