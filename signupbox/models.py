@@ -265,8 +265,7 @@ class Event(models.Model):
     def is_open(self):
         return self.status == EVENT_STATUS_OPEN and \
             (self.confirmed_attendees_count < self.capacity if self.capacity else True) and \
-                self.begins > datetime.now() and self.tickets.exclude(
-                    offered_from__gt=date.today()).exclude(offered_to__lt=date.today()).exists()
+                self.begins > datetime.now() and self.tickets_available.exists()
 
     @property
     def has_extra_forms(self):
@@ -297,7 +296,7 @@ class Event(models.Model):
     def tickets_available(self):
 
         tickets = [ticket.pk for ticket in self.tickets.all() if not ticket.available or ticket.confirmed_attendee_count < ticket.available]
-        return Ticket.objects.filter(pk__in=tickets)
+        return Ticket.objects.exclude(offered_from__gt=date.today()).exclude(offered_to__lt=date.today()).filter(pk__in=tickets)
 
     def save(self, *args, **kwargs):
 
