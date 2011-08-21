@@ -13,9 +13,13 @@
   <h3>{% trans "Time and date" %}</h3>
   <p>{% datetime_span event.begins event.ends %}</p>
 
-  {% if event.venue %}
+  {% if event.venue or event.address %}
   <h3>{% trans "Where" %}</h3>
-  <p>{{ event.venue }}</p>
+  <p>
+    <div><strong>{{ event.venue }}</strong></div>
+    <div>{{ event.address }}</div>
+    <div>{{ event.zip_code }} {{ event.city }}</div>
+  </p>
   {% endif %}
 
   {% if event.has_payments %}

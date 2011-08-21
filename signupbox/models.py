@@ -245,6 +245,9 @@ class Event(models.Model):
     description = models.TextField(blank=True, verbose_name=_('Description'))
     venue = models.CharField(max_length=1024,
         verbose_name=_('Where'), blank=True, help_text=_('The event venue'),)
+    address = models.CharField(max_length=255, blank=True, verbose_name=_('Street'))
+    city = models.CharField(max_length=255, blank=True, verbose_name=_('City'))
+    zip_code = models.CharField(max_length=255, blank=True, verbose_name=_('Zip code'))
 
     # date and time fields
     begins = models.DateTimeField(verbose_name=_('Begins'))
