@@ -5,6 +5,7 @@
   <link href='//fonts.googleapis.com/css?family=Molengo' rel='stylesheet' type='text/css'>
   {% compress css %}
   {{ block.super }}
+  <link rel="stylesheet" href="{{ MEDIA_URL }}jquery-ui/jquery-ui-1.8.13.custom.css" type="text/css">
   <link rel="stylesheet" href="{{ MEDIA_URL }}css/global.scss" type="text/css">
   <link rel="stylesheet" href="{{ MEDIA_URL }}css/modal.scss" type="text/css">
   <link rel="stylesheet" href="{{ MEDIA_URL }}css/forms.scss" type="text/css">
@@ -56,6 +57,7 @@
 {% block javascript %}
   {{ block.super }}
   {% compress js %}
+    <script type="text/javascript" src="{{ MEDIA_URL }}jquery-ui/jquery-ui-1.8.13.custom.js" ></script>
     <script type="text/javascript" src="{{ MEDIA_URL }}js/underscore.js" ></script>
     <script type="text/javascript" src="{{ MEDIA_URL }}js/modal.js" ></script>
     <script type="text/javascript" src="{{ MEDIA_URL }}js/attendee_actions.js" ></script>
@@ -70,6 +72,11 @@
       editor_selector : "mceEditor",
       theme : "simple"
     });
+
+    $(function() {
+      $('.datetime').datepicker({dateFormat: 'dd.mm.yy'});
+    });
+
   </script>
 
 {% endblock javascript %}
