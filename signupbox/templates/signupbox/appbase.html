@@ -3,9 +3,9 @@
 {% load compress %}
 {% block css %}
   <link href='//fonts.googleapis.com/css?family=Molengo' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="{{ MEDIA_URL }}jquery-ui/jquery-ui-1.8.13.custom.css" type="text/css">
   {% compress css %}
   {{ block.super }}
-  <link rel="stylesheet" href="{{ MEDIA_URL }}jquery-ui/jquery-ui-1.8.13.custom.css" type="text/css">
   <link rel="stylesheet" href="{{ MEDIA_URL }}css/global.scss" type="text/css">
   <link rel="stylesheet" href="{{ MEDIA_URL }}css/modal.scss" type="text/css">
   <link rel="stylesheet" href="{{ MEDIA_URL }}css/forms.scss" type="text/css">
