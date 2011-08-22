@@ -9,7 +9,7 @@
 </div>
 
 <div class="indent">
-<form action="{% url event_attendees event.slug %}" method="POST">
+<form action="" method="POST">
   {% csrf_token %}
   <input type="hidden" name="{{ step_field }}" value="{{ step0 }}" />
   {{ previous_fields|safe }}
