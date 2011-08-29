@@ -107,7 +107,7 @@ def send_reminder(attendee, language_code):
         # send email reminder
         pass
 
-@periodic_task(run_every=timedelta(days=1))
+#@periodic_task(run_every=timedelta(days=1))
 def send_reminders():
 
     translation.activate(settings.LANGUAGE_CODE)
