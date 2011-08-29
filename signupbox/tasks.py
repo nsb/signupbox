@@ -12,6 +12,8 @@ from django.conf import settings
 
 from celery.decorators import task, periodic_task
 
+import nexmo
+
 from activities.models import Activity
 from models import Booking, Attendee
 
@@ -78,3 +80,40 @@ def account_send_invites(invites, message, language_code):
         ])
     except SMTPException, exc:
         account_send_invites.retry(exc=exc)
+
+@task
+def send_reminder(attendee):
+    # send sms reminder using nexmo
+
+    if attendee.phone and attendee.booking.event.account.sms_gateway:
+
+        username = attendee.booking.event.account.sms_gateway_username
+        password = attendee.booking.event.account.sms_gateway_password
+        client = nexmo.Client(username, password)
+
+        from_ = attendee.booking.event.account.name
+        to = attendee.phone
+        message = render_to_string('signupbox/sms/reminder.txt',
+            context_instance=Context({'attendee':attendee, 'site':Site.objects.get_current()}, autoescape=False))
+
+        try:
+            client.send_message(message, from_, to)
+        except nexmo.NexmoError, exc:
+            send_reminder.retry(args=[booking], exc=exc)
+
+    elif attendee.email:
+        # send email reminder
+        pass
+
+@periodic_task(run_every=timedelta(days=1))
+def send_reminders(language_code):
+
+    translation.activate(language_code)
+
+    attendees = Attendee.objects.filter(reminder_sent=False,
+        booking__event__send_reminders=True, booking__event__begins__lt=datetime.today() + timedelta(days=2))
+
+    for a in attendees:
+        send_reminder.delay(a)
+        a.reminder_sent = datetime.today()
+        a.save()

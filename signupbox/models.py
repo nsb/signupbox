@@ -31,6 +31,10 @@ PAYMENT_GATEWAY_CHOICES = (
     ('quickpay', _('Quickpay')),
 )
 
+SMS_GATEWAY_CHOICES = (
+    ('nexmo', _('Nexmo')),
+)
+
 class AccountManager(models.Manager):
     def by_request(self, request):
 
@@ -72,6 +76,10 @@ class Account(models.Model):
     paypal_business = models.CharField(max_length=255, blank=True)
     autocapture = models.BooleanField(verbose_name=_('Auto capture'),
         blank=True, help_text=_('Automatically capture payments'), default=False)
+    sms_gateway = models.CharField(max_length=255, blank=True,
+        verbose_name=_('SMS gateway'), choices=SMS_GATEWAY_CHOICES)
+    sms_gateway_username = models.CharField(max_length=255, verbose_name=_("SMS gateway username"), blank=True)
+    sms_gateway_password = models.CharField(max_length=255, verbose_name=_('SMS gateway password'), blank=True)
     domain = models.URLField(blank=True, verbose_name=_('Domain')) 
     extra_info = models.TextField(verbose_name=_('Extra info'), blank=True,
         help_text=_('Extra info to be included in the registration email.'))
@@ -259,6 +267,8 @@ class Event(models.Model):
         choices=EVENT_STATUS_CHOICES, default='open', db_index=True)
     currency = models.CharField(max_length=3, choices=CURRENCY_CHOICES,
         blank=True, default='DKK', verbose_name=_('Currency'))
+
+    send_reminders = models.BooleanField(default=True, verbose_name=_('Send reminders'))
 
     activities = generic.GenericRelation(Activity)
 
@@ -483,7 +493,14 @@ class AttendeeManager(models.Manager):
                 signupbox_fieldvalue.attendee_id = signupbox_attendee.id AND
                 signupbox_fieldvalue.field_id = signupbox_field.id AND
                 signupbox_field.type = '%s'
-                """ % EMAIL_FIELD
+                """ % EMAIL_FIELD,
+                'phone':
+                """
+                SELECT value from signupbox_fieldvalue, signupbox_field WHERE
+                signupbox_fieldvalue.attendee_id = signupbox_attendee.id AND
+                signupbox_fieldvalue.field_id = signupbox_field.id AND
+                signupbox_field.type = '%s'
+                """ % PHONE_FIELD
             }
         )
 
@@ -501,6 +518,7 @@ class Attendee(models.Model):
         choices=ATTENDEE_STATUS_CHOICES, default=ATTENDEE_CONFIRMED)
     fields = models.ManyToManyField(Field, through="FieldValue")
     attendee_count = models.PositiveIntegerField(default=1)
+    reminder_sent = models.DateTimeField(blank=True, null=True)
 
     objects = AttendeeManager()
 
