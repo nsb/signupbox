@@ -82,8 +82,10 @@ def account_send_invites(invites, message, language_code):
         account_send_invites.retry(exc=exc)
 
 @task
-def send_reminder(attendee):
+def send_reminder(attendee, language_code):
     # send sms reminder using nexmo
+
+    translation.activate(settings.LANGUAGE_CODE)
 
     if attendee.phone and attendee.booking.event.account.sms_gateway:
 
@@ -99,21 +101,21 @@ def send_reminder(attendee):
         try:
             client.send_message(message, from_, to)
         except nexmo.NexmoError, exc:
-            send_reminder.retry(args=[booking], exc=exc)
+            send_reminder.retry(args=[attendee, language_code], exc=exc)
 
     elif attendee.email:
         # send email reminder
         pass
 
-@periodic_task(run_every=timedelta(days=1))
-def send_reminders(language_code):
+@periodic_task(run_every=timedelta(seconds=20))
+def send_reminders():
 
-    translation.activate(language_code)
+    translation.activate(settings.LANGUAGE_CODE)
 
-    attendees = Attendee.objects.filter(reminder_sent=False,
+    attendees = Attendee.objects.filter(reminder_sent=None,
         booking__event__send_reminders=True, booking__event__begins__lt=datetime.today() + timedelta(days=2))
 
     for a in attendees:
-        send_reminder.delay(a)
+        send_reminder.delay(a, settings.LANGUAGE_CODE)
         a.reminder_sent = datetime.today()
         a.save()
