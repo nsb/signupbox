@@ -113,7 +113,8 @@ def send_reminders():
     translation.activate(settings.LANGUAGE_CODE)
 
     attendees = Attendee.objects.filter(reminder_sent=None,
-        booking__event__send_reminders=True, booking__event__begins__lt=datetime.today() + timedelta(days=2))
+        booking__event__send_reminders=True, booking__event__begins__gt=datetime.today()),
+            booking__event__begins__lt=datetime.today() + timedelta(days=2))
 
     for a in attendees:
         send_reminder.delay(a, settings.LANGUAGE_CODE)
