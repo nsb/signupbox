@@ -7,9 +7,6 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        
-        # Deleting field 'Booking.reminder_sent'
-        db.delete_column('signupbox_booking', 'reminder_sent')
 
         # Deleting field 'Event.send_reminders'
         db.delete_column('signupbox_event', 'send_reminders')
@@ -23,9 +20,6 @@ class Migration(SchemaMigration):
 
     def backwards(self, orm):
         
-        # Adding field 'Booking.reminder_sent'
-        db.add_column('signupbox_booking', 'reminder_sent', self.gf('django.db.models.fields.DateTimeField')(null=True, blank=True), keep_default=False)
-
         # Adding field 'Event.send_reminders'
         db.add_column('signupbox_event', 'send_reminders', self.gf('django.db.models.fields.BooleanField')(default=True), keep_default=False)
 
