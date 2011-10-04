@@ -40,9 +40,11 @@ class EventFormTestCase(test.TestCase):
               'ends_1_0':'16',
               'ends_1_1':'00',
               'status': 'open',
+              'send_reminder': 0,
             },
             instance=Event(account=self.account),
         )
+        print f.errors
         self.assertTrue(f.is_valid())
 
         #End date before begin date should fail

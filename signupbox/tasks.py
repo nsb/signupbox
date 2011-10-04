@@ -15,7 +15,7 @@ from celery.decorators import task, periodic_task
 import nexmo
 
 from activities.models import Activity
-from models import Booking, Attendee
+from models import Event, Booking, Attendee
 
 @task
 def async_send_mail(recipients, subject, message, language_code):
@@ -105,18 +105,30 @@ def send_reminder(attendee, language_code):
 
     elif attendee.email:
         # send email reminder
-        pass
+        if attendee.email:
+            sender = attendee.booking.event.account.email
+            recipient = attendee.email
+            subject = attendee.booking.event.reminder_subject or render_to_string('signupbox/mails/reminder_subject.txt', context_instance=Context({'attendee': attendee}, autoescape=False))
+            message = attendee.booking.event.reminder or render_to_string('signupbox/mails/reminder_body.txt',
+                context_instance=Context({'attendee':attendee, 'site':Site.objects.get_current()}, autoescape=False))
+            try:
+                send_mail(subject, message, sender, [recipient])
+            except SMTPException, exc:
+                send_reminder.retry(args=[attendee, language_code], exc=exc)
 
-#@periodic_task(run_every=timedelta(days=1))
+
+@periodic_task(run_every=timedelta(days=1))
 def send_reminders():
 
     translation.activate(settings.LANGUAGE_CODE)
 
-    attendees = Attendee.objects.filter(reminder_sent=None,
-        booking__event__send_reminders=True, booking__event__begins__gt=datetime.today(),
-            booking__event__begins__lt=datetime.today() + timedelta(days=2))
+    for event in Event.objects.filter(begins__gt=datetime.today(), reminders_sent=None):
+        if event.begins and datetime.today() > event.begins - timedelta(days=event.send_reminder):
 
-    for a in attendees:
-        send_reminder.delay(a, settings.LANGUAGE_CODE)
-        a.reminder_sent = datetime.today()
-        a.save()
+            for attendee in event.confirmed_attendees.filter(reminder_sent=None):
+                send_reminder.delay(attendee, settings.LANGUAGE_CODE)
+                attendee.reminder_sent = datetime.today()
+                attendee.save()
+
+            event.reminders_sent = datetime.now()
+            event.save()

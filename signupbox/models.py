@@ -222,6 +222,15 @@ CURRENCY_CHOICES = (
     (CURRENCY_EUR, _('euros')),
 )
 
+SEND_REMINDER_CHOICES = (
+    (0, _('Never')),
+    (1, _('1 Day')),
+    (3, _('Three days')),
+    (7, _('One week')),
+    (14, _('Two weeks')),
+    (30, _('One month')),
+)
+
 class EventManager(models.Manager):
     def upcoming(self):
         return self.filter(begins__gt=datetime.now())
@@ -268,7 +277,11 @@ class Event(models.Model):
     currency = models.CharField(max_length=3, choices=CURRENCY_CHOICES,
         blank=True, default='DKK', verbose_name=_('Currency'))
 
-    send_reminders = models.BooleanField(default=True, verbose_name=_('Send reminders'))
+    send_reminder = models.PositiveIntegerField(default=0, choices=SEND_REMINDER_CHOICES,
+        verbose_name=_('Send reminder'), help_text=_('When should the reminder be sent?'))
+    reminder_subject = models.CharField(max_length=2048, verbose_name=_('Reminder subject'), blank=True)
+    reminder = models.TextField(blank=True, verbose_name=_('Reminder'))
+    reminders_sent = models.DateTimeField(blank=True, null=True)
 
     activities = generic.GenericRelation(Activity)
 

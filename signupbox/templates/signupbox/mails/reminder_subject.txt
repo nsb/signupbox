@@ -1,0 +1,1 @@
+{% load i18n %}{% blocktrans with title=attendee.booking.event.title begins=attendee.booking.event.begins|date %}Reminder: Your registration for {{ title }} on {{ begins }}.{% endblocktrans %}

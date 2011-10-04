@@ -1,0 +1,1 @@
+{% load i18n %}{% blocktrans with event_title=attendee.booking.event.title event_begins=attendee.booking.event.begins account_display_name=attendee.booking.event.account.display_name %}Reminder: You are registered for {{ event_title }} which starts {{ event_begins }} Regards {{ account_display_name }}{% endblocktrans %}
