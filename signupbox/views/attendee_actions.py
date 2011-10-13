@@ -115,12 +115,12 @@ class AttendeeActions(object):
             # attendee data
 
             writer.writerow(
-                [capfirst(field.label).encode('utf8') for field in event.fields.all()]
+                [capfirst(field.label).encode('utf8') for field in event.fields.all()] + [ugettext('Ticket').encode('utf8')]
             )
 
             for r in selected:
                 writer.writerow(
-                    [field.value.encode('utf8') for field in r.values.all()]
+                    [field.value.encode('utf8') for field in r.values.all()] + [r.ticket.name]
                 )
 
         elif data == BOOKING_DATA:
@@ -189,16 +189,16 @@ class AttendeeActions(object):
             # attendee data
 
             attendee_style = TableStyle([
-                ('BACKGROUND', (0,0), (2,0), "#F6F6F6"),
+                ('BACKGROUND', (0,0), (3,0), "#F6F6F6"),
             ])
 
             t = tables.Table(
                 [[None,
                   event.fields.all()[0].label,
-                  ugettext('Email'),]] + \
+                  ugettext('Email'), ugettext('Ticket')]] + \
                 [['#%d' % r.booking.id,
                   '%s %s' % (r.display_value, '(%d)' % r.attendee_count if r.attendee_count != 1 else ''),
-                  r.email,] for r in selected],
+                  r.email, r.ticket.name] for r in selected],
                   style = attendee_style,
                   hAlign = 'LEFT',
             )
@@ -237,11 +237,13 @@ class AttendeeActions(object):
             for column, field in enumerate(event.fields.all()):
                 ws.row(0).write(column, capfirst(field.label))
             ws.row(0).write(event.fields.count(), capfirst(_('Attendee count')))
+            ws.row(0).write(event.fields.count() + 1, capfirst(_('Ticket')))
 
             for row, r in enumerate(selected):
                 for column, field in enumerate(r.values.all()):
                     ws.row(row + 1).write(column, field.value)
                 ws.row(row + 1).write(event.fields.count(), '%d' % r.attendee_count)
+                ws.row(row + 1).write(event.fields.count() + 1, '%s' % r.ticket.name)
 
         elif data == BOOKING_DATA:
 
