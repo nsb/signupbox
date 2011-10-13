@@ -32,8 +32,12 @@ def attendeeform_factory(event, is_extra, instance=None):
 
         fields = dict((field.name, field) for field in fields_qs)
 
-        attendee = instance or Attendee.objects.create(booking=booking,
-            ticket=self.cleaned_data['ticket'] if event.has_extra_forms and ticket_qs.count() > 1 else ticket_qs.all()[0])
+        ticket = self.cleaned_data['ticket'] if event.has_extra_forms and ticket_qs.count() > 1 else ticket_qs.all()[0]
+
+        attendee = instance or Attendee.objects.create(booking=booking, ticket=ticket)
+
+        if instance:
+            attendee.ticket = ticket
 
         attendee.attendee_count = self.cleaned_data.get('attendee_count', attendee.attendee_count)
         attendee.save()
