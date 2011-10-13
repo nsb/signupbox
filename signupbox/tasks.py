@@ -117,7 +117,7 @@ def send_reminder(attendee, language_code):
                 send_reminder.retry(args=[attendee, language_code], exc=exc)
 
 
-@periodic_task(run_every=timedelta(days=1))
+@periodic_task(run_every=timedelta(hours=1))
 def send_reminders():
 
     translation.activate(settings.LANGUAGE_CODE)
