@@ -18,10 +18,10 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'
         #'ENGINE': 'django.db.backends.sqlite3',
         'NAME': 'signupbox',                      # Or path to database file if using sqlite3.
-        'USER': 'niels',                      # Not used with sqlite3.
+        'USER': '',                      # Not used with sqlite3.
         #'PASSWORD': 'niels',                  # Not used with sqlite3.
-        'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
-        'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
+        'HOST': 'localhost',                      # Set to empty string for localhost. Not used with sqlite3.
+        'PORT': '5432',                      # Set to empty string for default. Not used with sqlite3.
     }
 }
 
@@ -74,8 +74,9 @@ TEMPLATE_LOADERS = (
 
 MIDDLEWARE_CLASSES = (
     'django.middleware.cache.UpdateCacheMiddleware',
-    'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
+    'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.middleware.transaction.TransactionMiddleware',
@@ -119,9 +120,6 @@ INSTALLED_APPS = (
     'paypal.standard.ipn',
     'indexer',
     'paging',
-    'sentry',
-    'sentry.client',
-    'sentry.client.celery',
     'objperms',
     'quickpay',
     'activities',
