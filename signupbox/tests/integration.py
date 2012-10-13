@@ -69,6 +69,7 @@ class AdminTestCase(BaseTestCase):
                 'ends_1_1':'00',
                 'status': 'open',
                 'send_reminder': 0,
+                'language': 'da',
             },
         )
         self.failUnlessEqual(response.status_code, 302)
@@ -91,6 +92,7 @@ class AdminTestCase(BaseTestCase):
                 'ends_1_1':'00',
                 'status': 'open',
                 'send_reminder': 0,
+                'language': 'da',
             },
         )
         self.failUnlessEqual(response.status_code, 302)

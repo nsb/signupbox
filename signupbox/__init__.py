@@ -13,6 +13,6 @@ def on_booking_confirmed(sender, booking_id, **kwargs):
     booking.cardtype = kwargs.get("cardtype", "")
     booking.save()
 
-    process_booking.delay(booking, settings.LANGUAGE_CODE)
+    process_booking.delay(booking, booking.event.language)
 
 booking_confirmed.connect(on_booking_confirmed)

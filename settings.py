@@ -161,11 +161,6 @@ LOGGING = {
             'class': 'django.utils.log.AdminEmailHandler',
             'filters': []
         },
-        'sentry': {
-            'level': 'ERROR',
-            'class': 'signupbox.utils.CustomLoggingHandler',
-            'filters': []
-        },
     },
     'loggers': {
         'django': {
@@ -179,7 +174,7 @@ LOGGING = {
             'propagate': False,
         },
         'signupbox.default': {
-            'handlers': ['console', 'mail_admins', 'sentry'],
+            'handlers': ['console', 'mail_admins',],
             'level': 'DEBUG',
             'filters': []
         }

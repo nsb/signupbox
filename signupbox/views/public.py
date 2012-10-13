@@ -7,6 +7,7 @@ from django.views.decorators.csrf import csrf_view_exempt
 from django.utils.hashcompat import md5_constructor
 from django.conf import settings
 from django.utils.functional import curry
+from django.utils import translation
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.sites.models import Site
 
@@ -22,6 +23,8 @@ def event_site(request, slug):
     account = Account.objects.by_request(request)
     event = get_object_or_404(Event, account=account, slug=slug)
 
+    translation.activate(event.language)
+
     return render_to_response(
         'signupbox/event_site.html',
         RequestContext(request, {'event':event}),
@@ -32,6 +35,8 @@ def event_register(request, slug):
     account = Account.objects.by_request(request)
     event = get_object_or_404(Event, account=account, slug=slug)
     formset_class = registerform_factory(event)
+
+    translation.activate(event.language)
 
     if request.method == 'POST':
         if not event.is_open:
@@ -57,12 +62,14 @@ def event_confirm(request, slug, booking_id):
     booking = get_object_or_404(Booking, event=event, id=booking_id, confirmed=False)
     amount = booking.amount
 
+    translation.activate(event.language)
+
     if amount:
         if account.payment_gateway == 'quickpay':
 
             protocol = 3
             msgtype = 'authorize'
-            language = settings.LANGUAGE_CODE
+            language = event.language
             ordernumber = ''.join(['0' for i in range(4-len(booking.ordernumber))]) + booking.ordernumber
             autocapture = 1 if account.autocapture else 0
             cardtypelock = \
@@ -162,6 +169,8 @@ def event_complete(request, slug):
     account = Account.objects.by_request(request)
     event = get_object_or_404(Event, account=account, slug=slug)
 
+    translation.activate(event.language)
+
     return render_to_response(
         'signupbox/event_complete.html',
         RequestContext(request, {'event': event})
@@ -172,6 +181,8 @@ def event_incomplete(request, slug):
     account = Account.objects.by_request(request)
     event = get_object_or_404(Event, account=account, slug=slug)
 
+    translation.activate(event.language)
+
     return render_to_response(
         'signupbox/event_incomplete.html',
         RequestContext(request, {'event': event})
@@ -181,6 +192,8 @@ def event_terms(request, slug):
 
     account = Account.objects.by_request(request)
     event = get_object_or_404(Event, account=account, slug=slug)
+
+    translation.activate(event.language)
 
     return render_to_response(
         'signupbox/event_terms.html',

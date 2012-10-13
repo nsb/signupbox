@@ -222,6 +222,11 @@ CURRENCY_CHOICES = (
     (CURRENCY_EUR, _('euros')),
 )
 
+LANGUAGE_CHOICES = (
+    ('da', _('Danish')),
+    ('en', _('English')),
+)
+
 SEND_REMINDER_CHOICES = (
     (0, _('Never')),
     (1, _('1 Day')),
@@ -284,6 +289,8 @@ class Event(models.Model):
     reminders_sent = models.DateTimeField(blank=True, null=True)
 
     activities = generic.GenericRelation(Activity)
+
+    language = models.CharField(max_length=2, choices=LANGUAGE_CHOICES, default='da', verbose_name=_('Language'))
 
     objects = EventManager()
 
