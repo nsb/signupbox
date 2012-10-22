@@ -792,7 +792,7 @@ msgstr "Tilmeldingen blev ikke fuldført."
 
 #: templates/signupbox/event_register.html:8
 #, python-format
-msgid "registration for %(title)s"
+msgid "Registration for %(title)s"
 msgstr "Tilmelding til %(title)s"
 
 #: templates/signupbox/event_register.html:35
@@ -1132,8 +1132,8 @@ msgid "Event:"
 msgstr "Arrangement:"
 
 #: templates/signupbox/mails/register_email.txt:8
-msgid "Place:"
-msgstr "Lokation:"
+msgid "Where:"
+msgstr "Hvor:"
 
 #: templates/signupbox/mails/register_email.txt:16
 msgid "phone:"
