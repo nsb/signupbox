@@ -1133,7 +1133,7 @@ msgstr "Arrangement:"
 
 #: templates/signupbox/mails/register_email.txt:8
 msgid "Where:"
-msgstr "Hvor:"
+msgstr "Lokation:"
 
 #: templates/signupbox/mails/register_email.txt:16
 msgid "phone:"
