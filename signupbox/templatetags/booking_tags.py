@@ -31,6 +31,7 @@ def total_price(attendees):
 @register.simple_tag
 def price_range(tickets):
     current_tickets = tickets.exclude(offered_from__gt=date.today(), offered_to__lt=date.today())
+    current_tickets = current_tickets.exclude(available=0)
     min_ticket = current_tickets.aggregate(Min('price'))['price__min']
     max_ticket = current_tickets.aggregate(Max('price'))['price__max']
 
