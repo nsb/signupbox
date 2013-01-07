@@ -153,11 +153,14 @@ def account_invitation(request, key):
     if request.method == 'POST':
         form = InviteAcceptForm(request.POST)
         if form.is_valid():
-            user = User.objects.create_user(
-                username = form.cleaned_data['email'],
-                email = form.cleaned_data['email'],
-                password = form.cleaned_data['password']
-            )
+            try:
+                user = User.objects.get(username=form.cleaned_data['email'])
+            except User.DoesNotExist:
+                user = User.objects.create_user(
+                    username = form.cleaned_data['email'],
+                    email = form.cleaned_data['email'],
+                    password = form.cleaned_data['password']
+                )
             invitation.account.users.add(user)
             invitation.account.set_perms(user, view=True, change=invitation.is_admin) 
             invitation.is_accepted = True
