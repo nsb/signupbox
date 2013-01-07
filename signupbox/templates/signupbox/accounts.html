@@ -1,0 +1,13 @@
+{% extends "signupbox/base.html" %}
+{% load i18n %}
+{% load date_tags %}
+
+{% block page %}
+  <h2>{% trans "Choose account" %}</h2>
+  <p>{% trans "You have multiple accounts." %} {% trans "Please choose the one you wish to access." %}</p>
+  {% for account in accounts %}
+    <div>
+      <a href="http://{{ account.domain_for_account }}">{{ account.name }}</a>
+    </div>
+  {% endfor %}
+{% endblock page %}

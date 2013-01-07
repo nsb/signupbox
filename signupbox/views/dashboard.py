@@ -10,8 +10,11 @@ from django.core.urlresolvers import reverse
 from django.contrib.humanize.templatetags.humanize import naturalday
 from django.http import HttpResponse, HttpResponseForbidden
 from django.contrib.sites.models import Site
+from django.contrib.contenttypes.models import ContentType
 
 import gviz_api
+
+from objperms.models import ObjectPermission
 
 from ..forms import RegistrationForm
 from ..models import Account, Event, Booking, Attendee
@@ -26,6 +29,25 @@ def dateIterator(from_date=None, to_date=None, delta=timedelta(days=1)):
 
 def frontpage(request):
     return redirect(reverse('index'))
+
+@login_required
+def accounts(request):
+    """
+    In case the user has multiple accounts, let the user choose which one to access
+
+    """
+
+    obj_perms = ObjectPermission.objects.filter(
+        user=request.user,
+        content_type=ContentType.objects.get_for_model(Account),
+        can_view = True
+    )
+    accounts = Account.objects.filter(pk__in=[op.object_id for op in obj_perms])
+
+    return render_to_response(
+        'signupbox/accounts.html',
+        RequestContext(request, {'accounts': accounts}),
+    )
 
 @login_required
 @with_account
@@ -90,9 +112,12 @@ def signup(request):
 
         if form.is_valid():
             account = Account.objects.create(name=form.cleaned_data['accountname'], site=Site.objects.get_current())
-            user = User.objects.create_user(
-                form.cleaned_data['username'], form.cleaned_data['email'], form.cleaned_data['password']
-            )
+            try:
+                user = User.objects.get(username=form.cleaned_data['username'])
+            except User.DoesNotExist, e:
+                user = User.objects.create_user(
+                    form.cleaned_data['username'], form.cleaned_data['email'], form.cleaned_data['password']
+                )
             account.users.add(user)
             account.set_perms(user, view=True, change=True)
 

@@ -30,6 +30,14 @@ def with_account(view):
                           'path': request.get_full_path()
                       }
                 )
+            except ObjectPermission.MultipleObjectsReturned:
+                return HttpResponseRedirect(
+                    'http%(secure)s://%(host)s%(path)s' % {
+                        'secure': 's' if request.is_secure() else '',
+                        'host': request.get_host(),
+                        'path': '/accounts/',
+                    }
+                )
             except ObjectPermission.DoesNotExist:
                 raise Http404
 
