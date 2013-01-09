@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-13 15:01+0200\n"
+"POT-Creation-Date: 2013-01-09 10:20+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -513,12 +513,6 @@ msgstr "kodeord (igen)"
 msgid "This url is already taken. Please choose another."
 msgstr "Denne url er taget. Vælg venligst en anden."
 
-#: forms/registration.py:40
-msgid ""
-"This email address is already in use. Please supply a different email "
-"address."
-msgstr "Denne email adresse er taget. Vælg venligst en anden email adresse."
-
 #: forms/registration.py:54
 msgid "You must type the same password each time"
 msgstr "Du skal skrive det samme kodeord"
@@ -542,6 +536,18 @@ msgstr "Invitation"
 #: templates/signupbox/account_invitation.html:15
 msgid "Accept invitation"
 msgstr "Accepter invitation"
+
+#: templates/signupbox/accounts.html:6
+msgid "Choose account"
+msgstr "Vælg konto"
+
+#: templates/signupbox/accounts.html:7
+msgid "You have multiple accounts."
+msgstr "Du har flere konti."
+
+#: templates/signupbox/accounts.html:7
+msgid "Please choose the one you wish to access."
+msgstr "Vælg venligst den konto du vil tilgå."
 
 #: templates/signupbox/appbase.html:33
 msgid "logged in as"
@@ -1210,12 +1216,12 @@ msgstr "Bruger fjernet"
 msgid "Permissions updated."
 msgstr "Rettigheder opdateret."
 
-#: views/account.py:172
+#: views/account.py:175
 #, python-format
 msgid "Welcome to your %s account."
 msgstr "Velkommen til din %s konto."
 
-#: views/account.py:195
+#: views/account.py:198
 msgid "Invitation canceled."
 msgstr "Invitation fjernet."
 
@@ -1273,3 +1279,8 @@ msgstr "Billet opdateret."
 #: views/tickets.py:64
 msgid "Ticket added."
 msgstr "Billet tilføjet."
+
+#~ msgid ""
+#~ "This email address is already in use. Please supply a different email "
+#~ "address."
+#~ msgstr "Denne email adresse er taget. Vælg venligst en anden email adresse."
