@@ -30,6 +30,7 @@ def event_site(request, slug):
         RequestContext(request, {'event':event}),
     )
 
+@csrf_view_exempt
 def event_register(request, slug):
 
     account = Account.objects.by_request(request)
