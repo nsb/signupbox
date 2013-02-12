@@ -6,7 +6,7 @@
 {{ attendee.display_label }}: {{ attendee.display_value }}
 {% trans "Event:" %} {{ event.title }} ({{ event.website }})
 {% trans "Where:" %} {{ event.venue }}, {{ event.address }}, {{ event.zip_code }} {{ event.city }}	
-{% trans "Time and date:" %} {% date_span event.begins event.ends %}
+{% trans "Time and date:" %} {% datetime_span event.begins event.ends %}
 {% block booking_info %}{% endblock booking_info %}
 {{ event.account.extra_info }}
 --
