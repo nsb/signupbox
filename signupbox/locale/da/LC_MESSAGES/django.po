@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-09 10:20+0100\n"
+"POT-Creation-Date: 2013-04-15 09:28+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -213,6 +213,7 @@ msgid "Description"
 msgstr "Beskrivelse"
 
 #: models.py:269 templates/signupbox/event_site.html:17
+#: templates/signupbox/mails/register_email.txt:8
 msgid "Where"
 msgstr "Hvor"
 
@@ -797,9 +798,8 @@ msgid "The registration was not completed."
 msgstr "Tilmeldingen blev ikke fuldført."
 
 #: templates/signupbox/event_register.html:8
-#, python-format
-msgid "Registration for %(title)s"
-msgstr "Tilmelding til %(title)s"
+msgid "Registration for"
+msgstr "Tilmelding til"
 
 #: templates/signupbox/event_register.html:35
 msgid "Add extra attendee"
@@ -1134,12 +1134,8 @@ msgid "Booking number: #%(booking)s"
 msgstr "Tilmeldingsnummer: #%(booking)s"
 
 #: templates/signupbox/mails/register_email.txt:7
-msgid "Event:"
-msgstr "Arrangement:"
-
-#: templates/signupbox/mails/register_email.txt:8
-msgid "Where:"
-msgstr "Hvor:"
+msgid "Event"
+msgstr "Arrangement"
 
 #: templates/signupbox/mails/register_email.txt:16
 msgid "phone:"
@@ -1279,8 +1275,3 @@ msgstr "Billet opdateret."
 #: views/tickets.py:64
 msgid "Ticket added."
 msgstr "Billet tilføjet."
-
-#~ msgid ""
-#~ "This email address is already in use. Please supply a different email "
-#~ "address."
-#~ msgstr "Denne email adresse er taget. Vælg venligst en anden email adresse."
