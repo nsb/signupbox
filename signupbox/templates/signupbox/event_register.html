@@ -5,7 +5,7 @@
 
 <div id="event_register">
 
-  <h1>{% trans "Registration for" %} {{ event.title }}</h1>
+  <h1>{% blocktrans with event_title=event.title %}Registration for {{ event_title }}{% endblocktrans %}</h1>
 
   {% block register_form %}
   {% if formset.non_form_errors %}

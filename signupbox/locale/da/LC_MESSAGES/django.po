@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-04-15 09:28+0200\n"
+"POT-Creation-Date: 2013-04-15 09:59+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -798,8 +798,9 @@ msgid "The registration was not completed."
 msgstr "Tilmeldingen blev ikke fuldført."
 
 #: templates/signupbox/event_register.html:8
-msgid "Registration for"
-msgstr "Tilmelding til"
+#, python-format
+msgid "Registration for %(event_title)s"
+msgstr "Tilmelding til %(event_title)s"
 
 #: templates/signupbox/event_register.html:35
 msgid "Add extra attendee"
@@ -1275,3 +1276,6 @@ msgstr "Billet opdateret."
 #: views/tickets.py:64
 msgid "Ticket added."
 msgstr "Billet tilføjet."
+
+#~ msgid "Registration for"
+#~ msgstr "Tilmelding til"
