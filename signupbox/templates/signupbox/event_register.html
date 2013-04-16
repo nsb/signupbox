@@ -5,7 +5,11 @@
 
 <div id="event_register">
 
-  <h1>{% blocktrans with event_title=event.title %}Registration for {{ event_title }}{% endblocktrans %}</h1>
+  {% if LANGUAGE_CODE == 'da' %}
+  <h1>Tilmelding til {{ event.title }}</h1>
+  {% else %}
+  <h1>Registration for {{ event.title }}</h1>
+  {% endif %}
 
   {% block register_form %}
   {% if formset.non_form_errors %}
