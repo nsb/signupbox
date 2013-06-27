@@ -1,16 +1,15 @@
-ipython
-psycopg2
-django == 1.3
--e svn+http://google-visualization-python.googlecode.com/svn/trunk/#egg=gviz
-south
-django-kombu
-django-celery
-ghettoq
-BeautifulSoup
--e git://github.com/dziegler/django-css.git#egg=DjangoCSS
--e git://github.com/dcramer/django-paypal.git#egg=DjangoPayPal
-reportlab
-xlwt
+psycopg2==2.3.2
+django==1.3
+-e svn+http://google-visualization-python.googlecode.com/svn/trunk@15#egg=gviz
+south==0.7.3
+django-kombu==0.9.1
+django-celery==2.2.2
+ghettoq==0.4.5
+BeautifulSoup==3.2.0
+-e git://github.com/dziegler/django-css.git@0a0d7124b8136ff6b078958a13d241979c2c32df#egg=DjangoCSS
+-e git://github.com/dcramer/django-paypal.git@b78090fbd5047864a40855faaa11690bfbef5302#egg=DjangoPaypal
+reportlab==2.3
+xlwt==0.7.2
 -e git://github.com/nsb/django-object-permissions.git#egg=DjangoObjectPermissions
--e git://github.com/nsb/django-quickpay.git#egg=DjangoQuickpay
-simplejson
+-e git://github.com/nsb/django-quickpay.git@54e4655033af807b9d0f64685eb7bb3e4240bce2#egg=DjangoQuickpay
+simplejson==2.1.5
