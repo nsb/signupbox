@@ -14,3 +14,4 @@ xlwt==0.7.2
 -e git://github.com/nsb/django-quickpay.git@54e4655033af807b9d0f64685eb7bb3e4240bce2#egg=DjangoQuickpay
 simplejson==2.1.5
 django-paging==0.2.2
+django-indexer==0.2.1
