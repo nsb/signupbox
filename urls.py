@@ -3,7 +3,7 @@ from django.conf.urls.defaults import *
 from django.conf import settings
 
 from django.contrib import admin
-admin.autodiscover()
+#admin.autodiscover()
 
 urlpatterns = patterns('',
     (r'^myadmin/', include(admin.site.urls)),
