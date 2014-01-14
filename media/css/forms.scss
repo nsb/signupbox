@@ -31,6 +31,10 @@ input[type=text], input[type=search], input[type=date], input[type=email], input
     float: left;
   }
 
+  .input label {
+    width: auto;
+  }
+
   .error {
     margin-left: 12em;
 
