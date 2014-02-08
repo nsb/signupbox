@@ -3,7 +3,8 @@
 from datetime import datetime, date, time, timedelta
 import uuid, re
 from urlparse import urlparse
-from random import random
+from random import random, SystemRandom
+import string
 
 from django.db import models
 from django.db.models import signals, Max, Sum
@@ -395,6 +396,7 @@ class Booking(models.Model):
     currency = models.CharField(max_length=3, blank=True)
     confirmed = models.BooleanField(default=False)
     ordernumber = models.CharField(max_length=20)
+    token = models.CharField(max_length=64, db_index=True, null=True)
 
     objects = BookingManager()
 
@@ -418,6 +420,10 @@ class Booking(models.Model):
         get ordernumber from database sequence
 
         """
+        if not self.token:
+            gen = SystemRandom()
+            self.token = ''.join(gen.choice(string.ascii_lowercase + string.digits) for x in range(64))
+
         if not self.ordernumber:
             from django.db import connection
             cursor = connection.cursor()
@@ -470,7 +476,7 @@ class Field(models.Model):
 
     class Meta:
         unique_together = ('event', 'name')
-        ordering = ('id',)
+        ordering = ('ordering', 'id')
 
 class AttendeeManager(models.Manager):
 
@@ -507,6 +513,13 @@ class AttendeeManager(models.Manager):
                 signupbox_fieldvalue.field_id = signupbox_field.id AND
                 signupbox_field.ordering = 1
                 """,
+                'name':
+                """
+                SELECT value from signupbox_fieldvalue, signupbox_field WHERE
+                signupbox_fieldvalue.attendee_id = signupbox_attendee.id AND
+                signupbox_fieldvalue.field_id = signupbox_field.id AND
+                signupbox_field.type = '%s' ORDER BY signupbox_field.id FETCH FIRST 1 ROW ONLY
+                """ % TEXT_FIELD,
                 'email':
                 """
                 SELECT value from signupbox_fieldvalue, signupbox_field WHERE

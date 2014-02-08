@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-04-16 10:06+0200\n"
+"POT-Creation-Date: 2014-02-08 20:12+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,115 +17,115 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 
-#: models.py:30
+#: models.py:31
 msgid "PayPal"
 msgstr "PayPal"
 
-#: models.py:31
+#: models.py:32
 msgid "Quickpay"
 msgstr "Quickpay"
 
-#: models.py:35
+#: models.py:36
 msgid "Nexmo"
 msgstr ""
 
-#: models.py:63
+#: models.py:64
 msgid "Account name"
 msgstr "Konto navn"
 
-#: models.py:64
+#: models.py:65
 msgid "Company"
 msgstr "Firma"
 
-#: models.py:65 models.py:270 models.py:594
+#: models.py:66 models.py:271 models.py:607
 msgid "Street"
 msgstr "Gade"
 
-#: models.py:66 models.py:272 models.py:595
+#: models.py:67 models.py:273 models.py:608
 msgid "Zip code"
 msgstr "Post nummer"
 
-#: models.py:67 models.py:271 models.py:596
+#: models.py:68 models.py:272 models.py:609
 msgid "City"
 msgstr "By"
 
-#: models.py:68 models.py:597
+#: models.py:69 models.py:610
 msgid "Country"
 msgstr "Land"
 
-#: models.py:69 models.py:598
+#: models.py:70 models.py:611
 msgid "Phone number"
 msgstr "Telefon nummer"
 
-#: models.py:70
+#: models.py:71
 msgid "Email address"
 msgstr "Email adresse"
 
-#: models.py:71
+#: models.py:72
 msgid "CVR number"
 msgstr "CVR nummer"
 
-#: models.py:73
+#: models.py:74
 msgid "Payment gateway"
 msgstr "Betalings gateway"
 
-#: models.py:74
+#: models.py:75
 msgid "PBS number"
 msgstr "PBS nummer"
 
-#: models.py:75
+#: models.py:76
 msgid "Secret key"
 msgstr "Hemmelig nøgle"
 
-#: models.py:77
+#: models.py:78
 msgid "Auto capture"
 msgstr "Automatisk hævning"
 
-#: models.py:78
+#: models.py:79
 msgid "Automatically capture payments"
 msgstr "Hæv betalinger automatisk"
 
-#: models.py:80
+#: models.py:81
 msgid "SMS gateway"
 msgstr "SMS gateway"
 
-#: models.py:81
+#: models.py:82
 msgid "SMS gateway username"
 msgstr "SMS gateway brugernavn"
 
-#: models.py:82
+#: models.py:83
 msgid "SMS gateway password"
 msgstr "SMS gateway adgangskode"
 
-#: models.py:83
+#: models.py:84
 msgid "Domain"
 msgstr "Domæne"
 
-#: models.py:84
+#: models.py:85
 msgid "Extra info"
 msgstr "Ekstra information"
 
-#: models.py:85
+#: models.py:86
 msgid "Extra info to be included in the registration email."
 msgstr "Ekstra information som inkluderes i tilmeldingskvitteringen"
 
-#: models.py:86 forms/account.py:12 templates/signupbox/event_terms.html:5
+#: models.py:87 forms/account.py:12 templates/signupbox/event_terms.html:5
 msgid "Terms and conditions"
 msgstr "Vilkår og betingelser"
 
-#: models.py:87
+#: models.py:88
 msgid "Google analytics"
 msgstr "Google analytics"
 
-#: models.py:88
+#: models.py:89
 msgid "Enter your Google analytics tracker code to enable tracking."
 msgstr "Angiv din Google analytics kode for at starte dataopsamling"
 
-#: models.py:89
+#: models.py:90
 msgid "Users"
 msgstr "Brugere"
 
-#: models.py:91
+#: models.py:92
 msgid ""
 "In addition to the permissions manually assigned, \n"
 "            this account will also get all permissions granted to each group "
@@ -134,229 +134,229 @@ msgstr ""
 "I tillæg til alle rettigheder manuelt tildelt, vil denne konto også få alle "
 "rettigheder tildelt alle grupper den er i."
 
-#: models.py:147
+#: models.py:148
 msgid "Account"
 msgstr "Konto"
 
-#: models.py:148
+#: models.py:149
 msgid "Accounts"
 msgstr "Kontoer"
 
-#: models.py:206 templates/signupbox/profile.html:6
+#: models.py:207 templates/signupbox/profile.html:6
 msgid "Profile"
 msgstr "Profil"
 
-#: models.py:207
+#: models.py:208
 msgid "Profiles"
 msgstr "Profiler"
 
-#: models.py:216
+#: models.py:217
 msgid "Open"
 msgstr "Åben"
 
-#: models.py:217
+#: models.py:218
 msgid "Closed"
 msgstr "Lukket"
 
-#: models.py:221
+#: models.py:222
 msgid "kr."
 msgstr "kr."
 
-#: models.py:222
+#: models.py:223
 msgid "euros"
 msgstr "euro"
 
-#: models.py:226
+#: models.py:227
 msgid "Danish"
 msgstr "Dansk"
 
-#: models.py:227
+#: models.py:228
 msgid "English"
 msgstr "Engelsk"
 
-#: models.py:231
+#: models.py:232
 msgid "Never"
 msgstr "Aldrig"
 
-#: models.py:232
+#: models.py:233
 msgid "1 Day"
 msgstr "1 Dag"
 
-#: models.py:233
+#: models.py:234
 msgid "Three days"
 msgstr "Tre dage"
 
-#: models.py:234
+#: models.py:235
 msgid "One week"
 msgstr "En uge"
 
-#: models.py:235
+#: models.py:236
 msgid "Two weeks"
 msgstr "To uger"
 
-#: models.py:236
+#: models.py:237
 msgid "One month"
 msgstr "En måned"
 
-#: models.py:261
+#: models.py:262
 msgid "What"
 msgstr "Hvad"
 
-#: models.py:261
+#: models.py:262
 msgid "The event title"
 msgstr "Arrangementets navn"
 
-#: models.py:267 forms/event.py:11
+#: models.py:268 forms/event.py:11
 #: templates/signupbox/includes/export_pdf_booking.txt:6
 #: views/attendee_actions.py:140 views/attendee_actions.py:263
 msgid "Description"
 msgstr "Beskrivelse"
 
-#: models.py:269 templates/signupbox/event_site.html:17
+#: models.py:270 templates/signupbox/event_site.html:17
 #: templates/signupbox/mails/register_email.txt:8
 msgid "Where"
 msgstr "Hvor"
 
-#: models.py:269
+#: models.py:270
 msgid "The event venue"
 msgstr "Arrangementets lokation"
 
-#: models.py:275 forms/event.py:8
+#: models.py:276 forms/event.py:8
 msgid "Begins"
 msgstr "Begynder"
 
-#: models.py:276 forms/event.py:9
+#: models.py:277 forms/event.py:9
 msgid "Ends"
 msgstr "Slutter"
 
-#: models.py:279 templates/signupbox/event_detail.html:17
+#: models.py:280 templates/signupbox/event_detail.html:17
 msgid "Capacity"
 msgstr "Kapacitet"
 
-#: models.py:279
+#: models.py:280
 msgid "Leave blank for unlimited."
 msgstr "Blank for ubegrænset"
 
-#: models.py:280
+#: models.py:281
 msgid "Status"
 msgstr "Status"
 
-#: models.py:283 views/attendee_actions.py:138 views/attendee_actions.py:261
+#: models.py:284 views/attendee_actions.py:138 views/attendee_actions.py:261
 msgid "Currency"
 msgstr "Valuta"
 
-#: models.py:286
+#: models.py:287
 msgid "Send reminder"
 msgstr "Send påmindelse"
 
-#: models.py:286
+#: models.py:287
 msgid "When should the reminder be sent?"
 msgstr "Hvornår skal påmindelse afsendes?"
 
-#: models.py:287
+#: models.py:288
 msgid "Reminder subject"
 msgstr "Påmindelse emne"
 
-#: models.py:288
+#: models.py:289
 msgid "Reminder"
 msgstr "Påmindelse"
 
-#: models.py:293
+#: models.py:294
 msgid "Language"
 msgstr "Sprog"
 
-#: models.py:369
+#: models.py:370
 msgid "Available"
 msgstr "til rådighed"
 
-#: models.py:369
+#: models.py:370
 msgid "Number of available tickets. Leave blank for event capacity."
 msgstr ""
 "Antal billetter til rådighed. Hvis tom bruges arrangements kapaciteten."
 
-#: models.py:410
+#: models.py:412
 #, python-format
 msgid "%(attendee1)s and %(attendee2)s"
 msgstr "%(attendee1)s og %(attendee2)s"
 
-#: models.py:413
+#: models.py:415
 #, python-format
 msgid "%(name)s registered for %(event)s."
 msgstr "%(name)s tilmeldte sig %(event)s."
 
-#: models.py:435
+#: models.py:441
 msgid "text"
 msgstr "tekst"
 
-#: models.py:436
+#: models.py:442
 msgid "multiline text"
 msgstr "multilinie tekst"
 
-#: models.py:437
+#: models.py:443
 msgid "checkbox"
 msgstr "tjekboks"
 
-#: models.py:438
+#: models.py:444
 msgid "email"
 msgstr "email"
 
-#: models.py:439
+#: models.py:445
 msgid "select options"
 msgstr "dropdown"
 
-#: models.py:440
+#: models.py:446
 msgid "radio buttons"
 msgstr "radio knapper"
 
-#: models.py:441
+#: models.py:447
 msgid "phone"
 msgstr "telefon"
 
-#: models.py:448
+#: models.py:454
 msgid "Label"
 msgstr "Betegnelse"
 
-#: models.py:449
+#: models.py:455
 msgid "Help text"
 msgstr "Hjælpetekst"
 
-#: models.py:451
+#: models.py:457
 msgid "Type"
 msgstr "Type"
 
-#: models.py:452
+#: models.py:458
 msgid "Required"
 msgstr "Påkrævet"
 
-#: models.py:453
+#: models.py:459
 msgid "In extra forms"
 msgstr "I ekstra formularer"
 
-#: models.py:528 forms/attendees.py:65
+#: models.py:541 forms/attendees.py:65
 msgid "Confirmed"
 msgstr "Bekræftet"
 
-#: models.py:529
+#: models.py:542
 msgid "Unconfirmed"
 msgstr "Ubekræftet"
 
-#: models.py:530 forms/attendees.py:65
+#: models.py:543 forms/attendees.py:65
 msgid "Cancelled"
 msgstr "Afmeldt"
 
-#: models.py:591
+#: models.py:604
 msgid "Name"
 msgstr "Navn"
 
-#: models.py:592
+#: models.py:605
 msgid "Organization"
 msgstr "Firma"
 
-#: models.py:593 views/attendee_actions.py:198
+#: models.py:606 views/attendee_actions.py:198
 msgid "Email"
 msgstr "Email"
 
-#: models.py:609
+#: models.py:622
 msgid "Default ticket"
 msgstr "Standard billet"
 
@@ -625,11 +625,13 @@ msgstr "Tak for din tilmelding"
 msgid "We have sent you an email with a receipt of your registration."
 msgstr "Vi har sendt dig en email med en kvittering på din tilmelding."
 
-#: templates/signupbox/event_complete.html:10
-#: templates/signupbox/event_incomplete.html:10
-#, python-format
-msgid "<a href=\"%(website)s\">Back to event site</a>"
-msgstr "<a href=\"%(website)s\">Tilbage til arrangementssiden</a>"
+#: templates/signupbox/event_complete.html:11
+msgid "Would you like to subscribe to our newsletter?"
+msgstr "Vil du tilmeldes vores nyhedsbrev?"
+
+#: templates/signupbox/event_complete.html:26
+msgid "Subscribe to our newsletter"
+msgstr "Tilmeld til nyhedsbrev"
 
 #: templates/signupbox/event_confirm.html:9
 msgid "Confirm registration"
@@ -796,6 +798,11 @@ msgstr "Tilmelding ikke fuldført"
 #: templates/signupbox/event_incomplete.html:8
 msgid "The registration was not completed."
 msgstr "Tilmeldingen blev ikke fuldført."
+
+#: templates/signupbox/event_incomplete.html:10
+#, python-format
+msgid "<a href=\"%(website)s\">Back to event site</a>"
+msgstr "<a href=\"%(website)s\">Tilbage til arrangementssiden</a>"
 
 #: templates/signupbox/event_register.html:39
 msgid "Add extra attendee"

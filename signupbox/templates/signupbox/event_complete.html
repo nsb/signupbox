@@ -7,6 +7,24 @@
 
   <p>{% blocktrans with event.title as title %}We have sent you an email with a receipt of your registration.{% endblocktrans %}</p>
 
-  {% blocktrans with event.website as website %}<a href="{{ website }}">Back to event site</a>{% endblocktrans %}
+  <div class="newsletter">
+    <h4>{% trans "Would you like to subscribe to our newsletter?" %}</h4>
+    <form action="http://dac.us1.list-manage.com/subscribe/post?u=d297139f07d951498acdc50a3&amp;id=f47297dc57" method="post">
+    {% with booking.attendees.all|first as attendee %}
+    <input type="hidden" value="{{ attendee.email }}" name="EMAIL">
+    <input type="hidden" value="{{ attendee.name }}" name="FNAME">
+    {% endwith %}
+    <input type="hidden" value="" name="LNAME">
+    <input type="hidden" value="1" name="group[5][1]">
+    <input type="hidden" value="2" name="group[5][2]">
+    <input type="hidden" value="4" name="group[5][4]">
+    <input type="hidden" value="8" name="group[5][8]">
+    <input type="hidden" value="16" name="group[5][16]">
+    <input type="hidden" value="html" name="EMAILTYPE">
+    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+    <input type="hidden" name="b_d297139f07d951498acdc50a3_f47297dc57" value="">
+    <button class="button" type="submit" value="Subscribe" name="subscribe">{% trans "Subscribe to our newsletter" %}</button>
+    </form>
+  </div>
 
 {% endblock main %}

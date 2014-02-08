@@ -374,9 +374,9 @@ class EventSiteTestCase(BaseTestCase):
         )
         next, status_code = response.redirect_chain[0]
 
-        response = self.client.post(next, HTTP_HOST=self.http_host)
+        response = self.client.post(next, HTTP_HOST=self.http_host, follow=True)
 
-        self.failUnlessEqual(response.status_code, 302)
+        self.failUnlessEqual(response.status_code, 200)
         self.assertEquals(self.event.bookings.count(), 1) 
         self.assertEquals(self.event.confirmed_attendees_count, 2)
 
@@ -418,13 +418,6 @@ class EventSiteTestCase(BaseTestCase):
         self.failUnlessEqual(response.status_code, 302)
         self.assertEquals(self.event.bookings.count(), 1) 
         self.assertEquals(self.event.confirmed_attendees_count, 2)
-
-    def testComplete(self):
-        response = self.client.get(
-            reverse('event_complete', kwargs={'slug':self.event.slug,}),
-            HTTP_HOST=self.http_host,
-        )
-        self.failUnlessEqual(response.status_code, 200)
 
     def testIncomplete(self):
         response = self.client.get(

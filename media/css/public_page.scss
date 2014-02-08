@@ -10,6 +10,28 @@ a {
   text-decoration: underline;
 }
 
+form {
+  .button {
+    background-color: #336699;
+    color: #ffffff;
+    width: auto;
+    margin: 5px 5px 0 0;
+    padding: 10px 20px;
+    border: 0;
+    font-weight: bold;
+    font-size: 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    &:hover {
+      background-color: #1e5781;
+    }
+  }
+}
+
+.center {
+  text-align: center;
+}
+
 #page, #footer {
   width: 760px;
 }

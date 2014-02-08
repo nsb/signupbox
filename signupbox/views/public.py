@@ -81,7 +81,7 @@ def event_confirm(request, slug, booking_id):
             merchant = account.merchant_id
             continueurl = 'http://%s%s?%s' % (
                 request.get_host(),
-                reverse('event_complete', kwargs={'slug':slug}),
+                reverse('event_complete', kwargs={'slug': slug, 'token': booking.token}),
                 request.GET.urlencode()
             )
             cancelurl = 'http://%s%s?%s' % (
@@ -137,7 +137,7 @@ def event_confirm(request, slug, booking_id):
                 'item_name': event.title,
                 'invoice': booking.ordernumber,
                 'notify_url': "http://%s%s" % (request.get_host(), reverse('paypal-ipn')),
-                'return_url': "http://%s%s" % (request.get_host(), reverse('event_complete', kwargs={'slug':slug})),
+                'return_url': "http://%s%s" % (request.get_host(), reverse('event_complete', kwargs={'slug':slug, 'token': booking.token})),
                 'cancel_return': "http://%s%s" % (request.get_host(), reverse('event_incomplete', kwargs={'slug':slug})),
             }
 
@@ -156,7 +156,7 @@ def event_confirm(request, slug, booking_id):
         form = form_class(request.POST)
         if form.is_valid():
             form.save()
-            return redirect(reverse('event_complete', kwargs={'slug':slug}))
+            return redirect(reverse('event_complete', kwargs={'slug':slug, 'token': booking.token}))
     else:
         form = form_class()
 
@@ -165,16 +165,17 @@ def event_confirm(request, slug, booking_id):
             RequestContext(request, {'event':event, 'booking': booking, 'form':form}),
         )
 
-def event_complete(request, slug):
+def event_complete(request, slug, token):
 
     account = Account.objects.by_request(request)
     event = get_object_or_404(Event, account=account, slug=slug)
+    booking = get_object_or_404(Booking, token=token)
 
     translation.activate(event.language)
 
     return render_to_response(
         'signupbox/event_complete.html',
-        RequestContext(request, {'event': event})
+        RequestContext(request, {'event': event, 'booking': booking})
     )
 
 def event_incomplete(request, slug):
