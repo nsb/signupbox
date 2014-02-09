@@ -120,7 +120,7 @@ class AttendeeActions(object):
 
             for r in selected:
                 writer.writerow(
-                    [field.value.encode('utf8') for field in r.values.all()] + [r.ticket.name]
+                    [field.value.encode('utf8') for field in r.values.all()] + [r.ticket.name.encode('utf8')]
                 )
 
         elif data == BOOKING_DATA:
