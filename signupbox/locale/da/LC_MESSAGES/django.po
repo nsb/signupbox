@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-02-08 20:12+0100\n"
+"POT-Creation-Date: 2014-02-28 22:11+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -626,12 +626,19 @@ msgid "We have sent you an email with a receipt of your registration."
 msgstr "Vi har sendt dig en email med en kvittering på din tilmelding."
 
 #: templates/signupbox/event_complete.html:11
-msgid "Would you like to subscribe to our newsletter?"
-msgstr "Vil du tilmeldes vores nyhedsbrev?"
+msgid ""
+"Would you like to receive news regarding similar activities from Danish "
+"Architecture Center and subscribe to our monthly newsletter?"
+msgstr "Vil du modtage nyheder om lignende aktiviteter fra Dansk Arkitektur "
+"Center og modtage vores månedlige nyhedsbrev?"
 
 #: templates/signupbox/event_complete.html:26
-msgid "Subscribe to our newsletter"
-msgstr "Tilmeld til nyhedsbrev"
+msgid "Yes"
+msgstr "Ja"
+
+#: templates/signupbox/event_complete.html:27
+msgid "No"
+msgstr "Nej"
 
 #: templates/signupbox/event_confirm.html:9
 msgid "Confirm registration"
@@ -1278,6 +1285,12 @@ msgstr "Billet opdateret."
 #: views/tickets.py:64
 msgid "Ticket added."
 msgstr "Billet tilføjet."
+
+#~ msgid "Would you like to subscribe to our newsletter?"
+#~ msgstr "Vil du tilmeldes vores nyhedsbrev?"
+
+#~ msgid "Subscribe to our newsletter"
+#~ msgstr "Tilmeld til nyhedsbrev"
 
 #~ msgid "Registration for %(event_title)s"
 #~ msgstr "Tilmelding til %(event_title)s"
