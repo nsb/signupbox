@@ -1,6 +1,7 @@
 {% load i18n %}
 {% load date_tags %}
 <para>
+{% if event.project_id %}<strong>{% trans "Project Id" %}</strong> {{ event.project_id }}<br/>{% endif %}
 {% if event.venue %}<strong>{% trans "Venue:" %}</strong> {{ event.venue }}<br/>{% endif %}
 <strong>{% trans "Time and date:" %}</strong> {% datetime_span event.begins event.ends %}<br/>
 {% if event.price %}<strong>{% trans "Price:" %}</strong> {{ event.price|floatformat:"-2" }} {{ event.get_currency_display }}<br/>{% endif %}

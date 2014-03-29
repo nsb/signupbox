@@ -262,6 +262,12 @@ class Event(models.Model):
         max_length=255, verbose_name=_('What'), help_text=_('The event title'),
     )
     slug = models.SlugField(max_length=255)
+    project_id = models.CharField(max_length=128,
+                                  blank=True,
+                                  verbose_name=_('Project Id'),
+                                  help_text=_('Add the project id that '
+                                              'payments should be transfered '
+                                              'to.'))
 
     account = models.ForeignKey(Account, related_name='events')
 
