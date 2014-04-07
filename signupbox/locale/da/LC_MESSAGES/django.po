@@ -923,11 +923,12 @@ msgstr "Rediger billet"
 msgid ""
 "You can now close the page or go to Danish Architecture Center's website and "
 "see more interesting events."
-msgstr ""
+msgstr "Du kan nu lukke siden eller gå til Dansk Arkitektur Centers hjemmeside "
+"og see flere interessante arrangementer."
 
 #: templates/signupbox/event_view_more.html:9
 msgid "Go to website Danish Architecture Center"
-msgstr ""
+msgstr "Gå til Dansk Arkitektur Centers hjemmeside"
 
 #: templates/signupbox/index.html:7
 #, python-format
@@ -1307,9 +1308,8 @@ msgid "Event updated."
 msgstr "Arrangement opdateret."
 
 #: views/event.py:120
-#, fuzzy
 msgid "Event copied."
-msgstr "Arrangement opdateret."
+msgstr "Arrangement kopieret."
 
 #: views/fields.py:27
 msgid "Form fields updated."
@@ -1322,12 +1322,3 @@ msgstr "Billet opdateret."
 #: views/tickets.py:64
 msgid "Ticket added."
 msgstr "Billet tilføjet."
-
-#~ msgid "Would you like to subscribe to our newsletter?"
-#~ msgstr "Vil du tilmeldes vores nyhedsbrev?"
-
-#~ msgid "Subscribe to our newsletter"
-#~ msgstr "Tilmeld til nyhedsbrev"
-
-#~ msgid "Registration for %(event_title)s"
-#~ msgstr "Tilmelding til %(event_title)s"
