@@ -106,7 +106,10 @@ class AttendeeActions(object):
         """
 
         response = HttpResponse(mimetype='text/csv')
-        response['Content-Disposition'] = 'attachment; filename="%s.csv"' % event.title.encode('utf8')
+        # if the event has a project id, include it in the filename
+        project_id_token = "_%s" % (event.project_id) if event.project_id else ""
+        filename = "%s%s.csv" % (event.title.encode('utf8'), project_id_token)
+        response['Content-Disposition'] = 'attachment; filename="%s"' % filename
 
         writer = csv.writer(response)
 
@@ -285,8 +288,11 @@ class AttendeeActions(object):
                 for column, data in enumerate(column_data):
                     ws.row(row + 1).write(column, data)
 
+        # if the event has a project id, include it in the filename
+        project_id_token = "_%s" % (event.project_id) if event.project_id else ""
+        filename = "%s%s.xls" % (event.title.encode('utf8'), project_id_token)
         response = HttpResponse(mimetype='application/vnd.ms-excel')
-        response['Content-Disposition'] = 'attachment; filename="%s.xls"' % event.title.encode('utf8')
+        response['Content-Disposition'] = 'attachment; filename="%s"' % filename
 
         wb.save(response)
 
