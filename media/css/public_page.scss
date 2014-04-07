@@ -51,8 +51,12 @@ form {
 
   padding: 20px 40px;
 
-  h1, h3, p {
-    margin-bottom: 10px;
+  h1, h3 {
+    margin-bottom: 2px;
+  }
+
+  .details {
+    margin-bottom: 20px;
   }
 
   table {
