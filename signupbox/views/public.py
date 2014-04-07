@@ -178,6 +178,15 @@ def event_complete(request, slug, token):
         RequestContext(request, {'event': event, 'booking': booking})
     )
 
+def event_view_more(request, slug):
+    event = get_object_or_404(Event, slug=slug)
+
+    return render_to_response(
+        'signupbox/event_view_more.html',
+        RequestContext(request, {'event': event,})
+    )
+
+
 def event_incomplete(request, slug):
 
     account = Account.objects.by_request(request)
