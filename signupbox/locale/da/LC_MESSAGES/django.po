@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-04-07 11:20+0200\n"
+"POT-Creation-Date: 2014-04-07 15:23+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -216,7 +216,7 @@ msgstr "Tilføj det projekt nr. som billetindtægter skal overføres til."
 
 #: models.py:274 forms/event.py:11
 #: templates/signupbox/includes/export_pdf_booking.txt:6
-#: views/attendee_actions.py:140 views/attendee_actions.py:263
+#: views/attendee_actions.py:143 views/attendee_actions.py:266
 msgid "Description"
 msgstr "Beskrivelse"
 
@@ -249,7 +249,7 @@ msgstr "Blank for ubegrænset"
 msgid "Status"
 msgstr "Status"
 
-#: models.py:290 views/attendee_actions.py:138 views/attendee_actions.py:261
+#: models.py:290 views/attendee_actions.py:141 views/attendee_actions.py:264
 msgid "Currency"
 msgstr "Valuta"
 
@@ -360,11 +360,11 @@ msgstr "Navn"
 msgid "Organization"
 msgstr "Firma"
 
-#: models.py:612 views/attendee_actions.py:198
+#: models.py:612 views/attendee_actions.py:201
 msgid "Email"
 msgstr "Email"
 
-#: models.py:628
+#: models.py:624
 msgid "Default ticket"
 msgstr "Standard billet"
 
@@ -442,11 +442,11 @@ msgstr "PDF"
 msgid "Excel"
 msgstr "Excel"
 
-#: forms/attendees.py:25 views/attendee_actions.py:235
+#: forms/attendees.py:25 views/attendee_actions.py:238
 msgid "Attendee data"
 msgstr "Deltager data"
 
-#: forms/attendees.py:26 views/attendee_actions.py:250
+#: forms/attendees.py:26 views/attendee_actions.py:253
 msgid "Booking data"
 msgstr "Tilmeldings data"
 
@@ -482,8 +482,12 @@ msgstr "Alle"
 msgid "Begin date must be before end date"
 msgstr "Start dato skal være tidligere end slut dato"
 
-#: forms/register.py:71 views/attendee_actions.py:118
-#: views/attendee_actions.py:198 views/attendee_actions.py:240
+#: forms/event.py:25
+msgid "New title"
+msgstr ""
+
+#: forms/register.py:71 views/attendee_actions.py:121
+#: views/attendee_actions.py:201 views/attendee_actions.py:243
 msgid "Ticket"
 msgstr "Billet"
 
@@ -616,8 +620,8 @@ msgstr "Send"
 msgid "Export attendee data"
 msgstr "Eksporter deltager data"
 
-#: templates/signupbox/booking_detail.html:8 views/attendee_actions.py:133
-#: views/attendee_actions.py:255
+#: templates/signupbox/booking_detail.html:8 views/attendee_actions.py:136
+#: views/attendee_actions.py:258
 msgid "Booking"
 msgstr "Tilmelding"
 
@@ -704,6 +708,15 @@ msgstr "Pris i alt"
 msgid "Incl. vat"
 msgstr "Inkl. moms"
 
+#: templates/signupbox/event_copy.html:6
+#: templates/signupbox/event_detail.html:37
+msgid "Copy event"
+msgstr "Kopier arrangement"
+
+#: templates/signupbox/event_copy.html:16
+msgid "Copy"
+msgstr "Kopier"
+
 #: templates/signupbox/event_create.html:6 templates/signupbox/index.html:8
 msgid "Add event"
 msgstr "Tilføj arrangement"
@@ -749,16 +762,16 @@ msgstr[1] ""
 msgid "Website"
 msgstr "Website"
 
-#: templates/signupbox/event_detail.html:33
+#: templates/signupbox/event_detail.html:34
 #: templates/signupbox/event_edit.html:6
 msgid "Edit event"
 msgstr "Rediger arrangement"
 
-#: templates/signupbox/event_detail.html:38
+#: templates/signupbox/event_detail.html:43
 msgid "A new event!"
 msgstr "Et nyt arrangement"
 
-#: templates/signupbox/event_detail.html:39
+#: templates/signupbox/event_detail.html:44
 #, python-format
 msgid ""
 "\n"
@@ -905,6 +918,16 @@ msgstr "Ingen billetter for dette arrangement"
 #: templates/signupbox/event_tickets_edit.html:9
 msgid "Edit ticket"
 msgstr "Rediger billet"
+
+#: templates/signupbox/event_view_more.html:6
+msgid ""
+"You can now close the page or go to Danish Architecture Center's website and "
+"see more interesting events."
+msgstr ""
+
+#: templates/signupbox/event_view_more.html:9
+msgid "Go to website Danish Architecture Center"
+msgstr ""
 
 #: templates/signupbox/index.html:7
 #, python-format
@@ -1073,27 +1096,27 @@ msgid "Signup"
 msgstr "Opret"
 
 #: templates/signupbox/includes/export_pdf_booking.txt:5
-#: views/attendee_actions.py:136 views/attendee_actions.py:259
+#: views/attendee_actions.py:139 views/attendee_actions.py:262
 msgid "Transaction"
 msgstr "Transaktion"
 
 #: templates/signupbox/includes/export_pdf_booking.txt:7
-#: views/attendee_actions.py:135 views/attendee_actions.py:258
+#: views/attendee_actions.py:138 views/attendee_actions.py:261
 msgid "Ordernumber"
 msgstr "Ordrenummer"
 
 #: templates/signupbox/includes/export_pdf_booking.txt:8
-#: views/attendee_actions.py:137 views/attendee_actions.py:260
+#: views/attendee_actions.py:140 views/attendee_actions.py:263
 msgid "Amount"
 msgstr "Beløb"
 
 #: templates/signupbox/includes/export_pdf_booking.txt:9
-#: views/attendee_actions.py:139 views/attendee_actions.py:262
+#: views/attendee_actions.py:142 views/attendee_actions.py:265
 msgid "Cardtype"
 msgstr "Korttype"
 
 #: templates/signupbox/includes/export_pdf_booking.txt:10
-#: views/attendee_actions.py:141 views/attendee_actions.py:264
+#: views/attendee_actions.py:144 views/attendee_actions.py:267
 msgid "Notes"
 msgstr "Noter"
 
@@ -1255,11 +1278,11 @@ msgid_plural "Emails sent"
 msgstr[0] "Email sendt"
 msgstr[1] "Emails sendt"
 
-#: views/attendee_actions.py:134 views/attendee_actions.py:257
+#: views/attendee_actions.py:137 views/attendee_actions.py:260
 msgid "Date and time"
 msgstr "Dato og tid"
 
-#: views/attendee_actions.py:239
+#: views/attendee_actions.py:242
 msgid "Attendee count"
 msgstr "Deltager antal"
 
@@ -1275,12 +1298,17 @@ msgstr "Deltager tilføjet."
 msgid "Booking updated."
 msgstr "Tilmelding opdateret."
 
-#: views/event.py:28
+#: views/event.py:30
 msgid "Event added."
 msgstr "Arrangement tilføjet."
 
-#: views/event.py:79
+#: views/event.py:81
 msgid "Event updated."
+msgstr "Arrangement opdateret."
+
+#: views/event.py:120
+#, fuzzy
+msgid "Event copied."
 msgstr "Arrangement opdateret."
 
 #: views/fields.py:27
