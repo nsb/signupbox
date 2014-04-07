@@ -925,7 +925,7 @@ msgid ""
 "see more interesting events."
 msgstr ""
 "Du kan nu lukke siden eller gå til Dansk Arkitektur Centers hjemmeside og "
-"see flere interessante arrangementer."
+"se flere interessante arrangementer."
 
 #: templates/signupbox/event_view_more.html:9
 msgid "Go to website Danish Architecture Center"
