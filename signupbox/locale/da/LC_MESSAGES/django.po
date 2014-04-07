@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-04-07 15:23+0200\n"
+"POT-Creation-Date: 2014-04-07 16:14+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -923,8 +923,9 @@ msgstr "Rediger billet"
 msgid ""
 "You can now close the page or go to Danish Architecture Center's website and "
 "see more interesting events."
-msgstr "Du kan nu lukke siden eller gå til Dansk Arkitektur Centers hjemmeside "
-"og see flere interessante arrangementer."
+msgstr ""
+"Du kan nu lukke siden eller gå til Dansk Arkitektur Centers hjemmeside og "
+"see flere interessante arrangementer."
 
 #: templates/signupbox/event_view_more.html:9
 msgid "Go to website Danish Architecture Center"
@@ -1190,8 +1191,8 @@ msgstr "email:"
 
 #: templates/signupbox/mails/register_email_registrant.txt:4
 #, python-format
-msgid "Thank you for your recent booking for %(title)s."
-msgstr "Tak for din tilmelding til %(title)s."
+msgid "Confirmation of registration for: %(title)s."
+msgstr "Bekræftelse på tilmelding til: %(title)s."
 
 #: templates/signupbox/mails/register_email_registrant.txt:8
 #, python-format
@@ -1322,3 +1323,6 @@ msgstr "Billet opdateret."
 #: views/tickets.py:64
 msgid "Ticket added."
 msgstr "Billet tilføjet."
+
+#~ msgid "Thank you for your recent booking for %(title)s."
+#~ msgstr "Tak for din tilmelding til %(title)s."

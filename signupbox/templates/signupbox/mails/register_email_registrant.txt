@@ -1,7 +1,7 @@
 {% extends "signupbox/mails/register_email.txt" %}
 {% load i18n %}
 {% block intro %}
-{% blocktrans with event.title as title %}Thank you for your recent booking for {{ title }}.{% endblocktrans %}
+{% blocktrans with event.title as title %}Confirmation of registration for: {{ title }}.{% endblocktrans %}
 {% endblock intro %}
 {% block booking_info %}
 {% include "signupbox/includes/booking_description.txt" %}
