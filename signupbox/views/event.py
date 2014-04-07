@@ -8,8 +8,8 @@ from django.utils.translation import ugettext, ugettext_lazy as _
 from django.views.generic.list_detail import object_detail
 from django.http import HttpResponseForbidden
 
-from ..models import Event
-from ..forms import EventForm
+from ..models import Event, create_default_fields, create_default_tickets
+from ..forms import EventForm, EventCopyForm
 from ..decorators import with_account
 
 @login_required
@@ -25,6 +25,8 @@ def create(request, account):
         form = EventForm(request.POST, instance=event)
         if form.is_valid():
             event = form.save()
+            create_default_fields(event)
+            create_default_tickets(event)
             messages.success(request, _('Event added.'))
             return redirect(reverse('event_detail', kwargs={'slug':event.slug}))
     else:
@@ -83,5 +85,45 @@ def edit(request, slug, account):
 
     return render_to_response(
         'signupbox/event_edit.html',
+        RequestContext(request, {'form':form, 'event':event,})
+    )
+
+@login_required
+@with_account
+def copy(request, slug, account):
+
+    if not request.user.has_perm('view', account):
+        return HttpResponseForbidden()
+
+    event = get_object_or_404(Event, account=account, slug=slug)
+
+    if request.method == 'POST':
+        form = EventForm(request.POST, instance=Event(account=account))
+        if form.is_valid():
+            new_event = form.save()
+
+            for field in event.fields.all():
+                options = field.options.all()
+                field.pk = None
+                field.event = new_event
+                field.save()
+                for option in options:
+                    option.pk = None
+                    option.field = field
+                    option.save()
+
+            for ticket in event.tickets.all():
+                ticket.pk = None
+                ticket.event = new_event
+                ticket.save()
+
+            messages.success(request, _('Event copied.'))
+            return redirect(reverse('event_detail', kwargs={'slug':new_event.slug}))
+    else:
+        event.pk = None
+        form = EventForm(instance=event)
+
+    return render_to_response(
+        'signupbox/event_copy.html',
         RequestContext(request, {'form':form, 'event':event,})
     )

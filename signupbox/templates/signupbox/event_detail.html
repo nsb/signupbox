@@ -30,7 +30,12 @@
       </li>
       <li><strong>{% trans "Website" %}:</strong> <a href="{{ event.website }}">{{ event.website }}</a></li>
     </ul>
-    <div><a href="{% url event_edit event.slug %}">{% trans "Edit event" %}</a></div>
+    <div>
+      <a href="{% url event_edit event.slug %}">{% trans "Edit event" %}</a>
+    </div>
+    <div>
+      <a href="{% url event_copy event.slug %}">{% trans "Copy event" %}</a>
+    </div>
   </div>
 
   {% if not event.confirmed_attendees_count %}

@@ -20,3 +20,6 @@ class EventForm(forms.ModelForm):
         if set(('begins', 'ends')).issubset(self.cleaned_data) and self.cleaned_data['begins'] > self.cleaned_data['ends']:
             raise forms.ValidationError(_('Begin date must be before end date'))
         return self.cleaned_data
+
+class EventCopyForm(forms.Form):
+    title = forms.CharField(required=True, label=_('New title'))

@@ -605,7 +605,7 @@ class FieldOption(models.Model):
     class Meta:
         ordering = ('id',)
 
-def create_default_fields(sender, instance, created, **kwargs):
+def create_default_fields(event):
     default_fields = (
         {'label':ugettext('Name'), 'type':TEXT_FIELD, 'required':True, 'in_extra':True,},
         {'label':ugettext('Organization'), 'type':TEXT_FIELD,},
@@ -616,23 +616,15 @@ def create_default_fields(sender, instance, created, **kwargs):
         {'label':ugettext('Country'), 'type':TEXT_FIELD,},
         {'label':ugettext('Phone number'), 'type':PHONE_FIELD,},
     )
-    if created:
-        for index, field in enumerate(default_fields):
-            Field.objects.create(event=instance, **field)
+    for index, field in enumerate(default_fields):
+        Field.objects.create(event=event, **field)
 
-# auto create default form fields
-signals.post_save.connect(create_default_fields, sender=Event)
-
-def create_default_tickets(sender, instance, created, **kwargs):
+def create_default_tickets(event):
     default_tickets = (
         {'name':ugettext('Default ticket'),},
     )
-    if created:
-        for index, ticket in enumerate(default_tickets):
-            Ticket.objects.create(event=instance, **ticket)
-
-# auto create default tickets
-signals.post_save.connect(create_default_tickets, sender=Event)
+    for index, ticket in enumerate(default_tickets):
+        Ticket.objects.create(event=event, **ticket)
 
 def on_paypal_payment_success(sender, **kwargs):
     ipn_obj = sender

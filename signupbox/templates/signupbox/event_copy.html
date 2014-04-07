@@ -1,0 +1,22 @@
+{% extends "signupbox/appbase.html" %}
+{% load i18n %}
+
+{% block main %}
+<div class="headline indent">
+  <h2>{% trans "Copy event" %}</h2>
+</div>
+
+<div class="indent">
+  <form action="{% url event_copy event.slug %}" method="POST">
+    {% csrf_token %}
+    {% for field in form %}
+      {% include "signupbox/includes/field.html" %}
+    {% endfor %}
+    <div>
+      <input type="submit" value="{% trans "Copy" %}" />
+    </div>
+  </form>
+
+</div>
+
+{% endblock main %}
