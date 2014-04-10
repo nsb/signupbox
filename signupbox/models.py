@@ -577,7 +577,7 @@ class Attendee(models.Model):
                 return ''
 
     class Meta:
-        ordering = ('-id',)
+        ordering = ('id',)
 
 class FieldValue(models.Model):
     """
