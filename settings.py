@@ -201,18 +201,15 @@ COMPILER_FORMATS = {
 SOUTH_TESTS_MIGRATE = False
 
 BROKER_BACKEND = "djkombu.transport.DatabaseTransport"
-# CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
 CELERYD_CONCURRENCY = 1
 CELERYBEAT_SCHEDULE = {
     'run-survey-every-hour': {
         'task': 'signupbox.tasks.run_surveys',
-        'schedule': timedelta(seconds=30),
-        # 'args': (16, 16)
+        'schedule': timedelta(hours=1),
     },
-    'run-send-reminders': {
+    'run-send-reminders-every-hour': {
         'task': 'signupbox.tasks.send_reminders',
-        'schedule': timedelta(seconds=30),
-        # 'args': (16, 16)
+        'schedule': timedelta(hours=1),
     },
 }
 

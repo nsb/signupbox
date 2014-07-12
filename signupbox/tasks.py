@@ -13,7 +13,6 @@ from django.utils import translation
 from django.conf import settings
 
 from celery import group, task
-# from celery.decorators import task, periodic_task
 from celery.utils.log import get_task_logger
 
 import nexmo
@@ -123,7 +122,6 @@ def send_reminder(attendee, language_code):
                 send_reminder.retry(args=[attendee, language_code], exc=exc)
 
 
-# @periodic_task(run_every=timedelta(hours=1))
 @task
 def send_reminders():
 
