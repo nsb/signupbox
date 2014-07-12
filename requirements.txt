@@ -3,7 +3,8 @@ django==1.3
 -e svn+http://google-visualization-python.googlecode.com/svn/trunk@15#egg=gviz
 south==0.7.3
 django-kombu==0.9.1
-django-celery==2.2.2
+celery==3.0.20
+django-celery==3.0.17
 ghettoq==0.4.5
 BeautifulSoup==3.2.0
 -e git://github.com/dziegler/django-css.git@0a0d7124b8136ff6b078958a13d241979c2c32df#egg=DjangoCSS

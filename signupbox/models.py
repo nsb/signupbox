@@ -91,6 +91,12 @@ class Account(models.Model):
     groups = models.ManyToManyField(Group, related_name='groups', blank=True,
         help_text=_("""In addition to the permissions manually assigned, 
             this account will also get all permissions granted to each group it is in."""))
+    relationwise_api_key = models.CharField(
+        max_length=128,
+        blank=True,
+        verbose_name=_('Relationwise authentication key'),
+        help_text=_('Required in order to use the relationwise integration.'))
+
     site = models.ForeignKey(Site)
 
     objects = AccountManager()
@@ -298,6 +304,10 @@ class Event(models.Model):
     activities = generic.GenericRelation(Activity)
 
     language = models.CharField(max_length=2, choices=LANGUAGE_CHOICES, default='da', verbose_name=_('Language'))
+    surveyEnabled = models.BooleanField(default=False,
+                                        verbose_name=_('Survey'),
+                                        help_text=_('Send out survey questions to attendees after the event?'))
+    surveySent = models.BooleanField(default=False)
 
     objects = EventManager()
 

@@ -2,6 +2,8 @@ from smtplib import SMTPException
 
 from datetime import datetime, date, time, timedelta
 
+import urllib2
+
 from django.core.mail import send_mass_mail, send_mail
 from django.contrib.sites.models import Site
 from django.template.loader import render_to_string
@@ -10,12 +12,16 @@ from django.template import Context
 from django.utils import translation
 from django.conf import settings
 
-from celery.decorators import task, periodic_task
+from celery import group, task
+# from celery.decorators import task, periodic_task
+from celery.utils.log import get_task_logger
 
 import nexmo
 
 from activities.models import Activity
 from models import Event, Booking, Attendee
+
+logger = get_task_logger(__name__)
 
 @task
 def async_send_mail(recipients, subject, message, language_code):
@@ -117,7 +123,8 @@ def send_reminder(attendee, language_code):
                 send_reminder.retry(args=[attendee, language_code], exc=exc)
 
 
-@periodic_task(run_every=timedelta(hours=1))
+# @periodic_task(run_every=timedelta(hours=1))
+@task
 def send_reminders():
 
     translation.activate(settings.LANGUAGE_CODE)
@@ -132,3 +139,64 @@ def send_reminders():
 
             event.reminders_sent = datetime.now()
             event.save()
+
+
+@task
+def send_survey(attendee_id, key):
+    """Send a relationwise survey to a single recipient"""
+
+    url = 'https://www.relationwise.com/rls/restapi2/send/'
+    attendees = Attendee.objects.select_related(
+        'booking__event').filter(pk=attendee_id)
+
+    for attendee in attendees:
+        if not attendee.email:
+            return
+
+
+        context = Context({'event': attendee.booking.event,
+                   'attendee': attendee}, autoescape=False)
+
+        xml_string = render_to_string('signupbox/relationwise.html',
+                                      context_instance=context)
+
+        logger.info("sending survey for attendee %s" % attendee.name)
+        req = urllib2.Request(url=url,
+                              data=xml_string,
+                              headers={'Content-Type': 'application/xml',
+                                       'key': key})
+
+        try:
+            response = urllib2.urlopen(req)
+        except (urllib2.HTTPError, urllib2.URLError) as e:
+            logger.error('relationwise survey error: %s' %
+                e.headers.get('Details', ""))
+            send_survey.retry(e)
+
+@task
+def send_surveys(event_id):
+    """Send out relationwise surveys for event"""
+    try:
+        event = Event.objects.select_related('booking', 'account').get(pk=event_id)
+    except Event.DoesNotExist:
+        return
+
+    if not event.surveyEnabled or event.surveySent or not event.account.relationwise_api_key:
+        logger.warning("Skipping send survey for event %s." % event.title)
+        return
+
+    logger.info("Sending survey for event %s" % event.title)
+    group(send_survey.s(attendee.pk, event.account.relationwise_api_key)
+        for attendee in Attendee.objects.confirmed(event))()
+    event.surveySent = True
+    event.save()
+
+
+@task
+def run_surveys():
+    logger.info("Checking for surveys to be sent...")
+    begins = datetime.now() - timedelta(hours=20)
+    event_ids = Event.objects.filter(begins__lt=begins,
+                                     surveyEnabled=True).values_list('pk', flat=True)
+    logger.info("Send survey for %d events" % len(event_ids))
+    group(send_surveys.s(id) for id in event_ids)()

@@ -31,6 +31,7 @@ class AccountForm(forms.ModelForm):
             'sms_gateway_username',
             'sms_gateway_password',
             'google_analytics',
+            'relationwise_api_key',
             'terms',
             'extra_info',
         )

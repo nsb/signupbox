@@ -2,6 +2,7 @@
 # Django settings for signupbox project.
 
 import os
+from datetime import timedelta
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -115,7 +116,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'south',
     'compressor',
-    'djkombu',
+    # 'djkombu',
     'djcelery',
     'paypal.standard.ipn',
     'indexer',
@@ -200,8 +201,20 @@ COMPILER_FORMATS = {
 SOUTH_TESTS_MIGRATE = False
 
 BROKER_BACKEND = "djkombu.transport.DatabaseTransport"
-CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
+# CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
 CELERYD_CONCURRENCY = 1
+CELERYBEAT_SCHEDULE = {
+    'run-survey-every-hour': {
+        'task': 'signupbox.tasks.run_surveys',
+        'schedule': timedelta(seconds=30),
+        # 'args': (16, 16)
+    },
+    'run-send-reminders': {
+        'task': 'signupbox.tasks.send_reminders',
+        'schedule': timedelta(seconds=30),
+        # 'args': (16, 16)
+    },
+}
 
 import djcelery
 djcelery.setup_loader()
