@@ -1,0 +1,9 @@
+{% load i18n %}{% blocktrans with attendee_name=attendee.name %}Hi {{ attendee_name }}{% endblocktrans %}
+
+{% trans "We would like to get better at what we do, and a single question can make the difference." %}
+{% trans "Click on the link..." %}
+
+{{ relationwise_survey_url }}
+{% blocktrans with account_display_name=attendee.booking.event.account.display_name %}
+Regards {{ account_display_name }}
+{% endblocktrans %}

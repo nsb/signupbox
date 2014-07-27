@@ -140,7 +140,7 @@ def send_reminders():
 
 
 @task
-def send_survey(attendee_id, key):
+def send_survey(attendee_id, survye_id):
     """Send a relationwise survey to a single recipient"""
 
     url = 'https://www.relationwise.com/rls/restapi2/send/'
@@ -151,25 +151,37 @@ def send_survey(attendee_id, key):
         if not attendee.email:
             return
 
+        event = attendee.booking.event
+        relationwise_survey_url = \
+            ("https://www.relationwise.com/rss/automaticsurvey/diysurvey.aspx"
+             "?surveyID=%(surveyId)s"
+             "&email=%(email)s"
+             "&name=%(name)s"
+             "&signupbox=%(signupbox)s") % {
+            'surveyId': event.account.relationwise_survey_id.encode('iso-8859-1'),
+            'name': attendee.name.encode('iso-8859-1'),
+            'signupbox': event.slug.encode('iso-8859-1'),
+            'email': attendee.email.encode('iso-8859-1'),
+        }
 
-        context = Context({'event': attendee.booking.event,
-                   'attendee': attendee}, autoescape=False)
+        context = Context({'event': event,
+                           'attendee': attendee,
+                           'relationwise_survey_url': relationwise_survey_url},
+                           autoescape=False)
 
-        xml_string = render_to_string('signupbox/relationwise.html',
-                                      context_instance=context)
+        translation.activate(event.language)
 
-        logger.info("sending survey for attendee %s" % attendee.name)
-        req = urllib2.Request(url=url,
-                              data=xml_string,
-                              headers={'Content-Type': 'application/xml',
-                                       'key': key})
-
+        sender = event.account.email
+        recipient = attendee.email
+        subject = render_to_string('signupbox/mails/relationwise_subject.txt',
+                                   context_instance=context)
+        message = render_to_string('signupbox/mails/relationwise_body.txt',
+                                   context_instance=context)
         try:
-            response = urllib2.urlopen(req)
-        except (urllib2.HTTPError, urllib2.URLError) as e:
-            logger.error('relationwise survey error: %s' %
-                e.headers.get('Details', ""))
-            send_survey.retry(e)
+            send_mail(subject, message, sender, [recipient])
+        except SMTPException, exc:
+            send_survey.retry(args=[attendee, language_code], exc=exc)
+
 
 @task
 def send_surveys(event_id):
@@ -179,12 +191,12 @@ def send_surveys(event_id):
     except Event.DoesNotExist:
         return
 
-    if not event.surveyEnabled or event.surveySent or not event.account.relationwise_api_key:
+    if not event.surveyEnabled or event.surveySent or not event.account.relationwise_survey_id:
         logger.warning("Skipping send survey for event %s." % event.title)
         return
 
     logger.info("Sending survey for event %s" % event.title)
-    group(send_survey.s(attendee.pk, event.account.relationwise_api_key)
+    group(send_survey.s(attendee.pk, event.account.relationwise_survey_id)
         for attendee in Attendee.objects.confirmed(event))()
     event.surveySent = True
     event.save()
