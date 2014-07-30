@@ -4,6 +4,5 @@
 {% trans "Click on the link..." %}
 
 {{ relationwise_survey_url }}
-{% blocktrans with account_display_name=attendee.booking.event.account.display_name %}
-Regards {{ account_display_name }}
-{% endblocktrans %}
+
+{% blocktrans with account_display_name=attendee.booking.event.account.display_name %}Regards {{ account_display_name }}{% endblocktrans %}

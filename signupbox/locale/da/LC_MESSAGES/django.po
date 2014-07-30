@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-04-07 16:14+0200\n"
+"POT-Creation-Date: 2014-07-30 11:05+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -27,7 +27,7 @@ msgstr "Quickpay"
 
 #: models.py:36
 msgid "Nexmo"
-msgstr ""
+msgstr "Nexmo"
 
 #: models.py:64
 msgid "Account name"
@@ -37,23 +37,23 @@ msgstr "Konto navn"
 msgid "Company"
 msgstr "Firma"
 
-#: models.py:66 models.py:277 models.py:613
+#: models.py:66 models.py:283 models.py:623
 msgid "Street"
 msgstr "Gade"
 
-#: models.py:67 models.py:279 models.py:614
+#: models.py:67 models.py:285 models.py:624
 msgid "Zip code"
 msgstr "Post nummer"
 
-#: models.py:68 models.py:278 models.py:615
+#: models.py:68 models.py:284 models.py:625
 msgid "City"
 msgstr "By"
 
-#: models.py:69 models.py:616
+#: models.py:69 models.py:626
 msgid "Country"
 msgstr "Land"
 
-#: models.py:70 models.py:617
+#: models.py:70 models.py:627
 msgid "Phone number"
 msgstr "Telefon nummer"
 
@@ -134,245 +134,261 @@ msgstr ""
 "I tillæg til alle rettigheder manuelt tildelt, vil denne konto også få alle "
 "rettigheder tildelt alle grupper den er i."
 
-#: models.py:148
+#: models.py:97
+msgid "Relationwise Survey Id"
+msgstr ""
+
+#: models.py:98
+msgid "Required in order to use the Relationwise integration."
+msgstr ""
+
+#: models.py:154
 msgid "Account"
 msgstr "Konto"
 
-#: models.py:149
+#: models.py:155
 msgid "Accounts"
 msgstr "Kontoer"
 
-#: models.py:207 templates/signupbox/profile.html:6
+#: models.py:213 templates/signupbox/profile.html:6
 msgid "Profile"
 msgstr "Profil"
 
-#: models.py:208
+#: models.py:214
 msgid "Profiles"
 msgstr "Profiler"
 
-#: models.py:217
+#: models.py:223
 msgid "Open"
 msgstr "Åben"
 
-#: models.py:218
+#: models.py:224
 msgid "Closed"
 msgstr "Lukket"
 
-#: models.py:222
+#: models.py:228
 msgid "kr."
 msgstr "kr."
 
-#: models.py:223
+#: models.py:229
 msgid "euros"
 msgstr "euro"
 
-#: models.py:227
+#: models.py:233
 msgid "Danish"
 msgstr "Dansk"
 
-#: models.py:228
+#: models.py:234
 msgid "English"
 msgstr "Engelsk"
 
-#: models.py:232
+#: models.py:238
 msgid "Never"
 msgstr "Aldrig"
 
-#: models.py:233
+#: models.py:239
 msgid "1 Day"
 msgstr "1 Dag"
 
-#: models.py:234
+#: models.py:240
 msgid "Three days"
 msgstr "Tre dage"
 
-#: models.py:235
+#: models.py:241
 msgid "One week"
 msgstr "En uge"
 
-#: models.py:236
+#: models.py:242
 msgid "Two weeks"
 msgstr "To uger"
 
-#: models.py:237
+#: models.py:243
 msgid "One month"
 msgstr "En måned"
 
-#: models.py:262
+#: models.py:268
 msgid "What"
 msgstr "Hvad"
 
-#: models.py:262
+#: models.py:268
 msgid "The event title"
 msgstr "Arrangementets navn"
 
-#: models.py:267 templates/signupbox/includes/export_pdf_details.txt:4
+#: models.py:273 templates/signupbox/includes/export_pdf_details.txt:4
 msgid "Project Id"
 msgstr "Projekt nr."
 
-#: models.py:268
+#: models.py:274
 msgid "Add the project id that payments should be transfered to."
 msgstr "Tilføj det projekt nr. som billetindtægter skal overføres til."
 
-#: models.py:274 forms/event.py:11
+#: models.py:280 forms/event.py:11
 #: templates/signupbox/includes/export_pdf_booking.txt:6
 #: views/attendee_actions.py:143 views/attendee_actions.py:266
 msgid "Description"
 msgstr "Beskrivelse"
 
-#: models.py:276 templates/signupbox/event_site.html:16
+#: models.py:282 templates/signupbox/event_site.html:16
 #: templates/signupbox/mails/register_email.txt:8
 msgid "Where"
 msgstr "Hvor"
 
-#: models.py:276
+#: models.py:282
 msgid "The event venue"
 msgstr "Arrangementets lokation"
 
-#: models.py:282 forms/event.py:8
+#: models.py:288 forms/event.py:8
 msgid "Begins"
 msgstr "Begynder"
 
-#: models.py:283 forms/event.py:9
+#: models.py:289 forms/event.py:9
 msgid "Ends"
 msgstr "Slutter"
 
-#: models.py:286 templates/signupbox/event_detail.html:17
+#: models.py:292 templates/signupbox/event_detail.html:17
 msgid "Capacity"
 msgstr "Kapacitet"
 
-#: models.py:286
+#: models.py:292
 msgid "Leave blank for unlimited."
 msgstr "Blank for ubegrænset"
 
-#: models.py:287
+#: models.py:293
 msgid "Status"
 msgstr "Status"
 
-#: models.py:290 views/attendee_actions.py:141 views/attendee_actions.py:264
+#: models.py:296 views/attendee_actions.py:141 views/attendee_actions.py:264
 msgid "Currency"
 msgstr "Valuta"
 
-#: models.py:293
+#: models.py:299
 msgid "Send reminder"
 msgstr "Send påmindelse"
 
-#: models.py:293
+#: models.py:299
 msgid "When should the reminder be sent?"
 msgstr "Hvornår skal påmindelse afsendes?"
 
-#: models.py:294
+#: models.py:300
 msgid "Reminder subject"
 msgstr "Påmindelse emne"
 
-#: models.py:295
+#: models.py:301
 msgid "Reminder"
 msgstr "Påmindelse"
 
-#: models.py:300
+#: models.py:306
 msgid "Language"
 msgstr "Sprog"
 
-#: models.py:376
+#: models.py:308
+msgid "Survey"
+msgstr ""
+
+#: models.py:309
+msgid "Send out survey questions to attendees after the event?"
+msgstr ""
+
+#: models.py:386
 msgid "Available"
 msgstr "til rådighed"
 
-#: models.py:376
+#: models.py:386
 msgid "Number of available tickets. Leave blank for event capacity."
 msgstr ""
 "Antal billetter til rådighed. Hvis tom bruges arrangements kapaciteten."
 
-#: models.py:418
+#: models.py:428
 #, python-format
 msgid "%(attendee1)s and %(attendee2)s"
 msgstr "%(attendee1)s og %(attendee2)s"
 
-#: models.py:421
+#: models.py:431
 #, python-format
 msgid "%(name)s registered for %(event)s."
 msgstr "%(name)s tilmeldte sig %(event)s."
 
-#: models.py:447
+#: models.py:457
 msgid "text"
 msgstr "tekst"
 
-#: models.py:448
+#: models.py:458
 msgid "multiline text"
 msgstr "multilinie tekst"
 
-#: models.py:449
+#: models.py:459
 msgid "checkbox"
 msgstr "tjekboks"
 
-#: models.py:450
+#: models.py:460
 msgid "email"
 msgstr "email"
 
-#: models.py:451
+#: models.py:461
 msgid "select options"
 msgstr "dropdown"
 
-#: models.py:452
+#: models.py:462
 msgid "radio buttons"
 msgstr "radio knapper"
 
-#: models.py:453
+#: models.py:463
 msgid "phone"
 msgstr "telefon"
 
-#: models.py:460
+#: models.py:470
 msgid "Label"
 msgstr "Betegnelse"
 
-#: models.py:461
+#: models.py:471
 msgid "Help text"
 msgstr "Hjælpetekst"
 
-#: models.py:463
+#: models.py:473
 msgid "Type"
 msgstr "Type"
 
-#: models.py:464
+#: models.py:474
 msgid "Required"
 msgstr "Påkrævet"
 
-#: models.py:465
+#: models.py:475
 msgid "In extra forms"
 msgstr "I ekstra formularer"
 
-#: models.py:547 forms/attendees.py:65
+#: models.py:557 forms/attendees.py:65
 msgid "Confirmed"
 msgstr "Bekræftet"
 
-#: models.py:548
+#: models.py:558
 msgid "Unconfirmed"
 msgstr "Ubekræftet"
 
-#: models.py:549 forms/attendees.py:65
+#: models.py:559 forms/attendees.py:65
 msgid "Cancelled"
 msgstr "Afmeldt"
 
-#: models.py:610
+#: models.py:620
 msgid "Name"
 msgstr "Navn"
 
-#: models.py:611
+#: models.py:621
 msgid "Organization"
 msgstr "Firma"
 
-#: models.py:612 views/attendee_actions.py:201
+#: models.py:622 views/attendee_actions.py:201
 msgid "Email"
 msgstr "Email"
 
-#: models.py:624
+#: models.py:634
 msgid "Default ticket"
 msgstr "Standard billet"
 
-#: forms/account.py:51
+#: forms/account.py:52
 msgid "Email addresses"
 msgstr "Email adresser"
 
-#: forms/account.py:52
+#: forms/account.py:53
 msgid ""
 "Add email addresses for each person you wish to invite. Seperate each email "
 "address with a space."
@@ -380,33 +396,33 @@ msgstr ""
 "Angiv email adresser for hver person du vil invitere. Separer hver email "
 "adresse med et blank tegn."
 
-#: forms/account.py:54 forms/attendees.py:45
+#: forms/account.py:55 forms/attendees.py:45
 msgid "Message"
 msgstr "Besked"
 
-#: forms/account.py:56
+#: forms/account.py:57
 msgid "Make these users administrators?"
 msgstr "Gør disse brugere til administratorer?"
 
-#: forms/account.py:58
+#: forms/account.py:59
 msgid "Administrators can invite new users and edit acocunt settings"
 msgstr ""
 "Administratorer kan invitere nye brugere og redigere deres konto "
 "indstillinger"
 
-#: forms/account.py:68
+#: forms/account.py:69
 msgid "Account administrator"
 msgstr "Konto administrator"
 
-#: forms/account.py:70
+#: forms/account.py:71
 msgid "Can invite new members and edit account settings"
 msgstr "Kan invitere nye brugere og redigere konto indstillinger"
 
-#: forms/account.py:75
+#: forms/account.py:76
 msgid "Password"
 msgstr "Kodeord"
 
-#: forms/account.py:76
+#: forms/account.py:77
 msgid "Password (again)"
 msgstr "Kodeord (igen)"
 
@@ -478,11 +494,11 @@ msgstr "Vis"
 msgid "All"
 msgstr "Alle"
 
-#: forms/event.py:21
+#: forms/event.py:36
 msgid "Begin date must be before end date"
 msgstr "Start dato skal være tidligere end slut dato"
 
-#: forms/event.py:25
+#: forms/event.py:40
 msgid "New title"
 msgstr ""
 
@@ -924,8 +940,8 @@ msgid ""
 "You can now close the page or go to Danish Architecture Center's website and "
 "see more interesting events."
 msgstr ""
-"Du kan nu lukke siden eller gå til Dansk Arkitektur Centers hjemmeside og "
-"se flere interessante arrangementer."
+"Du kan nu lukke siden eller gå til Dansk Arkitektur Centers hjemmeside og se "
+"flere interessante arrangementer."
 
 #: templates/signupbox/event_view_more.html:9
 msgid "Go to website Danish Architecture Center"
@@ -1213,6 +1229,32 @@ msgstr "Transaktionsdato: %(timestamp)s"
 #, python-format
 msgid "Your registration for %(title)s."
 msgstr "Din tilmelding til %(title)s."
+
+#: templates/signupbox/mails/relationwise_body.txt:1
+#, python-format
+msgid "Hi %(attendee_name)s"
+msgstr "Hej %(attendee_name)s"
+
+#: templates/signupbox/mails/relationwise_body.txt:3
+msgid ""
+"We would like to get better at what we do, and a single question can make "
+"the difference."
+msgstr ""
+"Vi vil gerne være bedre til det vi laver, og et enkelt spørgsmål kan gøre "
+"forskellen."
+
+#: templates/signupbox/mails/relationwise_body.txt:4
+msgid "Click on the link..."
+msgstr "Klik på linket..."
+
+#: templates/signupbox/mails/relationwise_body.txt:8
+#, python-format
+msgid "Regards %(account_display_name)s"
+msgstr "Venlig hilsen %(account_display_name)s"
+
+#: templates/signupbox/mails/relationwise_subject.txt:1
+msgid "Your opinion is important"
+msgstr "Din mening er vigtig"
 
 #: templates/signupbox/mails/reminder_body.txt:1
 #: templates/signupbox/sms/reminder.txt:1
