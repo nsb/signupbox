@@ -171,7 +171,7 @@ def send_survey(attendee_id, survey_id):
 
         translation.activate(event.language)
 
-        sender = event.account.email
+        sender = 'noreply@%s' % Site.objects.get_current().domain
         recipient = attendee.email
         subject = render_to_string('signupbox/mails/relationwise_subject.txt',
                                    context_instance=context)
