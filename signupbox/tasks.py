@@ -140,7 +140,7 @@ def send_reminders():
 
 
 @task
-def send_survey(attendee_id, survye_id):
+def send_survey(attendee_id, survey_id):
     """Send a relationwise survey to a single recipient"""
 
     url = 'https://www.relationwise.com/rls/restapi2/send/'
@@ -180,7 +180,7 @@ def send_survey(attendee_id, survye_id):
         try:
             send_mail(subject, message, sender, [recipient])
         except SMTPException, exc:
-            send_survey.retry(args=[attendee, language_code], exc=exc)
+            send_survey.retry(args=[attendee_id, survey_id], exc=exc)
 
 
 @task
