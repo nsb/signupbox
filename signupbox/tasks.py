@@ -3,6 +3,8 @@ from smtplib import SMTPException
 from datetime import datetime, date, time, timedelta
 
 import urllib2
+from urllib import urlencode
+from urlparse import urlunparse
 
 from django.core.mail import send_mass_mail, send_mail
 from django.contrib.sites.models import Site
@@ -152,21 +154,23 @@ def send_survey(attendee_id, survey_id):
             return
 
         event = attendee.booking.event
-        relationwise_survey_url = \
-            ("https://www.relationwise.com/rss/automaticsurvey/diysurvey.aspx"
-             "?surveyID=%(surveyId)s"
-             "&email=%(email)s"
-             "&name=%(name)s"
-             "&signupbox=%(signupbox)s") % {
-            'surveyId': event.account.relationwise_survey_id.encode('iso-8859-1'),
+        query_params = {
+            'surveyID': event.account.relationwise_survey_id.encode('iso-8859-1'),
             'name': attendee.name.encode('iso-8859-1'),
             'signupbox': event.slug.encode('iso-8859-1'),
             'email': attendee.email.encode('iso-8859-1'),
         }
 
+        survey_url = urlunparse(('https',
+                                 'www.relationwise.com',
+                                 '/rss/automaticsurvey/diysurvey.aspx',
+                                 '',
+                                 urlencode(query_params),
+                                 ''))
+
         context = Context({'event': event,
                            'attendee': attendee,
-                           'relationwise_survey_url': relationwise_survey_url},
+                           'relationwise_survey_url': survey_url},
                            autoescape=False)
 
         translation.activate(event.language)
