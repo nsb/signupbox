@@ -209,8 +209,8 @@ def send_surveys(event_id):
 @task
 def run_surveys():
     logger.info("Checking for surveys to be sent...")
-    begins = datetime.now() - timedelta(minutes=5)
-    event_ids = Event.objects.filter(begins__lt=begins,
+    ends = datetime.now() - timedelta(hours=2)
+    event_ids = Event.objects.filter(ends__lt=ends,
                                      surveyEnabled=True).values_list('pk', flat=True)
     logger.info("Send survey for %d events" % len(event_ids))
     group(send_surveys.s(id) for id in event_ids)()
