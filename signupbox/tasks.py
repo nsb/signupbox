@@ -6,7 +6,7 @@ import urllib2
 from urllib import urlencode
 from urlparse import urlunparse
 
-from django.core.mail import send_mass_mail, send_mail
+from django.core.mail import send_mass_mail, send_mail, EmailMessage
 from django.contrib.sites.models import Site
 from django.template.loader import render_to_string
 from django.db.models import signals, Max, Sum
@@ -183,8 +183,13 @@ def send_survey(attendee_id, survey_id):
                                    context_instance=context)
         message = render_to_string('signupbox/mails/relationwise_body.txt',
                                    context_instance=context)
+        headers =  {}
+        if event.account.reply_to:
+            headers.update({'Reply-To': event.account.reply_to})
+
+        email = EmailMessage(subject, message, sender, [recipient], headers=headers)
         try:
-            send_mail(subject, message, sender, [recipient])
+            email.send()
         except SMTPException, exc:
             send_survey.retry(args=[attendee_id, survey_id], exc=exc)
 

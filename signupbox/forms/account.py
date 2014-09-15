@@ -34,6 +34,7 @@ class AccountForm(forms.ModelForm):
             'relationwise_survey_id',
             'terms',
             'extra_info',
+            'reply_to',
         )
 
 class UserForm(forms.ModelForm):

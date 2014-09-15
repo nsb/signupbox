@@ -96,6 +96,10 @@ class Account(models.Model):
         blank=True,
         verbose_name=_('Relationwise Survey Id'),
         help_text=_('Required in order to use the Relationwise integration.'))
+    reply_to = models.EmailField(max_length=254,
+                                 blank=True,
+                                 verbose_name=_('Reply to'),
+                                 help_text=_('The default reply-to email address for all outgoing emails.'))
 
     site = models.ForeignKey(Site)
 
