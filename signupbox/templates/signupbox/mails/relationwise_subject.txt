@@ -1,1 +1,1 @@
-{% load i18n %}{% trans "Your opinion is important" %}
+{% load i18n %}{% blocktrans with account_name=event.account.name %}Thank you for your participation in the {{ account_name }} activity{% endblocktrans %}

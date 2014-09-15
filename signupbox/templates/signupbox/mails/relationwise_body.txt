@@ -1,8 +1,14 @@
-{% load i18n %}{% blocktrans with attendee_name=attendee.name %}Hi {{ attendee_name }}{% endblocktrans %}
+{% load i18n %}{% blocktrans with attendee_name=attendee.name %}Dear {{ attendee_name }}{% endblocktrans %}
 
-{% trans "We would like to get better at what we do, and a single question can make the difference." %}
-{% trans "Click on the link..." %}
+{% blocktrans with name=event.account.display_name %}Thank you for your participation in the {{ name }} activity.{% endblocktrans %}
+{% trans "Whether you visited our exhibition or took part an event or a trip, we want to hear about your experience. Your answers will be used to improve our activities." %}
+
+{% blocktrans with name=event.display_name %}As a thank you for your help, you will receive a coupon for a free cup of coffee, tea or cocoa at {{ name }} café. It takes about 2 min. to complete the questionnaire.{% endblocktrans %}
 
 {{ relationwise_survey_url }}
 
-{% blocktrans with account_display_name=attendee.booking.event.account.display_name %}Regards {{ account_display_name }}{% endblocktrans %}
+{% if event.account.reply_to %}
+{% blocktrans with reply_to=event.account.reply_to %}If you have questions or comments on the questionnaire, please write us at {{ reply_to }}{% endblocktrans %}
+{% endif %}
+
+{% blocktrans with name=event.account.display_name %}Sincerely {{ name }}{% endblocktrans %}
