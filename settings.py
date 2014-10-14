@@ -205,7 +205,7 @@ CELERYD_CONCURRENCY = 1
 CELERYBEAT_SCHEDULE = {
     'run-survey-every-hour': {
         'task': 'signupbox.tasks.run_surveys',
-        'schedule': timedelta(minutes=1),
+        'schedule': timedelta(hours=1),
     },
     'run-send-reminders-every-hour': {
         'task': 'signupbox.tasks.send_reminders',
