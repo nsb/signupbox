@@ -1,1 +1,1 @@
-{% load i18n %}{% blocktrans with name=event.account.display.name %}Thank you for your participation in the {{ name }} activity{% endblocktrans %}
+{% load i18n %}{% blocktrans with name=event.account.genitive_display_name %}Thank you for your participation in the {{ name }} activity{% endblocktrans %}

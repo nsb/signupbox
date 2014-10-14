@@ -63,6 +63,10 @@ class Account(models.Model):
     """
     name = models.CharField(max_length=255, verbose_name=_('Account name'))
     organization = models.CharField(max_length=1024, verbose_name=_('Company'), blank=True)
+    genitive_organization = models.CharField(max_length=255,
+                                     verbose_name=_('Genitive organization name'),
+                                     blank=True,
+                                     help_text=_('Organization name in genitive form.'))
     street = models.CharField(max_length=255, verbose_name=_('Street'), blank=True)
     zip_code = models.CharField(max_length=255, verbose_name=_('Zip code'), blank=True)
     city = models.CharField(max_length=255, verbose_name=_('City'), blank=True)
@@ -121,6 +125,10 @@ class Account(models.Model):
     def display_name(self):
         return self.organization or self.name
 
+    @property
+    def genitive_display_name(self):
+        return self.genitive_organization or self.display_name
+
     def set_perms(self, user, view=None, change=None, delete=None):
         perm, created = ObjectPermission.objects.get_or_create(user=user,
             object_id=self.pk, content_type=ContentType.objects.get_for_model(self))
@@ -152,6 +160,8 @@ class Account(models.Model):
 
         if not self.id:
             self.site = Site.objects.get_current()
+        if not self.genitive_organization:
+            self.genitive_organization = self.organization
         super(Account, self).save( *args, **kwargs)
 
     class Meta:

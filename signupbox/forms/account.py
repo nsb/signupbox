@@ -16,6 +16,7 @@ class AccountForm(forms.ModelForm):
         model = Account
         fields = (
             'organization',
+            'genitive_organization',
             'street',
             'zip_code',
             'city',
