@@ -118,12 +118,20 @@ class AttendeeActions(object):
             # attendee data
 
             writer.writerow(
-                [capfirst(field.label).encode('utf8') for field in event.fields.all()] + [ugettext('Ticket').encode('utf8')]
+                [capfirst(field.label).encode('utf8') for field
+                 in event.fields.all()] + [
+                    ugettext('Ticket').encode('utf8'),
+                    ugettext('Registration date').encode('utf8'),
+                ]
             )
 
             for r in selected:
                 writer.writerow(
-                    [field.value.encode('utf8') for field in r.values.all()] + [r.ticket.name.encode('utf8')]
+                    [field.value.encode('utf8') for field
+                     in r.values.all()] + [
+                        r.ticket.name.encode('utf8'),
+                        r.booking.timestamp.strftime("%d-%m-%Y").encode('utf8'),
+                    ]
                 )
 
         elif data == BOOKING_DATA:
