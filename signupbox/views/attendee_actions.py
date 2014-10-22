@@ -5,7 +5,7 @@ from reportlab.lib import styles, colors
 from reportlab.pdfgen import canvas
 from reportlab.lib.units import mm
 
-from xlwt import Workbook
+from xlwt import Workbook, XFStyle
 
 from django.template.defaultfilters import date, floatformat, capfirst
 from django.utils.translation import ugettext, ungettext, ugettext_lazy as _
@@ -249,12 +249,26 @@ class AttendeeActions(object):
                 ws.row(0).write(column, capfirst(field.label))
             ws.row(0).write(event.fields.count(), capfirst(_('Attendee count')))
             ws.row(0).write(event.fields.count() + 1, capfirst(_('Ticket')))
+            ws.row(0).write(event.fields.count() + 2,
+                            capfirst(_('Registration date')))
 
             for row, r in enumerate(selected):
                 for column, field in enumerate(r.values.all()):
                     ws.row(row + 1).write(column, field.value)
-                ws.row(row + 1).write(event.fields.count(), '%d' % r.attendee_count)
+
+                attendee_count_format = XFStyle()
+                attendee_count_format.num_format_str = 'general'
+                ws.row(row + 1).write(event.fields.count(),
+                                      '%d' % r.attendee_count,
+                                      attendee_count_format)
+
                 ws.row(row + 1).write(event.fields.count() + 1, '%s' % r.ticket.name)
+
+                date_format = XFStyle()
+                date_format.num_format_str = 'dd-mm-yyyy'
+                ws.row(row + 1).write(event.fields.count() + 2,
+                                      '%s' % r.booking.timestamp.strftime('%d-%m-%Y'),
+                                      date_format)
 
         elif data == BOOKING_DATA:
 
