@@ -257,7 +257,7 @@ class AttendeeActions(object):
                     ws.row(row + 1).write(column, field.value)
 
                 attendee_count_format = XFStyle()
-                attendee_count_format.num_format_str = 'general'
+                attendee_count_format.num_format_str = '#.##'
                 ws.row(row + 1).write(event.fields.count(),
                                       '%d' % r.attendee_count,
                                       attendee_count_format)
