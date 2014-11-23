@@ -13,8 +13,8 @@ from django.contrib.auth import authenticate, login
 from django.http import HttpResponseForbidden
 from django.conf import settings
 
-from ..models import AccountInvite
-from ..forms import AccountForm, UserForm, ProfileForm, InviteForm, PermissionsForm, InviteAcceptForm
+from ..models import AccountInvite, RelationWiseSurvey
+from ..forms import AccountForm, AccountSurveyFormSet, UserForm, ProfileForm, InviteForm, PermissionsForm, InviteAcceptForm
 from ..decorators import with_account
 from ..tasks import account_send_invites
 
@@ -27,16 +27,19 @@ def account_settings(request, account):
 
     if request.method == 'POST':
         form = AccountForm(request.POST, instance=account)
-        if form.is_valid():
+        survey_formset = AccountSurveyFormSet(request.POST, instance=account)
+        if form.is_valid() and survey_formset.is_valid():
             form.save()
+            survey_formset.save()
             messages.success(request, _('Settings updated.'))
             return redirect(reverse('index'))
     else:
         form = AccountForm(instance=account)
+        survey_formset = AccountSurveyFormSet(instance=account)
 
     return render_to_response(
         'signupbox/settings.html',
-        RequestContext(request, {'form':form})
+        RequestContext(request, {'form':form, 'survey_formset':survey_formset})
     )
 
 @login_required

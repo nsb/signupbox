@@ -211,6 +211,16 @@ class AccountInvite(models.Model):
 
         super(AccountInvite, self).save(*args, **kwargs)
 
+
+class RelationWiseSurvey(models.Model):
+    account = models.ForeignKey(Account, related_name='surveys')
+    survey_id = models.CharField(max_length=128)
+    name = models.CharField(max_length=256)
+
+    def __unicode__(self):
+        return self.name
+
+
 class Profile(models.Model):
     """
     Extends django.contrib.auth.model.User.
@@ -318,6 +328,7 @@ class Event(models.Model):
     activities = generic.GenericRelation(Activity)
 
     language = models.CharField(max_length=2, choices=LANGUAGE_CHOICES, default='da', verbose_name=_('Language'))
+    survey = models.ForeignKey(RelationWiseSurvey, null=True, blank=True, related_name='events', on_delete=models.SET_NULL)
     surveyEnabled = models.BooleanField(default=False,
                                         verbose_name=_('Survey'),
                                         help_text=_('Send out survey questions to attendees after the event?'))
@@ -628,6 +639,7 @@ class FieldOption(models.Model):
 
     class Meta:
         ordering = ('id',)
+
 
 def create_default_fields(event):
     default_fields = (

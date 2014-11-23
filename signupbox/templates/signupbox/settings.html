@@ -12,6 +12,18 @@
     {% for field in form %}
       {% include "signupbox/includes/field.html" %}
     {% endfor %}
+    <fieldset>
+      <legend>{% trans "Relationwise questionaires" %}</legend>
+
+    {{ survey_formset.management_form }}
+
+    <div id="fields">
+      {% for form in survey_formset %}
+        {% include "signupbox/includes/fields_form.html" %}
+      {% endfor %}
+    </div>
+
+    </fieldset>
     <div>
       <input type="submit" value="{% trans "Save" %}" />
     </div>

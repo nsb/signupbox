@@ -5,7 +5,7 @@ from register import registerform_factory, emptyregisterform_factory, attendeefo
 from attendees import attendeeactionsform_factory, AttendeesExportForm, AttendeesEmailForm, BookingForm, FilterForm
 from ticket import TicketForm
 from fields import fieldformset_factory
-from account import AccountForm, UserForm, ProfileForm, InviteForm, PermissionsForm, InviteAcceptForm
+from account import AccountForm, AccountSurveyFormSet, UserForm, ProfileForm, InviteForm, PermissionsForm, InviteAcceptForm
 
 __all__ = [
     "RegistrationForm",
@@ -22,6 +22,7 @@ __all__ = [
     "fieldformset_factory",
     "ConfirmForm",
     "AccountForm",
+    "AccountSurveyFormSet"
     "UserForm",
     "ProfileForm",
     "InviteForm",

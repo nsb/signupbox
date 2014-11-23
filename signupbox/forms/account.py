@@ -1,8 +1,9 @@
 from django import forms
+from django.forms.models import modelformset_factory, inlineformset_factory
 from django.utils.translation import ungettext, ugettext, ugettext_lazy as _
 from django.contrib.auth.models import User
 
-from ..models import Account, Profile
+from ..models import Account, Profile, RelationWiseSurvey
 
 class AccountForm(forms.ModelForm):
 
@@ -37,6 +38,10 @@ class AccountForm(forms.ModelForm):
             'extra_info',
             'reply_to',
         )
+
+
+AccountSurveyFormSet = inlineformset_factory(Account, RelationWiseSurvey, extra=1)
+
 
 class UserForm(forms.ModelForm):
     class Meta:

@@ -28,7 +28,7 @@ class EventForm(forms.ModelForm):
             'reminder',
             'language',
             'project_id',
-            'surveyEnabled',
+            'survey',
         )
 
     def clean(self):

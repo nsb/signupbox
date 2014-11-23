@@ -155,7 +155,7 @@ def send_survey(attendee_id, survey_id):
 
         event = attendee.booking.event
         query_params = {
-            'surveyID': event.account.relationwise_survey_id.encode('iso-8859-1'),
+            'surveyID': survey_id.encode('iso-8859-1'),
             'name': attendee.name.encode('iso-8859-1'),
             'signupbox': event.slug.encode('iso-8859-1'),
             'email': attendee.email.encode('iso-8859-1'),
@@ -202,12 +202,12 @@ def send_surveys(event_id):
     except Event.DoesNotExist:
         return
 
-    if not event.surveyEnabled or event.surveySent or not event.account.relationwise_survey_id:
+    if not event.survey or event.surveySent:
         logger.warning("Skipping send survey for event %s." % event.title)
         return
 
     logger.info("Sending survey for event %s" % event.title)
-    group(send_survey.s(attendee.pk, event.account.relationwise_survey_id)
+    group(send_survey.s(attendee.pk, event.survey.survey_id)
         for attendee in Attendee.objects.confirmed(event))()
     event.surveySent = True
     event.save()
@@ -217,7 +217,6 @@ def send_surveys(event_id):
 def run_surveys():
     logger.info("Checking for surveys to be sent...")
     ends = datetime.now() - timedelta(hours=2)
-    event_ids = Event.objects.filter(ends__lt=ends,
-                                     surveyEnabled=True).values_list('pk', flat=True)
+    event_ids = Event.objects.filter(ends__lt=ends).exclude(survey=None).values_list('pk', flat=True)
     logger.info("Send survey for %d events" % len(event_ids))
     group(send_surveys.s(id) for id in event_ids)()
