@@ -1,9 +1,9 @@
 {% load i18n %}{% blocktrans with attendee_name=attendee.name %}Dear {{ attendee_name }}{% endblocktrans %}
 
 {% blocktrans with name=event.account.genitive_display_name %}Thank you for your participation in the {{ name }} activity.{% endblocktrans %}
-{% trans "Whether you visited our exhibition or took part an event or a trip, we want to hear about your experience." %} {% trans "Your answers will be used to improve our activities." %}
+{% trans "Whether you visited our exhibition or took part in an event or a trip, we want to hear about your experience." %} {% trans "Your answers will be used to improve our activities." %}
 
-{% blocktrans with name=event.display_name %}As a thank you for your help, you will receive a coupon for a free cup of coffee, tea or cocoa at DAC& café.{% endblocktrans %} {% trans "It takes about 2 min. to complete the questionnaire." %}
+{% blocktrans with name=event.display_name %}As a thank you for your help, you will receive a coupon for a free cup of coffee, tea or cocoa at DAC& café.{% endblocktrans %} {% trans "It takes about 2 min. to complete the questionnaire." %} {% trans "We use the data exclusively for internal quality assurance." %}
 
 {{ relationwise_survey_url }}
 
