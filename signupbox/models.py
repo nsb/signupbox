@@ -368,11 +368,6 @@ class Event(models.Model):
     def confirmed_attendees(self):
         return Attendee.objects.confirmed(event=self)
 
-    # @property
-    # def confirmed_attendees_count(self):
-    #     return self.confirmed_attendees.aggregate(
-    #         Sum('attendee_count'))['attendee_count__sum'] or 0
-
     @property
     def website(self):
         return ''.join(('http://', self.account.domain_for_account(), '/', self.slug, '/'))
