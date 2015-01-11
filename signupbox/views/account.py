@@ -27,7 +27,9 @@ def account_settings(request, account):
 
     if request.method == 'POST':
         form = AccountForm(request.POST, instance=account)
-        survey_formset = AccountSurveyFormSet(request.POST, instance=account)
+        survey_formset = AccountSurveyFormSet(
+            request.POST, instance=account,
+            queryset=RelationWiseSurvey.objects.filter(account=account))
         if form.is_valid() and survey_formset.is_valid():
             form.save()
             survey_formset.save()
@@ -35,7 +37,9 @@ def account_settings(request, account):
             return redirect(reverse('index'))
     else:
         form = AccountForm(instance=account)
-        survey_formset = AccountSurveyFormSet(instance=account)
+        survey_formset = AccountSurveyFormSet(
+            instance=account,
+            queryset=RelationWiseSurvey.objects.filter(account=account))
 
     return render_to_response(
         'signupbox/settings.html',
