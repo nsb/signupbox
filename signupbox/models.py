@@ -277,7 +277,9 @@ class EventManager(models.Manager):
             ' ON signupbox_booking.id = signupbox_attendee.booking_id '
             'JOIN signupbox_event '
             ' ON signupbox_event.id = signupbox_booking.event_id '
-            'WHERE signupbox_attendee.status = \'%s\' and signupbox_booking.confirmed = True') % ATTENDEE_CONFIRMED
+            'WHERE signupbox_attendee.status = \'%s\' and '
+            'signupbox_booking.confirmed = True and '
+            'signupbox_event.id = signupbox_booking.event_id') % ATTENDEE_CONFIRMED
 
         extra_selects = {
             'confirmed_attendees_count': confirmed_attendees_query,
