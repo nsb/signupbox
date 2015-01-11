@@ -117,6 +117,7 @@ INSTALLED_APPS = (
     'south',
     'compressor',
     # 'djkombu',
+    'kombu.transport.django',
     'djcelery',
     'paypal.standard.ipn',
     'indexer',

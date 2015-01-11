@@ -269,10 +269,40 @@ SEND_REMINDER_CHOICES = (
 
 class EventManager(models.Manager):
     def upcoming(self):
-        return self.filter(begins__gt=datetime.now())
+        qs = self.filter(begins__gt=datetime.now())
+
+        confirmed_attendees_query = (
+            'select count(*) from signupbox_attendee '
+            'JOIN signupbox_booking '
+            ' ON signupbox_booking.id = signupbox_attendee.booking_id '
+            'JOIN signupbox_event '
+            ' ON signupbox_event.id = signupbox_booking.event_id '
+            'WHERE signupbox_attendee.status = \'%s\' and signupbox_booking.confirmed = True') % ATTENDEE_CONFIRMED
+
+        extra_selects = {
+            'confirmed_attendees_count': confirmed_attendees_query,
+        }
+
+        return qs.extra(select=extra_selects)
+
 
     def previous(self):
-        return self.filter(begins__lt=datetime.now()).order_by('-begins')
+        qs = self.filter(begins__lt=datetime.now()).order_by('-begins')
+
+        confirmed_attendees_query = (
+            'select count(*) from signupbox_attendee '
+            'JOIN signupbox_booking '
+            ' ON signupbox_booking.id = signupbox_attendee.booking_id '
+            'JOIN signupbox_event '
+            ' ON signupbox_event.id = signupbox_booking.event_id '
+            'WHERE signupbox_attendee.status = \'%s\' and signupbox_booking.confirmed = True') % ATTENDEE_CONFIRMED
+
+        extra_selects = {
+            'confirmed_attendees_count': confirmed_attendees_query,
+        }
+
+        return qs.extra(select=extra_selects)
+
 
 class Event(models.Model):
     """
@@ -309,7 +339,7 @@ class Event(models.Model):
     zip_code = models.CharField(max_length=255, blank=True, verbose_name=_('Zip code'))
 
     # date and time fields
-    begins = models.DateTimeField(verbose_name=_('Begins'))
+    begins = models.DateTimeField(verbose_name=_('Begins'), db_index=True)
     ends = models.DateTimeField(verbose_name=_('Ends'))
 
     capacity = models.IntegerField(blank=True, null=True,
@@ -350,10 +380,10 @@ class Event(models.Model):
     def confirmed_attendees(self):
         return Attendee.objects.confirmed(event=self)
 
-    @property
-    def confirmed_attendees_count(self):
-        return self.confirmed_attendees.aggregate(
-            Sum('attendee_count'))['attendee_count__sum'] or 0
+    # @property
+    # def confirmed_attendees_count(self):
+    #     return self.confirmed_attendees.aggregate(
+    #         Sum('attendee_count'))['attendee_count__sum'] or 0
 
     @property
     def website(self):
