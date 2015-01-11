@@ -8,7 +8,8 @@ from django.utils.translation import ugettext, ugettext_lazy as _
 from django.views.generic.list_detail import object_detail
 from django.http import HttpResponseForbidden
 
-from ..models import Event, create_default_fields, create_default_tickets
+from ..models import Event, create_default_fields, create_default_tickets, \
+    RelationWiseSurvey
 from ..forms import EventForm, EventCopyForm
 from ..decorators import with_account
 
@@ -37,6 +38,8 @@ def create(request, account):
                 'ends': datetime.combine(date.today(), time(hour=16, minute=0)) + timedelta(days=7),
             }
         )
+        form.fields["survey"].queryset = \
+            RelationWiseSurvey.objects.filter(account=account)
 
     return render_to_response(
         'signupbox/event_create.html',
