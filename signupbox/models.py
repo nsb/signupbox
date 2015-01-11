@@ -268,18 +268,16 @@ SEND_REMINDER_CHOICES = (
 )
 
 class EventManager(models.Manager):
-    def upcoming(self):
-        qs = self.filter(begins__gt=datetime.now())
+
+    def get_query_set(self):
+        qs = super(EventManager, self).get_query_set()
 
         confirmed_attendees_query = (
-            'select count(*) from signupbox_attendee '
-            'JOIN signupbox_booking '
-            ' ON signupbox_booking.id = signupbox_attendee.booking_id '
-            'JOIN signupbox_event '
-            ' ON signupbox_event.id = signupbox_booking.event_id '
+            'select count(*) from signupbox_attendee, signupbox_booking '
             'WHERE signupbox_attendee.status = \'%s\' and '
             'signupbox_booking.confirmed = True and '
-            'signupbox_event.id = signupbox_booking.event_id') % ATTENDEE_CONFIRMED
+            'signupbox_event.id = signupbox_booking.event_id and '
+            'signupbox_booking.id = signupbox_attendee.booking_id') % ATTENDEE_CONFIRMED
 
         extra_selects = {
             'confirmed_attendees_count': confirmed_attendees_query,
@@ -287,23 +285,11 @@ class EventManager(models.Manager):
 
         return qs.extra(select=extra_selects)
 
+    def upcoming(self):
+        return self.filter(begins__gt=datetime.now())
 
     def previous(self):
-        qs = self.filter(begins__lt=datetime.now()).order_by('-begins')
-
-        confirmed_attendees_query = (
-            'select count(*) from signupbox_attendee '
-            'JOIN signupbox_booking '
-            ' ON signupbox_booking.id = signupbox_attendee.booking_id '
-            'JOIN signupbox_event '
-            ' ON signupbox_event.id = signupbox_booking.event_id '
-            'WHERE signupbox_attendee.status = \'%s\' and signupbox_booking.confirmed = True') % ATTENDEE_CONFIRMED
-
-        extra_selects = {
-            'confirmed_attendees_count': confirmed_attendees_query,
-        }
-
-        return qs.extra(select=extra_selects)
+        return self.filter(begins__lt=datetime.now()).order_by('-begins')
 
 
 class Event(models.Model):
