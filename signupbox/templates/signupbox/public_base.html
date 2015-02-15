@@ -49,6 +49,8 @@
 {% endblock page %}
 
 {% block javascript %}
+  {{ account.script_codes|safe }}
+
   {% compress js %}
     {{ block.super }}
     <script type="text/javascript" src="{{ MEDIA_URL }}js/register.js" ></script>

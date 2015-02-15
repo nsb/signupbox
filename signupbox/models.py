@@ -91,6 +91,8 @@ class Account(models.Model):
     terms = models.TextField(verbose_name=_('Terms and conditions'), blank=True)
     google_analytics = models.CharField(max_length=100, verbose_name=_('Google analytics'),
         blank=True, help_text=_('Enter your Google analytics tracker code to enable tracking.'))
+    script_codes = models.TextField(verbose_name=_('Script codes'), blank=True,
+                                    help_text=_('Script codes that will added on all public event pages.'))
     users = models.ManyToManyField(User, related_name='accounts', verbose_name=_('Users'),)
     groups = models.ManyToManyField(Group, related_name='groups', blank=True,
         help_text=_("""In addition to the permissions manually assigned, 
