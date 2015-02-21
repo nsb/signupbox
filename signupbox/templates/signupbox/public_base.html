@@ -14,6 +14,9 @@
 {% block title %}{{ account.display_name }}{% endblock title %}
 
 {% block page %}
+  {% block scriptcodes %}
+  {{ account.script_codes|safe }}
+  {% endblock scriptcodes %}
   <div id="page">
     <div id="header">
       {% block header %}
@@ -49,7 +52,6 @@
 {% endblock page %}
 
 {% block javascript %}
-  {{ account.script_codes|safe }}
 
   {% compress js %}
     {{ block.super }}
