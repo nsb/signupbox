@@ -86,14 +86,16 @@ class AttendeeActions(object):
             [a.email for a in attendees],
             subject,
             message,
-            settings.LANGUAGE_CODE
+            settings.LANGUAGE_CODE,
+            sender=event.account.from_address
         )
         if receive_copy:
             async_send_mail.delay(
                 [request.user.email],
                 subject,
                 message,
-                settings.LANGUAGE_CODE
+                settings.LANGUAGE_CODE,
+                sender=event.account.from_address
             )
 
         messages.success(request, ungettext('Email sent', 'Emails sent', attendees.count()))

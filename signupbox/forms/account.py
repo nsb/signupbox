@@ -38,6 +38,7 @@ class AccountForm(forms.ModelForm):
             'terms',
             'extra_info',
             'reply_to',
+            'from_address',
         )
 
 

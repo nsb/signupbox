@@ -25,14 +25,14 @@ from models import Event, Booking, Attendee
 logger = get_task_logger(__name__)
 
 @task
-def async_send_mail(recipients, subject, message, language_code):
+def async_send_mail(recipients, subject, message, language_code, sender=None):
     """
     Send mails asynchronyously
     """
 
     translation.activate(language_code)
 
-    sender = 'noreply@%s' % Site.objects.get_current().domain
+    sender = sender or 'noreply@%s' % Site.objects.get_current().domain
     try:
         send_mass_mail(((subject, message, sender, [recipient]) for recipient in recipients))
     except SMTPException, exc:
@@ -45,6 +45,9 @@ def process_booking(booking, language_code):
     """
     translation.activate(language_code)
 
+    account = booking.event.account
+    sender = account.from_address or 'noreply@%s' % Site.objects.get_current().domain
+
     try:
         send_mass_mail(
             ((render_to_string(
@@ -53,7 +56,7 @@ def process_booking(booking, language_code):
             ), render_to_string(
                 'signupbox/mails/register_email.txt' if index else 'signupbox/mails/register_email_registrant.txt',
                 context_instance=Context({'event': booking.event, 'booking': booking, 'attendee': attendee}, autoescape=False)
-            ), 'noreply@%s' % Site.objects.get_current().domain, 
+            ), sender,
             [attendee.email])
                 for index, attendee in enumerate(booking.attendees.order_by('id')) if attendee.email
             )
@@ -82,7 +85,7 @@ def account_send_invites(invites, message, language_code):
                 'signupbox/mails/account_invite_message.txt',
                 context_instance=Context({'invite':invite, 'message':message, 'site':Site.objects.get_current()}, autoescape=False)
               ),
-              'noreply@%s' % Site.objects.get_current().domain,
+              invite.account.from_address or 'noreply@%s' % Site.objects.get_current().domain,
               [invite.email]) for invite in invites
         ])
     except SMTPException, exc:
@@ -175,8 +178,10 @@ def send_survey(attendee_id, survey_id):
 
         translation.activate(event.language)
 
-        sender = '%s <noreply@%s>' % (
-            event.account.name, Site.objects.get_current().domain)
+        account = event.account
+        fallback_sender = 'noreply@%s' % Site.objects.get_current().domain
+        sender = '%s <%s>' % (
+            account.name, account.from_address or fallback_sender)
 
         recipient = attendee.email
         subject = render_to_string('signupbox/mails/relationwise_subject.txt',
