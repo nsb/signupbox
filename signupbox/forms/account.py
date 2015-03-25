@@ -23,6 +23,7 @@ class AccountForm(forms.ModelForm):
             'city',
             'country',
             'phone',
+            'email',
             'cvr',
             'payment_gateway',
             'paypal_business',
