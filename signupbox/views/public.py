@@ -75,7 +75,7 @@ def event_confirm(request, slug, booking_id):
             autocapture = 1 if account.autocapture else 0
             cardtypelock = \
                 "3d-jcb,3d-mastercard,3d-mastercard-dk,3d-visa,3d-visa-dk,american-express," \
-                "american-express-dk,dankort,diners,diners-dk,jcb,mastercard,mastercard-dk,mastercard-debet-dk,visa,visa-dk"
+                "american-express-dk,dankort,diners,diners-dk,jcb,mastercard,mastercard-dk,mastercard-debet-dk,visa,visa-dk,visa-electron"
             amount = int(amount * 100)
             currency = event.currency
             merchant = account.merchant_id
