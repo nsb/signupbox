@@ -164,6 +164,9 @@ def send_survey(attendee_id, survey_id):
             'email': attendee.email.encode('iso-8859-1'),
         }
 
+        if event.language == 'en':
+            query_params['lng'] = '9035'
+
         survey_url = urlunparse(('https',
                                  'www.relationwise.com',
                                  '/rss/automaticsurvey/diysurvey.aspx',
