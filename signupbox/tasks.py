@@ -244,6 +244,8 @@ def cronitor_ping_task():
     Ping cronitor.io every <interval> minutes to prevent alarm from firing
     """
     if getattr(settings, 'CRONITOR_ENABLED', False):
-        cronitor_monitor = 'https://cronitor.link/m22n/complete'
         logger.info('ping cronitor monitor %s' % cronitor_monitor)
-        urllib2.urlopen(cronitor_monitor)
+        try:
+          urlopen('https://cronitor.link/m22n/complete', timeout=10)
+        except Exception:
+            pass
