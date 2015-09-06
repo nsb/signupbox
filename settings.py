@@ -196,7 +196,7 @@ COMPILER_FORMATS = {
    '.scss': {
         'binary_path':'sass',
         'arguments': '*.scss *.css'
-    },  
+    },
 }
 
 SOUTH_TESTS_MIGRATE = False
@@ -212,8 +212,14 @@ CELERYBEAT_SCHEDULE = {
         'task': 'signupbox.tasks.send_reminders',
         'schedule': timedelta(hours=1),
     },
+    'cronitor-task': {
+        'task': 'signupbox.tasks.cronitor_periodic_task',
+        'schedule': timedelta(hours=1),
+    },
 }
+
+# Enable workers alarm with cronitor.io
+CRONITOR_ENABLED = True
 
 import djcelery
 djcelery.setup_loader()
-

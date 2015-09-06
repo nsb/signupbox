@@ -228,3 +228,22 @@ def run_surveys():
     event_ids = Event.objects.filter(ends__lt=ends).exclude(survey=None).values_list('pk', flat=True)
     logger.info("Send survey for %d events" % len(event_ids))
     group(send_surveys.s(id) for id in event_ids)()
+
+@shared_task(ignore_result=True)
+def cronitor_periodic_task():
+    """
+    """
+    if getattr(settings, 'CRONITOR_ENABLED', False):
+        logger.info('Calling cronitor task...')
+        cronitor_ping_task.delay()
+
+
+@shared_task(ignore_result=True)
+def cronitor_ping_task():
+    """
+    Ping cronitor.io every <interval> minutes to prevent alarm from firing
+    """
+    if getattr(settings, 'CRONITOR_ENABLED', False):
+        cronitor_monitor = 'https://cronitor.link/m22n/complete'
+        logger.info('ping cronitor monitor %s' % cronitor_monitor)
+        urllib2.urlopen(cronitor_monitor)
