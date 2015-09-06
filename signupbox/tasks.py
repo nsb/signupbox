@@ -229,7 +229,7 @@ def run_surveys():
     logger.info("Send survey for %d events" % len(event_ids))
     group(send_surveys.s(id) for id in event_ids)()
 
-@shared_task(ignore_result=True)
+@task(ignore_result=True)
 def cronitor_periodic_task():
     """
     """
@@ -238,7 +238,7 @@ def cronitor_periodic_task():
         cronitor_ping_task.delay()
 
 
-@shared_task(ignore_result=True)
+@task(ignore_result=True)
 def cronitor_ping_task():
     """
     Ping cronitor.io every <interval> minutes to prevent alarm from firing
