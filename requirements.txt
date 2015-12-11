@@ -9,7 +9,7 @@ ghettoq==0.4.5
 BeautifulSoup==3.2.0
 -e git://github.com/dziegler/django-css.git@0a0d7124b8136ff6b078958a13d241979c2c32df#egg=DjangoCSS
 -e git://github.com/dcramer/django-paypal.git@b78090fbd5047864a40855faaa11690bfbef5302#egg=DjangoPaypal
-reportlab==2.3
+#reportlab==2.3
 xlwt==0.7.2
 -e git://github.com/nsb/django-object-permissions.git#egg=DjangoObjectPermissions
 -e git://github.com/nsb/django-quickpay.git@54e4655033af807b9d0f64685eb7bb3e4240bce2#egg=DjangoQuickpay

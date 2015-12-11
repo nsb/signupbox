@@ -9,6 +9,7 @@ from urlparse import urlunparse
 from django.core.mail import send_mass_mail, send_mail, EmailMessage
 from django.contrib.sites.models import Site
 from django.template.loader import render_to_string
+from django.template import Context, Template
 from django.db.models import signals, Max, Sum
 from django.template import Context
 from django.utils import translation
@@ -20,7 +21,7 @@ from celery.utils.log import get_task_logger
 import nexmo
 
 from activities.models import Activity
-from models import Event, Booking, Attendee
+from models import Event, Booking, Attendee, RelationWiseSurvey
 
 logger = get_task_logger(__name__)
 
@@ -152,6 +153,8 @@ def send_survey(attendee_id, survey_id):
     attendees = Attendee.objects.select_related(
         'booking__event').filter(pk=attendee_id)
 
+    survey = RelationWiseSurvey.objects.get(survey_id=survey_id)
+
     for attendee in attendees:
         if not attendee.email:
             return
@@ -179,18 +182,19 @@ def send_survey(attendee_id, survey_id):
                            'relationwise_survey_url': survey_url},
                            autoescape=False)
 
-        translation.activate(event.language)
-
         account = event.account
         fallback_sender = 'noreply@%s' % Site.objects.get_current().domain
         sender = '%s <%s>' % (
             account.name, account.from_address or fallback_sender)
 
         recipient = attendee.email
-        subject = render_to_string('signupbox/mails/relationwise_subject.txt',
-                                   context_instance=context)
-        message = render_to_string('signupbox/mails/relationwise_body.txt',
-                                   context_instance=context)
+        # subject = render_to_string('signupbox/mails/relationwise_subject.txt',
+        #                            context_instance=context)
+        subject = Template(survey.subject).render(context)
+        # message = render_to_string('signupbox/mails/relationwise_body.txt',
+        #                            context_instance=context)
+        message = Template(survey.message).render(context)
+
         headers =  {}
         if event.account.reply_to:
             headers.update({'Reply-To': event.account.reply_to})

@@ -85,7 +85,7 @@ class Account(models.Model):
         verbose_name=_('SMS gateway'), choices=SMS_GATEWAY_CHOICES)
     sms_gateway_username = models.CharField(max_length=255, verbose_name=_("SMS gateway username"), blank=True)
     sms_gateway_password = models.CharField(max_length=255, verbose_name=_('SMS gateway password'), blank=True)
-    domain = models.URLField(blank=True, verbose_name=_('Domain')) 
+    domain = models.URLField(blank=True, verbose_name=_('Domain'))
     extra_info = models.TextField(verbose_name=_('Extra info'), blank=True,
         help_text=_('Extra info to be included in the registration email.'))
     terms = models.TextField(verbose_name=_('Terms and conditions'), blank=True)
@@ -95,7 +95,7 @@ class Account(models.Model):
                                     help_text=_('Script codes that will added on all public event pages.'))
     users = models.ManyToManyField(User, related_name='accounts', verbose_name=_('Users'),)
     groups = models.ManyToManyField(Group, related_name='groups', blank=True,
-        help_text=_("""In addition to the permissions manually assigned, 
+        help_text=_("""In addition to the permissions manually assigned,
             this account will also get all permissions granted to each group it is in."""))
     relationwise_survey_id = models.CharField(
         max_length=128,
@@ -201,7 +201,7 @@ class AccountInvite(models.Model):
         return ('signupbox.views.account_invitation', [self.key,])
 
     def url(self):
-        return '%s%s' % (Site.objects.get_current().domain, self.get_absolute_url()) 
+        return '%s%s' % (Site.objects.get_current().domain, self.get_absolute_url())
 
     def _create_key(self):
         salt = sha_constructor(str(random())).hexdigest()[:5]
@@ -223,6 +223,8 @@ class RelationWiseSurvey(models.Model):
     account = models.ForeignKey(Account, related_name='surveys')
     survey_id = models.CharField(max_length=128)
     name = models.CharField(max_length=256)
+    subject = models.CharField(max_length=1024, verbose_name=_('subject'))
+    message = models.TextField(verbose_name=_('email'))
 
     def __unicode__(self):
         return self.name
@@ -474,7 +476,7 @@ class Booking(models.Model):
                 'attendee1': ', '.join(attendees[:-1]), 'attendee2': attendees[-1]}
 
         return ugettext('%(name)s registered for %(event)s.') % {
-            'name': attendee_names, 'event': self.event.title} 
+            'name': attendee_names, 'event': self.event.title}
 
     def save(self, *args, **kwargs):
         """
