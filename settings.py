@@ -105,6 +105,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.media',
     'signupbox.context_processors.account',
     'signupbox.context_processors.site',
+    'signupbox.context_processors.date_format',
 )
 
 INSTALLED_APPS = (
