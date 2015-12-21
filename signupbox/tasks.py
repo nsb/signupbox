@@ -14,6 +14,7 @@ from django.db.models import signals, Max, Sum
 from django.template import Context
 from django.utils import translation
 from django.conf import settings
+from django.utils.translation import ugettext, ugettext_lazy as _
 
 from celery import group, task
 from celery.utils.log import get_task_logger
@@ -224,6 +225,10 @@ def send_surveys(event_id):
     event.surveySent = True
     event.save()
 
+    translation.activate(event.language)
+    activity = _('Sent surveys for %s.') % event.title
+    Activity.objects.create(content_object=event, activity=activity)
+
 
 @task
 def run_surveys():
@@ -248,7 +253,7 @@ def cronitor_ping_task():
     Ping cronitor.io every <interval> minutes to prevent alarm from firing
     """
     if getattr(settings, 'CRONITOR_ENABLED', False):
-        logger.info('ping cronitor monitor %s' % cronitor_monitor)
+        logger.info('ping cronitor monitor m22n')
         try:
           urlopen('https://cronitor.link/m22n/complete', timeout=10)
         except Exception:

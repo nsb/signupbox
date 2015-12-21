@@ -207,16 +207,16 @@ CELERYD_CONCURRENCY = 1
 CELERYBEAT_SCHEDULE = {
     'run-survey-every-hour': {
         'task': 'signupbox.tasks.run_surveys',
-        'schedule': timedelta(minutes=5),
+        'schedule': timedelta(hours=1),
     },
     'run-send-reminders-every-hour': {
         'task': 'signupbox.tasks.send_reminders',
         'schedule': timedelta(hours=1),
     },
-    'cronitor-task': {
-        'task': 'signupbox.tasks.cronitor_periodic_task',
-        'schedule': timedelta(hours=1),
-    },
+    # 'cronitor-task': {
+    #     'task': 'signupbox.tasks.cronitor_periodic_task',
+    #     'schedule': timedelta(hours=1),
+    # },
 }
 
 # Enable workers alarm with cronitor.io
