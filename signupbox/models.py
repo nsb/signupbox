@@ -395,6 +395,14 @@ class Event(models.Model):
         tickets = [ticket.pk for ticket in self.tickets.all() if not ticket.available or ticket.confirmed_attendee_count < ticket.available]
         return Ticket.objects.exclude(offered_from__gt=date.today()).exclude(offered_to__lt=date.today()).filter(pk__in=tickets)
 
+    @property
+    def activities(self):
+        return Activity.objects.filter(object_id=self.pk)
+
+    @property
+    def activities_short_list(self, count=6):
+        return self.activities.all()[:count]
+
     def save(self, *args, **kwargs):
 
         # auto create slug

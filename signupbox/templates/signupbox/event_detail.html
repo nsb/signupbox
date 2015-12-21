@@ -38,7 +38,24 @@
     </div>
   </div>
 
-  {% if not event.confirmed_attendees_count %}
+  {% if event.confirmed_attendees_count %}
+  <h3 class="indent">{% trans "Event activity" %}</h3>
+  <div class="activities">
+    <div>
+    {% for activity in account.activities %}
+      <div class="activity indent row">
+          <div class="quiet column timestamp">
+            {% blocktrans with activity.timestamp|timesince as since %}{{ since }} ago{% endblocktrans %}
+          </div>
+          <div class="column">{{ activity }}</div>
+      </div>
+    {% empty %}
+      <div class="empty">{% trans "No activites" %}</div>
+    {% endfor %}
+    </div>
+
+  </div>
+  {% else %}
   <div class="oobe">
     <h3>{% trans "A new event!" %}</h3>
     <p>{% blocktrans with attendees_url as attendees_url and tickets_url as tickets_url and fields_url as fields_url and event.website as website %}
