@@ -42,7 +42,7 @@
   <h3 class="indent">{% trans "Event activity" %}</h3>
   <div class="activities">
     <div>
-    {% for activity in account.activities %}
+    {% for activity in event.activities %}
       <div class="activity indent row">
           <div class="quiet column timestamp">
             {% blocktrans with activity.timestamp|timesince as since %}{{ since }} ago{% endblocktrans %}
