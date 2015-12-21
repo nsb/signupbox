@@ -1,6 +1,6 @@
 from django import forms
 
-from ..models import Event
+from ..models import Event, RelationWiseSurvey
 from widgets import DateTimeField, DateTimeWidget
 from django.utils.translation import ugettext, ugettext_lazy as _
 
@@ -9,6 +9,10 @@ class EventForm(forms.ModelForm):
     ends = DateTimeField(required=True, widget=DateTimeWidget, label=_('Ends'))
     description = forms.CharField(widget=forms.Textarea(attrs={'class': 'mceEditor'}),
         label=_('Description'), required=False)
+
+    def __init__(self, *args, **kwargs):
+        super(EventForm, self).__init__(*args, **kwargs)
+        self.fields['survey'].queryset = RelationWiseSurvey.objects.filter(account=self.instance.account)
 
     class Meta:
         model = Event
