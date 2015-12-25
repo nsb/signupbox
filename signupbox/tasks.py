@@ -41,11 +41,24 @@ def async_send_mail(recipients, subject, message, language_code, sender=None):
         async_send_mail.retry(exc=exc)
 
 @task
-def process_booking(booking, language_code):
+def send_booking_notifications(booking_id):
+    """
+    """
+    booking = Booking.objects.get(pk=booking_id)
+    event = booking.event
+    for subscriber in event.subscribers.all():
+        async_send_mail.delay([subscriber.email],
+                              _("New booking for %s") % event.title,
+                              booking.activity,
+                              event.language)
+
+@task
+def send_booking_receipt(booking_id, language_code):
     """
     Send mails on booking confirmed
     """
     translation.activate(language_code)
+    booking = Booking.objects.get(pk=booking_id)
 
     account = booking.event.account
     sender = account.from_address or 'noreply@%s' % Site.objects.get_current().domain
@@ -65,6 +78,15 @@ def process_booking(booking, language_code):
         )
     except SMTPException, exc:
         process_booking.retry(exc=exc)
+
+@task
+def process_booking(booking, language_code):
+    """
+    Send mails on booking confirmed
+    """
+    send_booking_notifications.delay(booking.pk)
+
+    send_booking_receipt.delay(booking.pk, language_code)
 
     Activity.objects.create(content_object = booking.event,
         activity = booking.activity)
