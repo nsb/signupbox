@@ -5,6 +5,19 @@
 {% block main %}
 <div class="headline indent">
   <h2>{{ event.title }}</h2>
+  <div>
+    {% if subscribed %}
+    <form method="post" action="{% url event_unsubscribe event.slug %}">
+      {% csrf_token %}
+      <input type="submit" value="{% trans "Unsubscribe from this event" %}" />
+    </form>
+    {% else %}
+    <form method="post" action="{% url event_subscribe event.slug %}">
+      {% csrf_token %}
+      <input type="submit" value="{% trans "Subscribe to this event" %}"/>
+    </form>
+    {% endif %}
+  </div>
 </div>
 
 <div class="indent">

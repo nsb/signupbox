@@ -360,6 +360,8 @@ class Event(models.Model):
                                         verbose_name=_('Survey'),
                                         help_text=_('Send out survey questions to attendees after the event?'))
     surveySent = models.BooleanField(default=False)
+    subscribers = models.ManyToManyField(User, related_name='events',
+                                         verbose_name=_('Subscribers'))
 
     objects = EventManager()
 

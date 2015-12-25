@@ -28,6 +28,7 @@ def create(request, account):
             event = form.save()
             create_default_fields(event)
             create_default_tickets(event)
+            event.subscribers.add(request.user)
             messages.success(request, _('Event added.'))
             return redirect(reverse('event_detail', kwargs={'slug':event.slug}))
     else:
@@ -62,6 +63,7 @@ def read(request, slug, account):
         template_object_name='event',
         template_name='signupbox/event_detail.html',
         extra_context = {
+            'subscribed': event.subscribers.filter(pk=request.user.pk).exists(),
             'attendees_url': reverse('event_attendees', kwargs={'slug': event.slug}),
             'tickets_url': reverse('event_tickets', kwargs={'slug': event.slug}),
             'fields_url': reverse('event_fields', kwargs={'slug': event.slug}),
@@ -130,3 +132,34 @@ def copy(request, slug, account):
         'signupbox/event_copy.html',
         RequestContext(request, {'form':form, 'event':event,})
     )
+
+
+@login_required
+@with_account
+def subscribe(request, slug, account):
+
+    if not request.user.has_perm('view', account):
+        return HttpResponseForbidden()
+
+    event = get_object_or_404(Event, account=account, slug=slug)
+
+    if request.method == 'POST':
+        event.subscribers.add(request.user)
+
+        messages.success(request, _('Subscribed.'))
+        return redirect(reverse('event_detail', kwargs={'slug':event.slug}))
+
+@login_required
+@with_account
+def unsubscribe(request, slug, account):
+
+    if not request.user.has_perm('view', account):
+        return HttpResponseForbidden()
+
+    event = get_object_or_404(Event, account=account, slug=slug)
+
+    if request.method == 'POST':
+        event.subscribers.remove(request.user)
+
+        messages.success(request, _('Unsubscribed.'))
+        return redirect(reverse('event_detail', kwargs={'slug':event.slug}))
