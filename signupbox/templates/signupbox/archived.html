@@ -16,13 +16,6 @@
         <div class="column"><h4><a href="{% url event_detail event.slug %}" title="{{ event.title }}">{{ event.title }}</a></h4></div>
         <div class="column">{% date_span event.begins event.ends %}</div>
         <div class="column">
-          {% blocktrans count event.confirmed_attendees_count|default_if_none:"0" as attendee_count %}
-            <strong>{{ attendee_count }}</strong> attendee
-            {% plural %}
-            <strong>{{ attendee_count }}</strong> attendees
-          {% endblocktrans %}
-        </div>
-        <div class="column">
           <form action="{% url event_unarchive event.slug %}" method="post">
             {% csrf_token %}
             <input type="submit" value="{% trans "Remove from archive" %}"/>
