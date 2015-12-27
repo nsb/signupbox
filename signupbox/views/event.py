@@ -194,4 +194,4 @@ def unarchive(request, slug, account):
         event.save()
 
         messages.success(request, _('%s was removed from archive') % event.title)
-        return redirect(reverse('index'))
+        return redirect(reverse('archived'))
