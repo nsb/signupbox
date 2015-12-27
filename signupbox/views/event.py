@@ -163,3 +163,35 @@ def unsubscribe(request, slug, account):
 
         messages.success(request, _('Unsubscribed.'))
         return redirect(reverse('event_detail', kwargs={'slug':event.slug}))
+
+@login_required
+@with_account
+def archive(request, slug, account):
+
+    if not request.user.has_perm('view', account):
+        return HttpResponseForbidden()
+
+    event = get_object_or_404(Event, account=account, slug=slug)
+
+    if request.method == 'POST':
+        event.archived = True
+        event.save()
+
+        messages.success(request, _('%s was archived') % event.title)
+        return redirect(reverse('index'))
+
+@login_required
+@with_account
+def unarchive(request, slug, account):
+
+    if not request.user.has_perm('view', account):
+        return HttpResponseForbidden()
+
+    event = get_object_or_404(Event, account=account, slug=slug)
+
+    if request.method == 'POST':
+        event.archived = False
+        event.save()
+
+        messages.success(request, _('%s was removed from archive') % event.title)
+        return redirect(reverse('index'))

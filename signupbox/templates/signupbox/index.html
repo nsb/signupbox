@@ -62,7 +62,7 @@
     </div>
 
     <div id="gviz" class="column"></div>
- 
+
   </div>
 
 
@@ -87,12 +87,22 @@
             <strong>{{ attendee_count }}</strong> attendees
           {% endblocktrans %}
         </div>
+        <div class="column">
+          <form action="{% url event_archive event.slug %}" method="post">
+            {% csrf_token %}
+            <input type="submit" value="{% trans "Archive" %}"/>
+          </form>
+        </div>
       </div>
     {% endfor %}
   </div>
   {% else %}
     <div class="empty">{% trans "No previous events" %}</div>
   {% endif %}
+
+  <div class="indent">
+    <a href="{% url archived %}">{% trans "Archived events" %}</a>
+  </div>
 
 {% endblock main %}
 

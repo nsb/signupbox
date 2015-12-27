@@ -1,0 +1,42 @@
+{% extends "signupbox/appbase.html" %}
+{% load i18n %}
+{% load date_tags %}
+
+{% block main %}
+<div class="headline indent">
+  <h2>{% blocktrans with account.display_name as name %}{{ name }}'s archived events{% endblocktrans %}</h2>
+  <div><a href="{% url index %}">{% trans "Back to all events" %}</a></div>
+</div>
+
+  <h3 class="indent">{% trans "Archived events" %}</h3>
+  {% if account.events.archived %}
+  <div class="event block previous">
+    {% for event in account.events.archived %}
+      <div class="event row {% cycle 'even' 'odd' %}">
+        <div class="column"><h4><a href="{% url event_detail event.slug %}" title="{{ event.title }}">{{ event.title }}</a></h4></div>
+        <div class="column">{% date_span event.begins event.ends %}</div>
+        <div class="column">
+          {% blocktrans count event.confirmed_attendees_count|default_if_none:"0" as attendee_count %}
+            <strong>{{ attendee_count }}</strong> attendee
+            {% plural %}
+            <strong>{{ attendee_count }}</strong> attendees
+          {% endblocktrans %}
+        </div>
+        <div class="column">
+          <form action="{% url event_unarchive event.slug %}" method="post">
+            {% csrf_token %}
+            <input type="submit" value="{% trans "Remove from archive" %}"/>
+          </form>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+  {% else %}
+    <div class="empty">{% trans "No archived events" %}</div>
+  {% endif %}
+
+{% endblock main %}
+
+{% block javascript %}
+  {{ block.super }}
+{% endblock javascript %}

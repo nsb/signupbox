@@ -65,6 +65,17 @@ def index(request, account):
 
 @login_required
 @with_account
+def archived(request, account):
+
+    if not request.user.has_perm('view', account):
+        return HttpResponseForbidden()
+
+    return render_to_response('signupbox/archived.html',
+                              RequestContext(request, {'account':account}))
+
+
+@login_required
+@with_account
 def event_gviz(request, account):
 
     if not request.user.has_perm('view', account):
@@ -80,7 +91,7 @@ def event_gviz(request, account):
     rows = []
     for d in dateIterator(from_date=since):
         for event in events:
- 
+
             num = Attendee.objects.filter(
                 booking__timestamp__range=(datetime.combine(d, time.min), datetime.combine(d, time.max)),
                 booking__event=event, booking__confirmed=True,

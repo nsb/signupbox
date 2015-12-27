@@ -298,8 +298,10 @@ class EventManager(models.Manager):
         return self.filter(begins__gt=datetime.now())
 
     def previous(self):
-        return self.filter(begins__lt=datetime.now()).order_by('-begins')
+        return self.filter(begins__lt=datetime.now()).exclude(archived=True).order_by('-begins')
 
+    def archived(self):
+        return self.filter(begins__lt=datetime.now(), archived=True).order_by('-begins')
 
 class Event(models.Model):
     """
@@ -362,6 +364,7 @@ class Event(models.Model):
     surveySent = models.BooleanField(default=False)
     subscribers = models.ManyToManyField(User, related_name='events',
                                          verbose_name=_('Subscribers'))
+    archived = models.BooleanField(default=True, db_index=True)
 
     objects = EventManager()
 
