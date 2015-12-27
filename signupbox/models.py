@@ -364,7 +364,7 @@ class Event(models.Model):
     surveySent = models.BooleanField(default=False)
     subscribers = models.ManyToManyField(User, related_name='events',
                                          verbose_name=_('Subscribers'))
-    archived = models.BooleanField(default=True, db_index=True)
+    archived = models.BooleanField(default=False, db_index=True)
 
     objects = EventManager()
 
