@@ -9,7 +9,7 @@ class Migration(SchemaMigration):
     def forwards(self, orm):
         
         # Adding field 'Event.archived'
-        db.add_column('signupbox_event', 'archived', self.gf('django.db.models.fields.BooleanField')(default=True, db_index=True), keep_default=False)
+        db.add_column('signupbox_event', 'archived', self.gf('django.db.models.fields.BooleanField')(default=False, db_index=True), keep_default=False)
 
 
     def backwards(self, orm):
@@ -130,7 +130,7 @@ class Migration(SchemaMigration):
             'Meta': {'ordering': "['begins', 'title', 'slug']", 'unique_together': "(('account', 'slug'),)", 'object_name': 'Event'},
             'account': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'events'", 'to': "orm['signupbox.Account']"}),
             'address': ('django.db.models.fields.CharField', [], {'max_length': '255', 'blank': 'True'}),
-            'archived': ('django.db.models.fields.BooleanField', [], {'default': 'True', 'db_index': 'True'}),
+            'archived': ('django.db.models.fields.BooleanField', [], {'default': 'False', 'db_index': 'True'}),
             'begins': ('django.db.models.fields.DateTimeField', [], {'db_index': 'True'}),
             'capacity': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
             'city': ('django.db.models.fields.CharField', [], {'max_length': '255', 'blank': 'True'}),
