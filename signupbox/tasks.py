@@ -176,7 +176,7 @@ def send_survey(attendee_id, survey_id):
     attendees = Attendee.objects.select_related(
         'booking__event').filter(pk=attendee_id)
 
-    survey = RelationWiseSurvey.objects.get(survey_id=survey_id)
+    survey = RelationWiseSurvey.objects.get(pk=survey_id)
 
     for attendee in attendees:
         if not attendee.email:
@@ -184,7 +184,7 @@ def send_survey(attendee_id, survey_id):
 
         event = attendee.booking.event
         query_params = {
-            'surveyID': survey_id.encode('iso-8859-1'),
+            'surveyID': survey.survey_id.encode('iso-8859-1'),
             'name': attendee.name.encode('iso-8859-1'),
             'signupbox': event.slug.encode('iso-8859-1'),
             'email': attendee.email.encode('iso-8859-1'),
@@ -242,7 +242,7 @@ def send_surveys(event_id):
         return
 
     logger.info("Sending survey for event %s" % event.title)
-    group(send_survey.s(attendee.pk, event.survey.survey_id)
+    group(send_survey.s(attendee.pk, event.survey.pk)
         for attendee in Attendee.objects.confirmed(event))()
     event.surveySent = True
     event.save()
