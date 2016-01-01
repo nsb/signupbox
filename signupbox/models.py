@@ -225,6 +225,8 @@ class RelationWiseSurvey(models.Model):
     name = models.CharField(max_length=256)
     subject = models.CharField(max_length=1024, verbose_name=_('subject'))
     message = models.TextField(verbose_name=_('email'))
+    language_parameter = models.CharField(max_length=32, blank=True,
+                                          verbose_name=_('Language parameter'))
 
     def __unicode__(self):
         return self.name

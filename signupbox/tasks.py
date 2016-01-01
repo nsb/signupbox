@@ -190,8 +190,8 @@ def send_survey(attendee_id, survey_id):
             'email': attendee.email.encode('iso-8859-1'),
         }
 
-        if event.language == 'en':
-            query_params['lng'] = '9035'
+        if survey.language_parameter:
+            query_params['lng'] = survey.language_parameter
 
         survey_url = urlunparse(('https',
                                  'www.relationwise.com',
