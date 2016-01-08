@@ -193,7 +193,7 @@ def send_survey(attendee_id, survey_id):
         if survey.language_parameter:
             query_params['lng'] = survey.language_parameter
 
-        survey_url = urlunparse(('https',
+        survey_url = urlunparse(('http',
                                  'www.relationwise.com',
                                  '/rls/survey-webhook.aspx',
                                  '',
