@@ -184,10 +184,10 @@ def send_survey(attendee_id, survey_id):
 
         event = attendee.booking.event
         query_params = {
-            'surveyID': survey.survey_id.encode('iso-8859-1'),
-            'name': attendee.name.encode('iso-8859-1'),
-            'signupbox': event.slug.encode('iso-8859-1'),
-            'email': attendee.email.encode('iso-8859-1'),
+            'id': survey.survey_id.encode('utf-8'),
+            'name': attendee.name.encode('utf-8'),
+            'signupbox': event.slug.encode('utf-8'),
+            'email': attendee.email.encode('utf-8'),
         }
 
         if survey.language_parameter:
@@ -195,7 +195,7 @@ def send_survey(attendee_id, survey_id):
 
         survey_url = urlunparse(('https',
                                  'www.relationwise.com',
-                                 '/rss/automaticsurvey/diysurvey.aspx',
+                                 '/rls/survey-webhook.aspx',
                                  '',
                                  urlencode(query_params),
                                  ''))
@@ -211,11 +211,7 @@ def send_survey(attendee_id, survey_id):
             account.name, account.from_address or fallback_sender)
 
         recipient = attendee.email
-        # subject = render_to_string('signupbox/mails/relationwise_subject.txt',
-        #                            context_instance=context)
         subject = Template(survey.subject).render(context)
-        # message = render_to_string('signupbox/mails/relationwise_body.txt',
-        #                            context_instance=context)
         message = Template(survey.message).render(context)
 
         headers =  {}
