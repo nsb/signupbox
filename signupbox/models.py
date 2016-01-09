@@ -284,7 +284,7 @@ class EventManager(models.Manager):
         qs = super(EventManager, self).get_query_set()
 
         confirmed_attendees_query = (
-            'select sum(attendee_count) from signupbox_attendee, signupbox_booking '
+            'select coalesce(sum(attendee_count), 0) from signupbox_attendee, signupbox_booking '
             'WHERE signupbox_attendee.status = \'%s\' and '
             'signupbox_booking.confirmed = True and '
             'signupbox_event.id = signupbox_booking.event_id and '
