@@ -111,7 +111,7 @@ def event_attendees_edit(request, slug, attendee_id, account):
         initial = {'ticket':attendee.ticket}
         for data in attendee.values.all():
             # fix boolean field
-            value = False if data.value == "false" else True if data.field.type == CHECKBOX_FIELD else data.value
+            value = False if data.value.lower() == "false" else True if data.field.type == CHECKBOX_FIELD else data.value
             initial[data.field.name] = value
 
         form = form_class(initial=initial)
