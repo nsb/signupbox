@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-01-11 19:28+0100\n"
+"POT-Creation-Date: 2016-02-20 17:04+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -45,23 +45,23 @@ msgstr "Ejefald organisationsnavn"
 msgid "Organization name in genitive form."
 msgstr "Organisationsnavn i ejefald."
 
-#: models.py:70 models.py:325 models.py:662
+#: models.py:70 models.py:338 models.py:686
 msgid "Street"
 msgstr "Gade"
 
-#: models.py:71 models.py:327 models.py:663
+#: models.py:71 models.py:340 models.py:687
 msgid "Zip code"
 msgstr "Post nummer"
 
-#: models.py:72 models.py:326 models.py:664
+#: models.py:72 models.py:339 models.py:688
 msgid "City"
 msgstr "By"
 
-#: models.py:73 models.py:665
+#: models.py:73 models.py:689
 msgid "Country"
 msgstr "Land"
 
-#: models.py:74 models.py:666
+#: models.py:74 models.py:690
 msgid "Phone number"
 msgstr "Telefon nummer"
 
@@ -130,281 +130,319 @@ msgid "Enter your Google analytics tracker code to enable tracking."
 msgstr "Angiv din Google analytics kode for at starte dataopsamling"
 
 #: models.py:94
+msgid "Script codes"
+msgstr "Scriptkoder"
+
+#: models.py:95
+msgid "Script codes that will added on all public event pages."
+msgstr "Scriptkoder som tilføjes alle arrangementssider."
+
+#: models.py:96
 msgid "Users"
 msgstr "Brugere"
 
-#: models.py:96
+#: models.py:98
 msgid ""
-"In addition to the permissions manually assigned, \n"
+"In addition to the permissions manually assigned,\n"
 "            this account will also get all permissions granted to each group "
 "it is in."
 msgstr ""
 "I tillæg til alle rettigheder manuelt tildelt, vil denne konto også få alle "
 "rettigheder tildelt alle grupper den er i."
 
-#: models.py:101
+#: models.py:103
 msgid "Relationwise Survey Id"
-msgstr ""
+msgstr "Relationwise Survey Id"
 
-#: models.py:102
+#: models.py:104
 msgid "Required in order to use the Relationwise integration."
-msgstr ""
+msgstr "Påkrævet for at bruge Relationwise integration."
 
-#: models.py:105
+#: models.py:107
 msgid "Reply to"
-msgstr ""
+msgstr "Svar til"
 
-#: models.py:106
+#: models.py:108
 msgid "The default reply-to email address for all outgoing emails."
-msgstr ""
+msgstr "Standard svar til email adresse for alle udgående emails."
 
-#: models.py:168
+#: models.py:111
+msgid "From address"
+msgstr "Fra adresse"
+
+#: models.py:112
+msgid "The default from email address for all outgoing emails."
+msgstr "Standard fra email adresse for alle udgående emails."
+
+#: models.py:175
 msgid "Account"
 msgstr "Konto"
 
-#: models.py:169
+#: models.py:176
 msgid "Accounts"
 msgstr "Kontoer"
 
-#: models.py:237 templates/signupbox/profile.html:6
+#: models.py:226
+msgid "subject"
+msgstr "Emne"
+
+#: models.py:227 models.py:522
+msgid "email"
+msgstr "email"
+
+#: models.py:229
+msgid "Language parameter"
+msgstr "Sprog parameter"
+
+#: models.py:248 templates/signupbox/profile.html:6
 msgid "Profile"
 msgstr "Profil"
 
-#: models.py:238
+#: models.py:249
 msgid "Profiles"
 msgstr "Profiler"
 
-#: models.py:247
+#: models.py:258
 msgid "Open"
 msgstr "Åben"
 
-#: models.py:248
+#: models.py:259
 msgid "Closed"
 msgstr "Lukket"
 
-#: models.py:252
+#: models.py:263
 msgid "kr."
 msgstr "kr."
 
-#: models.py:253
+#: models.py:264
 msgid "euros"
 msgstr "euro"
 
-#: models.py:257
+#: models.py:268
 msgid "Danish"
 msgstr "Dansk"
 
-#: models.py:258
+#: models.py:269
 msgid "English"
 msgstr "Engelsk"
 
-#: models.py:262
+#: models.py:273
 msgid "Never"
 msgstr "Aldrig"
 
-#: models.py:263
+#: models.py:274
 msgid "1 Day"
 msgstr "1 Dag"
 
-#: models.py:264
+#: models.py:275
 msgid "Three days"
 msgstr "Tre dage"
 
-#: models.py:265
+#: models.py:276
 msgid "One week"
 msgstr "En uge"
 
-#: models.py:266
+#: models.py:277
 msgid "Two weeks"
 msgstr "To uger"
 
-#: models.py:267
+#: models.py:278
 msgid "One month"
 msgstr "En måned"
 
-#: models.py:310
+#: models.py:323
 msgid "What"
 msgstr "Hvad"
 
-#: models.py:310
+#: models.py:323
 msgid "The event title"
 msgstr "Arrangementets navn"
 
-#: models.py:315 templates/signupbox/includes/export_pdf_details.txt:4
+#: models.py:328 templates/signupbox/includes/export_pdf_details.txt:4
 msgid "Project Id"
 msgstr "Projekt nr."
 
-#: models.py:316
+#: models.py:329
 msgid "Add the project id that payments should be transfered to."
 msgstr "Tilføj det projekt nr. som billetindtægter skal overføres til."
 
-#: models.py:322 forms/event.py:11
+#: models.py:335 forms/event.py:11
 #: templates/signupbox/includes/export_pdf_booking.txt:6
-#: views/attendee_actions.py:151 views/attendee_actions.py:286
+#: views/attendee_actions.py:153 views/attendee_actions.py:288
 msgid "Description"
 msgstr "Beskrivelse"
 
-#: models.py:324 templates/signupbox/event_site.html:16
+#: models.py:337 templates/signupbox/event_site.html:16
 #: templates/signupbox/mails/register_email.txt:8
 msgid "Where"
 msgstr "Hvor"
 
-#: models.py:324
+#: models.py:337
 msgid "The event venue"
 msgstr "Arrangementets lokation"
 
-#: models.py:330 forms/event.py:8
+#: models.py:343 forms/event.py:8
 msgid "Begins"
 msgstr "Begynder"
 
-#: models.py:331 forms/event.py:9
+#: models.py:344 forms/event.py:9
 msgid "Ends"
 msgstr "Slutter"
 
-#: models.py:334 templates/signupbox/event_detail.html:17
+#: models.py:347 templates/signupbox/event_detail.html:30
 msgid "Capacity"
 msgstr "Kapacitet"
 
-#: models.py:334
+#: models.py:347
 msgid "Leave blank for unlimited."
 msgstr "Blank for ubegrænset"
 
-#: models.py:335
+#: models.py:348
 msgid "Status"
 msgstr "Status"
 
-#: models.py:338 views/attendee_actions.py:149 views/attendee_actions.py:284
+#: models.py:351 views/attendee_actions.py:151 views/attendee_actions.py:286
 msgid "Currency"
 msgstr "Valuta"
 
-#: models.py:341
+#: models.py:354
 msgid "Send reminder"
 msgstr "Send påmindelse"
 
-#: models.py:341
+#: models.py:354
 msgid "When should the reminder be sent?"
 msgstr "Hvornår skal påmindelse afsendes?"
 
-#: models.py:342
+#: models.py:355
 msgid "Reminder subject"
 msgstr "Påmindelse emne"
 
-#: models.py:343
+#: models.py:356
 msgid "Reminder"
 msgstr "Påmindelse"
 
-#: models.py:348
+#: models.py:361
 msgid "Language"
 msgstr "Sprog"
 
-#: models.py:351
+#: models.py:364
 msgid "Survey"
-msgstr ""
+msgstr "Spørgeskema"
 
-#: models.py:352
+#: models.py:365
 msgid "Send out survey questions to attendees after the event?"
-msgstr ""
+msgstr "Send spørgeskema til deltagere efter arrangementet?"
 
-#: models.py:424
+#: models.py:368
+msgid "Subscribers"
+msgstr "Abonnenter"
+
+#: models.py:448
 msgid "Available"
 msgstr "til rådighed"
 
-#: models.py:424
+#: models.py:448
 msgid "Number of available tickets. Leave blank for event capacity."
 msgstr ""
 "Antal billetter til rådighed. Hvis tom bruges arrangements kapaciteten."
 
-#: models.py:466
+#: models.py:490
 #, python-format
 msgid "%(attendee1)s and %(attendee2)s"
 msgstr "%(attendee1)s og %(attendee2)s"
 
-#: models.py:469
+#: models.py:493
 #, python-format
 msgid "%(name)s registered for %(event)s."
 msgstr "%(name)s tilmeldte sig %(event)s."
 
-#: models.py:495
+#: models.py:519
 msgid "text"
 msgstr "tekst"
 
-#: models.py:496
+#: models.py:520
 msgid "multiline text"
 msgstr "multilinie tekst"
 
-#: models.py:497
+#: models.py:521
 msgid "checkbox"
 msgstr "tjekboks"
 
-#: models.py:498
-msgid "email"
-msgstr "email"
-
-#: models.py:499
+#: models.py:523
 msgid "select options"
 msgstr "dropdown"
 
-#: models.py:500
+#: models.py:524
 msgid "radio buttons"
 msgstr "radio knapper"
 
-#: models.py:501
+#: models.py:525
 msgid "phone"
 msgstr "telefon"
 
-#: models.py:508
+#: models.py:532
 msgid "Label"
 msgstr "Betegnelse"
 
-#: models.py:509
+#: models.py:533
 msgid "Help text"
 msgstr "Hjælpetekst"
 
-#: models.py:511
+#: models.py:535
 msgid "Type"
 msgstr "Type"
 
-#: models.py:512
+#: models.py:536
 msgid "Required"
 msgstr "Påkrævet"
 
-#: models.py:513
+#: models.py:537
 msgid "In extra forms"
 msgstr "I ekstra formularer"
 
-#: models.py:595 forms/attendees.py:65
+#: models.py:619 forms/attendees.py:65
 msgid "Confirmed"
 msgstr "Bekræftet"
 
-#: models.py:596
+#: models.py:620
 msgid "Unconfirmed"
 msgstr "Ubekræftet"
 
-#: models.py:597 forms/attendees.py:65
+#: models.py:621 forms/attendees.py:65
 msgid "Cancelled"
 msgstr "Afmeldt"
 
-#: models.py:659
+#: models.py:683
 msgid "Name"
 msgstr "Navn"
 
-#: models.py:660
+#: models.py:684
 msgid "Organization"
 msgstr "Firma"
 
-#: models.py:661 views/attendee_actions.py:209
+#: models.py:685 views/attendee_actions.py:211
 msgid "Email"
 msgstr "Email"
 
-#: models.py:673
+#: models.py:697
 msgid "Default ticket"
 msgstr "Standard billet"
 
-#: forms/account.py:59
+#: tasks.py:51
+#, python-format
+msgid "New booking for %s"
+msgstr "Ny booking for %s"
+
+#: tasks.py:247
+#, python-format
+msgid "Sent surveys for %s."
+msgstr "Sendte spørgeskema for %s"
+
+#: forms/account.py:62
 msgid "Email addresses"
 msgstr "Email adresser"
 
-#: forms/account.py:60
+#: forms/account.py:63
 msgid ""
 "Add email addresses for each person you wish to invite. Seperate each email "
 "address with a space."
@@ -412,33 +450,33 @@ msgstr ""
 "Angiv email adresser for hver person du vil invitere. Separer hver email "
 "adresse med et blank tegn."
 
-#: forms/account.py:62 forms/attendees.py:45
+#: forms/account.py:65 forms/attendees.py:45
 msgid "Message"
 msgstr "Besked"
 
-#: forms/account.py:64
+#: forms/account.py:67
 msgid "Make these users administrators?"
 msgstr "Gør disse brugere til administratorer?"
 
-#: forms/account.py:66
+#: forms/account.py:69
 msgid "Administrators can invite new users and edit acocunt settings"
 msgstr ""
 "Administratorer kan invitere nye brugere og redigere deres konto "
 "indstillinger"
 
-#: forms/account.py:76
+#: forms/account.py:79
 msgid "Account administrator"
 msgstr "Konto administrator"
 
-#: forms/account.py:78
+#: forms/account.py:81
 msgid "Can invite new members and edit account settings"
 msgstr "Kan invitere nye brugere og redigere konto indstillinger"
 
-#: forms/account.py:83
+#: forms/account.py:86
 msgid "Password"
 msgstr "Kodeord"
 
-#: forms/account.py:84
+#: forms/account.py:87
 msgid "Password (again)"
 msgstr "Kodeord (igen)"
 
@@ -474,11 +512,11 @@ msgstr "PDF"
 msgid "Excel"
 msgstr "Excel"
 
-#: forms/attendees.py:25 views/attendee_actions.py:246
+#: forms/attendees.py:25 views/attendee_actions.py:248
 msgid "Attendee data"
 msgstr "Deltager data"
 
-#: forms/attendees.py:26 views/attendee_actions.py:273
+#: forms/attendees.py:26 views/attendee_actions.py:275
 msgid "Booking data"
 msgstr "Tilmeldings data"
 
@@ -510,16 +548,16 @@ msgstr "Vis"
 msgid "All"
 msgstr "Alle"
 
-#: forms/event.py:36
+#: forms/event.py:40
 msgid "Begin date must be before end date"
 msgstr "Start dato skal være tidligere end slut dato"
 
-#: forms/event.py:40
+#: forms/event.py:44
 msgid "New title"
-msgstr ""
+msgstr "Ny titel"
 
-#: forms/register.py:71 views/attendee_actions.py:123
-#: views/attendee_actions.py:209 views/attendee_actions.py:251
+#: forms/register.py:71 views/attendee_actions.py:125
+#: views/attendee_actions.py:211 views/attendee_actions.py:253
 msgid "Ticket"
 msgstr "Billet"
 
@@ -535,8 +573,10 @@ msgid ""
 msgid_plural ""
 "There are only %(available)d %(ticket_name)s left. Please adjust your ticket "
 "choices."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Der er kun %(available)d %(ticket_name)s tilbage. Juster venligst "
+"dit valg."
+msgstr[1] "Der er kun %(available)d %(ticket_name)s tilbage. Juster venligst "
+"dit valg."
 
 #: forms/registration.py:15
 msgid "URL"
@@ -614,6 +654,27 @@ msgstr "log ud"
 msgid "login"
 msgstr "log ind"
 
+#: templates/signupbox/archived.html:7
+#, python-format
+msgid "%(name)s's archived events"
+msgstr "%(name)s's arkiverede arrangementer"
+
+#: templates/signupbox/archived.html:8
+msgid "Back to all events"
+msgstr "Tilbage til alle arrangementer"
+
+#: templates/signupbox/archived.html:11 templates/signupbox/index.html:104
+msgid "Archived events"
+msgstr "Arkiverede arrangementer"
+
+#: templates/signupbox/archived.html:21
+msgid "Remove from archive"
+msgstr "Fjern fra arkiv"
+
+#: templates/signupbox/archived.html:28
+msgid "No archived events"
+msgstr "Ingen arkiverede arrangementer"
+
 #: templates/signupbox/attendee_add.html:8
 #: templates/signupbox/attendees.html:10
 msgid "Add attendee"
@@ -652,8 +713,8 @@ msgstr "Send"
 msgid "Export attendee data"
 msgstr "Eksporter deltager data"
 
-#: templates/signupbox/booking_detail.html:8 views/attendee_actions.py:144
-#: views/attendee_actions.py:278
+#: templates/signupbox/booking_detail.html:8 views/attendee_actions.py:146
+#: views/attendee_actions.py:280
 msgid "Booking"
 msgstr "Tilmelding"
 
@@ -677,11 +738,41 @@ msgstr ""
 "Vil du modtage nyheder om lignende aktiviteter fra Dansk Arkitektur Center "
 "og modtage vores månedlige nyhedsbrev?"
 
-#: templates/signupbox/event_complete.html:26
+#: templates/signupbox/event_complete.html:19
+msgid "Choose your interests"
+msgstr "Vælg dine interesser"
+
+#: templates/signupbox/event_complete.html:23
+msgid "Architecural experiences - Exhibitions - Guided trips"
+msgstr "Arkitekturoplevelser - Udstillinger - Guidede ture"
+
+#: templates/signupbox/event_complete.html:27
+msgid "Kids and familiy activities"
+msgstr "Børne- og familieaktiviteter"
+
+#: templates/signupbox/event_complete.html:31
+msgid ""
+"Professional knowledge - Architecture events - Construction and urban "
+"development"
+msgstr "Faglig viden - Arrangementer om arkitektur - Byggeri og byudvikling"
+
+#: templates/signupbox/event_complete.html:36
+msgid "New books - Designproducts from DACs shop"
+msgstr "Nye bøger - Designprodukter fra DACs shop"
+
+#: templates/signupbox/event_complete.html:41
+msgid "Group tours - Meetings - Experiences for organizations and companies"
+msgstr "Gruppeture - Møder - Oplevelser for foreninger og virksomheder"
+
+#: templates/signupbox/event_complete.html:45
+msgid "Educational offerings for teachers"
+msgstr "Undervisningstilbud for lærer og undervisere"
+
+#: templates/signupbox/event_complete.html:53
 msgid "Yes"
 msgstr "Ja"
 
-#: templates/signupbox/event_complete.html:27
+#: templates/signupbox/event_complete.html:54
 msgid "No"
 msgstr "Nej"
 
@@ -741,7 +832,7 @@ msgid "Incl. vat"
 msgstr "Inkl. moms"
 
 #: templates/signupbox/event_copy.html:6
-#: templates/signupbox/event_detail.html:37
+#: templates/signupbox/event_detail.html:50
 msgid "Copy event"
 msgstr "Kopier arrangement"
 
@@ -760,19 +851,29 @@ msgstr "Tilføj arrangement"
 msgid "Add"
 msgstr "Tilføj"
 
-#: templates/signupbox/event_detail.html:14
+#: templates/signupbox/event_detail.html:12
+#, fuzzy
+msgid "Unsubscribe from this event"
+msgstr "Ingen billetter for dette arrangement"
+
+#: templates/signupbox/event_detail.html:17
+#, fuzzy
+msgid "Subscribe to this event"
+msgstr "Ingen billetter for dette arrangement"
+
+#: templates/signupbox/event_detail.html:27
 msgid "Date"
 msgstr "Dato"
 
-#: templates/signupbox/event_detail.html:15
+#: templates/signupbox/event_detail.html:28
 msgid "Venue"
 msgstr "Lokation"
 
-#: templates/signupbox/event_detail.html:21
+#: templates/signupbox/event_detail.html:34
 msgid "Unlimited"
 msgstr "Ubegrænset"
 
-#: templates/signupbox/event_detail.html:24 templates/signupbox/index.html:28
+#: templates/signupbox/event_detail.html:37 templates/signupbox/index.html:28
 #: templates/signupbox/index.html.py:84
 #, python-format
 msgid ""
@@ -790,20 +891,35 @@ msgstr[1] ""
 "\n"
 "<strong>%(attendee_count)s</strong> deltagere"
 
-#: templates/signupbox/event_detail.html:31
+#: templates/signupbox/event_detail.html:44
 msgid "Website"
 msgstr "Website"
 
-#: templates/signupbox/event_detail.html:34
+#: templates/signupbox/event_detail.html:47
 #: templates/signupbox/event_edit.html:6
 msgid "Edit event"
 msgstr "Rediger arrangement"
 
-#: templates/signupbox/event_detail.html:43
+#: templates/signupbox/event_detail.html:55
+#, fuzzy
+msgid "Event activity"
+msgstr "Seneste aktiviteter"
+
+#: templates/signupbox/event_detail.html:61 templates/signupbox/index.html:55
+#, python-format
+msgid "%(since)s ago"
+msgstr "%(since)s siden"
+
+#: templates/signupbox/event_detail.html:66
+#, fuzzy
+msgid "No activites"
+msgstr "Ingen senester aktiviteter"
+
+#: templates/signupbox/event_detail.html:73
 msgid "A new event!"
 msgstr "Et nyt arrangement"
 
-#: templates/signupbox/event_detail.html:44
+#: templates/signupbox/event_detail.html:74
 #, python-format
 msgid ""
 "\n"
@@ -846,8 +962,7 @@ msgstr "Form felter"
 msgid "Add field"
 msgstr "Tilføj felter"
 
-#: templates/signupbox/event_fields.html:40
-#: templates/signupbox/members.html:35
+#: templates/signupbox/event_fields.html:40 templates/signupbox/members.html:35
 #: templates/signupbox/includes/fields_form.html:24
 msgid "Remove"
 msgstr "Fjern"
@@ -1018,11 +1133,6 @@ msgstr ""
 msgid "Recent activities"
 msgstr "Seneste aktiviteter"
 
-#: templates/signupbox/index.html:55
-#, python-format
-msgid "%(since)s ago"
-msgstr "%(since)s siden"
-
 #: templates/signupbox/index.html:60
 msgid "No recent activites"
 msgstr "Ingen senester aktiviteter"
@@ -1044,11 +1154,15 @@ msgstr ""
 msgid "Previous events"
 msgstr "Tidligere arrangementer"
 
-#: templates/signupbox/index.html:94
+#: templates/signupbox/index.html:93
+msgid "Archive"
+msgstr ""
+
+#: templates/signupbox/index.html:100
 msgid "No previous events"
 msgstr "Ingen tidligere arrangementer"
 
-#: templates/signupbox/index.html:128
+#: templates/signupbox/index.html:138
 msgid "Registrations the last seven days"
 msgstr "Tilmeldinger de seneste syv dage"
 
@@ -1109,15 +1223,15 @@ msgstr "Inviter brugere"
 msgid "Invite users to this account via email."
 msgstr "Inviter brugere til denne konto via email."
 
-#: templates/signupbox/public_base.html:40
+#: templates/signupbox/public_base.html:43
 msgid "Phone"
 msgstr "Telefon"
 
-#: templates/signupbox/public_base.html:41
+#: templates/signupbox/public_base.html:44
 msgid "CVR no."
 msgstr "CVR nummer"
 
-#: templates/signupbox/public_base.html:42
+#: templates/signupbox/public_base.html:45
 msgid "Contact"
 msgstr "Kontakt"
 
@@ -1134,27 +1248,27 @@ msgid "Signup"
 msgstr "Opret"
 
 #: templates/signupbox/includes/export_pdf_booking.txt:5
-#: views/attendee_actions.py:147 views/attendee_actions.py:282
+#: views/attendee_actions.py:149 views/attendee_actions.py:284
 msgid "Transaction"
 msgstr "Transaktion"
 
 #: templates/signupbox/includes/export_pdf_booking.txt:7
-#: views/attendee_actions.py:146 views/attendee_actions.py:281
+#: views/attendee_actions.py:148 views/attendee_actions.py:283
 msgid "Ordernumber"
 msgstr "Ordrenummer"
 
 #: templates/signupbox/includes/export_pdf_booking.txt:8
-#: views/attendee_actions.py:148 views/attendee_actions.py:283
+#: views/attendee_actions.py:150 views/attendee_actions.py:285
 msgid "Amount"
 msgstr "Beløb"
 
 #: templates/signupbox/includes/export_pdf_booking.txt:9
-#: views/attendee_actions.py:150 views/attendee_actions.py:285
+#: views/attendee_actions.py:152 views/attendee_actions.py:287
 msgid "Cardtype"
 msgstr "Korttype"
 
 #: templates/signupbox/includes/export_pdf_booking.txt:10
-#: views/attendee_actions.py:152 views/attendee_actions.py:287
+#: views/attendee_actions.py:154 views/attendee_actions.py:289
 msgid "Notes"
 msgstr "Noter"
 
@@ -1327,34 +1441,34 @@ msgstr "Påmindelse: Din tilmelding til %(title)s d. %(begins)s."
 msgid "%(date)s at %(time)s"
 msgstr "%(date)s kl. %(time)s"
 
-#: views/account.py:34
+#: views/account.py:36
 msgid "Settings updated."
 msgstr "Indstillinger opdateret."
 
-#: views/account.py:58
+#: views/account.py:62
 msgid "Profile updated."
 msgstr "Profil opdateret."
 
-#: views/account.py:112
+#: views/account.py:116
 msgid "Invitation sent."
 msgid_plural "Invitations sent."
 msgstr[0] "Invitation sendt."
 msgstr[1] "Invitationer sendt."
 
-#: views/account.py:132
+#: views/account.py:136
 msgid "User removed."
 msgstr "Bruger fjernet"
 
-#: views/account.py:150
+#: views/account.py:154
 msgid "Permissions updated."
 msgstr "Rettigheder opdateret."
 
-#: views/account.py:178
+#: views/account.py:182
 #, python-format
 msgid "Welcome to your %s account."
 msgstr "Velkommen til din %s konto."
 
-#: views/account.py:201
+#: views/account.py:205
 msgid "Invitation canceled."
 msgstr "Invitation fjernet."
 
@@ -1367,21 +1481,21 @@ msgstr "Side %(page_num)d af %(page_count)d"
 msgid "Attendee status updated."
 msgstr "Deltager status opdateret."
 
-#: views/attendee_actions.py:99
+#: views/attendee_actions.py:101
 msgid "Email sent"
 msgid_plural "Emails sent"
 msgstr[0] "Email sendt"
 msgstr[1] "Emails sendt"
 
-#: views/attendee_actions.py:124 views/attendee_actions.py:253
+#: views/attendee_actions.py:126 views/attendee_actions.py:255
 msgid "Registration date"
 msgstr "Tilmeldingsdato"
 
-#: views/attendee_actions.py:145 views/attendee_actions.py:280
+#: views/attendee_actions.py:147 views/attendee_actions.py:282
 msgid "Date and time"
 msgstr "Dato og tid"
 
-#: views/attendee_actions.py:250
+#: views/attendee_actions.py:252
 msgid "Attendee count"
 msgstr "Deltager antal"
 
@@ -1397,17 +1511,35 @@ msgstr "Deltager tilføjet."
 msgid "Booking updated."
 msgstr "Tilmelding opdateret."
 
-#: views/event.py:30
+#: views/event.py:32
 msgid "Event added."
 msgstr "Arrangement tilføjet."
 
-#: views/event.py:81
+#: views/event.py:86
 msgid "Event updated."
 msgstr "Arrangement opdateret."
 
-#: views/event.py:120
+#: views/event.py:125
 msgid "Event copied."
 msgstr "Arrangement kopieret."
+
+#: views/event.py:149
+msgid "Subscribed."
+msgstr ""
+
+#: views/event.py:164
+msgid "Unsubscribed."
+msgstr ""
+
+#: views/event.py:180
+#, python-format
+msgid "%s was archived"
+msgstr ""
+
+#: views/event.py:196
+#, python-format
+msgid "%s was removed from archive"
+msgstr ""
 
 #: views/fields.py:27
 msgid "Form fields updated."
