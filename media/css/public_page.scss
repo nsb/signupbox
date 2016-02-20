@@ -62,6 +62,13 @@ form {
   table {
     width: 100%;
   }
+
+  .newsletter-topics {
+    margin-top: 10px;
+    li {
+      padding: 5px 0;
+    }
+  }
 }
 
 #event_register {
@@ -90,7 +97,7 @@ form {
 
     &.last {
       text-align: right;
-    } 
+    }
   }
 
   thead {
