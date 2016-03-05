@@ -5,7 +5,7 @@ from attendees import event_attendees, event_attendees_edit, event_attendees_add
 from tickets import event_tickets, event_tickets_edit, event_tickets_add
 from fields import event_fields
 from public import event_site, event_register, event_confirm, event_complete, event_incomplete, event_view_more, event_terms, quickpay_callback
-from account import account_settings, account_profile, account_members, account_members_add, account_permissions, account_members_delete, account_invitation, account_invitation_cancel
+from account import account_settings, account_profile, account_members, account_members_add, account_permissions, account_members_delete, account_invitation, account_invitation_cancel, account_exports
 __all__ = [
     "frontpage",
     "accounts",

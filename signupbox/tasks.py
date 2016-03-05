@@ -1,6 +1,7 @@
 from smtplib import SMTPException
-
+import csv
 from datetime import datetime, date, time, timedelta
+import StringIO
 
 import urllib2
 from urllib import urlencode
@@ -10,11 +11,13 @@ from django.core.mail import send_mass_mail, send_mail, EmailMessage
 from django.contrib.sites.models import Site
 from django.template.loader import render_to_string
 from django.template import Context, Template
+from django.template.defaultfilters import date
 from django.db.models import signals, Max, Sum
 from django.template import Context
 from django.utils import translation
 from django.conf import settings
 from django.utils.translation import ugettext, ugettext_lazy as _
+from django.http import HttpResponse
 
 from celery import group, task
 from celery.utils.log import get_task_logger
@@ -22,7 +25,7 @@ from celery.utils.log import get_task_logger
 import nexmo
 
 from activities.models import Activity
-from models import Event, Booking, Attendee, RelationWiseSurvey
+from models import Account, Event, Booking, Attendee, RelationWiseSurvey
 
 logger = get_task_logger(__name__)
 
@@ -276,3 +279,38 @@ def cronitor_ping_task():
           urlopen('https://cronitor.link/m22n/complete', timeout=10)
         except Exception:
             pass
+
+@task(ignore_result=True)
+def export_attendee_data(account_id, email_address):
+    """
+    Export attendee data
+    """
+
+    try:
+        account = Account.objects.get(pk=account_id)
+    except Account.DoesNotExist:
+        return
+
+    attendees = Attendee.objects.filter(account=account)\
+                        .select_related('booking', 'booking__event')
+
+    csvfile = StringIO.StringIO()
+    writer = csv.writer(csvfile)
+
+    writer.writerow(['Name'.encode('utf-8'),
+                     'E-mail'.encode('utf-8'),
+                     'Event'.encode('utf-8'),
+                     'Date'.encode('utf-8')])
+
+    for a in attendees:
+        writer.writerow([a.name.encode('utf-8') if a.name else '',
+                         a.email.encode('utf-8') if a.email else '',
+                         a.booking.event.title.encode('utf-8'),
+                         date(a.booking.timestamp, "d/m/Y H:i")])
+
+    sender = 'noreply@%s' % Site.objects.get_current().domain
+    message = EmailMessage("signupbox export",
+                           "Attached is a CSV with attendee data",
+                           sender, [email_address])
+    message.attach('exports.csv', csvfile.getvalue(), 'text/csv')
+    message.send()

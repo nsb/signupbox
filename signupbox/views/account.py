@@ -16,7 +16,7 @@ from django.conf import settings
 from ..models import AccountInvite, RelationWiseSurvey
 from ..forms import AccountForm, AccountSurveyFormSet, UserForm, ProfileForm, InviteForm, PermissionsForm, InviteAcceptForm
 from ..decorators import with_account
-from ..tasks import account_send_invites
+from ..tasks import account_send_invites, export_attendee_data
 
 @login_required
 @with_account
@@ -45,6 +45,23 @@ def account_settings(request, account):
         'signupbox/settings.html',
         RequestContext(request, {'form':form, 'survey_formset':survey_formset})
     )
+
+@login_required
+@with_account
+def account_exports(request, account):
+
+    if not request.user.has_perm('view', account):
+        return HttpResponseForbidden()
+
+    if request.method == 'POST':
+        export_attendee_data.delay(account.pk, request.user.email)
+        messages.success(request, _('We have sent you an email with the requested data.'))
+        return redirect(reverse('account_exports'))
+    else:
+        pass
+
+    return render_to_response('signupbox/exports.html',
+                              RequestContext(request, {}))
 
 @login_required
 @with_account
@@ -169,7 +186,7 @@ def account_invitation(request, key):
                     password = form.cleaned_data['password']
                 )
             invitation.account.users.add(user)
-            invitation.account.set_perms(user, view=True, change=invitation.is_admin) 
+            invitation.account.set_perms(user, view=True, change=invitation.is_admin)
             invitation.is_accepted = True
             invitation.save()
 
