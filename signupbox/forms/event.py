@@ -33,6 +33,7 @@ class EventForm(forms.ModelForm):
             'language',
             'project_id',
             'survey',
+            'show_newsletter_subscribe',
         )
 
     def clean(self):

@@ -367,6 +367,9 @@ class Event(models.Model):
     subscribers = models.ManyToManyField(User, related_name='events',
                                          verbose_name=_('Subscribers'))
     archived = models.BooleanField(default=False, db_index=True)
+    show_newsletter_subscribe = models.BooleanField(default=True,
+                                                    verbose_name=_('Show newsletter signup'),
+                                                    help_text=_('Show newsletter signup after registration?'))
 
     objects = EventManager()
 

@@ -7,6 +7,7 @@
 
   <p>{% blocktrans with event.title as title %}We have sent you an email with a receipt of your registration.{% endblocktrans %}</p>
 
+  {% if event.show_newsletter_subscribe %}
   <div class="newsletter">
     <h4>{% trans "Would you like to receive news regarding similar activities from Danish Architecture Center and subscribe to our monthly newsletter?" %}</h4>
     <form action="http://dac.us1.list-manage.com/subscribe/post?u=d297139f07d951498acdc50a3&amp;id=f47297dc57" method="post">
@@ -54,5 +55,6 @@
     <a href="{% url event_view_more event.slug %}">{% trans "No" %}</a>
     </form>
   </div>
+  {% endif %}
 
 {% endblock main %}
