@@ -370,6 +370,10 @@ class Event(models.Model):
     show_newsletter_subscribe = models.BooleanField(default=True,
                                                     verbose_name=_('Show newsletter signup'),
                                                     help_text=_('Show newsletter signup after registration?'))
+    extra_info_override = models.TextField(verbose_name=_('Extra info'),
+                                           blank=True,
+                                           help_text=_('Replaces default extra info in the registration email.'))
+
 
     objects = EventManager()
 

@@ -34,6 +34,7 @@ class EventForm(forms.ModelForm):
             'project_id',
             'survey',
             'show_newsletter_subscribe',
+            'extra_info_override',
         )
 
     def clean(self):
