@@ -36,6 +36,7 @@ class EventForm(forms.ModelForm):
             'show_newsletter_subscribe',
             'extra_info_override',
             'show_address',
+            'redirect_public_page_url',
         )
 
     def clean(self):

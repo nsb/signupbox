@@ -376,7 +376,10 @@ class Event(models.Model):
     show_address = models.BooleanField(default=True,
                                        verbose_name=_('Show address'),
                                        help_text=_('Show address in emails and public pages'))
-
+    redirect_public_page_url = models.URLField(blank=True,
+                                               verbose_name=_('redirect event page'),
+                                               help_text=_('redirect event page to this URL.')
+                                               )
 
     objects = EventManager()
 

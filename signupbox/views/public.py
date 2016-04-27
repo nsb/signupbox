@@ -23,6 +23,9 @@ def event_site(request, slug):
     account = Account.objects.by_request(request)
     event = get_object_or_404(Event, account=account, slug=slug)
 
+    if event.redirect_public_page_url:
+        return redirect(event.redirect_public_page_url)
+
     translation.activate(event.language)
 
     return render_to_response(
