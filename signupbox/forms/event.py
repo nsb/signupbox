@@ -35,6 +35,7 @@ class EventForm(forms.ModelForm):
             'survey',
             'show_newsletter_subscribe',
             'extra_info_override',
+            'show_address',
         )
 
     def clean(self):

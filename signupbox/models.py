@@ -373,6 +373,9 @@ class Event(models.Model):
     extra_info_override = models.TextField(verbose_name=_('Extra info'),
                                            blank=True,
                                            help_text=_('Replaces default extra info in the registration email.'))
+    show_address = models.BooleanField(default=True,
+                                       verbose_name=_('Show address'),
+                                       help_text=_('Show address in emails and public pages'))
 
 
     objects = EventManager()

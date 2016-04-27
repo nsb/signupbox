@@ -10,9 +10,11 @@
 {% block booking_info %}{% endblock booking_info %}
 {% firstof event.extra_info_override event.account.extra_info %}
 --
+{% if event.show_address %}
 {% with event.account as account %}
 {{ account.organization }}
 {{ account.street }}, {{ account.city }} {{ account.zip_code }}
 {% if account.phone %}{% trans "phone:" %} {{ account.phone }}{% endif %}
 {% if account.email %}{% trans "mail:" %} {{ account.email }}{% endif %}
 {% endwith %}
+{% endif %}
