@@ -3,7 +3,7 @@
 
 {% block main %}
 
-<div id="event_register">
+<div id="event_register" class="col-sm-12">
 
   {% if LANGUAGE_CODE == 'da' %}
   <h1>Tilmelding til {{ event.title }}</h1>
@@ -20,25 +20,25 @@
   </ul>
   {% endif %}
 
-  <form action="{% url event_register event.slug %}" method="post">
+  <form class="form-horizontal" action="{% url event_register event.slug %}" method="post">
   {% csrf_token %}
   {{ formset.management_form }}
 
     <div id="attendee-forms">
     {% for form in formset.forms %}
-      <fieldset>
       {% for field in form %}
         {% include "signupbox/includes/field.html" %}
       {% endfor %}
-      </fieldset>
     {% endfor %}
     </div>
 
-    <div>
+    <div class="form-group">
       {% if event.has_extra_forms %}
         <strong id="add-attendee"><a  href="#">{% trans "Add extra attendee" %}</a> {% trans "or" %}</strong>
       {% endif %}
-      <input type="submit" value="{% trans "Continue" %}" />
+      <div class="col-sm-offset-2 col-sm-10">
+        <input type="submit" value="{% trans "Continue" %}" class="btn btn-default" />
+      </div>
     </div>
   </form>
   {% endblock register_form %}

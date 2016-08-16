@@ -2,11 +2,13 @@
 {% load i18n %}
 
 {% block main %}
+  <div class="col-sm-12">
 
-  <p>{% trans "You can now close the page or go to Danish Architecture Center's website and see more interesting events." %}</p>
+    <p>{% trans "You can now close the page or go to Danish Architecture Center's website and see more interesting events." %}</p>
 
-  <a href="http://www.dac.dk/{{ LANGUAGE_CODE }}/service-sider/kalender/">
-    {% trans "Go to website Danish Architecture Center" %}
-  </a>
+    <a href="http://www.dac.dk/{{ LANGUAGE_CODE }}/service-sider/kalender/">
+      {% trans "Go to website Danish Architecture Center" %}
+    </a>
 
+  </div>
 {% endblock main %}

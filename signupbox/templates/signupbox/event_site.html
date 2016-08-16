@@ -4,29 +4,33 @@
 {% load booking_tags %}
 
 {% block main %}
-<div id="event_site">
+<div id="event_site" class="col-sm-12">
 
   <h1>{{ event.title }}</h1>
-  <div class="details">{{ event.description|safe }}</div>
+  <p class="details">{{ event.description|safe }}</p>
 
   <h3>{% trans "Time and date" %}</h3>
-  <div class="details">{% datetime_span event.begins event.ends %}</div>
+  <p class="details">{% datetime_span event.begins event.ends %}</p>
 
   {% if event.venue or event.address %}
   <h3>{% trans "Where" %}</h3>
-  <div class="details">
+  <p class="details">
     <div><strong>{{ event.venue }}</strong></div>
     <div>{{ event.address }}</div>
     <div>{{ event.zip_code }} {{ event.city }}</div>
-  </div>
+  </p>
   {% endif %}
 
   {% if event.has_payments %}
   <h3>{% trans "Price" %}</h3>
-  <div class="details">{% price_range event.tickets.all %} {{ event.get_currency_display }}</div>
+  <p class="details">{% price_range event.tickets.all %} {{ event.get_currency_display }}</p>
   {% endif %}
 
-  <h2><a href="{% url event_register event.slug %}">{% trans "Register" %}</a></h2>
+  <p>
+    <a href="{% url event_register event.slug %}" class="btn btn-lg btn-success">
+      {% trans "Register" %}
+    </a>
+  </p>
 
 </div>
 {% endblock main %}

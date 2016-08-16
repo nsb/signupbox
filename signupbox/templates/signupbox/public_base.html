@@ -1,14 +1,11 @@
 {% extends "signupbox/base.html" %}
 {% load i18n %}
 {% load compress %}
+
 {% block css %}
   <link href='http://fonts.googleapis.com/css?family=Molengo' rel='stylesheet' type='text/css'>
-  {% compress css %}
-  {{ block.super }}
-  <link rel="stylesheet" href="{{ MEDIA_URL }}css/global.scss" type="text/css">
-  <link rel="stylesheet" href="{{ MEDIA_URL }}css/forms.scss" type="text/css">
-  <link rel="stylesheet" href="{{ MEDIA_URL }}css/public_page.scss" type="text/css">
-  {% endcompress %}
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
 {% endblock css %}
 
 {% block title %}{{ account.display_name }}{% endblock title %}
@@ -17,12 +14,12 @@
   {% block scriptcodes %}
   {{ account.script_codes|safe }}
   {% endblock scriptcodes %}
-  <div id="page">
-    <div id="header">
+  <div id="page" class="container">
+    <div id="header" class="row">
       {% block header %}
       {% endblock header %}
     </div>
-    <div id="main">
+    <div id="main" class="row">
       {% if messages %}
       <ul class="messages">
           {% for message in messages %}
@@ -35,7 +32,7 @@
   </div>
 
   {% block footer %}
-  <div id="footer">
+  <div id="footer" class="container text-muted text-center">
     <p class="small quiet">
     {{ account.organization }}
     {% if account.street %}, {{ account.street }}{% endif %}

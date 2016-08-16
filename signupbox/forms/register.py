@@ -8,13 +8,20 @@ from ..models import Field, FieldValue, Ticket, Booking, Attendee
 from ..signals import booking_confirmed
 
 FIELD_TYPES = {
-    TEXT_FIELD: forms.CharField,
-    TEXTAREA_FIELD: curry(forms.CharField, widget=forms.Textarea),
-    CHECKBOX_FIELD: forms.BooleanField,
-    EMAIL_FIELD: forms.EmailField,
-    SELECT_FIELD: forms.ChoiceField,
-    RADIOBUTTON_FIELD: curry(forms.ChoiceField, widget=forms.RadioSelect),
-    PHONE_FIELD: forms.CharField,
+    TEXT_FIELD: curry(forms.CharField,
+                      widget=forms.TextInput(attrs={'class': 'form-control'})),
+    TEXTAREA_FIELD: curry(forms.CharField,
+                          widget=forms.Textarea(attrs={'class': 'form-control'})),
+    CHECKBOX_FIELD: curry(forms.BooleanField,
+                          widget=forms.CheckboxInput(attrs={'class': 'form-control'})),
+    EMAIL_FIELD: curry(forms.EmailField,
+                       widget=forms.TextInput(attrs={'class': 'form-control'})),
+    SELECT_FIELD: curry(forms.ChoiceField,
+                        widget=forms.Select(attrs={'class': 'form-control'})),
+    RADIOBUTTON_FIELD: curry(forms.ChoiceField,
+                             widget=forms.RadioSelect(attrs={'class': 'form-control'})),
+    PHONE_FIELD: curry(forms.CharField,
+                       widget=forms.TextInput(attrs={'class': 'form-control'})),
 }
 
 def attendeeform_factory(event, is_extra, instance=None):

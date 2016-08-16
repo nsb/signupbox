@@ -1,8 +1,9 @@
-<div class="fieldWrapper{% if field.field.required %} required{% endif %}">
-  <div class="error">{{ field.errors }}</div>
-  {{ field.label_tag }}
-  <div class="input">
+<div class="form-group{% if field.field.required %} required{% endif %} {% if field.errors %} has-error{% endif %}">
+  <label class="col-sm-2 control-label">
+    {{ field.label }}
+  </label>
+  <div class="col-sm-6">
     {{ field }}
-    <div class="quiet">{{ field.help_text }}</div>
   </div>
+  <p class="help-block">{{ field.help_text }}</p>
 </div>

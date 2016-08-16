@@ -3,58 +3,100 @@
 
 {% block main %}
 
-  <h1>{% trans "Thanks for registering" %}</h1>
+<div id="event_confirm" class="col-sm-12">
 
-  <p>{% blocktrans with event.title as title %}We have sent you an email with a receipt of your registration.{% endblocktrans %}</p>
+  <h2>{% trans "Thanks for registering" %}</h2>
+  <h5>{% blocktrans with event.title as title %}We have sent you an email with a receipt of your registration.{% endblocktrans %}</h5>
 
   {% if event.show_newsletter_subscribe %}
   <div class="newsletter">
     <h4>{% trans "Would you like to receive news regarding similar activities from Danish Architecture Center and subscribe to our monthly newsletter?" %}</h4>
-    <form action="http://dac.us1.list-manage.com/subscribe/post?u=d297139f07d951498acdc50a3&amp;id=f47297dc57" method="post">
-    {% with booking.attendees.all|first as attendee %}
-    <input type="hidden" value="{{ attendee.email }}" name="EMAIL">
-    <input type="hidden" value="{{ attendee.name }}" name="FNAME">
-    {% endwith %}
 
-    <div class="newsletter-topics">
-      <strong>{% trans "Choose your interests" %}: </strong>
-  		<ul>
-  			<li>
-  				<input type="checkbox" value="1" name="group[5][1]" id="mce-group[5]-5-0">
-  				<label for="mce-group[5]-5-0"><strong>{% trans "Architecural experiences - Exhibitions - Guided trips" %}</strong></label>
-  			</li>
-  			<li>
-  				<input type="checkbox" value="256" name="group[5][256]" id="mce-group[5]-5-1">
-  				<label for="mce-group[5]-5-1"><strong>{% trans "Kids and familiy activities" %}</strong></label>
-  			</li>
-  			<li>
-  				<input type="checkbox" value="512" name="group[5][512]" id="mce-group[5]-5-2">
-  				<label for="mce-group[5]-5-2"><strong>{% trans "Professional knowledge - Architecture events - Construction and urban development" %}</strong>
-  				</label>
-  			</li>
-  			<li>
-  				<input type="checkbox" value="16" name="group[5][16]" id="mce-group[5]-5-3">
-  				<label for="mce-group[5]-5-3"><strong>{% trans "New books - Designproducts from DACs shop" %}</strong>
-  				</label>
-  			</li>
-  			<li>
-  				<input type="checkbox" value="1024" name="group[5][1024]" id="mce-group[5]-5-4">
-  				<label for="mce-group[5]-5-4"><strong>{% trans "Group tours - Meetings - Experiences for organizations and companies" %}</strong></label>
-  			</li>
-  			<li>
-  				<input type="checkbox" value="8" name="group[5][8]" id="mce-group[5]-5-5">
-  				<label for="mce-group[5]-5-5"><strong>{% trans "Educational offerings for teachers" %}</strong>
-  				</label>
-  			</li>
-  		</ul>
-    </div>
+    <strong>{% trans "Choose your interests" %}: </strong>
 
-    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
-    <input type="hidden" name="b_d297139f07d951498acdc50a3_f47297dc57" value="">
-    <button class="button" type="submit" value="Subscribe" name="subscribe">{% trans "Yes" %}</button>
-    <a href="{% url event_view_more event.slug %}">{% trans "No" %}</a>
+    <form class="form-horizontal" action="http://dac.us1.list-manage.com/subscribe/post?u=d297139f07d951498acdc50a3&amp;id=f47297dc57" method="post">
+      {% with booking.attendees.all|first as attendee %}
+      <input type="hidden" value="{{ attendee.email }}" name="EMAIL">
+      <input type="hidden" value="{{ attendee.name }}" name="FNAME">
+      {% endwith %}
+
+      <div class="form-group">
+        <div class="col-sm-offset-1 col-sm-11">
+          <div class="checkbox">
+      			<label>
+      				<input type="checkbox" value="1" name="group[5][1]" id="mce-group[5]-5-0">
+      				{% trans "Architecural experiences - Exhibitions - Guided trips" %}
+      			</label>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-offset-1 col-sm-11">
+          <div class="checkbox">
+      			<label>
+      				<input type="checkbox" value="256" name="group[5][256]" id="mce-group[5]-5-1">
+      				{% trans "Kids and familiy activities" %}
+      			</label>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-offset-1 col-sm-11">
+          <div class="checkbox">
+      			<label>
+      				<input type="checkbox" value="512" name="group[5][512]" id="mce-group[5]-5-2">
+      				{% trans "Professional knowledge - Architecture events - Construction and urban development" %}
+      			</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="col-sm-offset-1 col-sm-11">
+          <div class="checkbox">
+      			<label>
+      				<input type="checkbox" value="16" name="group[5][16]" id="mce-group[5]-5-3">
+      				{% trans "New books - Designproducts from DACs shop" %}
+      			</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="col-sm-offset-1 col-sm-11">
+          <div class="checkbox">
+      			<label>
+      				<input type="checkbox" value="1024" name="group[5][1024]" id="mce-group[5]-5-4">
+      				{% trans "Group tours - Meetings - Experiences for organizations and companies" %}
+      			</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="col-sm-offset-1 col-sm-11">
+          <div class="checkbox">
+      			<label>
+      				<input type="checkbox" value="8" name="group[5][8]" id="mce-group[5]-5-5">
+      				{% trans "Educational offerings for teachers" %}
+      			</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+      <input type="hidden" name="b_d297139f07d951498acdc50a3_f47297dc57" value="">
+
+      <div class="form-group">
+        <div class="col-sm-offset-1 col-sm-11">
+          <button class="btn btn-default btn-lg" type="submit" value="Subscribe" name="subscribe">{% trans "Yes" %}</button>
+          <a href="{% url event_view_more event.slug %}">{% trans "No" %}</a>
+        </div>
+      </div>
+
     </form>
   </div>
   {% endif %}
 
+</div>
 {% endblock main %}

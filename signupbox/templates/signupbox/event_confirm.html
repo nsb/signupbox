@@ -4,32 +4,36 @@
 
 {% block main %}
 
-<div id="event_confirm">
+<div id="event_confirm" class="col-sm-12">
 
 <h3>{% trans "Confirm registration" %}</h3>
-<p>{% blocktrans with event.title as title %}Registration for {{ title }}.{% endblocktrans %}</p>
-
 
 {% block summary %}
 {% regroup booking.attendees.all by ticket as summary_list %}
-<table>
-  <thead>
-    <tr>
-      <th>{% trans "Category" %}</th>
-      <th>{% trans "Count" %}</th>
-      <th class="last">{% trans "Collected price" %}</th>
-    </tr>
-  </thead>
-  <tbody>
-  {% for s in summary_list %}
-    <tr>
-      <td>{{ s.grouper }}</td>
-      <td>{% attendee_count s.list %}</td>
-      <td class="last">{% trans "Free" %}</td>
-    </tr>
-  {% endfor %}
-  </tbody>
-</table>
+
+<div class="panel panel-default">
+  <div class="panel-heading">{% blocktrans with event.title as title %}Registration for {{ title }}.{% endblocktrans %}</div>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>{% trans "Category" %}</th>
+        <th>{% trans "Count" %}</th>
+        <th class="last">{% trans "Collected price" %}</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for s in summary_list %}
+      <tr>
+        <td>{{ s.grouper }}</td>
+        <td>{% attendee_count s.list %}</td>
+        <td class="last">{% trans "Free" %}</td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</div>
+
 {% endblock summary %}
 
 <p class="small quiet">{% blocktrans with event.terms_url as terms_url %}By confirming this registration you agree to our <a href="{{ terms_url }}" class="new_window">terms and conditions</a>.{% endblocktrans %}</p>
@@ -39,9 +43,9 @@
   {% csrf_token %}
   {{ form }}
 
-  <div>
-    <input type="submit" value="{% trans "Confirm" %}" />
-  </div>
+  <p>
+    <input type="submit" value="{% trans "Confirm" %}" class="btn btn-primary btn-lg" />
+  </p>
 </form>
 {% endblock confirm_form %}
 
