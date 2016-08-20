@@ -1,5 +1,5 @@
 {% extends "signupbox/event_register_base.html" %}
-{% load i18n %}
+{% load i18n form_tags %}
 
 {% block main %}
 
@@ -27,7 +27,11 @@
     <div id="attendee-forms">
     {% for form in formset.forms %}
       {% for field in form %}
-        {% include "signupbox/includes/field.html" %}
+        {% if field.field.widget|klass == "RadioSelect" %}
+          {% include "signupbox/includes/radiobutton.html" %}
+        {% else %}
+          {% include "signupbox/includes/field.html" %}
+        {% endif %}
       {% endfor %}
     {% endfor %}
     </div>

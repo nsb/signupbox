@@ -19,7 +19,7 @@ FIELD_TYPES = {
     SELECT_FIELD: curry(forms.ChoiceField,
                         widget=forms.Select(attrs={'class': 'form-control'})),
     RADIOBUTTON_FIELD: curry(forms.ChoiceField,
-                             widget=forms.RadioSelect(attrs={'class': 'form-control'})),
+                             widget=forms.RadioSelect()),
     PHONE_FIELD: curry(forms.CharField,
                        widget=forms.TextInput(attrs={'class': 'form-control'})),
 }
