@@ -30,7 +30,7 @@
         {% if field.field.widget|klass == "RadioSelect" %}
           {% include "signupbox/includes/radiobutton.html" %}
         {% else %}
-          {% include "signupbox/includes/field.html" %}
+          {% include "signupbox/includes/field_bootstrap.html" %}
         {% endif %}
       {% endfor %}
     {% endfor %}

@@ -1,0 +1,9 @@
+<div class="form-group{% if field.field.required %} required{% endif %} {% if field.errors %} has-error{% endif %}">
+  <label class="col-sm-2 control-label">
+    {{ field.label }}
+  </label>
+  <div class="col-sm-6">
+    {{ field }}
+  </div>
+  <p class="help-block">{{ field.help_text }}</p>
+</div>
