@@ -18,9 +18,9 @@
 <div id="event_register" class="col-sm-12">
 
   {% if LANGUAGE_CODE == 'da' %}
-  <h1>Tilmelding til {{ event.title }}</h1>
+  <h2>Tilmelding til {{ event.title }}</h2>
   {% else %}
-  <h1>Registration for {{ event.title }}</h1>
+  <h2>Registration for {{ event.title }}</h2>
   {% endif %}
 
   {% block register_form %}
