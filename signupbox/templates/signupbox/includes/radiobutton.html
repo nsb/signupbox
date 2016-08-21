@@ -1,5 +1,10 @@
-<div class="radio col-sm-push-2">
-  <label>
-    {{ field }}
-  </label>
+<div class="form-group">
+  <div class="col-sm-push-2 col-sm-2"></div>
+  <div class="col-sm-6">
+    {% for radio in field %}
+      <div class="radio">
+        {{ radio }}
+      </div>
+    {% endfor %}
+  </div>
 </div>
