@@ -1,6 +1,18 @@
 {% extends "signupbox/event_register_base.html" %}
 {% load i18n form_tags %}
 
+{% block css %}
+  {{ block.super }}
+
+  <style>
+    .extra {
+      border-top: solid 1px #ddd;
+      padding-top: 20px;
+    }
+  </style>
+
+{% endblock css %}
+
 {% block main %}
 
 <div id="event_register" class="col-sm-12">
@@ -37,10 +49,10 @@
     </div>
 
     <div class="form-group">
-      {% if event.has_extra_forms %}
-        <strong id="add-attendee"><a  href="#">{% trans "Add extra attendee" %}</a> {% trans "or" %}</strong>
-      {% endif %}
       <div class="col-sm-offset-2 col-sm-10">
+        {% if event.has_extra_forms %}
+          <strong id="add-attendee"><a  href="#">{% trans "Add extra attendee" %}</a> {% trans "or" %}</strong>
+        {% endif %}
         <input type="submit" value="{% trans "Continue" %}" class="btn btn-default" />
       </div>
     </div>
@@ -55,7 +67,11 @@
 <script type="text/html" id="AttendeeAddExtra">
 <fieldset class="extra">
   {% for field in empty_form %}
-    {% include "signupbox/includes/field.html" %}
+    {% if field.field.widget|klass == "RadioSelect" %}
+      {% include "signupbox/includes/radiobutton.html" %}
+    {% else %}
+      {% include "signupbox/includes/field_bootstrap.html" %}
+    {% endif %}
   {% endfor %}
 </fieldset>
 </script>
