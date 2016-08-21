@@ -6,14 +6,14 @@
 {% block main %}
 <div id="event_site" class="col-sm-12">
 
-  <h1>{{ event.title }}</h1>
+  <h2>{{ event.title }}</h2>
   <p class="details">{{ event.description|safe }}</p>
 
-  <h3>{% trans "Time and date" %}</h3>
+  <h4>{% trans "Time and date" %}</h4>
   <p class="details">{% datetime_span event.begins event.ends %}</p>
 
   {% if event.venue or event.address %}
-  <h3>{% trans "Where" %}</h3>
+  <h4>{% trans "Where" %}</h4>
   <p class="details">
     <div><strong>{{ event.venue }}</strong></div>
     <div>{{ event.address }}</div>
@@ -22,7 +22,7 @@
   {% endif %}
 
   {% if event.has_payments %}
-  <h3>{% trans "Price" %}</h3>
+  <h4>{% trans "Price" %}</h4>
   <p class="details">{% price_range event.tickets.all %} {{ event.get_currency_display }}</p>
   {% endif %}
 
