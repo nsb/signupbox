@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from dashboard import frontpage, accounts, index, archived, signup, event_gviz
-from event import create as event_create, read as event_detail, edit as event_edit, copy as event_copy, subscribe as event_subscribe, unsubscribe as event_unsubscribe, archive as event_archive, unarchive as event_unarchive
+from event import create as event_create, read as event_detail, edit as event_edit, copy as event_copy, edit_confirmation_mail as event_edit_confirmation_mail, subscribe as event_subscribe, unsubscribe as event_unsubscribe, archive as event_archive, unarchive as event_unarchive
 from attendees import event_attendees, event_attendees_edit, event_attendees_add, event_booking_detail
 from tickets import event_tickets, event_tickets_edit, event_tickets_add
 from fields import event_fields

@@ -46,3 +46,12 @@ class EventForm(forms.ModelForm):
 
 class EventCopyForm(forms.Form):
     title = forms.CharField(required=True, label=_('New title'))
+
+class EventConfirmationMailForm(forms.ModelForm):
+
+    class Meta:
+        model = Event
+        fields = (
+            'confirmation_mail_registrant',
+            'confirmation_mail',
+        )

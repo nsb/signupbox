@@ -10,7 +10,7 @@ from django.http import HttpResponseForbidden
 
 from ..models import Event, create_default_fields, create_default_tickets, \
     RelationWiseSurvey
-from ..forms import EventForm, EventCopyForm
+from ..forms import EventForm, EventCopyForm, EventConfirmationMailForm
 from ..decorators import with_account
 
 @login_required
@@ -130,6 +130,30 @@ def copy(request, slug, account):
 
     return render_to_response(
         'signupbox/event_copy.html',
+        RequestContext(request, {'form':form, 'event':event,})
+    )
+
+
+@login_required
+@with_account
+def edit_confirmation_mail(request, slug, account):
+
+    if not request.user.has_perm('view', account):
+        return HttpResponseForbidden()
+
+    event = get_object_or_404(Event, account=account, slug=slug)
+
+    if request.method == 'POST':
+        form = EventConfirmationMailForm(request.POST, instance=event)
+        if form.is_valid():
+            form.save()
+            messages.success(request, _('Event updated.'))
+            return redirect(reverse('event_detail', kwargs={'slug':slug}))
+    else:
+        form = EventConfirmationMailForm(instance=event)
+
+    return render_to_response(
+        'signupbox/event_edit_confirmation_mail.html',
         RequestContext(request, {'form':form, 'event':event,})
     )
 

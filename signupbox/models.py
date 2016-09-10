@@ -380,6 +380,13 @@ class Event(models.Model):
                                                verbose_name=_('redirect event page'),
                                                help_text=_('redirect event page to this URL.')
                                                )
+    confirmation_mail = models.TextField(verbose_name=_('Confirmation email extra attendee'),
+                                         blank=True,
+                                         help_text=_('This email will be sent to extra attendees after sucessful registration.'))
+
+    confirmation_mail_registrant = models.TextField(verbose_name=_('Confirmation email'),
+                                                    blank=True,
+                                                    help_text=_('This email will be sent to the registrant after sucessful registration.'))
 
     objects = EventManager()
 
